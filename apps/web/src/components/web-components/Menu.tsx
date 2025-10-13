@@ -107,79 +107,77 @@ const NAV = [
 
   { label: "Stories", href: "/stories" },
   // Si quieres ocultar Donate ahora, comenta o borra la siguiente línea:
-  // { label: "Donate", href: "/donate" },
+  { label: "Donate", href: "/donate" },
   { label: "Media Room", href: "/media" },
 ]
 
-/* ====================== Desktop ====================== */
+/* ====================== Desktop (sin "More") ====================== */
 export function MenuDesktop() {
   const pathname = usePathname()
+
+  const isActive = (href: string) =>
+    pathname === href || pathname?.startsWith(href + "/")
+
+  const ItemInner = (item: (typeof NAV)[number]) => {
+    if (!item.children) {
+      return (
+        <NavigationMenuLink asChild data-active={isActive(item.href)}>
+          <Link
+            href={item.href}
+            className={cn(
+              "py-2 px-2 text-sm rounded-md", // padding compacto
+              "hover:bg-accent hover:text-accent-foreground",
+              "data-[active=true]:bg-accent/50"
+            )}
+          >
+            {item.label}
+          </Link>
+        </NavigationMenuLink>
+      )
+    }
+
+    return (
+      <>
+        <NavigationMenuTrigger className="text-sm font-normal px-2">
+          {item.label}
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <div className="p-4 md:w-[600px] lg:w-[720px]">
+            <ul className="grid gap-2 sm:grid-cols-2">
+              <ListItem title="Overview" href={item.href}>
+                A quick summary of this section.
+              </ListItem>
+              {item.children.map((sub) => (
+                <ListItem key={sub.href} title={sub.label} href={sub.href}>
+                  {sub.description}
+                </ListItem>
+              ))}
+            </ul>
+          </div>
+        </NavigationMenuContent>
+      </>
+    )
+  }
 
   return (
     <div className="hidden md:block">
       <NavigationMenu className="relative">
-        <NavigationMenuList>
-          {NAV.map((item) => {
-            const isActive =
-              pathname === item.href || pathname?.startsWith(item.href + "/")
-
-            if (!item.children) {
-              return (
-                <NavigationMenuItem key={item.label}>
-                  <NavigationMenuLink asChild data-active={isActive}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "px-4 py-2 text-sm rounded-md",
-                        "hover:bg-accent hover:text-accent-foreground",
-                        "data-[active=true]:bg-accent/50"
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              )
-            }
-
-            return (
-              <NavigationMenuItem key={item.label}>
-                <NavigationMenuTrigger className="text-sm font-normal">
-                  {item.label}
-                </NavigationMenuTrigger>
-
-                {/* Mega menu con Overview + grid de items con descripción */}
-                <NavigationMenuContent>
-                  <div className="p-4 md:w-[600px] lg:w-[720px]">
-                    <ul className="grid gap-2 sm:grid-cols-2">
-                      {/* Overview arriba a la izquierda */}
-                      <ListItem title="Overview" href={item.href}>
-                        A quick summary of this section.
-                      </ListItem>
-
-                      {item.children.map((sub) => (
-                        <ListItem
-                          key={sub.href}
-                          title={sub.label}
-                          href={sub.href}
-                        >
-                          {sub.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            )
-          })}
+        {/* ÚNICA lista: evita problemas de alineación del viewport */}
+        <NavigationMenuList className="gap-0">
+          {NAV.map((item) => (
+            <NavigationMenuItem key={item.label}>
+              <ItemInner {...item} />
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
 
-        {/* 👇 Esto fija el problema #2 (posición/viewport) */}
+        {/* Viewport para posicionamiento correcto */}
         <NavigationMenuViewport className="left-0 right-0" />
       </NavigationMenu>
     </div>
   )
 }
+
 
 /* ====================== Mobile ====================== */
 /* Drawer lateral con acordeones (bonito + colapsable) */
@@ -192,7 +190,7 @@ import { ListItem } from "./Listitem"
 
 export function MenuMobile() {
   return (
-    <div className="md:hidden">
+    <div className="block min-[1000px]:hidden">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" aria-label="Open menu">

@@ -17,21 +17,31 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
   }, [])
 
   return (
-    <div className="flex h-16 items-center justify-between gap-4">
-  <div className="flex items-center gap-2 shrink-0">
-    <MenuMobile />
-    <Logo />
-  </div>
+    <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center gap-4">
+          {/* IZQUIERDA: menú + logo */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* botón hamburguesa solo mobile */}
+            <div className="block min-[1000px]:hidden">
+              <MenuMobile />
+            </div>
 
-  {/* 👇 El buscador ocupa el espacio restante sin sobresalir */}
-  <div className="flex-1 min-w-[180px]">
-    <Search onSearch={handleSearch} />
-  </div>
+            <Logo />
 
-  <div className="hidden md:flex items-center gap-3 shrink-0">
-    <MenuDesktop />
-    <LanguageToggle currentLang={currentLang} onToggle={onLanguageToggle} />
-  </div>
-</div>
+            {/* menú desktop a la izquierda */}
+            <div className="hidden min-[1000px]:block">
+              <MenuDesktop />
+            </div>
+          </div>
+
+          {/* DERECHA: empujado con ml-auto */}
+          <div className="ml-auto flex items-center gap-3 shrink-0">
+            <Search onSearch={handleSearch} />
+            <LanguageToggle currentLang={currentLang} onToggle={onLanguageToggle} />
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }
