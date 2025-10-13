@@ -8,7 +8,7 @@ export default function Home() {
   
   return (
     <div className="">
-      <Toolbar currentLang="en" onLanguageToggle={() => {}} />
+      <h1>About Page</h1>
     </div>
   );
 }
