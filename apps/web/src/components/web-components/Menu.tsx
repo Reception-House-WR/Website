@@ -106,12 +106,11 @@ const NAV = [
   },
 
   { label: "Stories", href: "/stories" },
-  // Si quieres ocultar Donate ahora, comenta o borra la siguiente línea:
   { label: "Donate", href: "/donate" },
   { label: "Media Room", href: "/media" },
 ]
 
-/* ====================== Desktop (sin "More") ====================== */
+/* ====================== Desktop  ====================== */
 export function MenuDesktop() {
   const pathname = usePathname()
 
@@ -125,7 +124,7 @@ export function MenuDesktop() {
           <Link
             href={item.href}
             className={cn(
-              "py-2 px-2 text-sm rounded-md", // padding compacto
+              "py-2 px-2 text-sm rounded-md", 
               "hover:bg-accent hover:text-accent-foreground",
               "data-[active=true]:bg-accent/50"
             )}
@@ -162,7 +161,6 @@ export function MenuDesktop() {
   return (
     <div className="hidden md:block">
       <NavigationMenu className="relative">
-        {/* ÚNICA lista: evita problemas de alineación del viewport */}
         <NavigationMenuList className="gap-0">
           {NAV.map((item) => (
             <NavigationMenuItem key={item.label}>
@@ -171,7 +169,6 @@ export function MenuDesktop() {
           ))}
         </NavigationMenuList>
 
-        {/* Viewport para posicionamiento correcto */}
         <NavigationMenuViewport className="left-0 right-0" />
       </NavigationMenu>
     </div>
@@ -180,7 +177,6 @@ export function MenuDesktop() {
 
 
 /* ====================== Mobile ====================== */
-/* Drawer lateral con acordeones (bonito + colapsable) */
 import { Sheet, SheetContent, SheetTrigger,
   SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
