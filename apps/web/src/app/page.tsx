@@ -1,14 +1,11 @@
 
 "use client";
-import { Button } from "@/components/ui/button";
-import { Toolbar } from "@/components/web-components/Toolbar";
-import Image from "next/image";
 
 export default function Home() {
   
   return (
     <div className="">
-      <Toolbar currentLang="en" onLanguageToggle={() => {}} />
+      <h1>hello</h1>
     </div>
   );
 }
