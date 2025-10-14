@@ -1,11 +1,13 @@
 
 "use client";
 
+import { Hero } from "./(home)/sections/Hero";
+
 export default function Home() {
   
   return (
     <div className="">
-      <h1>hello</h1>
+      <Hero lang="en" />
     </div>
   );
 }
