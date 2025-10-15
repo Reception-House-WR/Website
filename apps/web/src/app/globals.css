@@ -93,8 +93,8 @@
   );
 
 
-  --card-shadow: 0 4px 20px hsl(12 85% 60% / 0.1);
-  --card-hover-shadow: 0 8px 30px hsl(12 85% 60% / 0.15);
+  --card-shadow: 0 4px 20px hsla(0, 0%, 19%, 0.1);
+  --card-hover-shadow: 0 8px 30px hsla(0, 0%, 16%, 0.15);
 
 
   --rh-yellow-500: oklch(0.82 0.14 90);  /* #F0C04F base */
