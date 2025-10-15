@@ -33,8 +33,8 @@ export default function RootLayout({
           <ClientToolbar />
         {children}
         <DonateButton lang="en" />
+        <Footer/>
       </body>
-      <Footer/>
     </html>
   );
 }
