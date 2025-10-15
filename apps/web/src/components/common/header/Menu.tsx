@@ -125,8 +125,8 @@ export function MenuDesktop() {
             href={item.href}
             className={cn(
               "py-2 px-2 text-sm rounded-md", 
-              "hover:bg-accent hover:text-accent-foreground",
-              "data-[active=true]:bg-accent/50"
+              "hover:!bg-[var(--rh-500)] hover:text-white",
+              "data-[active=true]:bg-gray-900 data-[active=true]:text-white",
             )}
           >
             {item.label}
@@ -137,7 +137,10 @@ export function MenuDesktop() {
 
     return (
       <>
-        <NavigationMenuTrigger className="text-sm font-normal px-2">
+        <NavigationMenuTrigger className="text-sm font-normal px-2 rounded-md bg-transparent
+             hover:text-white hover:bg-[var(--rh-500)] 
+             data-[state=open]:!bg-[var(--rh-500)] data-[state=open]:!text-white 
+             transition-colors duration-200">
           {item.label}
         </NavigationMenuTrigger>
         <NavigationMenuContent>
