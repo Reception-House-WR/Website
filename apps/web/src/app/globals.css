@@ -77,12 +77,13 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --teal-500: hsl(186 100% 27%); /* #007B89 */
-  --teal-400: hsl(186 71% 34%);  /* ~10% tint  #198894 */
-  --teal-300: hsl(186 52% 41%);  /* ~20% tint  #3395A0 */
-  --teal-200: hsl(186 39% 49%);  /* ~30% tint  #4CA2AC */
-  --teal-100: hsl(186 37% 56%);  /* ~40% tint  #66AFB8 */
-  --teal-50:  hsl(186 37% 63%);  /* ~50% tint  #7FBDC4 */
+  --rh-500: oklch(0.43 0.08 205); /* #007B89 */
+  --rh-400: oklch(0.50 0.07 205); /* ~10% tint  #198894 */
+  --rh-300: oklch(0.56 0.06 205); /* ~20% tint  #3395A0 */
+  --rh-200: oklch(0.63 0.05 205); /* ~30% tint  #4CA2AC */
+  --rh-100: oklch(0.70 0.04 205); /* ~40% tint  #66AFB8 */
+  --rh-50:  oklch(0.77 0.03 205); /* ~50% tint  #7FBDC4 */
+
 
 
   --hero-gradient: linear-gradient(
@@ -90,6 +91,35 @@
     hsl(186 100% 27% / 0.90),  /* teal profundo */
     hsl(186 37% 63% / 0.70)    /* teal claro (50% tint) */
   );
+
+
+  --card-shadow: 0 4px 20px hsl(12 85% 60% / 0.1);
+  --card-hover-shadow: 0 8px 30px hsl(12 85% 60% / 0.15);
+
+
+  --rh-yellow-500: oklch(0.82 0.14 90);  /* #F0C04F base */
+  --rh-yellow-400: oklch(0.85 0.12 90);  /* ~10% tint */
+  --rh-yellow-300: oklch(0.88 0.10 90);  /* ~20% tint */
+  --rh-yellow-200: oklch(0.91 0.08 90);  /* ~30% tint */
+  --rh-yellow-100: oklch(0.94 0.06 90);  /* ~40% tint */
+  --rh-yellow-50:  oklch(0.97 0.04 90);  /* ~50% tint */
+
+  --rh-red-500: oklch(0.66 0.20 35);  /* #F64D2A base */
+  --rh-red-400: oklch(0.70 0.17 35);  /* ~10% tint */
+  --rh-red-300: oklch(0.74 0.14 35);  /* ~20% tint */
+  --rh-red-200: oklch(0.78 0.11 35);  /* ~30% tint */
+  --rh-red-100: oklch(0.82 0.08 35);  /* ~40% tint */
+  --rh-red-50:  oklch(0.86 0.05 35);  /* ~50% tint */
+
+  --rh-green-500: oklch(0.73 0.14 125); /* #8AB24B base */
+  --rh-green-400: oklch(0.77 0.12 125); /* ~10% tint */
+  --rh-green-300: oklch(0.81 0.10 125); /* ~20% tint */
+  --rh-green-200: oklch(0.85 0.08 125); /* ~30% tint */
+  --rh-green-100: oklch(0.89 0.06 125); /* ~40% tint */
+  --rh-green-50:  oklch(0.93 0.04 125); /* ~50% tint */
+
+
+
 }
 
 .dark {

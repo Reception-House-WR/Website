@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import heroImage from "/assets/hero-photo.jpg";
+import heroImage from "/assets/hero-photo2.jpg";
 
 interface HeroProps {
   lang: string;
@@ -31,15 +31,10 @@ export const Hero = ({ lang }: HeroProps) => {
     >
       {/* Background Image with Overlay */}
       <div 
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: "url(/assets/hero-photo2.jpg)",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
+        className="absolute inset-0 z-0 bg-[url('/assets/hero-photo2.jpg')] bg-cover bg-center"
       >
         <div 
-          className="absolute inset-0"
+          className="absolute inset-0 "
           style={{ background: 'var(--hero-gradient)' }}
         />
       </div>
