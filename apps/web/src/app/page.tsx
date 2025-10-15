@@ -6,6 +6,7 @@ import { Hero } from "./(home)/sections/Hero";
 import { StoriesCarousel } from "./(home)/sections/StoriesCarousel";
 import { Partners } from "./(home)/sections/Partners";
 
+
 export default function Home() {
   
   return (

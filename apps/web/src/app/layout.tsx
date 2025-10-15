@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientToolbar from "@/components/common/header/ClientToolbar";
 import { DonateButton } from "@/components/common/DonateButton";
+import Footer from "@/components/common/Footer";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +34,7 @@ export default function RootLayout({
         {children}
         <DonateButton lang="en" />
       </body>
+      <Footer/>
     </html>
   );
 }

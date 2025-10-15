@@ -15,7 +15,6 @@ const translations = {
   },
 };
 
-// Coloca los archivos en: public/assets/partners/{id}.png
 const partners = [
   { id: 1, name: "Immigration Partnership" },
   { id: 2, name: "Waterloo Region Community Foundation" },
