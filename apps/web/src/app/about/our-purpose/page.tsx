@@ -1,8 +1,17 @@
+import { Hero } from '@/sections/about/our-purpose/Hero'
+import { VisionMission } from '@/sections/about/our-purpose/VisionMission'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className='min-h-screen'>
+      <Hero />
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <VisionMission />
+        </div>
+      </section>
+    </div>
   )
 }
 
