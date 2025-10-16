@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import heroImage from "/assets/hero-photo2.jpg";
 
 interface HeroProps {
   lang: string;
