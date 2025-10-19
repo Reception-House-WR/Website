@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react" 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -14,6 +15,14 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 
+// --- IMPORTS FOR MOBILE MENU ---
+import { Sheet, SheetContent, SheetTrigger,
+  SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet" 
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion" 
+import { Button } from "@/components/ui/button" 
+import { Menu } from "lucide-react" 
+import { ListItem } from "./Listitem" 
+
 const NAV = [
   { label: "Home", href: "/" },
 
@@ -23,7 +32,7 @@ const NAV = [
     children: [
       {
         label: "Our People",
-        href: "/about/people",
+        href: "/about/our-people", 
         description: "Meet the team behind Reception House.",
       },
       {
@@ -162,7 +171,8 @@ export function MenuDesktop() {
   }
 
   return (
-    <div className="hidden md:block">
+    // UPDATED: Changed md:block to lg:block to match Toolbar.tsx
+    <div className="hidden lg:block"> 
       <NavigationMenu className="relative">
         <NavigationMenuList className="gap-0">
           {NAV.map((item) => (
@@ -180,16 +190,12 @@ export function MenuDesktop() {
 
 
 /* ====================== Mobile ====================== */
-import { Sheet, SheetContent, SheetTrigger,
-  SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Menu } from "lucide-react"
-import { ListItem } from "./Listitem"
+// Imports are already at the top
 
 export function MenuMobile() {
   return (
-    <div className="block min-[1000px]:hidden">
+    // UPDATED: Changed min-[1000px]:hidden to lg:hidden to match Toolbar.tsx
+    <div className="block lg:hidden"> 
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" aria-label="Open menu">
@@ -197,7 +203,7 @@ export function MenuMobile() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side="left" className="w-[92vw] sm:w-96 p-4" aria-describedby={undefined}>
+        <SheetContent side="left" className="w-[92vw] sm:w-96 p-4" aria-describedby="mobile-menu-desc"> {/* <-- FIXED aria-describedby */}
           <div className="mb-4 text-lg font-semibold">Reception House</div>
           <SheetHeader className="sr-only">
             <SheetTitle>Site navigation</SheetTitle>
@@ -251,5 +257,3 @@ export function MenuMobile() {
     </div>
   )
 }
-
-export default MenuDesktop
