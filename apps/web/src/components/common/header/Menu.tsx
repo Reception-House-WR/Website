@@ -155,11 +155,11 @@ export function MenuDesktop() {
         <NavigationMenuContent>
           <div className="p-4 md:w-[600px] lg:w-[720px]">
             <ul className="grid gap-2 sm:grid-cols-2">
-              <ListItem title="Overview" href={item.href}>
+              <ListItem title="Overview" href={item.href} className="text-[var(--rh-500)]">
                 A quick summary of this section.
               </ListItem>
               {item.children.map((sub) => (
-                <ListItem key={sub.href} title={sub.label} href={sub.href}>
+                <ListItem key={sub.href} title={sub.label} href={sub.href} className="text-[var(--rh-500)]">
                   {sub.description}
                 </ListItem>
               ))}

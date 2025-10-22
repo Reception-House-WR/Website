@@ -9,7 +9,7 @@ const translations = {
   en: {
     title: "Belonging Starts Here",
     subtitle: "We guide refugees and newcomers with resources, connections, and opportunity, so every person can build an independent, fulfilling life in Canada.",
-    cta: "Get Involved",
+    cta: "Contact us",
     learnMore: "Learn More",
   },
   fr: {

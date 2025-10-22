@@ -96,12 +96,12 @@ export default function OurPeople() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[40vh] min-h-[300px] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={teamImageUrl}
-            alt="Our team"
-            className="w-full h-full object-cover"
+      <section className="relative h-[40vh] min-h-[300px] overflow-hidden" role="banner">
+        <div className="absolute inset-0 z-0 bg-[url('/assets/hero-photo2.jpg')] bg-cover bg-center">
+
+           <div 
+            className="absolute inset-0 "
+            style={{ background: 'var(--hero-gradient)' }}
           />
           {/* Solid accent color overlay (now rh-teal) */}
           
@@ -112,12 +112,12 @@ export default function OurPeople() {
               <Users className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+            // style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
             >
               Our People
             </h1>
             <p className="text-xl text-white/90"
-            style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.6)' }}
+            // style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.6)' }}
             >
               Meet the passionate individuals who make our mission possible every
               day.
@@ -148,23 +148,23 @@ export default function OurPeople() {
               <div className="flex flex-wrap gap-2">
                 {departments.map((dept) => (
                   <Badge
-  key={dept}
-  // We are removing the `variant` prop to take full control
-  className={cn(
-    // 1. Base styles for all badges
-    "px-4 py-1.5 rounded-full cursor-pointer transition-colors text-sm font-medium border",
+                    key={dept}
+                    // We are removing the `variant` prop to take full control
+                    className={cn(
+                      // 1. Base styles for all badges
+                      "px-4 py-1.5 rounded-full cursor-pointer transition-colors text-sm font-medium border",
 
-    // 2. Conditional styles
-    selectedDepartment === dept
-      ? // If TRUE (Selected): Use primary (orange) styles
-        "bg-primary text-primary-foreground border-primary hover:bg-primary/90"
-      : // If FALSE (Not Selected): Use card/border (white/grey) styles
-        "bg-card border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary"
-  )}
-  onClick={() => setSelectedDepartment(dept)}
->
-  {dept}
-</Badge>
+                      // 2. Conditional styles
+                      selectedDepartment === dept
+                        ? // If TRUE (Selected): Use primary (orange) styles
+                          "bg-[var(--rh-400)] text-white border-[var(--rh-500)] hover:bg-[var(--rh-400)]/90"
+                        : // If FALSE (Not Selected): Use card/border (white/grey) styles
+                          "bg-card border-border text-foreground hover:bg-[var(--rh-400)] hover:text-white hover:border-[var(--rh-500)]"
+                    )}
+                    onClick={() => setSelectedDepartment(dept)}
+                  >
+                  {dept}
+                </Badge>
                 ))}
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function OurPeople() {
                       />
                     ) : (
                       // ELSE, show the initials (your original code):
-                      <div className="w-20 h-20 bg-rh-orange rounded-full flex items-center justify-center">
+                      <div className="w-20 h-20 bg-[var(--rh-500)] rounded-full flex items-center justify-center">
                         <span className="text-primary-foreground text-2xl font-bold">
                           {employee.name
                             .split(" ")
@@ -210,7 +210,7 @@ export default function OurPeople() {
                       {/* variant="secondary" now maps to the green tag */}
                       <Badge
                         variant="secondary"
-                        className="mb-3 font-medium border-0"
+                        className="mb-3 font-medium border-0 bg-[var(--rh-yellow-200)]"
                       >
                         {employee.department}
                       </Badge>

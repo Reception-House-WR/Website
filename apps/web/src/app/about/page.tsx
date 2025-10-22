@@ -1,8 +1,10 @@
+import HeroAboutUs from "@/sections/about/overview/HeroAboutUs";
+
 export default function Home() {
   
   return (
     <div className="">
-      <h1>About Page</h1>
+      <HeroAboutUs />
     </div>
   );
 }

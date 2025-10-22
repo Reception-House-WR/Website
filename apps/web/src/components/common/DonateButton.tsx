@@ -17,7 +17,7 @@ export const DonateButton = ({ lang }: DonateButtonProps) => {
     <div className="fixed bottom-8 right-8 z-50 animate-slide-in-right">
       <Button
         size="lg"
-        className="group rounded-full shadow-2xl bg-[var(--rh-yellow-500)] text-black hover:bg-[var(--rh-green-400)]"
+        className="group rounded-full shadow-lg shadow-black/15 bg-[var(--rh-green-500)] text-black hover:bg-[var(--rh-green-400)]"
         aria-label={text}
       >
         <Heart className="h-5 w-5 mr-2 transition-transform group-hover:scale-110" fill="currentColor" />
