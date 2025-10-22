@@ -174,7 +174,7 @@ export function MenuDesktop() {
     // UPDATED: Changed md:block to lg:block to match Toolbar.tsx
     <div className="hidden lg:block"> 
       <NavigationMenu className="relative">
-        <NavigationMenuList className="gap-0">
+        <NavigationMenuList className="gap-1">
           {NAV.map((item) => (
             <NavigationMenuItem key={item.label}>
               <ItemInner {...item} />

@@ -42,10 +42,10 @@ export const CoreValues = () => {
             return (
                 <Card
                 key={value.title}
-                className="p-6 text-center hover:shadow-soft transition-all duration-300 border-2 hover:border-primary animate-scale-in"
+                className="p-6 text-center hover:shadow-soft transition-all duration-300 border-2 hover:border-[var(--rh-500)] animate-scale-in"
                 style={{ animationDelay: `${index * 100}ms` }}
                 >
-                <div className="w-16 h-16 bg-warm-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[var(--rh-500)] rounded-full flex items-center justify-center mx-auto mb-4">
                     <Icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-foreground">{value.title}</h3>
