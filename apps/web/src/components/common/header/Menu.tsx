@@ -50,6 +50,11 @@ const NAV = [
         href: "/contact",
         description: "Get in touch or visit our offices.",
       },
+      {
+        label: "Careers",
+        href: "/careers",
+        description: "Join our staff—see current openings.",
+      }
     ],
   },
 
