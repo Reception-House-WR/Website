@@ -42,7 +42,7 @@ const NAV = [
       },
       {
         label: "Our History",
-        href: "/about/history",
+        href: "/about/our-history",
         description: "Milestones and impact over the years.",
       },
       {

@@ -1,4 +1,4 @@
-"use client"; // Required for useState
+"use client"; 
 
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 
-// Using a placeholder image as the local asset wasn't provided
 const teamImageUrl =
   "/assets/team-collaboration.jpg";
 
@@ -27,7 +26,7 @@ const employees = [
     role: "Executive Director",
     department: "Leadership",
     email: "sarah@nonprofit.org",
-    imageUrl: "/avatars/sarah-johnson.jpg", // Placeholder for potential future image URL
+    imageUrl: "/avatars/sarah-johnson.jpg", 
   },
   {
     name: "Michael Chen",
