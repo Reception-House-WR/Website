@@ -121,6 +121,10 @@
 
 
 
+  --timeline-gradient: linear-gradient(to bottom, var(--rh-red-500), var(--rh-green-500), var(--rh-500));
+
+
+
 }
 
 .dark {
