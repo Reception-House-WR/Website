@@ -7,7 +7,7 @@ export const VisionMission = () => {
     <>
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 mb-20">
             <Card className="p-10 bg-gradient-to-br from-primary/5 to-accent/5 border-2 border-teal-600/20 shadow-card animate-fade-in">
-                <div className="w-14 h-14 bg-teal-600 rounded-full flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-[var(--rh-500)] rounded-full flex items-center justify-center mb-6">
                     <Target className="w-7 h-7 text-white" />
                 </div>
                 <h2 className="text-3xl font-bold mb-4 text-foreground">Our Mission</h2>
