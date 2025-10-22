@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react" 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -14,6 +15,14 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 
+// --- IMPORTS FOR MOBILE MENU ---
+import { Sheet, SheetContent, SheetTrigger,
+  SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet" 
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion" 
+import { Button } from "@/components/ui/button" 
+import { Menu } from "lucide-react" 
+import { ListItem } from "./Listitem" 
+
 const NAV = [
   { label: "Home", href: "/" },
 
@@ -23,7 +32,7 @@ const NAV = [
     children: [
       {
         label: "Our People",
-        href: "/about/people",
+        href: "/about/our-people", 
         description: "Meet the team behind Reception House.",
       },
       {
@@ -33,7 +42,7 @@ const NAV = [
       },
       {
         label: "Our History",
-        href: "/about/history",
+        href: "/about/our-history",
         description: "Milestones and impact over the years.",
       },
       {
@@ -41,6 +50,11 @@ const NAV = [
         href: "/contact",
         description: "Get in touch or visit our offices.",
       },
+      {
+        label: "Careers",
+        href: "/careers",
+        description: "Join our staff—see current openings.",
+      }
     ],
   },
 
@@ -146,11 +160,11 @@ export function MenuDesktop() {
         <NavigationMenuContent>
           <div className="p-4 md:w-[600px] lg:w-[720px]">
             <ul className="grid gap-2 sm:grid-cols-2">
-              <ListItem title="Overview" href={item.href}>
+              <ListItem title="Overview" href={item.href} className="text-[var(--rh-500)]">
                 A quick summary of this section.
               </ListItem>
               {item.children.map((sub) => (
-                <ListItem key={sub.href} title={sub.label} href={sub.href}>
+                <ListItem key={sub.href} title={sub.label} href={sub.href} className="text-[var(--rh-500)]">
                   {sub.description}
                 </ListItem>
               ))}
@@ -162,9 +176,10 @@ export function MenuDesktop() {
   }
 
   return (
-    <div className="hidden md:block">
+    // UPDATED: Changed md:block to lg:block to match Toolbar.tsx
+    <div className="hidden lg:block"> 
       <NavigationMenu className="relative">
-        <NavigationMenuList className="gap-0">
+        <NavigationMenuList className="gap-1">
           {NAV.map((item) => (
             <NavigationMenuItem key={item.label}>
               <ItemInner {...item} />
@@ -180,16 +195,12 @@ export function MenuDesktop() {
 
 
 /* ====================== Mobile ====================== */
-import { Sheet, SheetContent, SheetTrigger,
-  SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Menu } from "lucide-react"
-import { ListItem } from "./Listitem"
+// Imports are already at the top
 
 export function MenuMobile() {
   return (
-    <div className="block min-[1000px]:hidden">
+    // UPDATED: Changed min-[1000px]:hidden to lg:hidden to match Toolbar.tsx
+    <div className="block lg:hidden"> 
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" aria-label="Open menu">
@@ -197,7 +208,7 @@ export function MenuMobile() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side="left" className="w-[92vw] sm:w-96 p-4" aria-describedby={undefined}>
+        <SheetContent side="left" className="w-[92vw] sm:w-96 p-4" aria-describedby="mobile-menu-desc"> {/* <-- FIXED aria-describedby */}
           <div className="mb-4 text-lg font-semibold">Reception House</div>
           <SheetHeader className="sr-only">
             <SheetTitle>Site navigation</SheetTitle>
@@ -251,5 +262,3 @@ export function MenuMobile() {
     </div>
   )
 }
-
-export default MenuDesktop
