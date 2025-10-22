@@ -1,28 +1,39 @@
 import { Card } from "@/components/ui/card";
-import { Eye, Heart, Target, TrendingUp } from "lucide-react";
+import { ShieldCheck, Users, Rocket, MessageSquare, Lightbulb } from "lucide-react";
 
 const values = [
   {
-    icon: Heart,
-    title: "Compassion",
-    description: "We lead with empathy, treating everyone with dignity and respect.",
+    icon: ShieldCheck,
+    title: "Integrity",
+    description:
+      "Integrity means treating others with dignity and respect, even when no one is watching. We build strong relationships by being truthful, ethical, and dependable in all our interactions. Our actions reflect our values.",
   },
   {
-    icon: Target,
-    title: "Excellence",
-    description: "We pursue the highest standards in everything we do to maximize our impact.",
+    icon: Users,
+    title: "Inclusivity",
+    description:
+      "We create spaces where everyone feels welcomed, respected, and valued, regardless of their background or identity. By actively listening and removing barriers, we ensure all voices are heard. Inclusivity is about making room for everyone to thrive.",
   },
   {
-    icon: TrendingUp,
+    icon: Rocket,
+    title: "Empowerment",
+    description:
+      "Empowerment is about creating space for others to grow, make decisions, and learn from mistakes. We offer tools, encouragement, and trust — not control. When people feel empowered, they thrive.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Communication",
+    description:
+      "We communicate with clarity, consistency, and purpose. By adapting our approach to meet diverse needs, we ensure communication is inclusive, accessible, and easy to understand, so everyone can engage and contribute meaningfully.",
+  },
+  {
+    icon: Lightbulb,
     title: "Innovation",
-    description: "We embrace creative solutions and continuous improvement to better serve our community.",
-  },
-  {
-    icon: Eye,
-    title: "Transparency",
-    description: "We operate with honesty and accountability in all our actions and decisions.",
+    description:
+      "We create space for creativity and continuous improvement. Innovation happens when we explore new ideas, stumble, and grow — especially in fast-changing environments. Every misstep is a lesson that helps us evolve.",
   },
 ];
+
 
 
 export const CoreValues = () => {
@@ -36,13 +47,13 @@ export const CoreValues = () => {
             </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex flex-wrap flex-row justify-center gap-6">
             {values.map((value, index) => {
             const Icon = value.icon;
             return (
                 <Card
                 key={value.title}
-                className="p-6 text-center hover:shadow-soft transition-all duration-300 border-2 hover:border-[var(--rh-500)] animate-scale-in"
+                className="p-6 text-center hover:shadow-soft transition-all duration-300 border-2 hover:border-[var(--rh-500)] animate-scale-in min-w-40 max-w-80"
                 style={{ animationDelay: `${index * 100}ms` }}
                 >
                 <div className="w-16 h-16 bg-[var(--rh-500)] rounded-full flex items-center justify-center mx-auto mb-4">
