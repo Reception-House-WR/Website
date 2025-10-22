@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -7,9 +7,7 @@ import { Search, Users } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-
-const teamImageUrl =
-  "/assets/team-collaboration.jpg";
+const teamImageUrl = "/assets/team-collaboration.jpg";
 
 const departments = [
   "All",
@@ -26,7 +24,7 @@ const employees = [
     role: "Executive Director",
     department: "Leadership",
     email: "sarah@nonprofit.org",
-    imageUrl: "/avatars/sarah-johnson.jpg", 
+    imageUrl: "/avatars/sarah-johnson.jpg",
   },
   {
     name: "Michael Chen",
@@ -88,38 +86,42 @@ export default function OurPeople() {
       employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       employee.role.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDepartment =
-      selectedDepartment === "All" || employee.department === selectedDepartment;
+      selectedDepartment === "All" ||
+      employee.department === selectedDepartment;
     return matchesSearch && matchesDepartment;
   });
 
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[40vh] min-h-[300px] overflow-hidden" role="banner">
+      <section
+        className="relative h-[40vh] min-h-[300px] overflow-hidden"
+        role="banner"
+      >
         <div className="absolute inset-0 z-0 bg-[url('/assets/hero-photo2.jpg')] bg-cover bg-center">
-
-           <div 
+          <div
             className="absolute inset-0 "
-            style={{ background: 'var(--hero-gradient)' }}
+            style={{ background: "var(--hero-gradient)" }}
           />
           {/* Solid accent color overlay (now rh-teal) */}
-          
         </div>
         <div className="relative container mx-auto px-4 h-full flex items-center">
           <div className="max-w-2xl text-white animate-fade-in-up">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-black/30 backdrop-blur-sm rounded-full mb-4">
               <Users className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4"
-            // style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+            <h1
+              className="text-4xl md:text-5xl font-bold mb-4"
+              // style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
             >
               Our People
             </h1>
-            <p className="text-xl text-white/90"
-            // style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.6)' }}
+            <p
+              className="text-xl text-white/90"
+              // style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.6)' }}
             >
-              Meet the passionate individuals who make our mission possible every
-              day.
+              Meet the passionate individuals who make our mission possible
+              every day.
             </p>
           </div>
         </div>
@@ -148,7 +150,6 @@ export default function OurPeople() {
                 {departments.map((dept) => (
                   <Badge
                     key={dept}
-                    // We are removing the `variant` prop to take full control
                     className={cn(
                       // 1. Base styles for all badges
                       "px-4 py-1.5 rounded-full cursor-pointer transition-colors text-sm font-medium border",
@@ -162,8 +163,8 @@ export default function OurPeople() {
                     )}
                     onClick={() => setSelectedDepartment(dept)}
                   >
-                  {dept}
-                </Badge>
+                    {dept}
+                  </Badge>
                 ))}
               </div>
             </div>
@@ -187,7 +188,7 @@ export default function OurPeople() {
                         className="w-20 h-20 rounded-full object-cover"
                       />
                     ) : (
-                      // ELSE, show the initials (your original code):
+                      // ELSE, show the initials (name's first letters):
                       <div className="w-20 h-20 bg-[var(--rh-500)] rounded-full flex items-center justify-center">
                         <span className="text-primary-foreground text-2xl font-bold">
                           {employee.name
@@ -206,7 +207,7 @@ export default function OurPeople() {
                       <p className="text-muted-foreground font-medium mb-2">
                         {employee.role}
                       </p>
-                      {/* variant="secondary" now maps to the green tag */}
+                      {/* variant="secondary" maps to the green tag */}
                       <Badge
                         variant="secondary"
                         className="mb-3 font-medium border-0 bg-[var(--rh-yellow-200)]"
