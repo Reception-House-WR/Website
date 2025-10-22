@@ -12,9 +12,8 @@ export const VisionMission = () => {
                 </div>
                 <h2 className="text-3xl font-bold mb-4 text-foreground">Our Mission</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                To empower individuals and families through compassionate support, innovative programs, 
-                and community partnerships that create pathways to stability, growth, and opportunity. 
-                We believe every person deserves the resources and respect needed to build a thriving life.
+                    Guide and support refugees and newcomers with the resources, connections, and
+                    opportunities they need to build independent successful lives in Canada.
                 </p>
             </Card>
 
@@ -24,9 +23,8 @@ export const VisionMission = () => {
                 </div>
                 <h2 className="text-3xl font-bold mb-4 text-foreground">Our Vision</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                A world where every community member has access to the support, resources, and opportunities 
-                they need to thrive. We envision vibrant, resilient communities where compassion drives action 
-                and collective effort creates lasting, transformative change for generations to come.
+                    A future where every newcomer finds belonging, security, and the opportunity to build a
+                    fulfilling life.
                 </p>
             </Card>
         </div>
