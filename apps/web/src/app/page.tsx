@@ -1,10 +1,8 @@
-"use client";
-
-import { Campaign } from "./(home)/sections/Campaign";
-import { EventsCalendar } from "./(home)/sections/EventCalender";
-import { Hero } from "./(home)/sections/Hero";
-import { StoriesCarousel } from "./(home)/sections/StoriesCarousel";
-import { Partners } from "./(home)/sections/Partners";
+import { Campaign } from "../sections/home/Campaign";
+import { EventsCalendar } from "../sections/home/EventCalender";
+import { Hero } from "../sections/home/Hero";
+import { StoriesCarousel } from "../sections/home/StoriesCarousel";
+import { Partners } from "../sections/home/Partners";
 
 
 export default function Home() {

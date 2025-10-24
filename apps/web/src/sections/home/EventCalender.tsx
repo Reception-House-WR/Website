@@ -183,7 +183,7 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
   const modifiersStyles = {
     hasEvent: {
       fontWeight: 'bold',
-      position: 'relative' as const,
+      position: 'relative' as const
     },
   };
 
@@ -214,15 +214,18 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
 
         <div className="mx-auto max-w-6xl grid lg:grid-cols-[350px_1fr] gap-8 items-start">
           {/* Left Calendar */}
-          <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-shadow lg:sticky lg:top-4">
-            <CardContent className="p-4">
+          <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-shadow lg:sticky lg:top-4 ">
+            <CardContent className="p-4 flex flex-col items-center">
               <Calendar
                 mode="single"
                 selected={selectedDate}
                 onSelect={handleDateSelect}
                 modifiers={modifiers}
                 modifiersStyles={modifiersStyles}
-                className="rounded-md"
+                className=" relative rounded-md
+                before:content-[''] before:absolute before:inset-0
+                before:bg-[url('/assets/leaf.png')] before:bg-no-repeat before:bg-center before:bg-contain
+                before:opacity-15 before:pointer-events-none before:z-0"
                 modifiersClassNames={{
                   hasEvent: "relative after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:rounded-full after:bg-primary",
                 }}
@@ -320,19 +323,19 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
                     key={event.id}
                     className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
                   >
-                    <CardContent className="p-0">
+                    <CardContent className="p-0 sm:flex md:h-48">
                         {/* Event Image */}
-                        <div className="relative aspect-video md:aspect-auto md:h-48 overflow-hidden bg-muted">
+                        <div className="relative md:aspect-auto overflow-hidden bg-muted h-full ">
                           <img
                             src={'assets/stories/story-1.jpg'}
                             alt={event.image.alt}
                             loading="lazy"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
                         
                         {/* Event Details */}
-                        <div className="p-6 space-y-3">
+                        <div className="p-6 space-y-3 ">
                           <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                             {event.title}
                           </h3>
