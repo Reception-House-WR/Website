@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface HeroProps {
   lang: string;
@@ -47,10 +48,13 @@ export const Hero = ({ lang }: HeroProps) => {
           {t.subtitle}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          <Button  size="lg" className="group">
+          <Link href="/about/contact-us">
+          <Button  size="lg" className="group" > 
             {t.cta}
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            
           </Button>
+          </Link>
           <Button variant="outline" size="lg" className="bg-card/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-card/20">
             {t.learnMore}
           </Button>
