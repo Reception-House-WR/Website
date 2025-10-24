@@ -1,34 +1,4 @@
-
-import { MapPin, Phone, Mail, Clock, Car, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Address",
-    details: ["123 Community Drive", "Suite 200", "City, State 12345"],
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    details: ["Main: (555) 123-4567", "Fax: (555) 123-4568"],
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    details: ["info@nonprofit.org", "support@nonprofit.org"],
-  },
-  {
-    icon: Clock,
-    title: "Office Hours",
-    details: ["Monday - Friday: 9am - 5pm", "Saturday: 10am - 2pm", "Sunday: Closed"],
-  },
-];
-
-const socialLinks = [
-  { icon: Facebook, name: "Facebook", url: "#" },
-  { icon: Twitter, name: "Twitter", url: "#" },
-  { icon: Instagram, name: "Instagram", url: "#" },
-  { icon: Linkedin, name: "LinkedIn", url: "#" },
-];
+import { Mail } from "lucide-react";
 
 export default function HeroContactUs() {
     return (
