@@ -7,8 +7,9 @@ const page = () => {
   return (
     <div>
         <HeroContactUs />
-        <ContactBlock />  
+        <ContactBlock /> 
         <ContactUsMap />
+
     </div>
   
   )

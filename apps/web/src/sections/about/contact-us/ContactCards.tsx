@@ -5,22 +5,22 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Address",
-    details: ["123 Community Drive", "Suite 200", "City, State 12345"],
+    details: ["700 – 101 Frederick St, Kitchener","N2H 6R2", "ON, Canada"],
   },
   {
     icon: Phone,
     title: "Phone",
-    details: ["Main: (555) 123-4567", "Fax: (555) 123-4568"],
+    details: ["Main: (519)-743-0445", "Fax: (555) 123-4568"],
   },
   {
     icon: Mail,
     title: "Email",
-    details: ["info@nonprofit.org", "support@nonprofit.org"],
+    details: ["info@receptionhouse.ca"],
   },
   {
     icon: Clock,
     title: "Office Hours",
-    details: ["Monday - Friday: 9am - 5pm", "Saturday: 10am - 2pm", "Sunday: Closed"],
+    details: ["Monday - Friday: 9am - 4:30pm", "Saturday and Sunday: Closed"],
   },
 ];
 
@@ -36,7 +36,7 @@ export default function ContactCards() {
                 style={{ animationDelay: `${index * 100}ms` }}
                 >
                 <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-warm-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-[var(--rh-500)] rounded-lg flex items-center justify-center flex-shrink-0">
                     <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
