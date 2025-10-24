@@ -214,7 +214,7 @@ export const ContactForm = () => {
             </div>
           </Field>
 
-          <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+          <Button type="submit" size="lg" className="w-full bg-[var(--rh-500)]" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
 
