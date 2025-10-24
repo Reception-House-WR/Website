@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 export const VideoSection = () => {
+  const [playing, setPlaying] = useState(false)
   return (
     <div className="mb-20 animate-fade-in">
       <div className="text-center mb-8">
@@ -20,7 +21,6 @@ export const VideoSection = () => {
           {(() => {
             const videoId = 'wioQow3uayc'
             const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
-            const [playing, setPlaying] = useState(false)
 
             return playing ? (
               <iframe
