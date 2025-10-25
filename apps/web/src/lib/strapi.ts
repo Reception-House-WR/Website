@@ -3,15 +3,12 @@ import qs from "qs";
 
 // --- Strapi API Response Type Definitions ---
 
-// Represents image format details (e.g., thumbnail, small)
 interface StrapiImageFormat {
   url: string;
   width: number;
   height: number;
-  // Add other format properties if needed
 }
 
-// Represents the main Strapi media object structure
 interface StrapiImageData {
   id: number;
   name: string;
@@ -29,7 +26,7 @@ interface StrapiImageData {
   ext: string;
   mime: string;
   size: number;
-  url: string; // The main relative URL
+  url: string;
   previewUrl: string | null;
   provider: string;
   provider_metadata: any | null;
@@ -37,7 +34,6 @@ interface StrapiImageData {
   updatedAt: string;
 }
 
-// Represents the expected fields for the 'Page Hero' content type
 interface PageHeroDirectAttributes {
   id: number;
   title: string;
@@ -50,7 +46,6 @@ interface PageHeroDirectAttributes {
   documentId?: string;
 }
 
-// Represents the expected fields for the 'Employee' content type
 interface EmployeeDirectAttributes {
   id: number;
   name: string;
@@ -64,14 +59,32 @@ interface EmployeeDirectAttributes {
   documentId?: string;
 }
 
-// Represents a single item in the 'data' array (without 'attributes' nesting)
+interface TextSectionDirectAttributes {
+  title: string;
+  description: string; // Rich Text content
+  sectionIdentifier: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface TimelineEventDirectAttributes {
+  year: string;
+  title: string;
+  description: string; // Rich Text content
+  image: StrapiImageData | null;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
 interface StrapiDataItem<T> {
   id: number;
   documentId?: string;
   [key: string]: any;
 }
 
-// Represents the overall Strapi API response structure
 interface StrapiResponse<T> {
   data: (StrapiDataItem<T> & T)[] | null;
   meta?: {
@@ -87,14 +100,12 @@ interface StrapiResponse<T> {
 
 // --- Frontend Data Shape Definitions ---
 
-// Clean data structure for Hero components
 export interface HeroData {
   title: string;
   description: string;
   imageUrl: string;
 }
 
-// Clean data structure for Employee components
 export interface Employee {
   id: number;
   name: string;
@@ -103,13 +114,26 @@ export interface Employee {
   email: string;
   imageUrl: string | null;
 }
+
+export interface TextSectionData {
+  title: string;
+  description: string;
+}
+
+export interface TimelineEvent {
+  year: string;
+  title: string;
+  description: string;
+  imageUrl: string | null;
+  order: number;
+}
 // --- End Frontend Data Shapes ---
 
 // --- Utility Functions ---
 
 /**
  * Constructs the full URL for Strapi media assets.
- * @param mediaData - The Strapi media object.
+ * @param mediaData The Strapi media object.
  * @returns The full URL or null if invalid.
  */
 export function getStrapiMedia(
@@ -120,8 +144,7 @@ export function getStrapiMedia(
   }
   const url = mediaData.url;
   const strapiUrl =
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"; // Fallback for safety
-  // Prepend base URL if URL is relative
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
   return url.startsWith("/") ? `${strapiUrl}${url}` : url;
 }
 
@@ -129,9 +152,9 @@ export function getStrapiMedia(
  * Central helper function to fetch data from the Strapi API.
  * Handles base URL, authorization token, headers, error checking, and JSON parsing.
  * Uses Next.js default caching in production, 'no-store' in development.
- * @param path - The API endpoint path (e.g., '/api/employees').
- * @param queryObject - Query parameters object for qs.
- * @param fetchOptions - Optional additional `fetch` options.
+ * @param path The API endpoint path (e.g., '/api/employees').
+ * @param queryObject Query parameters object for qs.
+ * @param fetchOptions Optional additional `fetch` options.
  * @returns The parsed JSON response data or null on error.
  */
 async function fetchApi<T>(
@@ -143,11 +166,9 @@ async function fetchApi<T>(
     process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
   const strapiToken = process.env.STRAPI_API_TOKEN;
 
-  // Build query string
   const query = qs.stringify(queryObject, { encodeValuesOnly: true });
   const apiUrl = `${strapiUrl}${path}${query ? `?${query}` : ""}`;
 
-  // Set up headers
   const headers = new Headers({
     "Content-Type": "application/json",
     ...(fetchOptions.headers || {}),
@@ -156,36 +177,30 @@ async function fetchApi<T>(
     headers.set("Authorization", `Bearer ${strapiToken}`);
   }
 
-  // Set cache options based on environment
   const cacheOption =
-    process.env.NODE_ENV === "development" ? "no-store" : "default"; // 'default' allows Next.js caching
+    process.env.NODE_ENV === "development" ? "no-store" : "default";
 
   const options: RequestInit = {
     headers,
-    cache: fetchOptions.cache ?? cacheOption, // Allow overriding cache via fetchOptions
-    ...fetchOptions, // Merge other fetch options
+    cache: fetchOptions.cache ?? cacheOption,
+    ...fetchOptions,
   };
 
   try {
-    // Make the API request
-    // console.log(`Fetching Strapi (${path}):`, apiUrl); // Keep for debugging if needed, remove for production
     const res = await fetch(apiUrl, options);
 
-    // Handle HTTP errors
     if (!res.ok) {
       console.error(
         `Strapi fetch error (${path}):`,
         res.status,
-        await res.text() // Log error response body
+        await res.text()
       );
       return null;
     }
 
-    // Parse and return successful response
     const json: T = await res.json();
     return json;
   } catch (error) {
-    // Handle network or other fetch errors
     console.error(`Error fetching Strapi (${path}):`, error);
     return null;
   }
@@ -195,13 +210,13 @@ async function fetchApi<T>(
 
 /**
  * Fetches hero content for a specific page identifier.
- * @param identifier - The unique identifier for the page hero entry.
+ * @param identifier The unique identifier for the page hero entry.
  * @returns HeroData object or null.
  */
 export async function fetchPageHero(
   identifier: string
 ): Promise<HeroData | null> {
-  const path = "/api/our-people-heroes"; // Specific endpoint for heroes
+  const path = "/api/page-heroes"; // NOTE: Using specific endpoint name from previous steps
   const params = {
     filters: { pageIdentifier: { $eq: identifier } },
     populate: { backgroundImage: true },
@@ -213,19 +228,17 @@ export async function fetchPageHero(
   );
 
   if (!json || !json.data || json.data.length === 0) {
-    console.warn(`No page hero found in Strapi for identifier: ${identifier}`);
+    console.warn(`No page hero found for identifier: ${identifier}`);
     return null;
   }
 
   const heroAttributes = json.data[0];
-
-  // Handle potentially missing image gracefully
   const imageUrl = getStrapiMedia(heroAttributes.backgroundImage);
 
   return {
-    title: heroAttributes.title || "Default Title", // Provide fallbacks
+    title: heroAttributes.title || "Default Title",
     description: heroAttributes.description || "Default description.",
-    imageUrl: imageUrl || "/assets/default-hero.jpg", // Use fallback image
+    imageUrl: imageUrl || "/assets/default-hero.jpg", // Fallback image
   };
 }
 
@@ -237,8 +250,8 @@ export async function fetchPageHero(
 export async function fetchDepartments(): Promise<string[]> {
   const path = "/api/employees";
   const params = {
-    fields: ["department"], // Only fetch the department field
-    pagination: { pageSize: 1000 }, // Fetch a large number to likely get all unique departments
+    fields: ["department"],
+    pagination: { pageSize: 1000 }, // Fetch enough employees to get all unique departments
   };
 
   const json = await fetchApi<StrapiResponse<{ department: string }>>(
@@ -250,29 +263,28 @@ export async function fetchDepartments(): Promise<string[]> {
     console.warn(
       "No department data returned from Strapi for fetchDepartments."
     );
-    return ["All"]; // Return default on failure
+    return ["All"];
   }
 
-  // Process the department names
   const departmentNames = json.data
     .map((item) => item.department)
-    .filter((dept): dept is string => !!dept); // Remove null/undefined
+    .filter((dept): dept is string => !!dept);
 
   const uniqueDepartments = Array.from(new Set(departmentNames)).sort();
 
-  return ["All", ...uniqueDepartments]; // Prepend "All"
+  return ["All", ...uniqueDepartments];
 }
 
 /**
  * Fetches the list of all published employees, sorted by name.
- * @returns Array of Employee objects or null on error.
+ * @returns Array of Employee objects or null on error (returns empty array if no data found).
  */
 export async function fetchEmployees(): Promise<Employee[] | null> {
   const path = "/api/employees";
   const params = {
-    populate: { imageUrl: true }, // Populate the image field
-    sort: ["name:asc"], // Sort by name
-    pagination: { pageSize: 100 }, // Adjust pageSize if more than 100 employees expected
+    populate: { imageUrl: true },
+    sort: ["name:asc"],
+    pagination: { pageSize: 100 }, // Adjust if expecting more employees
   };
 
   const json = await fetchApi<StrapiResponse<EmployeeDirectAttributes>>(
@@ -280,23 +292,92 @@ export async function fetchEmployees(): Promise<Employee[] | null> {
     params
   );
 
-  if (!json || !json.data) {
-    console.warn("No employee data returned from Strapi.");
-    return []; // Return empty array if fetch fails or no data
+  if (!json) return null; // Fetch error occurred in fetchApi
+  if (!json.data) {
+    console.warn("No employee data array returned from Strapi.");
+    return []; // Return empty array if data field is missing/null
   }
 
-  // Map Strapi data to the clean Employee type
   const employees: Employee[] = json.data.map((item) => {
     const imageUrl = getStrapiMedia(item.imageUrl);
     return {
       id: item.id,
-      name: item.name || "Unknown", // Provide fallbacks
+      name: item.name || "Unknown",
       role: item.role || "Unknown",
       department: item.department || "Unknown",
       email: item.email || "Unknown",
-      imageUrl: imageUrl, // Will be null if image missing or getStrapiMedia fails
+      imageUrl: imageUrl,
     };
   });
 
-  return employees; // Return the mapped array
+  return employees;
+}
+
+/**
+ * Fetches a specific Text Section entry based on its identifier.
+ * @param identifier The unique identifier for the text section entry.
+ * @returns TextSectionData object or null.
+ */
+export async function fetchTextSection(
+  identifier: string
+): Promise<TextSectionData | null> {
+  const path = "/api/text-sections";
+  const params = {
+    filters: { sectionIdentifier: { $eq: identifier } },
+  };
+
+  const json = await fetchApi<StrapiResponse<TextSectionDirectAttributes>>(
+    path,
+    params
+  );
+
+  if (!json || !json.data || json.data.length === 0) {
+    console.warn(`No text section found for identifier: ${identifier}`);
+    return null;
+  }
+
+  const sectionAttributes = json.data[0];
+
+  return {
+    title: sectionAttributes.title || `Title for ${identifier}`,
+    description:
+      sectionAttributes.description || `Description for ${identifier}`,
+  };
+}
+
+/**
+ * Fetches all published Timeline Events, sorted by the 'order' field.
+ * @returns Array of TimelineEvent objects or null on error (returns empty array if no data found).
+ */
+export async function fetchTimelineEvents(): Promise<TimelineEvent[] | null> {
+  const path = "/api/timeline-events";
+  const params = {
+    sort: ["order:asc"],
+    populate: { image: true },
+    pagination: { pageSize: 50 }, // Adjust if expecting more events
+  };
+
+  const json = await fetchApi<StrapiResponse<TimelineEventDirectAttributes>>(
+    path,
+    params
+  );
+
+  if (!json) return null; // Fetch error occurred in fetchApi
+  if (!json.data) {
+    console.warn("No timeline event data array returned from Strapi.");
+    return []; // Return empty array if data field is missing/null
+  }
+
+  const timelineEvents: TimelineEvent[] = json.data.map((item) => {
+    const imageUrl = getStrapiMedia(item.image);
+    return {
+      year: item.year || "Unknown Year",
+      title: item.title || "Untitled Event",
+      description: item.description || "",
+      imageUrl: imageUrl,
+      order: item.order || 0,
+    };
+  });
+
+  return timelineEvents;
 }

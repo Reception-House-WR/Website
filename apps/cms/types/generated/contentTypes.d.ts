@@ -464,40 +464,12 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiHeroHero extends Struct.SingleTypeSchema {
-  collectionName: 'heroes';
+export interface ApiPageHeroPageHero extends Struct.CollectionTypeSchema {
+  collectionName: 'page_heroes';
   info: {
-    displayName: 'hero';
-    pluralName: 'heroes';
-    singularName: 'hero';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images' | 'files'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::hero.hero'> &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiOurPeopleHeroOurPeopleHero
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'our_people_heroes';
-  info: {
-    displayName: 'our people hero';
-    pluralName: 'our-people-heroes';
-    singularName: 'our-people-hero';
+    displayName: 'Page Hero';
+    pluralName: 'page-heroes';
+    singularName: 'page-hero';
   };
   options: {
     draftAndPublish: true;
@@ -512,10 +484,74 @@ export interface ApiOurPeopleHeroOurPeopleHero
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::our-people-hero.our-people-hero'
+      'api::page-hero.page-hero'
     > &
       Schema.Attribute.Private;
-    pageIdentifier: Schema.Attribute.String &
+    pageIdentifier: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTextSectionTextSection extends Struct.CollectionTypeSchema {
+  collectionName: 'text_sections';
+  info: {
+    displayName: 'Text Section ';
+    pluralName: 'text-sections';
+    singularName: 'text-section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::text-section.text-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sectionIdentifier: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTimelineEventTimelineEvent
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'timeline_events';
+  info: {
+    displayName: 'Timeline Event';
+    pluralName: 'timeline-events';
+    singularName: 'timeline-event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::timeline-event.timeline-event'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
@@ -523,6 +559,7 @@ export interface ApiOurPeopleHeroOurPeopleHero
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    year: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1037,8 +1074,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::employee.employee': ApiEmployeeEmployee;
-      'api::hero.hero': ApiHeroHero;
-      'api::our-people-hero.our-people-hero': ApiOurPeopleHeroOurPeopleHero;
+      'api::page-hero.page-hero': ApiPageHeroPageHero;
+      'api::text-section.text-section': ApiTextSectionTextSection;
+      'api::timeline-event.timeline-event': ApiTimelineEventTimelineEvent;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
