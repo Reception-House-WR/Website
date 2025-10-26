@@ -45,9 +45,10 @@ export default function Services(){
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mb-12 my-8">
           {serviceHighlights.map((service, index) => (
-            <div 
+            <a
               key={index}
-              className="group relative h-64 rounded-xl overflow-hidden cursor-pointer animate-fade-in-up"
+              href={service.href} // ej: "#health-and-wellbeing"
+              className="group relative h-64 rounded-xl overflow-hidden cursor-pointer animate-fade-in-up block"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Background Image */}
@@ -72,7 +73,7 @@ export default function Services(){
                   {service.title}
                 </h3>
               </div>
-            </div>
+            </a>
           ))}
         </div>
     );

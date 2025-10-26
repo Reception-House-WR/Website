@@ -121,6 +121,8 @@
     var(--rh-green-500),
     var(--rh-500)
   );
+
+  
 }
 
 .dark {
@@ -169,4 +171,8 @@
 /* Make paragraphs inside .markdown have the same spacing */
 .markdown p {
   margin-bottom: 1.5rem; /* ~mb-6 */
+}
+
+html {
+  scroll-behavior: smooth;
 }

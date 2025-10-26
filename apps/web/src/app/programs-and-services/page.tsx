@@ -1,5 +1,6 @@
 import Programs from "@/sections/programs-and-services/overview/programs"
 import Services from "@/sections/programs-and-services/overview/Services"
+import HealthcareSection from "@/sections/programs-and-services/health/Healthcare"
 import ServicesHero from "@/sections/programs-and-services/overview/ServicesHero"
 
 const page = () => {
@@ -10,6 +11,7 @@ const page = () => {
         <ServicesHero />
         <Services />
         <Programs />
+        <HealthcareSection />
     </div>
   
   )
