@@ -2,9 +2,9 @@ import Programs from "@/sections/programs-and-services/overview/programs"
 import Services from "@/sections/programs-and-services/overview/Services"
 import HealthcareSection from "@/sections/programs-and-services/health/Healthcare"
 import ServicesHero from "@/sections/programs-and-services/overview/ServicesHero"
+import YouthSection from "@/sections/programs-and-services/children/YouthSection"
 
-const page = () => {
-
+export default function Home(){
   return (
 
     <div>
@@ -12,9 +12,9 @@ const page = () => {
         <Services />
         <Programs />
         <HealthcareSection />
+        <YouthSection />
     </div>
   
   )
 }
 
-export default page
