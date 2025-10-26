@@ -35,7 +35,7 @@ const programs = [
 export const HousingSection = () => {
   return (
     <>
-    <section className="py-10 bg-gradient-warm">
+    <section className="py-10 bg-gradient-warm" id="temporary-accommodation">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-foreground">
             Housing in Waterloo Region
