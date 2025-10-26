@@ -1,8 +1,13 @@
+// app/events/EventCalendar.tsx
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
 
+// --- Types ---
 interface Event {
   id: number;
   title: string;
@@ -14,56 +19,66 @@ interface EventCalendarProps {
   events: Event[];
 }
 
+// --- Calendar Sidebar Component ---
 export function EventCalendar({ events }: EventCalendarProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  // Convert event dates to Date objects for the calendar
+  // Convert event date strings to Date objects
   const eventDates = events
     .filter((event) => event.category === "upcoming")
-    .map((event) => new Date(event.date));
+    .map((event) => {
+      const date = new Date(event.date);
+      date.setUTCDate(date.getUTCDate() + 1); // Adjust timezone offset
+      return date;
+    });
 
-  // Get events for selected date
+  // Get events for the selected date
   const eventsOnSelectedDate = selectedDate
-    ? events.filter((event) => {
-        const eventDate = new Date(event.date);
-        return (
-          eventDate.getDate() === selectedDate.getDate() &&
-          eventDate.getMonth() === selectedDate.getMonth() &&
-          eventDate.getFullYear() === selectedDate.getFullYear()
-        );
-      })
+    ? events.filter(
+        (event) => event.date === format(selectedDate, "yyyy-MM-dd")
+      )
     : [];
 
   return (
-    <Card>
+    <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-shadow lg:sticky lg:top-4">
       <CardHeader>
         <CardTitle className="text-xl text-center">
           Upcoming Events Calendar
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+
+      <CardContent className="space-y-4 p-4 flex flex-col items-center">
+        {/* Calendar with event markers */}
         <Calendar
           mode="single"
           selected={selectedDate}
           onSelect={setSelectedDate}
-          className="rounded-md border mx-auto"
+          className="relative rounded-md border mx-auto scale-105 my-3
+            before:content-[''] before:absolute before:inset-0
+            before:bg-[url('/assets/leaf.png')] before:bg-no-repeat before:bg-center before:bg-contain
+            before:opacity-15 before:pointer-events-none before:z-0"
           modifiers={{
             eventDay: eventDates,
           }}
-          modifiersStyles={{
-            eventDay: {
-              fontWeight: "bold",
-              backgroundColor: "hsl(var(--primary))",
-              color: "hsl(var(--primary-foreground))",
-              borderRadius: "0.5rem",
-            },
+          modifiersClassNames={{
+            eventDay:
+              "relative after:content-[''] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-[var(--rh-500)] aria-selected:after:hidden",
           }}
         />
 
+        {/* Legend */}
+        <div className="mt-4 pt-4 border-t border-border w-full">
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <div className="h-1.5 w-1.5 rounded-full bg-[var(--rh-500)]"></div>
+              <span>Scheduled Events</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Events for the selected date */}
         {selectedDate && eventsOnSelectedDate.length > 0 && (
-          <div className="space-y-2 pt-2">
+          <div className="space-y-2 pt-2 w-full">
             <h4 className="font-semibold text-sm text-muted-foreground">
               Events on{" "}
               {selectedDate.toLocaleDateString("en-US", {
@@ -88,6 +103,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
           </div>
         )}
 
+        {/* No events for selected date */}
         {selectedDate && eventsOnSelectedDate.length === 0 && (
           <div className="text-center py-4">
             <p className="text-sm text-muted-foreground">

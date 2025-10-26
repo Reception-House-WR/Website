@@ -1,5 +1,6 @@
 // src/lib/strapi.ts
 import qs from "qs";
+import { unstable_noStore as noStore } from "next/cache";
 
 // --- Strapi API Response Type Definitions ---
 
@@ -79,6 +80,20 @@ interface TimelineEventDirectAttributes {
   publishedAt: string;
 }
 
+// Add this interface after TimelineEventDirectAttributes
+interface EventDirectAttributes {
+  id: number;
+  title: string;
+  description: string; // Rich Text content
+  date: string; // Strapi Date field
+  time: string;
+  location: string;
+  image: StrapiImageData | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
 interface StrapiDataItem<T> {
   id: number;
   documentId?: string;
@@ -126,6 +141,17 @@ export interface TimelineEvent {
   description: string;
   imageUrl: string | null;
   order: number;
+}
+
+// Add this interface after TimelineEvent
+export interface Event {
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  location: string;
+  image: string | null;
+  category: "upcoming" | "past";
 }
 // --- End Frontend Data Shapes ---
 
@@ -380,4 +406,56 @@ export async function fetchTimelineEvents(): Promise<TimelineEvent[] | null> {
   });
 
   return timelineEvents;
+}
+
+/**
+ * Fetches all published Events, sorted by date (newest first).
+ * Automatically calculates the 'category' (upcoming/past).
+ * @returns Array of Event objects or null on error (returns empty array if no data found).
+ */
+export async function fetchEvents(): Promise<Event[] | null> {
+  const path = "/api/events";
+  const params = {
+    sort: ["date:desc"],
+    populate: { image: true },
+    pagination: { pageSize: 50 }, // Adjust if expecting more events
+  };
+
+  const json = await fetchApi<StrapiResponse<EventDirectAttributes>>(
+    path,
+    params,
+    {
+      // Ensure events are always fresh, overriding the default cache
+      cache: "no-store",
+    }
+  );
+
+  if (!json) return null; // Fetch error occurred in fetchApi
+  if (!json.data) {
+    console.warn("No event data array returned from Strapi.");
+    return []; // Return empty array if data field is missing/null
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Normalize today's date for comparison
+
+  const events: Event[] = json.data.map((item) => {
+    const imageUrl = getStrapiMedia(item.image);
+
+    // Determine category
+    const eventDate = new Date(item.date);
+    const category = eventDate < today ? "past" : "upcoming";
+
+    return {
+      title: item.title || "Untitled Event",
+      description: item.description || "",
+      date: item.date, // Pass the "YYYY-MM-DD" string directly
+      time: item.time || "TBD",
+      location: item.location || "TBD",
+      image: imageUrl,
+      category: category,
+    };
+  });
+
+  return events;
 }
