@@ -4,11 +4,11 @@ export default function ServicesHero(){
         <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
             <img 
-            src="assets/images/services-hero.jpg"
+            src="assets/hero-community.jpg"
             alt="Diverse community members engaging in welcoming activities" 
             className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--rh-500)]/90 via-[var(--rh-500)]/70 to-transparent"></div>
         </div>
 
         {/* Content */}
