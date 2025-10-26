@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "text_sections",
+  "info": {
+    "singularName": "text-section",
+    "pluralName": "text-sections",
+    "displayName": "Text Section "
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "sectionIdentifier": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

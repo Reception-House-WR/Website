@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react" 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -13,15 +13,26 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
   NavigationMenuViewport,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 
 // --- IMPORTS FOR MOBILE MENU ---
-import { Sheet, SheetContent, SheetTrigger,
-  SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet" 
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion" 
-import { Button } from "@/components/ui/button" 
-import { Menu } from "lucide-react" 
-import { ListItem } from "./Listitem" 
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import { ListItem } from "./Listitem";
 
 const NAV = [
   { label: "Home", href: "/" },
@@ -32,7 +43,7 @@ const NAV = [
     children: [
       {
         label: "Our People",
-        href: "/about/our-people", 
+        href: "/about/our-people",
         description: "Meet the team behind Reception House.",
       },
       {
@@ -117,14 +128,14 @@ const NAV = [
   { label: "Stories", href: "/stories" },
   { label: "Donate", href: "/donate" },
   { label: "Media Room", href: "/media" },
-]
+];
 
 /* ====================== Desktop  ====================== */
 export function MenuDesktop() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const isActive = (href: string) =>
-    pathname === href || pathname?.startsWith(href + "/")
+    pathname === href || pathname?.startsWith(href + "/");
 
   const ItemInner = (item: (typeof NAV)[number]) => {
     if (!item.children) {
@@ -133,33 +144,44 @@ export function MenuDesktop() {
           <Link
             href={item.href}
             className={cn(
-              "py-2 px-2 text-sm rounded-md", 
+              "py-2 px-2 text-sm rounded-md",
               "hover:!bg-[var(--rh-500)] hover:text-white",
-              "data-[active=true]:bg-gray-900 data-[active=true]:text-white",
+              "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
             )}
           >
             {item.label}
           </Link>
         </NavigationMenuLink>
-      )
+      );
     }
 
     return (
       <>
-        <NavigationMenuTrigger className="text-sm font-normal px-2 rounded-md bg-transparent
+        <NavigationMenuTrigger
+          className="text-sm font-normal px-2 rounded-md bg-transparent
              hover:text-white hover:bg-[var(--rh-500)] 
              data-[state=open]:!bg-[var(--rh-500)] data-[state=open]:!text-white 
-             transition-colors duration-200">
+             transition-colors duration-200"
+        >
           {item.label}
         </NavigationMenuTrigger>
         <NavigationMenuContent>
           <div className="p-4 md:w-[600px] lg:w-[720px]">
             <ul className="grid gap-2 sm:grid-cols-2">
-              <ListItem title="Overview" href={item.href} className="text-[var(--rh-500)]">
+              <ListItem
+                title="Overview"
+                href={item.href}
+                className="text-[var(--rh-500)]"
+              >
                 A quick summary of this section.
               </ListItem>
               {item.children.map((sub) => (
-                <ListItem key={sub.href} title={sub.label} href={sub.href} className="text-[var(--rh-500)]">
+                <ListItem
+                  key={sub.href}
+                  title={sub.label}
+                  href={sub.href}
+                  className="text-[var(--rh-500)]"
+                >
                   {sub.description}
                 </ListItem>
               ))}
@@ -167,12 +189,12 @@ export function MenuDesktop() {
           </div>
         </NavigationMenuContent>
       </>
-    )
-  }
+    );
+  };
 
   return (
-    // UPDATED: Changed md:block to lg:block to match Toolbar.tsx
-    <div className="hidden lg:block"> 
+    // lg:block to match Toolbar.tsx
+    <div className="hidden lg:block">
       <NavigationMenu className="relative">
         <NavigationMenuList className="gap-1">
           {NAV.map((item) => (
@@ -185,17 +207,15 @@ export function MenuDesktop() {
         <NavigationMenuViewport className="left-0 right-0" />
       </NavigationMenu>
     </div>
-  )
+  );
 }
 
-
 /* ====================== Mobile ====================== */
-// Imports are already at the top
 
 export function MenuMobile() {
   return (
-    // UPDATED: Changed min-[1000px]:hidden to lg:hidden to match Toolbar.tsx
-    <div className="block lg:hidden"> 
+    // lg:hidden to match Toolbar.tsx
+    <div className="block lg:hidden">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" aria-label="Open menu">
@@ -203,7 +223,13 @@ export function MenuMobile() {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side="left" className="w-[92vw] sm:w-96 p-4" aria-describedby="mobile-menu-desc"> {/* <-- FIXED aria-describedby */}
+        <SheetContent
+          side="left"
+          className="w-[92vw] sm:w-96 p-4"
+          aria-describedby="mobile-menu-desc"
+        >
+          {" "}
+          {/* <-- aria-described by */}
           <div className="mb-4 text-lg font-semibold">Reception House</div>
           <SheetHeader className="sr-only">
             <SheetTitle>Site navigation</SheetTitle>
@@ -211,7 +237,6 @@ export function MenuMobile() {
               Browse and open sections and pages of Reception House.
             </SheetDescription>
           </SheetHeader>
-
           <nav className="space-y-2">
             {NAV.map((item) =>
               item.children ? (
@@ -255,5 +280,5 @@ export function MenuMobile() {
         </SheetContent>
       </Sheet>
     </div>
-  )
+  );
 }
