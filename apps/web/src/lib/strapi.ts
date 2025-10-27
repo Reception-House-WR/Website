@@ -30,7 +30,7 @@ interface StrapiImageData {
   url: string;
   previewUrl: string | null;
   provider: string;
-  provider_metadata: any | null;
+  provider_metadata: unknown | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -97,7 +97,7 @@ interface EventDirectAttributes {
 interface StrapiDataItem<T> {
   id: number;
   documentId?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface StrapiResponse<T> {
@@ -185,7 +185,7 @@ export function getStrapiMedia(
  */
 async function fetchApi<T>(
   path: string,
-  queryObject: Record<string, any> = {},
+  queryObject: Record<string, unknown> = {},
   fetchOptions: RequestInit = {}
 ): Promise<T | null> {
   const strapiUrl =
