@@ -1,4 +1,5 @@
 // app/events/page.tsx
+export const dynamic = "force-dynamic";
 
 import {
   fetchPageHero,
