@@ -1,5 +1,5 @@
 import { Users } from "lucide-react"; // Icon for Hero section
-import TeamDirectory from "./TeamDirectory"; // Client Component for interactive directory
+import TeamDirectory from "../../../components/common/TeamDirectory"; // Client Component for interactive directory
 import {
   fetchPageHero,
   type HeroData,
