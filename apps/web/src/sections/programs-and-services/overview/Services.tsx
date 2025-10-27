@@ -37,6 +37,13 @@ const serviceHighlights = [
       title: "Integration Skills Training",
       color: "secondary", 
       href: "#integration-skills-training"
+    }, 
+    {
+      icon: BookOpen,
+      image: "assets/services/service-integration-training.jpg",
+      title: "Services en Français",
+      color: "secondary", 
+      href: "#french-services"
     }
   ];
 
