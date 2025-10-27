@@ -107,31 +107,31 @@ const HealthcareSection = () => {
 
           {/* Image Carousel */}
         <div className="relative animate-scale-in lg:sticky lg:top-8">
-        <div className="rounded-2xl overflow-hidden shadow-medium">
-            <Carousel className="relative w-full">
-                {/* allow slides to extend without clipping the rounded wrapper */}
-                <CarouselContent className="overflow-visible">
-                {carouselImages.map((image, index) => (
-                    <CarouselItem key={index} className="p-0">
-                    <div className="relative w-full h-[500px]">
-                        <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        sizes="100vw"
-                        className="object-cover"
-                        priority={index === 0}
-                        />
-                    </div>
-                    </CarouselItem>
-                ))}
-                </CarouselContent>
+          <div className="rounded-2xl overflow-hidden shadow-medium">
+              <Carousel className="relative w-full">
+                  {/* allow slides to extend without clipping the rounded wrapper */}
+                  <CarouselContent className="overflow-visible">
+                  {carouselImages.map((image, index) => (
+                      <CarouselItem key={index} className="p-0">
+                      <div className="relative w-full h-[500px]">
+                          <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          sizes="100vw"
+                          className="object-cover"
+                          priority={index === 0}
+                          />
+                      </div>
+                      </CarouselItem>
+                  ))}
+                  </CarouselContent>
 
-                {/* arrows aligned to the image edges */}
-                <CarouselPrevious className="!absolute left-4 top-1/2 -translate-y-1/2 z-10" />
-                <CarouselNext className="!absolute right-4 top-1/2 -translate-y-1/2 z-10" />
-            </Carousel>
-        </div>
+                  {/* arrows aligned to the image edges */}
+                  <CarouselPrevious className="!absolute left-4 top-1/2 -translate-y-1/2 z-10" />
+                  <CarouselNext className="!absolute right-4 top-1/2 -translate-y-1/2 z-10" />
+              </Carousel>
+          </div>
 
 
             <div className="mt-6 bg-card p-6 rounded-xl shadow-medium border border-border">
