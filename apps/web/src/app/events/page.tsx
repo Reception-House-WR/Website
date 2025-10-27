@@ -13,7 +13,7 @@ const defaultHeroData: HeroData = {
   title: "Community Events",
   description:
     "Join us in our upcoming events and community activities. Your participation helps us build a more welcoming community for newcomers.",
-  imageUrl: "/assets/hero-photo2.jpg",
+  imageUrl: "/assets/timeline/timeline5.jpg",
 };
 
 const defaultEvents: Event[] = [];
