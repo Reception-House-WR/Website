@@ -2,7 +2,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 const images = [
     { 
-        src: "assets/skills/1.png", alt: "Skills Training Image 1"
+        src: "/assets/skills/1.png", alt: "Skills Training Image 1"
     }, 
     {
         src: "/assets/skills/2.png", alt: "Skills Training Image 2"

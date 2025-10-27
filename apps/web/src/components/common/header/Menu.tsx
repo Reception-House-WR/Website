@@ -70,32 +70,32 @@ const NAV = [
     children: [
       {
         label: "Healthcare & Wellbeing",
-        href: "/programs-and-services#healthcare-wellbeing",
+        href: "/programs-and-services/healthcare-wellbeing",
         description: "Primary care access, mental health and wellness.",
       },
       {
         label: "Temporary Accommodation & Housing",
-        href: "/programs-and-services#housing",
+        href: "/programs-and-services/housing",
         description: "Short-term stays and pathways to permanent housing.",
       },
       {
         label: "Children & Youth",
-        href: "/programs-and-services#children-youth",
+        href: "/programs-and-services/children-youth",
         description: "Support for school readiness and youth programs.",
       },
       {
         label: "Employment Services",
-        href: "/programs-and-services#employment",
+        href: "/programs-and-services/employment",
         description: "Job search help, coaching and employer links.",
       },
       {
         label: "Integration Skills Training",
-        href: "/programs-and-services#integration-skills",
+        href: "/programs-and-services/integration-skills",
         description: "Language and life skills for newcomers.",
       },
       {
         label: "French Services",
-        href: "/programs-and-services#french-services",
+        href: "/programs-and-services/french-services",
         description: "Services en français pour les nouveaux arrivants.",
       },
     ],

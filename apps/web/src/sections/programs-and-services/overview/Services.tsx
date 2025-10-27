@@ -8,49 +8,49 @@ const serviceHighlights = [
       image: "assets/services/service-health-wellbeing.jpg",
       title: "Health and Wellbeing Support",
       color: "primary", 
-      href: "#health-and-wellbeing"
+      href: "programs-and-services/healthcare-wellbeing"
     },
     {
       icon: Building2,
       image: "assets/services/service-housing-support.jpg",
       title: "Temporary Accommodation and Housing Support",
       color: "secondary", 
-      href: "#temporary-accommodation"
+      href: "programs-and-services/housing"
     },
     {
       icon: GraduationCap,
       image: "assets/services/service-children-youth.jpg",
       title: "Children and Youth",
       color: "accent", 
-      href: "#children-and-youth"
+      href: "programs-and-services/children-youth"
     },
     {
       icon: Briefcase,
       image: "assets/services/service-employment.jpg",
       title: "Employment Services",
       color: "primary", 
-      href: "#employment-services"
+      href: "programs-and-services/employment"
     },
     {
       icon: BookOpen,
       image: "assets/services/service-integration-training.jpg",
       title: "Integration Skills Training",
       color: "secondary", 
-      href: "#integration-skills-training"
+      href: "programs-and-services/integration-skills"
     }, 
     {
       icon: BookOpen,
       image: "assets/services/service-integration-training.jpg",
       title: "Services en Français",
       color: "secondary", 
-      href: "#french-services"
+      href: "programs-and-services/french-services"
     }
   ];
 
 export default function Services(){
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mb-12 my-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-12 my-8">
           {serviceHighlights.map((service, index) => (
             <a
               key={index}
