@@ -43,19 +43,19 @@ const EventCard = ({ event }: { event: Event }) => {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <Card className="overflow-hidden">
+      <Card className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0">
         <CardContent className="p-0 md:flex h-full">
           {/* Event Image Section */}
-          <div className="w-full h-48 md:h-auto md:w-1/3 relative bg-muted/50 flex-shrink-0">
+          <div className="w-full h-48 md:h-auto md:w-1/3  bg-muted/50 flex-shrink-0">
             {event.image ? (
               <img
                 src={event.image}
                 alt={event.title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
             ) : (
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center p-6">
+              <div className=" w-full h-full flex items-center justify-center p-6">
                 <div className="w-24 h-24 bg-muted-foreground/10 rounded-full flex items-center justify-center">
                   <CalendarIcon className="w-10 h-10 text-muted-foreground/50" />
                 </div>
