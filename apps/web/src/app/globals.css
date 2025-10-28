@@ -121,8 +121,6 @@
     var(--rh-green-500),
     var(--rh-500)
   );
-
-  
 }
 
 .dark {
@@ -176,5 +174,10 @@
 html {
   scroll-behavior: smooth;
 }
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
