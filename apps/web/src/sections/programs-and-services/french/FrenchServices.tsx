@@ -125,7 +125,7 @@ const additionalServices: AdditionalService[] = [
 
 const FrenchServicesSection = () => {
   return (
-    <section className="py-20 bg-[var(--rh-yellow-50)]">
+    <section className="py-10">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
