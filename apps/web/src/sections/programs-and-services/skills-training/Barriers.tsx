@@ -18,7 +18,7 @@ const barriers = [
 
 export default function Barriers() {
   return (
-    <section className="py-20">
+    <section >
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="mb-16">
           <h2 className="text-4xl font-bold mb-8 text-foreground text-center">
@@ -42,6 +42,15 @@ export default function Barriers() {
           </div>
         </div>
       </div>
+      <div >
+            <h2 className="text-4xl font-bold text-foreground text-center">
+              How We Help
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+              Reception House provides comprehensive training and support programs designed to help newcomers 
+              overcome these barriers and successfully integrate into their new community.
+            </p>
+        </div>
     </section>
   );
 }

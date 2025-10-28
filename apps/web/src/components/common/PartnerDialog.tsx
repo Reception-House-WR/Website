@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,9 @@ export const PartnerDialog = ({ type, buttonText, title, description }: PartnerD
     const data = Object.fromEntries(formData);
 
     try {
-      const res = await fetch("/api/housing", {
+      const endpoint = type === "landlord" ? "/api/housing" : "/api/employment";
+      
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
