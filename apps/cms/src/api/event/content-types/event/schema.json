@@ -34,6 +34,13 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "isPaid": {
+      "type": "boolean",
+      "default": false
+    },
+    "eventbriteUrl": {
+      "type": "string"
     }
   }
 }

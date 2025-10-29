@@ -21,7 +21,28 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
+  email: z.email(),
+  phone: z
+    .string()
+    .optional()
+    .refine(
+      (val) => {
+        // If the field is empty (it's optional), it's valid.
+        if (!val) return true;
+
+        // Strip all non-digit characters
+        const digits = val.replace(/\D/g, "");
+
+        // Check if the remaining digits are within a reasonable length
+        // (e.g., at least 10 for a standard number)
+        return digits.length >= 10 && digits.length <= 15;
+      },
+      {
+        // This message will show if the refinement fails
+        message:
+          "Phone number is not valid. Please enter a valid phone number.",
+      }
+    ),
   attendees: z.number().min(1, "You must have at least 1 attendee."),
   message: z.string().optional(),
   newsletter: z.boolean().optional(),
@@ -39,6 +60,7 @@ export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
     defaultValues: {
       fullName: "",
       email: "",
+      phone: "",
       attendees: 1,
       message: "",
       newsletter: false,
@@ -75,6 +97,23 @@ export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
               <FormLabel>Email Address *</FormLabel>
               <FormControl>
                 <Input placeholder="your.email@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number </FormLabel>
+              <FormControl>
+                <Input
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

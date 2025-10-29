@@ -1,133 +1,10 @@
-// app/events/EventsPageClient.tsx
-
 "use client";
-import { useState } from "react";
-import { Calendar as CalendarIcon, Clock, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
+
+import { Calendar as CalendarIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import { EventCalendar } from "./EventCalendar";
 import { type HeroData, type Event } from "@/lib/strapi";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { RSVPForm } from "./RSVPForm";
-
-// --- Helper: Format date for display ---
-function formatDisplayDate(isoDate: string) {
-  const date = new Date(isoDate);
-  date.setUTCDate(date.getUTCDate() + 1);
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
-// --- Event Card (individual event) ---
-const EventCard = ({ event }: { event: Event }) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const displayDate = formatDisplayDate(event.date);
-
-  return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <Card className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0">
-        <CardContent className="p-0 md:flex h-full">
-          {/* Event Image Section */}
-          <div className="w-full h-48 md:h-auto md:w-1/3  bg-muted/50 flex-shrink-0">
-            {event.image ? (
-              <img
-                src={event.image}
-                alt={event.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-              />
-            ) : (
-              <div className=" w-full h-full flex items-center justify-center p-6">
-                <div className="w-24 h-24 bg-muted-foreground/10 rounded-full flex items-center justify-center">
-                  <CalendarIcon className="w-10 h-10 text-muted-foreground/50" />
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Event Details Section */}
-          <div className="w-full md:w-2/3 p-6">
-            <div className="flex justify-between items-start mb-2">
-              <CardTitle className="text-2xl">{event.title}</CardTitle>
-              {event.category === "upcoming" && (
-                <Badge className="mb-3 font-medium border-0 text-foreground bg-[var(--rh-yellow-300)] hover:bg-[var(--rh-yellow-200)]">
-                  Upcoming
-                </Badge>
-              )}
-            </div>
-
-            <CardDescription className="mb-4">
-              {event.description}
-            </CardDescription>
-
-            <div className="space-y-3 text-muted-foreground mb-6">
-              <div className="flex items-center gap-3">
-                <CalendarIcon className="w-5 h-5" />
-                <span>{displayDate}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Clock className="w-5 h-5" />
-                <span>{event.time}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5" />
-                <span>{event.location}</span>
-              </div>
-            </div>
-
-            <DialogTrigger asChild>
-              <Button
-                size="lg"
-                disabled={event.category === "past"}
-                className={
-                  event.category === "upcoming"
-                    ? "bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
-                    : ""
-                }
-              >
-                {event.category === "upcoming" ? "RSVP Now" : "Event Ended"}
-              </Button>
-            </DialogTrigger>
-          </div>
-        </CardContent>
-      </Card>
-
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">RSVP for Event</DialogTitle>
-          <DialogDescription className="text-base">
-            <span className="font-semibold text-foreground">{event.title}</span>
-            <br />
-            {displayDate} at {event.time}
-          </DialogDescription>
-        </DialogHeader>
-        <RSVPForm
-          eventTitle={event.title}
-          eventDate={`${displayDate} at ${event.time}`}
-          onClose={() => setIsDialogOpen(false)}
-        />
-      </DialogContent>
-    </Dialog>
-  );
-};
+import { EventCard } from "./EventCard";
 
 // --- Main Events Page Client Component ---
 interface EventsPageClientProps {
@@ -185,11 +62,11 @@ export default function EventsPageClient({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Event Tabs */}
           <div className="lg:col-span-2">
-            <Tabs defaultValue="upcoming" className="w-full">
+            <Tabs defaultValue="all" className="w-full">
               <TabsList className="grid w-full grid-cols-3 max-w-md">
+                <TabsTrigger value="all">All Events</TabsTrigger>
                 <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
                 <TabsTrigger value="past">Past Events</TabsTrigger>
-                <TabsTrigger value="all">All Events</TabsTrigger>
               </TabsList>
 
               <TabsContent value="upcoming" className="mt-6">
