@@ -1,7 +1,9 @@
+import { Volunteers } from "@/sections/get-involved/volunteer/Volunteers";
+
 export default function Home() {
     return (
-        <div>
-            hi
-        </div>
+        <main className="min-h-screen">
+            <Volunteers />
+        </main>
     );
 }
