@@ -1,8 +1,8 @@
 "use client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { PartnerDialog } from '../../../components/common/PartnerDialog';
+import { PartnerDialog } from '@/components/common/PartnerDialog';
 import { StatCounter } from './StatCounter'
-import { ProgramCard } from '../../../components/common/ProgramCard';
+import { ProgramCard } from '@/components/common/ProgramCard';
 import { Card } from '@/components/ui/card';
 
 const programs = [

@@ -1,6 +1,4 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Home, Users, Heart, Building2, GraduationCap, Briefcase, BookOpen } from "lucide-react";
+import { Heart, Building2, GraduationCap, Briefcase, BookOpen } from "lucide-react";
 
 const serviceHighlights = [
     {
