@@ -8,7 +8,7 @@ export default function Home(){
         title="Temporary Accommodation and Housing"
         description="Building communities by connecting newcomers with safe, welcoming homes in Waterloo Region."
       />
-        <HousingSection />
+      <HousingSection />
     </div>
   );
 }
