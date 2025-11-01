@@ -113,11 +113,6 @@ const NAV = [
         description: "Share your time and skills with our community.",
       },
       {
-        label: "Rent to Refugees",
-        href: "/get-involved/rent-to-refugees",
-        description: "Landlords: offer a unit and change a life.",
-      },
-      {
         label: "Careers",
         href: "/get-involved/careers",
         description: "Join our staff—see current openings.",

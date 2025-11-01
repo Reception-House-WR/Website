@@ -2,12 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Link, Home } from "lucide-react";
 
-const general_application_url = "https://www.vomevolunteer.com/volunteer/form-details/application%20form/8e04abde-2c39-438e-a097-db1f71c459ac/profile"
-const board_member_application_url = "https://www.vomevolunteer.com/volunteer/form-details/volunteer-20board-20member-20application/52483238-9e97-432f-adbc-c61bd8559e43/link?_branch_match_id=1412983189162399966&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXL85ILErVK8vPTS3LzynNK0lNLdJLzs%2FVL4uKSnIzMy9LDUmyrytKTUstKsrMS49PKsovL04tsnXOKAJqAQC8oI5LRQAAAA%3D%3D"
-
 export default function WaysToGetInvolved() {
     return (
-        <section className="py-16" aria-labelledby="ways-heading">
+        <section aria-labelledby="ways-heading">
         <div className="container mx-auto px-4">
           <h2 id="ways-heading" className="text-3xl md:text-4xl font-bold text-center mb-12">
             Ways to Get Involved
@@ -25,13 +22,8 @@ export default function WaysToGetInvolved() {
                   From language support to cultural orientation, your help is invaluable.
                 </p>
                 <Button className="w-full md:w-auto mx-5 bg-[var(--rh-500)]" >
-                  <a href={general_application_url} target="_blank" >
-                    General Application
-                  </a>
-                </Button>
-                <Button  className="w-full md:w-auto bg-[var(--rh-500)]">
-                  <a href={board_member_application_url} target="_blank" >
-                    General Application
+                  <a href="/get-involved/volunteer" target="_blank" >
+                    Volunteer with us
                   </a>
                 </Button>
               </CardContent>
