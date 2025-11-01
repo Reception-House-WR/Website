@@ -13,11 +13,6 @@ export default function Home() {
       <ServicesHero />
       <Services />
       <Programs />
-      <HealthcareSection />
-      <HousingSection />
-      <YouthSection />
-      <TrainingSection />
-      <FrenchServicesSection />
     </div>
   );
 }
