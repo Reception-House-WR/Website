@@ -1,0 +1,41 @@
+name: Build & Push Next.js to ACR (App Service auto-deploys)
+
+on:
+  push:
+    branches: [ "master" ]
+
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: true
+
+env:
+  ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}   # e.g. youracr.azurecr.io
+  ACR_USERNAME:     ${{ secrets.ACR_USERNAME }}
+  ACR_PASSWORD:     ${{ secrets.ACR_PASSWORD }}
+  IMAGE_NAME:       ${{ secrets.IMAGE_NAME || 'nextjs-web' }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker login (ACR admin creds)
+        run: |
+          echo "$ACR_PASSWORD" | docker login "$ACR_LOGIN_SERVER" -u "$ACR_USERNAME" --password-stdin
+
+      - name: Compute tags
+        id: vars
+        run: echo "SHA_TAG=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Build image (context = repo root)
+        run: |
+          docker build \
+            -t $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ steps.vars.outputs.SHA_TAG }} \
+            -t $ACR_LOGIN_SERVER/$IMAGE_NAME:latest \
+            -f apps/web/Dockerfile .
+
+      - name: Push image
+        run: |
+          docker push $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ steps.vars.outputs.SHA_TAG }}
+          docker push $ACR_LOGIN_SERVER/$IMAGE_NAME:latest
