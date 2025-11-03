@@ -8,4 +8,5 @@ export type {
   TextSectionData,
   TimelineEvent,
   Event,
+  Story,
 } from "./types";

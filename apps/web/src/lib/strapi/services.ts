@@ -6,12 +6,14 @@ import type {
   TextSectionData,
   TimelineEvent,
   Event,
+  Story,
   StrapiResponse,
   PageHeroDirectAttributes,
   EmployeeDirectAttributes,
   TextSectionDirectAttributes,
   TimelineEventDirectAttributes,
   EventDirectAttributes,
+  StoryDirectAttributes,
 } from "./types";
 
 /**
@@ -236,4 +238,45 @@ export async function fetchEvents(): Promise<Event[] | null> {
   });
 
   return events;
+}
+
+// lib/strapi/services.ts
+
+/**
+ * Fetches all published Stories, sorted by publish date.
+ * @returns Array of Story objects or null on error.
+ */
+export async function fetchStories(): Promise<Story[] | null> {
+  const path = "/api/stories";
+  const params = {
+    sort: ["publishedAt:desc"],
+    populate: { image: true },
+    pagination: { pageSize: 10 }, // Get the 10 most recent stories
+  };
+
+  const json = await fetchApi<StrapiResponse<StoryDirectAttributes>>(
+    path,
+    params
+    // No 'next' block needed, we are using time-based revalidation
+  );
+
+  if (!json) return null;
+  if (!json.data) {
+    console.warn("No story data array returned from Strapi.");
+    return [];
+  }
+
+  const stories: Story[] = json.data.map((item) => {
+    const imageUrl = getStrapiMedia(item.image);
+    return {
+      id: item.id,
+      name: item.name || "Unnamed",
+      story: item.story || "No story provided.",
+      videoUrl: item.videoUrl || "#",
+      image: imageUrl,
+      imageAlt: item.image?.alternativeText || `A photo of ${item.name}`,
+    };
+  });
+
+  return stories;
 }

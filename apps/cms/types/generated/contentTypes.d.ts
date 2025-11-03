@@ -528,6 +528,34 @@ export interface ApiPageHeroPageHero extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiStoryStory extends Struct.CollectionTypeSchema {
+  collectionName: 'stories';
+  info: {
+    displayName: 'Story';
+    pluralName: 'stories';
+    singularName: 'story';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::story.story'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    story: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    videoUrl: Schema.Attribute.String;
+  };
+}
+
 export interface ApiTextSectionTextSection extends Struct.CollectionTypeSchema {
   collectionName: 'text_sections';
   info: {
@@ -1108,6 +1136,7 @@ declare module '@strapi/strapi' {
       'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;
       'api::page-hero.page-hero': ApiPageHeroPageHero;
+      'api::story.story': ApiStoryStory;
       'api::text-section.text-section': ApiTextSectionTextSection;
       'api::timeline-event.timeline-event': ApiTimelineEventTimelineEvent;
       'plugin::content-releases.release': PluginContentReleasesRelease;

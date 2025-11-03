@@ -151,3 +151,25 @@ export interface Event {
   isPaid: boolean;
   eventbriteUrl?: string;
 }
+
+// lib/strapi/types.ts
+
+export interface StoryDirectAttributes {
+  id: number;
+  name: string;
+  story: string; // Rich Text content
+  videoUrl: string;
+  image: StrapiImageData | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface Story {
+  id: number;
+  name: string;
+  story: string;
+  videoUrl: string;
+  image: string | null;
+  imageAlt: string;
+}
