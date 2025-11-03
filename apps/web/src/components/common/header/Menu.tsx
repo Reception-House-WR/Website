@@ -60,7 +60,7 @@ const NAV = [
         label: "Contact Us",
         href: "/about/contact-us",
         description: "Get in touch or visit our offices.",
-      }
+      },
     ],
   },
 

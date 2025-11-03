@@ -1,3 +1,5 @@
+// lib/strapi/index.ts
+
 // --- EXPORT ALL PUBLIC-FACING FETCHER FUNCTIONS ---
 export * from "./services";
 
@@ -8,4 +10,5 @@ export type {
   TextSectionData,
   TimelineEvent,
   Event,
+  Story,
 } from "./types";

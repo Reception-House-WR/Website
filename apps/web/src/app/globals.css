@@ -115,6 +115,13 @@
   --rh-green-100: oklch(0.89 0.06 125); /* ~40% tint */
   --rh-green-50: oklch(0.93 0.04 125); /* ~50% tint */
 
+  --rh-orange-500: oklch(0.66 0.2 35); /* #F64D2A base */
+  --rh-orange-400: oklch(0.7 0.17 35); /* ~10% tint */
+  --rh-orange-300: oklch(0.74 0.14 35); /* ~20% tint */
+  --rh-orange-200: oklch(0.78 0.11 35); /* ~30% tint */
+  --rh-orange-100: oklch(0.82 0.08 35); /* ~40% tint */
+  --rh-orange-50: oklch(0.86 0.05 35); /* ~50% tint */
+
   --timeline-gradient: linear-gradient(
     to bottom,
     var(--rh-red-500),
