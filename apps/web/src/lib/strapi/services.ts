@@ -7,6 +7,9 @@ import type {
   TimelineEvent,
   Event,
   Story,
+  Campaign,
+  InKindItem,
+  DonatePageData,
   StrapiResponse,
   PageHeroDirectAttributes,
   EmployeeDirectAttributes,
@@ -14,6 +17,9 @@ import type {
   TimelineEventDirectAttributes,
   EventDirectAttributes,
   StoryDirectAttributes,
+  CampaignDirectAttributes,
+  InKindItemDirectAttributes,
+  DonatePageDirectAttributes,
 } from "./types";
 
 /**
@@ -279,4 +285,76 @@ export async function fetchStories(): Promise<Story[] | null> {
   });
 
   return stories;
+}
+
+// lib/strapi/services.ts
+
+/**
+ * Fetches all published Campaigns.
+ */
+export async function fetchCampaigns(): Promise<Campaign[] | null> {
+  const path = "/api/campaigns";
+  const params = {
+    sort: ["publishedAt:desc"],
+    populate: { image: true },
+  };
+  const json = await fetchApi<StrapiResponse<CampaignDirectAttributes>>(
+    path,
+    params
+  );
+  if (!json?.data) return null;
+
+  return json.data.map((item) => {
+    const imageUrl = getStrapiMedia(item.image);
+    return {
+      id: item.id,
+      name: item.name || "Untitled Campaign",
+      description: item.description || "",
+      image: imageUrl,
+      imageAlt: item.image?.alternativeText || `Image for ${item.name}`,
+    };
+  });
+}
+
+/**
+ * Fetches all published In-Kind Donation items.
+ */
+export async function fetchInKindItems(): Promise<InKindItem[] | null> {
+  const path = "/api/in-kind-items";
+  const params = {
+    sort: ["name:asc"],
+    pagination: { pageSize: 100 },
+  };
+  const json = await fetchApi<StrapiResponse<InKindItemDirectAttributes>>(
+    path,
+    params
+  );
+  if (!json?.data) return null;
+
+  return json.data.map((item) => ({
+    id: item.id,
+    name: item.name,
+    category: item.category || "other",
+  }));
+}
+
+export async function fetchDonatePage(): Promise<DonatePageData | null> {
+  const path = "/api/donate-page";
+
+  // We expect a single data object, not an array
+  const json = await fetchApi<{ data: DonatePageDirectAttributes }>(path, {});
+
+  // Check if the data object itself is null or undefined
+  if (!json?.data) {
+    console.warn(
+      "No data found for Donate Page. Make sure it is created and published in Strapi."
+    );
+    return null;
+  }
+
+  // Access 'json.data' directly as an object
+  return {
+    dropOffInfo: json.data.dropOffInfo || "",
+    thriftPartners: json.data.thriftPartners || "",
+  };
 }

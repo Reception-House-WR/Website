@@ -173,3 +173,55 @@ export interface Story {
   image: string | null;
   imageAlt: string;
 }
+
+// lib/strapi/types.ts
+
+// --- Add this for the "Campaign" Collection Type ---
+export interface CampaignDirectAttributes {
+  id: number;
+  name: string;
+  description: string;
+  image: StrapiImageData | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface Campaign {
+  id: number;
+  name: string;
+  description: string;
+  image: string | null;
+  imageAlt: string;
+}
+
+// --- Add this for the "In-Kind Item" Collection Type ---
+export interface InKindItemDirectAttributes {
+  id: number;
+  name: string;
+  category: "school" | "personal" | "baby" | "giftCards";
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface InKindItem {
+  id: number;
+  name: string;
+  category: string;
+}
+
+// --- Add this for the "Donate Page" Single Type ---
+export interface DonatePageDirectAttributes {
+  id: number;
+  dropOffInfo: string; // Markdown field
+  thriftPartners: string; // Text field, one partner per line
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface DonatePageData {
+  dropOffInfo: string;
+  thriftPartners: string;
+}

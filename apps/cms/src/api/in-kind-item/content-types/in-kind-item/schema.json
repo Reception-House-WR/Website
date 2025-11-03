@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "in_kind_items",
+  "info": {
+    "singularName": "in-kind-item",
+    "pluralName": "in-kind-items",
+    "displayName": "InKindItem"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "school",
+        "personal",
+        "baby",
+        "giftCards"
+      ]
+    }
+  }
+}

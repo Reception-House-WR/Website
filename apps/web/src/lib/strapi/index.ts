@@ -9,4 +9,7 @@ export type {
   TimelineEvent,
   Event,
   Story,
+  Campaign,
+  InKindItem,
+  DonatePageData,
 } from "./types";
