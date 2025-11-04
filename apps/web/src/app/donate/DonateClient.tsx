@@ -30,7 +30,7 @@ import MarkdownRenderer from "@/components/common/MarkdownRenderer";
 import {
   type HeroData,
   type Campaign,
-  type InKindItem,
+  type DonationCategory,
   type DonatePageData,
   type DonationProgram, // <-- ADDED
 } from "@/lib/strapi";
@@ -45,11 +45,19 @@ const iconMap: Record<string, LucideIcon> = {
   Handshake: Handshake,
 };
 
+// 2. ADD THIS COLOR MAP
+const colorMap: Record<string, string> = {
+  blue: "hover:border-[var(--rh-500)] bg-gradient-to-br from-blue-50 to-cyan-50",
+  pink: "hover:border-[var(--rh-orange-500)] bg-gradient-to-br from-purple-50 to-pink-50",
+  yellow:
+    "hover:border-[var(--rh-yellow-500)] bg-gradient-to-br from-amber-50 to-yellow-50",
+  rose: "hover:border-[var(--rh-orange-300)] bg-gradient-to-br from-pink-50 to-rose-50",
+};
 // --- Component Props ---
 interface DonateClientProps {
   heroData: HeroData;
   campaignsData: Campaign[];
-  inKindItemsData: InKindItem[];
+  donationCategoriesData: DonationCategory[];
   donatePageData: DonatePageData | null;
   programsData: DonationProgram[]; // <-- ADDED
 }
@@ -57,7 +65,7 @@ interface DonateClientProps {
 export default function DonateClient({
   heroData,
   campaignsData,
-  inKindItemsData,
+  donationCategoriesData,
   donatePageData, // This prop is now unused by your hard-coded logic, but left as requested
   programsData, // <-- ADDED
 }: DonateClientProps) {
@@ -74,19 +82,6 @@ export default function DonateClient({
       prevIndex === 0 ? campaignsData.length - 1 : prevIndex - 1
     );
   };
-
-  // --- Process dynamic data ---
-  const inKindItems = inKindItemsData.reduce(
-    (acc, item) => {
-      const category = item.category || "other";
-      if (!acc[category]) {
-        acc[category] = [];
-      }
-      acc[category].push(item.name);
-      return acc;
-    },
-    {} as Record<string, string[]>
-  );
 
   // This logic remains as you provided it
   const thriftPartners = [
@@ -254,7 +249,7 @@ export default function DonateClient({
           </div>
         </section>
 
-        {/* In-Kind Donations (Dynamic) */}
+        {/* --- MODIFIED In-Kind Donations (Dynamic) --- */}
         <section className="py-16 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
           <div className="container mx-auto max-w-5xl">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
@@ -265,86 +260,37 @@ export default function DonateClient({
               consider donating any of the following items:
             </p>
 
+            {/* 7. REPLACE the static grid with this dynamic one */}
             <div className="grid md:grid-cols-2 gap-6 mb-12">
-              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-500)] bg-gradient-to-br from-blue-50 to-cyan-50">
-                <CardHeader>
-                  <CardTitle>🎒 Kids School Items</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {inKindItems.school?.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
-                          ✓
-                        </span>
-                        <span className="text-high-contrast font-medium">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-orange-500)] bg-gradient-to-br from-purple-50 to-pink-50">
-                <CardHeader>
-                  <CardTitle>🧴 Personal Care Items</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {inKindItems.personal?.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
-                          ✓
-                        </span>
-                        <span className="text-high-contrast font-medium">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-orange-300)] bg-gradient-to-br from-pink-50 to-rose-50">
-                <CardHeader>
-                  <CardTitle>👶 Baby Essentials</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {inKindItems.baby?.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
-                          ✓
-                        </span>
-                        <span className="text-high-contrast font-medium">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-yellow-500)] bg-gradient-to-br from-amber-50 to-yellow-50">
-                <CardHeader>
-                  <CardTitle>🎁 Gift Cards</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {inKindItems.giftCards?.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
-                          ✓
-                        </span>
-                        <span className="text-high-contrast font-medium">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              {donationCategoriesData.map((category) => (
+                <Card
+                  key={category.id}
+                  className={`border-2 hover:shadow-lg transition-all duration-300 ${
+                    colorMap[category.color] || colorMap.blue
+                  }`}
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <span className="text-2xl">{category.emoji}</span>
+                      {category.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {category.items.map((item) => (
+                        <li key={item.id} className="flex items-start">
+                          <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
+                            ✓
+                          </span>
+                          <span className="text-high-contrast font-medium">
+                            {item.name}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
 
             <Card className="bg-muted border-2">

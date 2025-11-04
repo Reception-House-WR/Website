@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donation_categories",
+  "info": {
+    "singularName": "donation-category",
+    "pluralName": "donation-categories",
+    "displayName": "Donation Category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "emoji": {
+      "type": "string"
+    },
+    "color": {
+      "type": "enumeration",
+      "enum": [
+        "blue",
+        "pink",
+        "yellow",
+        "rose"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "in_kind_items": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::in-kind-item.in-kind-item",
+      "inversedBy": "donation_categories"
+    }
+  }
+}

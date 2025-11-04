@@ -10,7 +10,7 @@ export type {
   Event,
   Story,
   Campaign,
-  InKindItem,
+  DonationCategory,
   DonatePageData,
   DonationProgram,
 } from "./types";

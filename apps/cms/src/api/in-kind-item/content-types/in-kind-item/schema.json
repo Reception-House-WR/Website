@@ -4,7 +4,7 @@
   "info": {
     "singularName": "in-kind-item",
     "pluralName": "in-kind-items",
-    "displayName": "InKindItem"
+    "displayName": "In Kind Item"
   },
   "options": {
     "draftAndPublish": true
@@ -14,14 +14,11 @@
     "name": {
       "type": "string"
     },
-    "category": {
-      "type": "enumeration",
-      "enum": [
-        "school",
-        "personal",
-        "baby",
-        "giftCards"
-      ]
+    "donation_categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::donation-category.donation-category",
+      "mappedBy": "in_kind_items"
     }
   }
 }

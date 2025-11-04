@@ -8,7 +8,7 @@ import type {
   Event,
   Story,
   Campaign,
-  InKindItem,
+  DonationCategory,
   DonatePageData,
   DonationProgram,
   StrapiResponse,
@@ -19,7 +19,7 @@ import type {
   EventDirectAttributes,
   StoryDirectAttributes,
   CampaignDirectAttributes,
-  InKindItemDirectAttributes,
+  DonationCategoryDirectAttributes,
   DonatePageDirectAttributes,
   DonationProgramDirectAttributes,
 } from "./types";
@@ -319,15 +319,18 @@ export async function fetchCampaigns(): Promise<Campaign[] | null> {
 }
 
 /**
- * Fetches all published In-Kind Donation items.
+ * Fetches all published Donation Categories, sorted by 'order',
+ * and populates their related In-Kind Items.
  */
-export async function fetchInKindItems(): Promise<InKindItem[] | null> {
-  const path = "/api/in-kind-items";
+export async function fetchDonationCategories(): Promise<
+  DonationCategory[] | null
+> {
+  const path = "/api/donation-categories";
   const params = {
-    sort: ["name:asc"],
-    pagination: { pageSize: 100 },
+    sort: ["order:asc"],
+    populate: ["inKindItems"],
   };
-  const json = await fetchApi<StrapiResponse<InKindItemDirectAttributes>>(
+  const json = await fetchApi<StrapiResponse<DonationCategoryDirectAttributes>>(
     path,
     params
   );
@@ -335,8 +338,11 @@ export async function fetchInKindItems(): Promise<InKindItem[] | null> {
 
   return json.data.map((item) => ({
     id: item.id,
-    name: item.name,
-    category: item.category || "other",
+    title: item.title,
+    emoji: item.emoji,
+    color: item.color,
+    // This simplifies the nested 'data' array from Strapi
+    items: item.inKindItems?.data || [],
   }));
 }
 

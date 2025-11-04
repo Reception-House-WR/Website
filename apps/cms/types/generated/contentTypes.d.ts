@@ -460,6 +460,42 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDonationCategoryDonationCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'donation_categories';
+  info: {
+    displayName: 'Donation Category';
+    pluralName: 'donation-categories';
+    singularName: 'donation-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    color: Schema.Attribute.Enumeration<['blue', 'pink', 'yellow', 'rose']>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    emoji: Schema.Attribute.String;
+    in_kind_items: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::in-kind-item.in-kind-item'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation-category.donation-category'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDonationProgramDonationProgram
   extends Struct.CollectionTypeSchema {
   collectionName: 'donation_programs';
@@ -562,7 +598,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
 export interface ApiInKindItemInKindItem extends Struct.CollectionTypeSchema {
   collectionName: 'in_kind_items';
   info: {
-    displayName: 'InKindItem';
+    displayName: 'In Kind Item';
     pluralName: 'in-kind-items';
     singularName: 'in-kind-item';
   };
@@ -570,12 +606,13 @@ export interface ApiInKindItemInKindItem extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    category: Schema.Attribute.Enumeration<
-      ['school', 'personal', 'baby', 'giftCards']
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    donation_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation-category.donation-category'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1228,6 +1265,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::campaign.campaign': ApiCampaignCampaign;
+      'api::donation-category.donation-category': ApiDonationCategoryDonationCategory;
       'api::donation-program.donation-program': ApiDonationProgramDonationProgram;
       'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;

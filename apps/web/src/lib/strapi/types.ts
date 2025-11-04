@@ -195,20 +195,33 @@ export interface Campaign {
   imageAlt: string;
 }
 
-// --- Add this for the "In-Kind Item" Collection Type ---
-export interface InKindItemDirectAttributes {
+// lib/strapi/types.ts
+
+// This is the new item type
+export interface InKindItem {
   id: number;
   name: string;
-  category: "school" | "personal" | "baby" | "giftCards";
+}
+
+// This is the new category type
+export interface DonationCategoryDirectAttributes {
+  id: number;
+  title: string;
+  emoji: string;
+  color: "blue" | "pink" | "yellow" | "rose";
+  order: number;
+  inKindItems: { data: InKindItem[] }; // This is how relations are structured
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 }
 
-export interface InKindItem {
+export interface DonationCategory {
   id: number;
-  name: string;
-  category: string;
+  title: string;
+  emoji: string;
+  color: string;
+  items: InKindItem[]; // We will simplify this in the fetch
 }
 
 // --- Add this for the "Donate Page" Single Type ---

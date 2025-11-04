@@ -3,12 +3,12 @@
 import {
   fetchPageHero,
   fetchCampaigns,
-  fetchInKindItems,
+  fetchDonationCategories,
   fetchDonatePage,
   fetchDonationPrograms,
   type HeroData,
   type Campaign,
-  type InKindItem,
+  type DonationCategory,
   type DonationProgram,
   type DonatePageData,
 } from "@/lib/strapi";
@@ -27,13 +27,13 @@ async function getData() {
   const [
     heroResult,
     campaignsResult,
-    inKindItemsResult,
+    donationCategoriesResult,
     donatePageResult,
     programsResult,
   ] = await Promise.all([
     fetchPageHero("donate-hero"),
     fetchCampaigns(),
-    fetchInKindItems(),
+    fetchDonationCategories(),
     fetchDonatePage(),
     fetchDonationPrograms(),
   ]);
@@ -41,7 +41,7 @@ async function getData() {
   return {
     heroData: heroResult || defaultHeroData,
     campaignsData: campaignsResult || [],
-    inKindItemsData: inKindItemsResult || [],
+    donationCategoriesData: donationCategoriesResult || [],
     donatePageData: donatePageResult,
     programsData: programsResult || [],
   };
@@ -51,7 +51,7 @@ export default async function DonatePage() {
   const {
     heroData,
     campaignsData,
-    inKindItemsData,
+    donationCategoriesData,
     donatePageData,
     programsData,
   } = await getData();
@@ -60,7 +60,7 @@ export default async function DonatePage() {
     <DonateClient
       heroData={heroData}
       campaignsData={campaignsData}
-      inKindItemsData={inKindItemsData}
+      donationCategoriesData={donationCategoriesData}
       donatePageData={donatePageData}
       programsData={programsData}
     />
