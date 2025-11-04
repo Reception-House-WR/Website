@@ -5,9 +5,11 @@ import {
   fetchCampaigns,
   fetchInKindItems,
   fetchDonatePage,
+  fetchDonationPrograms,
   type HeroData,
   type Campaign,
   type InKindItem,
+  type DonationProgram,
   type DonatePageData,
 } from "@/lib/strapi";
 import DonateClient from "./DonateClient";
@@ -22,25 +24,37 @@ const defaultHeroData: HeroData = {
 };
 
 async function getData() {
-  const [heroResult, campaignsResult, inKindItemsResult, donatePageResult] =
-    await Promise.all([
-      fetchPageHero("donate-hero"),
-      fetchCampaigns(),
-      fetchInKindItems(),
-      fetchDonatePage(),
-    ]);
+  const [
+    heroResult,
+    campaignsResult,
+    inKindItemsResult,
+    donatePageResult,
+    programsResult,
+  ] = await Promise.all([
+    fetchPageHero("donate-hero"),
+    fetchCampaigns(),
+    fetchInKindItems(),
+    fetchDonatePage(),
+    fetchDonationPrograms(),
+  ]);
 
   return {
     heroData: heroResult || defaultHeroData,
     campaignsData: campaignsResult || [],
     inKindItemsData: inKindItemsResult || [],
     donatePageData: donatePageResult,
+    programsData: programsResult || [],
   };
 }
 
 export default async function DonatePage() {
-  const { heroData, campaignsData, inKindItemsData, donatePageData } =
-    await getData();
+  const {
+    heroData,
+    campaignsData,
+    inKindItemsData,
+    donatePageData,
+    programsData,
+  } = await getData();
 
   return (
     <DonateClient
@@ -48,6 +62,7 @@ export default async function DonatePage() {
       campaignsData={campaignsData}
       inKindItemsData={inKindItemsData}
       donatePageData={donatePageData}
+      programsData={programsData}
     />
   );
 }

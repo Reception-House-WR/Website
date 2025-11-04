@@ -225,3 +225,27 @@ export interface DonatePageData {
   dropOffInfo: string;
   thriftPartners: string;
 }
+
+// lib/strapi/types.ts
+
+// --- Add this for the raw Strapi data ---
+export interface DonationProgramDirectAttributes {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+  iconName: string; // This will be "Home", "Briefcase", etc.
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+// --- Add this for the frontend data shape ---
+export interface DonationProgram {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+  iconName: string;
+}

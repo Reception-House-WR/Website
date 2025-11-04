@@ -10,6 +10,7 @@ import type {
   Campaign,
   InKindItem,
   DonatePageData,
+  DonationProgram,
   StrapiResponse,
   PageHeroDirectAttributes,
   EmployeeDirectAttributes,
@@ -20,6 +21,7 @@ import type {
   CampaignDirectAttributes,
   InKindItemDirectAttributes,
   DonatePageDirectAttributes,
+  DonationProgramDirectAttributes,
 } from "./types";
 
 /**
@@ -357,4 +359,32 @@ export async function fetchDonatePage(): Promise<DonatePageData | null> {
     dropOffInfo: json.data.dropOffInfo || "",
     thriftPartners: json.data.thriftPartners || "",
   };
+}
+
+// lib/strapi/services.ts
+// ... (add DonationProgramDirectAttributes, DonationProgram to your types import)
+
+/**
+ * Fetches all published Donation Programs, sorted by the 'order' field.
+ */
+export async function fetchDonationPrograms(): Promise<
+  DonationProgram[] | null
+> {
+  const path = "/api/donation-programs";
+  const params = {
+    sort: ["order:asc"], // Sort by the order field
+  };
+  const json = await fetchApi<StrapiResponse<DonationProgramDirectAttributes>>(
+    path,
+    params
+  );
+  if (!json?.data) return null;
+
+  return json.data.map((item) => ({
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    buttonText: item.buttonText,
+    iconName: item.iconName,
+  }));
 }

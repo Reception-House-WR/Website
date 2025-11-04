@@ -12,4 +12,5 @@ export type {
   Campaign,
   InKindItem,
   DonatePageData,
+  DonationProgram,
 } from "./types";

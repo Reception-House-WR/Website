@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donation_programs",
+  "info": {
+    "singularName": "donation-program",
+    "pluralName": "donation-programs",
+    "displayName": "Donation Program"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "iconName": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

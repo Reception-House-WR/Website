@@ -1,6 +1,7 @@
 // src/app/donate/DonateClient.tsx
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,8 +11,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { PageHero } from "@/components/ui/pageHero";
-import AccessibleCarousel from "@/components/common/AccessibleCarousel";
-import { Mail, MapPin, HeartHandshake } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  HeartHandshake,
+  Home,
+  Briefcase,
+  Heart,
+  Handshake,
+  ChevronLeft,
+  ChevronRight,
+  Icon, // <-- Import the value (the component)
+  type LucideIcon, // <-- Import the type
+} from "lucide-react";
+
 import Image from "next/image";
 import MarkdownRenderer from "@/components/common/MarkdownRenderer";
 import {
@@ -19,40 +32,18 @@ import {
   type Campaign,
   type InKindItem,
   type DonatePageData,
+  type DonationProgram, // <-- ADDED
 } from "@/lib/strapi";
 
-// --- Static Program Data ---
-// (We keep this hard-coded as the icons are static assets)
-const programs = [
-  {
-    title: "Housing Support",
-    description:
-      "Help newcomers find safe, affordable housing and establish their first home. Your donation provides essential furniture, household items, and assistance with rent deposits.",
-    icon: "/assets/icons/housing-icon.png", // Use root-relative paths
-    iconAlt: "Icon representing housing support",
-  },
-  {
-    title: "Employment & Integration",
-    description:
-      "Support job training, language classes, and professional development programs that help newcomers gain meaningful employment.",
-    icon: "/assets/icons/employment-icon.png",
-    iconAlt: "Icon representing employment support",
-  },
-  {
-    title: "Health & Well-Being",
-    description:
-      "Ensure access to medical care, mental health support, and wellness programs for families adjusting to their new lives.",
-    icon: "/assets/icons/health-icon.png",
-    iconAlt: "Icon representing health support",
-  },
-  {
-    title: "Community Partnerships",
-    description:
-      "Strengthen connections between newcomers and local communities through cultural events, mentorship programs, and social integration initiatives.",
-    icon: "/assets/icons/community-icon.png",
-    iconAlt: "Icon representing community partnerships",
-  },
-];
+// --- REMOVED STATIC 'programs' ARRAY ---
+
+// --- ADDED ICON MAP ---
+const iconMap: Record<string, LucideIcon> = {
+  Home: Home,
+  Briefcase: Briefcase,
+  Heart: Heart,
+  Handshake: Handshake,
+};
 
 // --- Component Props ---
 interface DonateClientProps {
@@ -60,14 +51,30 @@ interface DonateClientProps {
   campaignsData: Campaign[];
   inKindItemsData: InKindItem[];
   donatePageData: DonatePageData | null;
+  programsData: DonationProgram[]; // <-- ADDED
 }
 
 export default function DonateClient({
   heroData,
   campaignsData,
   inKindItemsData,
-  donatePageData,
+  donatePageData, // This prop is now unused by your hard-coded logic, but left as requested
+  programsData, // <-- ADDED
 }: DonateClientProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === campaignsData.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? campaignsData.length - 1 : prevIndex - 1
+    );
+  };
+
   // --- Process dynamic data ---
   const inKindItems = inKindItemsData.reduce(
     (acc, item) => {
@@ -81,10 +88,20 @@ export default function DonateClient({
     {} as Record<string, string[]>
   );
 
-  const thriftPartners = donatePageData?.thriftPartners.split("\n") || [];
-  const dropOffInfo =
-    donatePageData?.dropOffInfo ||
-    "Please contact us for drop-off information.";
+  // This logic remains as you provided it
+  const thriftPartners = [
+    "Thrift on Kent",
+    "Worth a Second Look",
+    "Salvation Army",
+    "Habitat for Humanity ReStore",
+    "Goodwill",
+    "Mission Thrift",
+  ];
+
+  // --- ADDED ICON HELPER ---
+  const getProgramIcon = (iconName: string): LucideIcon => {
+    return iconMap[iconName] || Heart; // Default to Heart icon if not found
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -95,7 +112,7 @@ export default function DonateClient({
           icon={<HeartHandshake className="w-8 h-8 text-white" />}
         />
 
-        {/* Where Your Donation Helps (Static) */}
+        {/* --- MODIFIED "Where Your Donation Helps" (Dynamic) --- */}
         <section
           id="donate-programs"
           className="py-16 px-4 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50"
@@ -108,91 +125,127 @@ export default function DonateClient({
               Choose a program that resonates with you and make a direct impact
             </p>
             <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-              {programs.map((program) => (
-                <Card
-                  key={program.title}
-                  className="group hover:shadow-2xl transition-all duration-300 border-2  animate-slide-up hover:-translate-y-2 overflow-hidden"
-                >
-                  <CardHeader className="relative">
-                    <div className="w-24 h-24 mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <Image
-                        src={program.icon}
-                        alt={program.iconAlt}
-                        width={56}
-                        height={56}
-                        className="w-14 h-14 object-contain"
-                      />
-                    </div>
-                    <CardTitle className="text-2xl group-hover:text-primary transition-colors">
-                      {program.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <CardDescription className="text-base leading-relaxed text-high-contrast">
-                      {program.description}
-                    </CardDescription>
-                    <Button
-                      variant="default"
-                      size="lg"
-                      className="w-full bg-[var(--rh-500)] text-primary-foreground hover:bg-[var(--rh-400)]"
-                    >
-                      Donate to {program.title}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+              {/* Use dynamic 'programsData' prop */}
+              {programsData.map((program) => {
+                const ProgramIcon = getProgramIcon(program.iconName);
+                return (
+                  <Card
+                    key={program.id} // Use dynamic ID
+                    className="group hover:shadow-2xl transition-all duration-300 border-2  animate-slide-up hover:-translate-y-2 overflow-hidden flex flex-col"
+                  >
+                    <CardHeader className="relative">
+                      <div className="w-24 h-24 mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <ProgramIcon // Use dynamic Icon
+                          aria-label={program.title}
+                          className="w-14 h-14 text-[var(--rh-orange-500)]"
+                        />
+                      </div>
+                      <CardTitle className="text-2xl group-hover:text-primary transition-colors">
+                        {program.title} {/* Use dynamic Title */}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 flex flex-col flex-grow">
+                      <CardDescription className="text-base leading-relaxed text-high-contrast">
+                        {program.description} {/* Use dynamic Description */}
+                      </CardDescription>
+                      <Button
+                        variant="default"
+                        size="lg"
+                        className="w-full bg-[var(--rh-500)] text-primary-foreground hover:bg-[var(--rh-400)] mt-auto"
+                      >
+                        {program.buttonText} {/* Use dynamic Button Text */}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* Campaign Carousel (Dynamic) */}
+        {/* --- MODIFIED CAMPAIGN CAROUSEL --- */}
         <section className="py-16 px-4 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50">
-          <div className="container mx-auto max-w-6xl">
+          <div className="container mx-auto max-w-4xl">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
               Current Campaigns
             </h2>
             <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
               Join our active campaigns making a difference right now
             </p>
-
             {campaignsData.length > 0 ? (
-              <AccessibleCarousel ariaLabel="Current donation campaigns">
-                {campaignsData.map((campaign) => (
-                  <Card
-                    key={campaign.id}
-                    className="mx-4 overflow-hidden border-2 shadow-xl"
-                  >
-                    <div className="relative h-64 md:h-80 overflow-hidden">
-                      <Image
-                        src={
-                          campaign.image || "/assets/default-placeholder.jpg"
-                        }
-                        alt={campaign.imageAlt}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <h3 className="text-3xl md:text-4xl font-bold mb-2">
-                          {campaign.name}
-                        </h3>
-                      </div>
+              <div className="relative">
+                {/* Render only the current card */}
+                <Card
+                  key={campaignsData[currentIndex].id}
+                  className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
+                >
+                  <div className="relative h-64 md:h-80 overflow-hidden">
+                    <Image
+                      src={
+                        campaignsData[currentIndex].image ||
+                        "/assets/default-placeholder.jpg"
+                      }
+                      alt={campaignsData[currentIndex].imageAlt}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                      <h3 className="text-3xl md:text-4xl font-bold mb-2">
+                        {campaignsData[currentIndex].name}
+                      </h3>
                     </div>
-                    <CardContent className="p-8 md:p-12 bg-white">
-                      <p className="text-lg leading-relaxed text-high-contrast mb-6">
-                        {campaign.description}
-                      </p>
-                      <Button
-                        variant="default"
-                        size="lg"
-                        className="w-full md:w-auto"
-                      >
-                        Support This Campaign
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </AccessibleCarousel>
+                  </div>
+                  <CardContent className="p-8 md:p-12 bg-white">
+                    <p className="text-lg leading-relaxed text-high-contrast mb-6">
+                      {campaignsData[currentIndex].description}
+                    </p>
+                    <Button
+                      size="lg"
+                      className="w-full md:w-auto bg-[var(--rh-orange-500)] text-primary-foreground hover:bg-[var(--rh-orange-400)]"
+                    >
+                      Support This Campaign
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* --- NEW NAVIGATION CONTROLS --- */}
+                <div className="mt-6 flex items-center justify-center gap-4">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={goToPrevious}
+                    aria-label="Previous campaign"
+                    className="rounded-full"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  {/* Dots */}
+                  <div className="flex gap-2">
+                    {campaignsData.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentIndex(index)}
+                        className={`h-2 w-2 rounded-full transition-all ${
+                          index === currentIndex
+                            ? "bg-[var(--rh-orange-500)] w-8"
+                            : "bg-border hover:bg-primary/50"
+                        }`}
+                        aria-label={`Go to campaign ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={goToNext}
+                    aria-label="Next campaign"
+                    className="rounded-full"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
             ) : (
               <p className="text-center text-muted-foreground">
                 No active campaigns at this time. Please check back soon!
@@ -213,7 +266,7 @@ export default function DonateClient({
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-12">
-              <Card className="border-2 hover:shadow-lg ...">
+              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-500)] bg-gradient-to-br from-blue-50 to-cyan-50">
                 <CardHeader>
                   <CardTitle>🎒 Kids School Items</CardTitle>
                 </CardHeader>
@@ -221,7 +274,9 @@ export default function DonateClient({
                   <ul className="space-y-3">
                     {inKindItems.school?.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-primary mr-3 text-lg">✓</span>
+                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
+                          ✓
+                        </span>
                         <span className="text-high-contrast font-medium">
                           {item}
                         </span>
@@ -231,7 +286,7 @@ export default function DonateClient({
                 </CardContent>
               </Card>
 
-              <Card className="border-2 hover:shadow-lg ...">
+              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-orange-500)] bg-gradient-to-br from-purple-50 to-pink-50">
                 <CardHeader>
                   <CardTitle>🧴 Personal Care Items</CardTitle>
                 </CardHeader>
@@ -239,7 +294,9 @@ export default function DonateClient({
                   <ul className="space-y-3">
                     {inKindItems.personal?.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-primary mr-3 text-lg">✓</span>
+                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
+                          ✓
+                        </span>
                         <span className="text-high-contrast font-medium">
                           {item}
                         </span>
@@ -249,7 +306,7 @@ export default function DonateClient({
                 </CardContent>
               </Card>
 
-              <Card className="border-2 hover:shadow-lg ...">
+              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-orange-300)] bg-gradient-to-br from-pink-50 to-rose-50">
                 <CardHeader>
                   <CardTitle>👶 Baby Essentials</CardTitle>
                 </CardHeader>
@@ -257,7 +314,9 @@ export default function DonateClient({
                   <ul className="space-y-3">
                     {inKindItems.baby?.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-primary mr-3 text-lg">✓</span>
+                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
+                          ✓
+                        </span>
                         <span className="text-high-contrast font-medium">
                           {item}
                         </span>
@@ -267,7 +326,7 @@ export default function DonateClient({
                 </CardContent>
               </Card>
 
-              <Card className="border-2 hover:shadow-lg ...">
+              <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:border-[var(--rh-yellow-500)] bg-gradient-to-br from-amber-50 to-yellow-50">
                 <CardHeader>
                   <CardTitle>🎁 Gift Cards</CardTitle>
                 </CardHeader>
@@ -275,7 +334,9 @@ export default function DonateClient({
                   <ul className="space-y-3">
                     {inKindItems.giftCards?.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-primary mr-3 text-lg">✓</span>
+                        <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
+                          ✓
+                        </span>
                         <span className="text-high-contrast font-medium">
                           {item}
                         </span>
@@ -286,15 +347,24 @@ export default function DonateClient({
               </Card>
             </div>
 
-            <Card className="bg-muted/50 border-2">
-              <CardContent className="p-8 space-y-4">
+            <Card className="bg-muted border-2">
+              <CardContent className="p-6 space-y-4">
+                {" "}
+                {/* Reverted to p-6 */}
                 <h3 className="text-xl font-bold text-high-contrast flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-primary" />
+                  <MapPin className="h-5 w-5 text-[var(--rh-orange-500)]" />
                   Drop-Off Information
                 </h3>
+                {/* --- HARD-CODED CONTENT FROM SCREENSHOT --- */}
                 <div className="text-high-contrast leading-relaxed markdown">
-                  {/* Use MarkdownRenderer for rich text */}
-                  <MarkdownRenderer content={dropOffInfo} />
+                  <p>
+                    <strong className="text-[var(--rh-orange-500)]">
+                      Please Note:
+                    </strong>{" "}
+                    While we gratefully accept the above items, we are unable to
+                    store or distribute furniture, household items, or clothing
+                    at this time.
+                  </p>
                 </div>
                 <div>
                   <p className="font-semibold mb-2 text-high-contrast">
@@ -312,14 +382,15 @@ export default function DonateClient({
                     ))}
                   </div>
                 </div>
+                {/* --- END HARD-CODED CONTENT --- */}
                 <div className="pt-4 border-t border-border">
                   <p className="flex items-center gap-2 text-high-contrast">
-                    <Mail className="h-5 w-5 text-primary" />
+                    <Mail className="h-5 w-5 text-[var(--rh-orange-500)]" />
                     <span>
                       Questions? Email us at{" "}
                       <a
                         href="mailto:donations@receptionhouse.ca"
-                        className="text-primary underline hover:no-underline font-medium"
+                        className="text-[var(--rh-orange-5To-orange-500)] underline hover:no-underline font-medium"
                       >
                         donations@receptionhouse.ca
                       </a>

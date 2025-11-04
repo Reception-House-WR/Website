@@ -460,29 +460,33 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiDonatePageDonatePage extends Struct.SingleTypeSchema {
-  collectionName: 'donate_pages';
+export interface ApiDonationProgramDonationProgram
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'donation_programs';
   info: {
-    displayName: 'DonatePage';
-    pluralName: 'donate-pages';
-    singularName: 'donate-page';
+    displayName: 'Donation Program';
+    pluralName: 'donation-programs';
+    singularName: 'donation-program';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+    buttonText: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    dropOffInfo: Schema.Attribute.Text;
+    description: Schema.Attribute.Text;
+    iconName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::donate-page.donate-page'
+      'api::donation-program.donation-program'
     > &
       Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
-    thriftPartners: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1224,7 +1228,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::campaign.campaign': ApiCampaignCampaign;
-      'api::donate-page.donate-page': ApiDonatePageDonatePage;
+      'api::donation-program.donation-program': ApiDonationProgramDonationProgram;
       'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;
       'api::in-kind-item.in-kind-item': ApiInKindItemInKindItem;
