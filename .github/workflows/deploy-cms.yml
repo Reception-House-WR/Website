@@ -1,0 +1,50 @@
+name: Build & Push CMS to ACR (App Service auto-deploys)
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - "apps/cms/**"
+      - ".github/workflows/deploy-cms.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: prod-deploy-cms
+  cancel-in-progress: true
+
+env:
+  ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}      
+  ACR_USERNAME:     ${{ secrets.ACR_USERNAME }}          # ACR admin username
+  ACR_PASSWORD:     ${{ secrets.ACR_PASSWORD }}          # ACR admin password
+  CMS_IMAGE_NAME:   ${{ secrets.CMS_IMAGE_NAME || 'cms' }}
+
+jobs:
+  build-and-push-cms:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker login (ACR admin creds)
+        run: |
+          echo "$ACR_PASSWORD" | docker login "$ACR_LOGIN_SERVER" -u "$ACR_USERNAME" --password-stdin
+
+      - name: Compute tags
+        id: vars
+        run: echo "SHA_TAG=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Build CMS image (context = repo root, Dockerfile in apps/cms/)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: apps/cms/Dockerfile
+          push: true
+          tags: |
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:${{ steps.vars.outputs.SHA_TAG }}
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:buildcache,mode=max

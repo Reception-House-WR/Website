@@ -1,0 +1,12 @@
+.git
+node_modules
+**/node_modules
+dist
+build
+.tmp
+.cache
+coverage
+Dockerfile
+docker-compose.yml
+.vscode
+.DS_Store
