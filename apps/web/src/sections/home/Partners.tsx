@@ -1,4 +1,9 @@
+import { ProgramCard } from "@/components/common/ProgramCard";
 import { Card } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import programs from "../programs-and-services/overview/programs";
+import Link from "next/link";
+import { link } from "fs";
 
 interface PartnersSectionProps {
   lang: string;
@@ -16,13 +21,13 @@ const translations = {
 };
 
 const partners = [
-  { id: 1, name: "Immigration Partnership" },
-  { id: 2, name: "Waterloo Region Community Foundation" },
-  { id: 3, name: "Toasty Toes Waterloo Region Fund" },
-  { id: 4, name: "Government of Canada" },
-  { id: 5, name: "Ontario Trillium Foundation" },
-  { id: 6, name: "Fairmount Foundation" },
-  { id: 7, name: "Lyle S. Hallman Foundation" },
+  { id: 1, name: "Immigration Partnership", link: "https://www.immigrationwaterlooregion.ca/en/immigration-partnership.aspx"},
+  { id: 2, name: "Waterloo Region Community Foundation", link: "https://www.wrcf.ca/" },
+  { id: 3, name: "Toasty Toes Waterloo Region Fund", link: "https://www.wrcf.ca/toastytoes" },
+  { id: 4, name: "Government of Canada", link: "https://www.canada.ca/en.html" },
+  { id: 5, name: "Ontario Trillium Foundation", link: "https://otf.ca/" },
+  { id: 6, name: "Fairmount Foundation", link: "https://fairmountfoundation.org/" },
+  { id: 7, name: "Lyle S. Hallman Foundation", link: "https://www.lshallmanfdn.org/" },
 ];
 
 export const Partners = ({ lang }: PartnersSectionProps) => {
@@ -38,13 +43,19 @@ export const Partners = ({ lang }: PartnersSectionProps) => {
           <p className="text-muted-foreground">{t.subtitle}</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mx-auto max-w-6xl">
-          {partners.map((partner, index) => (
+      
+           <Carousel
+            aria-label="Housing programs carousel"
+            className="relative w-full py-4"
+            >
+            <CarouselContent className="py-6">
+                {partners.map((partner, index) => (
             <Card
               key={partner.id}
-              className="flex items-center justify-center p-6 h-32 shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all hover:scale-105 animate-fade-in"
+              className="w-50 mx-5 flex items-center justify-center p-6 h-32 shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all hover:scale-105 animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
+              <Link href={partner.link} target="_blank">
               <div className="text-center">
                 <div className="w-24 h-16 mx-auto mb-2 flex items-center justify-center">
                   <img
@@ -58,9 +69,14 @@ export const Partners = ({ lang }: PartnersSectionProps) => {
                   {partner.name}
                 </p>
               </div>
+              </Link>
             </Card>
           ))}
-        </div>
+            </CarouselContent>
+
+            <CarouselPrevious className="!absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10" />
+            <CarouselNext className="!absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10" />
+            </Carousel>
       </div>
     </section>
   );
