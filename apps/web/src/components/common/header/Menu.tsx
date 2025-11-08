@@ -34,7 +34,7 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ListItem } from "./Listitem";
 
-const NAV = [
+export const NAV = [
   { label: "Home", href: "/" },
 
   {
