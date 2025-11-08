@@ -460,6 +460,35 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDonatePageDonatePage extends Struct.SingleTypeSchema {
+  collectionName: 'donate_pages';
+  info: {
+    displayName: 'Donate Page';
+    pluralName: 'donate-pages';
+    singularName: 'donate-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dropOffInfo: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donate-page.donate-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    thriftPartners: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDonationCategoryDonationCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'donation_categories';
@@ -477,8 +506,8 @@ export interface ApiDonationCategoryDonationCategory
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     emoji: Schema.Attribute.String;
-    in_kind_items: Schema.Attribute.Relation<
-      'manyToOne',
+    inKindItems: Schema.Attribute.Relation<
+      'oneToMany',
       'api::in-kind-item.in-kind-item'
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -609,10 +638,6 @@ export interface ApiInKindItemInKindItem extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    donation_categories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::donation-category.donation-category'
-    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1265,6 +1290,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::campaign.campaign': ApiCampaignCampaign;
+      'api::donate-page.donate-page': ApiDonatePageDonatePage;
       'api::donation-category.donation-category': ApiDonationCategoryDonationCategory;
       'api::donation-program.donation-program': ApiDonationProgramDonationProgram;
       'api::employee.employee': ApiEmployeeEmployee;

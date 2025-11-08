@@ -13,12 +13,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "donation_categories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::donation-category.donation-category",
-      "mappedBy": "in_kind_items"
     }
   }
 }

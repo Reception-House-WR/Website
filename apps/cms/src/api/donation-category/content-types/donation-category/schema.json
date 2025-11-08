@@ -29,11 +29,10 @@
     "order": {
       "type": "integer"
     },
-    "in_kind_items": {
+    "inKindItems": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::in-kind-item.in-kind-item",
-      "inversedBy": "donation_categories"
+      "relation": "oneToMany",
+      "target": "api::in-kind-item.in-kind-item"
     }
   }
 }

@@ -7,10 +7,6 @@ import {
   fetchDonatePage,
   fetchDonationPrograms,
   type HeroData,
-  type Campaign,
-  type DonationCategory,
-  type DonationProgram,
-  type DonatePageData,
 } from "@/lib/strapi";
 import DonateClient from "./DonateClient";
 
@@ -24,6 +20,7 @@ const defaultHeroData: HeroData = {
 };
 
 async function getData() {
+  // --- FIX 1: Capture all 5 results from the promise ---
   const [
     heroResult,
     campaignsResult,
@@ -38,6 +35,7 @@ async function getData() {
     fetchDonationPrograms(),
   ]);
 
+  // --- FIX 2: Return all data ---
   return {
     heroData: heroResult || defaultHeroData,
     campaignsData: campaignsResult || [],
@@ -48,6 +46,7 @@ async function getData() {
 }
 
 export default async function DonatePage() {
+  // --- FIX 3: Destructure all data from getData() ---
   const {
     heroData,
     campaignsData,
@@ -56,6 +55,7 @@ export default async function DonatePage() {
     programsData,
   } = await getData();
 
+  // --- FIX 4: Pass all props to the client component ---
   return (
     <DonateClient
       heroData={heroData}

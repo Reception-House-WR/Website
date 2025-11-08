@@ -221,7 +221,7 @@ export interface DonationCategory {
   title: string;
   emoji: string;
   color: string;
-  items: InKindItem[]; // We will simplify this in the fetch
+  items: InKindItem[] | []; // We will simplify this in the fetch
 }
 
 // --- Add this for the "Donate Page" Single Type ---

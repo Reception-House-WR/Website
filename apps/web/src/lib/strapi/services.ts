@@ -322,9 +322,7 @@ export async function fetchCampaigns(): Promise<Campaign[] | null> {
  * Fetches all published Donation Categories, sorted by 'order',
  * and populates their related In-Kind Items.
  */
-export async function fetchDonationCategories(): Promise<
-  DonationCategory[] | null
-> {
+export async function fetchDonationCategories(): Promise<any> { // DonationCategory[] | null
   const path = "/api/donation-categories";
   const params = {
     sort: ["order:asc"],
@@ -335,6 +333,7 @@ export async function fetchDonationCategories(): Promise<
     params
   );
   if (!json?.data) return null;
+  console.log(json.data[0].inKindItems);
 
   return json.data.map((item) => ({
     id: item.id,
@@ -342,7 +341,7 @@ export async function fetchDonationCategories(): Promise<
     emoji: item.emoji,
     color: item.color,
     // This simplifies the nested 'data' array from Strapi
-    items: item.inKindItems?.data || [],
+    items: item.inKindItems || [],
   }));
 }
 
@@ -366,9 +365,6 @@ export async function fetchDonatePage(): Promise<DonatePageData | null> {
     thriftPartners: json.data.thriftPartners || "",
   };
 }
-
-// lib/strapi/services.ts
-// ... (add DonationProgramDirectAttributes, DonationProgram to your types import)
 
 /**
  * Fetches all published Donation Programs, sorted by the 'order' field.
