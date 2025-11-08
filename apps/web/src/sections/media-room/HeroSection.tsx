@@ -3,7 +3,7 @@ import React from 'react'
 export const HeroSection = () => {
   return (
     <section 
-      className="relative overflow-hidden bg-gradient-to-br from-primary to-primary/80 py-20 md:py-28"
+      className="relative overflow-hidden bg-gradient-to-br from-[var(--rh-500)] to-[var(--rh-500)]/80 py-20 md:py-28"
       role="banner"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

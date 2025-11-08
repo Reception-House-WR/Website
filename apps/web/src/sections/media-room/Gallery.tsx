@@ -119,8 +119,8 @@ export const Gallery = () => {
                 />
                 {item.type === "video" && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                    <div className="rounded-full bg-primary p-4 transition-transform group-hover:scale-110">
-                      <PlayIcon className="h-8 w-8 text-primary-foreground" aria-hidden="true" />
+                    <div className="rounded-full bg-[var(--rh-500)] p-4 transition-transform group-hover:scale-110">
+                      <PlayIcon className="h-8 w-8 text-white" aria-hidden="true" />
                     </div>
                   </div>
                 )}

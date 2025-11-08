@@ -68,7 +68,7 @@ export const MediaKit = () => {
                 style={{ boxShadow: 'var(--card-shadow)' }}
               >
                 <CardHeader>
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--rh-500)]/10 text-[var(--rh-500)] transition-colors group-hover:bg-[var(--rh-500)] group-hover:text-white">
                     <Icon className="h-6 w-6" aria-hidden="true" />
                   </div>
                   <CardTitle className="text-lg">{item.title}</CardTitle>

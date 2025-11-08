@@ -122,7 +122,7 @@ export const NAV = [
 
   { label: "Stories", href: "/stories" },
   { label: "Donate", href: "/donate" },
-  { label: "Media Room", href: "/media" },
+  { label: "Media Room", href: "/media-room" },
 ];
 
 /* ====================== Desktop  ====================== */
