@@ -6,7 +6,7 @@ import {
   fetchStories,
   type Story,
 } from "@/lib/strapi";
-import StoriesClient from "./StoriesClient";
+import StoriesClient from "../../sections/stories/StoriesClient";
 import { Users } from "lucide-react";
 
 export const revalidate = 60;

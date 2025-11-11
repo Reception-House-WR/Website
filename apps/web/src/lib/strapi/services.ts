@@ -322,6 +322,7 @@ export async function fetchCampaigns(): Promise<Campaign[] | null> {
  * Fetches all published Donation Categories, sorted by 'order',
  * and populates their related In-Kind Items.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function fetchDonationCategories(): Promise<any> { // DonationCategory[] | null
   const path = "/api/donation-categories";
   const params = {

@@ -8,7 +8,7 @@ import {
   fetchDonationPrograms,
   type HeroData,
 } from "@/lib/strapi";
-import DonateClient from "./DonateClient";
+import DonateClient from "@/sections/donate/DonateClient";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
