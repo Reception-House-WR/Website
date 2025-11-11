@@ -7,7 +7,7 @@ import {
   fetchEvents,
   type Event,
 } from "@/lib/strapi";
-import EventsPageClient from "./EventsPageClient";
+import EventsPageClient from "@/sections/events/EventsPageClient";
 
 // --- Default fallback data (used if Strapi fails) ---
 const defaultHeroData: HeroData = {

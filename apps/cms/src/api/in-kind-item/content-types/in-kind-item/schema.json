@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "in_kind_items",
+  "info": {
+    "singularName": "in-kind-item",
+    "pluralName": "in-kind-items",
+    "displayName": "In Kind Item"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

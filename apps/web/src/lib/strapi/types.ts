@@ -151,3 +151,114 @@ export interface Event {
   isPaid: boolean;
   eventbriteUrl?: string;
 }
+
+// lib/strapi/types.ts
+
+export interface StoryDirectAttributes {
+  id: number;
+  name: string;
+  story: string; // Rich Text content
+  videoUrl: string;
+  image: StrapiImageData | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface Story {
+  id: number;
+  name: string;
+  story: string;
+  videoUrl: string;
+  image: string | null;
+  imageAlt: string;
+}
+
+// lib/strapi/types.ts
+
+// --- Add this for the "Campaign" Collection Type ---
+export interface CampaignDirectAttributes {
+  id: number;
+  name: string;
+  description: string;
+  image: StrapiImageData | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface Campaign {
+  id: number;
+  name: string;
+  description: string;
+  image: string | null;
+  imageAlt: string;
+}
+
+// lib/strapi/types.ts
+
+// This is the new item type
+export interface InKindItem {
+  id: number;
+  name: string;
+}
+
+// This is the new category type
+export interface DonationCategoryDirectAttributes {
+  id: number;
+  title: string;
+  emoji: string;
+  color: "blue" | "pink" | "yellow" | "rose";
+  order: number;
+  inKindItems: { data: InKindItem[] }; // This is how relations are structured
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface DonationCategory {
+  id: number;
+  title: string;
+  emoji: string;
+  color: string;
+  items: InKindItem[] | []; // We will simplify this in the fetch
+}
+
+// --- Add this for the "Donate Page" Single Type ---
+export interface DonatePageDirectAttributes {
+  id: number;
+  dropOffInfo: string; // Markdown field
+  thriftPartners: string; // Text field, one partner per line
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface DonatePageData {
+  dropOffInfo: string;
+  thriftPartners: string;
+}
+
+// lib/strapi/types.ts
+
+// --- Add this for the raw Strapi data ---
+export interface DonationProgramDirectAttributes {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+  iconName: string; // This will be "Home", "Briefcase", etc.
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+// --- Add this for the frontend data shape ---
+export interface DonationProgram {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+  iconName: string;
+}

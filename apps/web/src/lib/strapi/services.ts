@@ -6,12 +6,22 @@ import type {
   TextSectionData,
   TimelineEvent,
   Event,
+  Story,
+  Campaign,
+  DonationCategory,
+  DonatePageData,
+  DonationProgram,
   StrapiResponse,
   PageHeroDirectAttributes,
   EmployeeDirectAttributes,
   TextSectionDirectAttributes,
   TimelineEventDirectAttributes,
   EventDirectAttributes,
+  StoryDirectAttributes,
+  CampaignDirectAttributes,
+  DonationCategoryDirectAttributes,
+  DonatePageDirectAttributes,
+  DonationProgramDirectAttributes,
 } from "./types";
 
 /**
@@ -236,4 +246,148 @@ export async function fetchEvents(): Promise<Event[] | null> {
   });
 
   return events;
+}
+
+// lib/strapi/services.ts
+
+/**
+ * Fetches all published Stories, sorted by publish date.
+ * @returns Array of Story objects or null on error.
+ */
+export async function fetchStories(): Promise<Story[] | null> {
+  const path = "/api/stories";
+  const params = {
+    sort: ["publishedAt:desc"],
+    populate: { image: true },
+    pagination: { pageSize: 10 }, // Get the 10 most recent stories
+  };
+
+  const json = await fetchApi<StrapiResponse<StoryDirectAttributes>>(
+    path,
+    params
+    // No 'next' block needed, we are using time-based revalidation
+  );
+
+  if (!json) return null;
+  if (!json.data) {
+    console.warn("No story data array returned from Strapi.");
+    return [];
+  }
+
+  const stories: Story[] = json.data.map((item) => {
+    const imageUrl = getStrapiMedia(item.image);
+    return {
+      id: item.id,
+      name: item.name || "Unnamed",
+      story: item.story || "No story provided.",
+      videoUrl: item.videoUrl || "#",
+      image: imageUrl,
+      imageAlt: item.image?.alternativeText || `A photo of ${item.name}`,
+    };
+  });
+
+  return stories;
+}
+
+// lib/strapi/services.ts
+
+/**
+ * Fetches all published Campaigns.
+ */
+export async function fetchCampaigns(): Promise<Campaign[] | null> {
+  const path = "/api/campaigns";
+  const params = {
+    sort: ["publishedAt:desc"],
+    populate: { image: true },
+  };
+  const json = await fetchApi<StrapiResponse<CampaignDirectAttributes>>(
+    path,
+    params
+  );
+  if (!json?.data) return null;
+
+  return json.data.map((item) => {
+    const imageUrl = getStrapiMedia(item.image);
+    return {
+      id: item.id,
+      name: item.name || "Untitled Campaign",
+      description: item.description || "",
+      image: imageUrl,
+      imageAlt: item.image?.alternativeText || `Image for ${item.name}`,
+    };
+  });
+}
+
+/**
+ * Fetches all published Donation Categories, sorted by 'order',
+ * and populates their related In-Kind Items.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function fetchDonationCategories(): Promise<any> { // DonationCategory[] | null
+  const path = "/api/donation-categories";
+  const params = {
+    sort: ["order:asc"],
+    populate: ["inKindItems"],
+  };
+  const json = await fetchApi<StrapiResponse<DonationCategoryDirectAttributes>>(
+    path,
+    params
+  );
+  if (!json?.data) return null;
+  console.log(json.data[0].inKindItems);
+
+  return json.data.map((item) => ({
+    id: item.id,
+    title: item.title,
+    emoji: item.emoji,
+    color: item.color,
+    // This simplifies the nested 'data' array from Strapi
+    items: item.inKindItems || [],
+  }));
+}
+
+export async function fetchDonatePage(): Promise<DonatePageData | null> {
+  const path = "/api/donate-page";
+
+  // We expect a single data object, not an array
+  const json = await fetchApi<{ data: DonatePageDirectAttributes }>(path, {});
+
+  // Check if the data object itself is null or undefined
+  if (!json?.data) {
+    console.warn(
+      "No data found for Donate Page. Make sure it is created and published in Strapi."
+    );
+    return null;
+  }
+
+  // Access 'json.data' directly as an object
+  return {
+    dropOffInfo: json.data.dropOffInfo || "",
+    thriftPartners: json.data.thriftPartners || "",
+  };
+}
+
+/**
+ * Fetches all published Donation Programs, sorted by the 'order' field.
+ */
+export async function fetchDonationPrograms(): Promise<
+  DonationProgram[] | null
+> {
+  const path = "/api/donation-programs";
+  const params = {
+    sort: ["order:asc"], // Sort by the order field
+  };
+  const json = await fetchApi<StrapiResponse<DonationProgramDirectAttributes>>(
+    path,
+    params
+  );
+  if (!json?.data) return null;
+
+  return json.data.map((item) => ({
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    buttonText: item.buttonText,
+    iconName: item.iconName,
+  }));
 }
