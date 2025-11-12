@@ -1,34 +1,31 @@
 {
   "kind": "collectionType",
-  "collectionName": "stories",
+  "collectionName": "partners",
   "info": {
-    "singularName": "story",
-    "pluralName": "stories",
-    "displayName": "Story"
+    "singularName": "partner",
+    "pluralName": "partners",
+    "displayName": "Partner"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Author": {
+    "Name": {
       "type": "string"
     },
-    "Quote": {
-      "type": "text"
-    },
-    "Country": {
-      "type": "string"
-    },
-    "Image": {
+    "logo": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
       ]
+    },
+    "URL": {
+      "type": "string"
     }
   }
 }

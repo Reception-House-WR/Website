@@ -441,151 +441,26 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    ButtonLabel: Schema.Attribute.String;
+    ButtonURL: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images'>;
+    Description: Schema.Attribute.Text;
+    Goal: Schema.Attribute.BigInteger;
+    Image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::campaign.campaign'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
+    Name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiDonatePageDonatePage extends Struct.SingleTypeSchema {
-  collectionName: 'donate_pages';
-  info: {
-    displayName: 'Donate Page';
-    pluralName: 'donate-pages';
-    singularName: 'donate-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    dropOffInfo: Schema.Attribute.Text;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::donate-page.donate-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    thriftPartners: Schema.Attribute.Text;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiDonationCategoryDonationCategory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'donation_categories';
-  info: {
-    displayName: 'Donation Category';
-    pluralName: 'donation-categories';
-    singularName: 'donation-category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    color: Schema.Attribute.Enumeration<['blue', 'pink', 'yellow', 'rose']>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    emoji: Schema.Attribute.String;
-    inKindItems: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::in-kind-item.in-kind-item'
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::donation-category.donation-category'
-    > &
-      Schema.Attribute.Private;
-    order: Schema.Attribute.Integer;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiDonationProgramDonationProgram
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'donation_programs';
-  info: {
-    displayName: 'Donation Program';
-    pluralName: 'donation-programs';
-    singularName: 'donation-program';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    buttonText: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    iconName: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::donation-program.donation-program'
-    > &
-      Schema.Attribute.Private;
-    order: Schema.Attribute.Integer;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
-  collectionName: 'employees';
-  info: {
-    displayName: 'Employee';
-    pluralName: 'employees';
-    singularName: 'employee';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    department: Schema.Attribute.String & Schema.Attribute.Required;
-    email: Schema.Attribute.Email &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    imageUrl: Schema.Attribute.Media<'images'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::employee.employee'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    role: Schema.Attribute.String & Schema.Attribute.Required;
+    Raised: Schema.Attribute.BigInteger;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -606,30 +481,29 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    date: Schema.Attribute.Date & Schema.Attribute.Required;
-    description: Schema.Attribute.Text;
-    eventbriteUrl: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-    isPaid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    Date: Schema.Attribute.Date;
+    Description: Schema.Attribute.Text;
+    EventBriteURL: Schema.Attribute.String;
+    isPaid: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
-    location: Schema.Attribute.String;
+    Location: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    time: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    Time: Schema.Attribute.Time;
+    Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
   };
 }
 
-export interface ApiInKindItemInKindItem extends Struct.CollectionTypeSchema {
-  collectionName: 'in_kind_items';
+export interface ApiPartnerPartner extends Struct.CollectionTypeSchema {
+  collectionName: 'partners';
   info: {
-    displayName: 'In Kind Item';
-    pluralName: 'in-kind-items';
-    singularName: 'in-kind-item';
+    displayName: 'Partner';
+    pluralName: 'partners';
+    singularName: 'partner';
   };
   options: {
     draftAndPublish: true;
@@ -641,46 +515,16 @@ export interface ApiInKindItemInKindItem extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::in-kind-item.in-kind-item'
+      'api::partner.partner'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-  };
-}
-
-export interface ApiPageHeroPageHero extends Struct.CollectionTypeSchema {
-  collectionName: 'page_heroes';
-  info: {
-    displayName: 'Page Hero';
-    pluralName: 'page-heroes';
-    singularName: 'page-hero';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    backgroundImage: Schema.Attribute.Media<'images'> &
-      Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::page-hero.page-hero'
-    > &
-      Schema.Attribute.Private;
-    pageIdentifier: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    URL: Schema.Attribute.String;
   };
 }
 
@@ -695,29 +539,32 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    Author: Schema.Attribute.String;
+    Country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    image: Schema.Attribute.Media<'images'>;
+    Image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::story.story'> &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    story: Schema.Attribute.Text;
+    Quote: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    videoUrl: Schema.Attribute.String;
   };
 }
 
-export interface ApiTextSectionTextSection extends Struct.CollectionTypeSchema {
-  collectionName: 'text_sections';
+export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
+  collectionName: 'web_pages';
   info: {
-    displayName: 'Text Section ';
-    pluralName: 'text-sections';
-    singularName: 'text-section';
+    displayName: 'WebPage';
+    pluralName: 'web-pages';
+    singularName: 'web-page';
   };
   options: {
     draftAndPublish: true;
@@ -726,56 +573,28 @@ export interface ApiTextSectionTextSection extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    Identifier: Schema.Attribute.UID;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::text-section.text-section'
+      'api::web-page.web-page'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    sectionIdentifier: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    Sections: Schema.Attribute.DynamicZone<
+      [
+        'donate.current-campaign',
+        'common.section',
+        'common.hero',
+        'common.carousel',
+        'common.button',
+        'stories.stories-carousel',
+      ]
+    >;
+    Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-  };
-}
-
-export interface ApiTimelineEventTimelineEvent
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'timeline_events';
-  info: {
-    displayName: 'Timeline Event';
-    pluralName: 'timeline-events';
-    singularName: 'timeline-event';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<'images'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::timeline-event.timeline-event'
-    > &
-      Schema.Attribute.Private;
-    order: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    year: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1290,16 +1109,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::campaign.campaign': ApiCampaignCampaign;
-      'api::donate-page.donate-page': ApiDonatePageDonatePage;
-      'api::donation-category.donation-category': ApiDonationCategoryDonationCategory;
-      'api::donation-program.donation-program': ApiDonationProgramDonationProgram;
-      'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;
-      'api::in-kind-item.in-kind-item': ApiInKindItemInKindItem;
-      'api::page-hero.page-hero': ApiPageHeroPageHero;
+      'api::partner.partner': ApiPartnerPartner;
       'api::story.story': ApiStoryStory;
-      'api::text-section.text-section': ApiTextSectionTextSection;
-      'api::timeline-event.timeline-event': ApiTimelineEventTimelineEvent;
+      'api::web-page.web-page': ApiWebPageWebPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_common_carousels",
+  "info": {
+    "displayName": "Carousel"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Limit": {
+      "type": "integer"
+    },
+    "SortBy": {
+      "type": "enumeration",
+      "enum": [
+        "priority"
+      ]
+    },
+    "Direction": {
+      "type": "enumeration",
+      "enum": [
+        "asc",
+        "desc"
+      ]
+    }
+  },
+  "config": {}
+}

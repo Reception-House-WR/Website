@@ -11,18 +11,33 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "Name": {
       "type": "string"
     },
-    "description": {
+    "Description": {
       "type": "text"
     },
-    "image": {
+    "Raised": {
+      "type": "biginteger"
+    },
+    "Goal": {
+      "type": "biginteger"
+    },
+    "Image": {
       "type": "media",
-      "multiple": false,
+      "multiple": true,
       "allowedTypes": [
-        "images"
+        "images",
+        "files",
+        "videos",
+        "audios"
       ]
+    },
+    "ButtonURL": {
+      "type": "string"
+    },
+    "ButtonLabel": {
+      "type": "string"
     }
   }
 }

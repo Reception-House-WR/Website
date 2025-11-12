@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "web_pages",
+  "info": {
+    "singularName": "web-page",
+    "pluralName": "web-pages",
+    "displayName": "WebPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Identifier": {
+      "type": "uid"
+    },
+    "Sections": {
+      "type": "dynamiczone",
+      "components": [
+        "donate.current-campaign",
+        "common.section",
+        "common.hero",
+        "common.carousel",
+        "common.button",
+        "stories.stories-carousel"
+      ]
+    }
+  }
+}

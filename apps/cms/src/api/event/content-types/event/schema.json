@@ -11,36 +11,36 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string",
-      "required": true
+    "Title": {
+      "type": "string"
     },
-    "description": {
+    "Description": {
       "type": "text"
     },
-    "date": {
-      "type": "date",
-      "required": true
+    "Date": {
+      "type": "date"
     },
-    "time": {
+    "Time": {
+      "type": "time"
+    },
+    "Location": {
       "type": "string"
-    },
-    "location": {
-      "type": "string"
-    },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
     },
     "isPaid": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
-    "eventbriteUrl": {
-      "type": "string"
+    "EventBriteURL": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "isPaid"
+            },
+            true
+          ]
+        }
+      }
     }
   }
 }

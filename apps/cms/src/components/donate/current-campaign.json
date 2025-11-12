@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_donate_current_campaigns",
+  "info": {
+    "displayName": "CurrentCampaign"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "campaign": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::campaign.campaign"
+    }
+  },
+  "config": {}
+}
