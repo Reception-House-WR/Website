@@ -11,18 +11,22 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Author": {
-      "type": "string"
+    "author": {
+      "type": "string",
+      "required": true
     },
-    "Quote": {
-      "type": "text"
+    "quote": {
+      "type": "text",
+      "required": true
     },
-    "Country": {
-      "type": "string"
+    "country": {
+      "type": "string",
+      "required": true
     },
-    "Image": {
+    "image": {
       "type": "media",
       "multiple": true,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",

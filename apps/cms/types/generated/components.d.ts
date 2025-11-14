@@ -3,40 +3,40 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface CommonButton extends Struct.ComponentSchema {
   collectionName: 'components_common_buttons';
   info: {
-    displayName: 'Button';
+    displayName: 'button';
   };
   attributes: {
-    Label: Schema.Attribute.String;
-    URL: Schema.Attribute.String;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface CommonCarousel extends Struct.ComponentSchema {
   collectionName: 'components_common_carousels';
   info: {
-    displayName: 'Carousel';
+    displayName: 'carousel';
   };
   attributes: {
-    Description: Schema.Attribute.Text;
-    Direction: Schema.Attribute.Enumeration<['asc', 'desc']>;
-    Limit: Schema.Attribute.Integer;
-    SortBy: Schema.Attribute.Enumeration<['priority']>;
-    Title: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    direction: Schema.Attribute.Enumeration<['asc', 'desc']>;
+    limit: Schema.Attribute.Integer;
+    sortBy: Schema.Attribute.Enumeration<['priority']>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface CommonHero extends Struct.ComponentSchema {
   collectionName: 'components_common_heroes';
   info: {
-    displayName: 'Hero';
+    displayName: 'hero';
   };
   attributes: {
-    BackgroundImage: Schema.Attribute.Media<
+    backgroundImage: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    Description: Schema.Attribute.Text;
-    Title: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -46,31 +46,31 @@ export interface CommonSection extends Struct.ComponentSchema {
     displayName: 'section';
   };
   attributes: {
-    Description: Schema.Attribute.Text;
-    Title: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   collectionName: 'components_donate_current_campaigns';
   info: {
-    displayName: 'CurrentCampaign';
+    displayName: 'currentCampaign';
   };
   attributes: {
     campaign: Schema.Attribute.Relation<'oneToOne', 'api::campaign.campaign'>;
-    Title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface StoriesStoriesCarousel extends Struct.ComponentSchema {
   collectionName: 'components_stories_stories_carousels';
   info: {
-    displayName: 'stories-carousel';
+    displayName: 'storiesCarousel';
   };
   attributes: {
-    Description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
     stories: Schema.Attribute.Relation<'oneToMany', 'api::story.story'>;
-    Title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 

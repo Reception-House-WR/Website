@@ -1,15 +1,17 @@
 {
   "collectionName": "components_common_buttons",
   "info": {
-    "displayName": "Button"
+    "displayName": "button"
   },
   "options": {},
   "attributes": {
-    "Label": {
-      "type": "string"
+    "label": {
+      "type": "string",
+      "required": true
     },
-    "URL": {
-      "type": "string"
+    "url": {
+      "type": "string",
+      "required": true
     }
   },
   "config": {}

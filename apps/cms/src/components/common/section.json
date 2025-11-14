@@ -5,11 +5,13 @@
   },
   "options": {},
   "attributes": {
-    "Title": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "Description": {
-      "type": "text"
+    "description": {
+      "type": "text",
+      "required": true
     }
   },
   "config": {}

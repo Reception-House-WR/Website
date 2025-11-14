@@ -11,21 +11,26 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
-      "type": "string"
+    "name": {
+      "type": "string",
+      "required": true
     },
-    "Description": {
-      "type": "text"
+    "description": {
+      "type": "text",
+      "required": true
     },
-    "Raised": {
-      "type": "biginteger"
+    "raised": {
+      "type": "biginteger",
+      "required": true
     },
-    "Goal": {
-      "type": "biginteger"
+    "goal": {
+      "type": "biginteger",
+      "required": true
     },
-    "Image": {
+    "image": {
       "type": "media",
       "multiple": true,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -33,11 +38,13 @@
         "audios"
       ]
     },
-    "ButtonURL": {
-      "type": "string"
+    "buttonURL": {
+      "type": "string",
+      "required": true
     },
-    "ButtonLabel": {
-      "type": "string"
+    "buttonLabel": {
+      "type": "string",
+      "required": true
     }
   }
 }

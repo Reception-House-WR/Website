@@ -11,25 +11,31 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "Description": {
-      "type": "text"
+    "description": {
+      "type": "text",
+      "required": true
     },
-    "Date": {
-      "type": "date"
+    "date": {
+      "type": "date",
+      "required": true
     },
-    "Time": {
-      "type": "time"
+    "time": {
+      "type": "time",
+      "required": true
     },
-    "Location": {
-      "type": "string"
+    "location": {
+      "type": "string",
+      "required": true
     },
     "isPaid": {
-      "type": "boolean"
+      "type": "boolean",
+      "required": true
     },
-    "EventBriteURL": {
+    "eventBriteURL": {
       "type": "string",
       "conditions": {
         "visible": {
@@ -41,6 +47,17 @@
           ]
         }
       }
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

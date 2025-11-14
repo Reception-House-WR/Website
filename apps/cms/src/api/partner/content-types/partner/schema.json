@@ -11,12 +11,14 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
-      "type": "string"
+    "name": {
+      "type": "string",
+      "required": true
     },
     "logo": {
       "type": "media",
       "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -24,8 +26,9 @@
         "audios"
       ]
     },
-    "URL": {
-      "type": "string"
+    "url": {
+      "type": "string",
+      "required": true
     }
   }
 }

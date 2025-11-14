@@ -11,13 +11,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "Identifier": {
-      "type": "uid"
+    "identifier": {
+      "type": "uid",
+      "required": true
     },
-    "Sections": {
+    "sections": {
       "type": "dynamiczone",
       "components": [
         "donate.current-campaign",

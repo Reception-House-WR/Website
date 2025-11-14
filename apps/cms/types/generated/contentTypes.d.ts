@@ -441,26 +441,27 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    ButtonLabel: Schema.Attribute.String;
-    ButtonURL: Schema.Attribute.String;
+    buttonLabel: Schema.Attribute.String & Schema.Attribute.Required;
+    buttonURL: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.Text;
-    Goal: Schema.Attribute.BigInteger;
-    Image: Schema.Attribute.Media<
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    goal: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
-    >;
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::campaign.campaign'
     > &
       Schema.Attribute.Private;
-    Name: Schema.Attribute.String;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Raised: Schema.Attribute.BigInteger;
+    raised: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -481,17 +482,19 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Date: Schema.Attribute.Date;
-    Description: Schema.Attribute.Text;
-    EventBriteURL: Schema.Attribute.String;
-    isPaid: Schema.Attribute.Boolean;
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    eventBriteURL: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    isPaid: Schema.Attribute.Boolean & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
-    Location: Schema.Attribute.String;
+    location: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Time: Schema.Attribute.Time;
-    Title: Schema.Attribute.String;
+    time: Schema.Attribute.Time & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -518,13 +521,14 @@ export interface ApiPartnerPartner extends Struct.CollectionTypeSchema {
       'api::partner.partner'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Name: Schema.Attribute.String;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    URL: Schema.Attribute.String;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -539,20 +543,21 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Author: Schema.Attribute.String;
-    Country: Schema.Attribute.String;
+    author: Schema.Attribute.String & Schema.Attribute.Required;
+    country: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Image: Schema.Attribute.Media<
+    image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
-    >;
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::story.story'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    Quote: Schema.Attribute.Text;
+    quote: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -573,7 +578,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Identifier: Schema.Attribute.UID;
+    identifier: Schema.Attribute.UID & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -581,7 +586,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    Sections: Schema.Attribute.DynamicZone<
+    sections: Schema.Attribute.DynamicZone<
       [
         'donate.current-campaign',
         'common.section',
@@ -591,7 +596,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'stories.stories-carousel',
       ]
     >;
-    Title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

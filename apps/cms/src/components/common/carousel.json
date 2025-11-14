@@ -1,26 +1,30 @@
 {
   "collectionName": "components_common_carousels",
   "info": {
-    "displayName": "Carousel"
+    "displayName": "carousel"
   },
   "options": {},
   "attributes": {
-    "Title": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "Description": {
-      "type": "text"
+    "description": {
+      "type": "text",
+      "required": true
     },
-    "Limit": {
-      "type": "integer"
+    "limit": {
+      "type": "integer",
+      "required": false
     },
-    "SortBy": {
+    "sortBy": {
       "type": "enumeration",
+      "required": false,
       "enum": [
         "priority"
       ]
     },
-    "Direction": {
+    "direction": {
       "type": "enumeration",
       "enum": [
         "asc",

@@ -1,15 +1,17 @@
 {
   "collectionName": "components_stories_stories_carousels",
   "info": {
-    "displayName": "stories-carousel"
+    "displayName": "storiesCarousel"
   },
   "options": {},
   "attributes": {
-    "Title": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "Description": {
-      "type": "text"
+    "description": {
+      "type": "text",
+      "required": true
     },
     "stories": {
       "type": "relation",

@@ -1,17 +1,19 @@
 {
   "collectionName": "components_common_heroes",
   "info": {
-    "displayName": "Hero"
+    "displayName": "hero"
   },
   "options": {},
   "attributes": {
-    "Title": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "Description": {
-      "type": "text"
+    "description": {
+      "type": "text",
+      "required": true
     },
-    "BackgroundImage": {
+    "backgroundImage": {
       "type": "media",
       "multiple": true,
       "allowedTypes": [
