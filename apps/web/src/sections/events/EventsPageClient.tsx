@@ -100,8 +100,8 @@ export default function EventsPageClient({
               <TabsContent value="all" className="mt-6">
                 <div className="space-y-6">
                   {allEventsData.length > 0 ? (
-                    allEventsData.map((event) => (
-                      <EventCard key={event.title} event={event} />
+                    allEventsData.map((event, id) => (
+                      <EventCard key={id} event={event} />
                     ))
                   ) : (
                     <p className="text-muted-foreground">

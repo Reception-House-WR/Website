@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Calendar as CalendarIcon, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import {
   Card,
   CardContent,
@@ -141,6 +142,15 @@ export const EventCard = ({ event }: { event: Event }) => {
     </Card>
   );
 
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  if (!siteKey) {
+    // If key is missing, render the card but don't allow RSVP
+
+    console.error("reCAPTCHA site key is missing.");
+    return CardUI;
+  }
+
+
   // --- CONDITIONAL WRAPPER ---
   if (event.isPaid || event.category === "past") {
     return CardUI;
@@ -148,6 +158,7 @@ export const EventCard = ({ event }: { event: Event }) => {
 
   // --- FREE, UPCOMING EVENT: Wrap in the Dialog ---
   return (
+    <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       {CardUI} {/* This now contains the <DialogTrigger> */}
       <DialogContent className="sm:max-w-[500px]">
@@ -166,5 +177,6 @@ export const EventCard = ({ event }: { event: Event }) => {
         />
       </DialogContent>
     </Dialog>
+    </GoogleReCaptchaProvider>
   );
 };

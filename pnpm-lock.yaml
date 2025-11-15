@@ -142,6 +142,9 @@ importers:
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
+      react-google-recaptcha-v3:
+        specifier: ^1.11.0
+        version: 1.11.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-hook-form:
         specifier: ^7.65.0
         version: 7.65.0(react@19.1.0)
@@ -6812,6 +6815,12 @@ packages:
 
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
+
+  react-google-recaptcha-v3@1.11.0:
+    resolution: {integrity: sha512-kLQqpz/77m8+trpBwzqcxNtvWZYoZ/YO6Vm2cVTHW8hs80BWUfDpC7RDwuAvpswwtSYApWfaSpIDFWAIBNIYxQ==}
+    peerDependencies:
+      react: 19.1.0
+      react-dom: 19.1.0
 
   react-helmet@6.1.0:
     resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
@@ -16492,6 +16501,12 @@ snapshots:
   react-fast-compare@2.0.4: {}
 
   react-fast-compare@3.2.2: {}
+
+  react-google-recaptcha-v3@1.11.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   react-helmet@6.1.0(react@19.1.0):
     dependencies:
