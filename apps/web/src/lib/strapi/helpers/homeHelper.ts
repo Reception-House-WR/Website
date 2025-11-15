@@ -1,7 +1,7 @@
 import { Hero } from "../models/common/hero";
 import { Section } from "../models/common/section";
 import { Campaign } from "../models/donate/campaign";
-import { AppEvent } from "../models/event/event";
+import { UpcomingEvent } from "../models/event/event";
 import { HomeSections } from "../models/home/homeSections";
 import { Partner } from "../models/home/partner";
 import { Story } from "../models/stories/story";
@@ -55,8 +55,58 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
     __component: "common.hero",
     title: heroRaw?.title ?? "",
     description: heroRaw?.description ?? "",
-    backgroundImage: heroRaw?.backgroundImage ?? null,
+    backgroundImageUrl: heroRaw?.backgroundImage[0].url ?? null,
   };
+
+  const stories: Story[] = (storiesRaw?.stories ?? []).map((story: any) => ({
+    author: story.author,
+    country: story.country,
+    image: story.image?.[0]?.url ?? null,
+    quote: story.quote,
+  }));
+
+  const campaign: Campaign = {
+    name: campaignRaw?.campaign?.name ?? "",
+    description: campaignRaw?.campaign?.description ?? "",
+    goal: campaignRaw?.campaign?.goal ?? 0,
+    raised: campaignRaw?.campaign?.raised ?? 0,
+    image: campaignRaw?.campaign?.image?.[0]?.url ?? null,
+    buttonLabel: campaignRaw?.campaign?.buttonLabel ?? "",
+    buttonURL: campaignRaw?.campaign?.buttonURL ?? "",
+  }
+
+  // console.log("events raw:", eventsRes);
+
+  const events: UpcomingEvent[] = (eventsRes?.data ?? []).map((event: any) => {
+    const dateStr = event?.date;
+    let parsedDate: Date | null = null;
+
+    if (typeof dateStr === "string") {
+      const m = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (m) {
+        const year = Number(m[1]);
+        const month = Number(m[2]) - 1; // JS months are 0-based
+        const day = Number(m[3]);
+        parsedDate = new Date(year, month, day);
+      } else {
+        const ts = Date.parse(dateStr);
+        parsedDate = isNaN(ts) ? null : new Date(ts);
+      }
+    }
+
+    return {
+      title: event.title,
+      description: event.description,
+      date: parsedDate,
+      time: event.time,
+      location: event.location,
+      isPaid: event.isPaid,
+      eventBriteURL: event.eventBriteURL,
+      image: event.image?.url ?? null,
+    } as UpcomingEvent;
+  });
+
+  // console.log("events:", events);
 
   return {
     title: page.title,
@@ -66,17 +116,17 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
 
     storiesSection: {
       section: toSection(storiesRaw),
-      stories: (storiesRaw?.stories ?? []) as Story[],
+      stories,
     },
 
     currentCampaignSection: {
       section: toSection(campaignRaw),
-      campaign: (campaignRaw?.campaign ?? null) as Campaign,
+      campaign,
     },
 
     upcomingEventsSection: {
       section: toSection(upcomingRaw),
-      events: (eventsRes?.data ?? []) as AppEvent[],
+      events
     },
 
     partnersSection: {

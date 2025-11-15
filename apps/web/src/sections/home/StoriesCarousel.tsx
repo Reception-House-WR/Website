@@ -4,17 +4,11 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-
-interface Story {
-  id: number;
-  image: string;
-  quote: string;
-  name: string;
-  origin: string;
-}
-
+import { Story } from "@/lib/strapi/models/stories/story";
 interface StoriesCarouselProps {
-  lang: string;
+  title: string;
+  desc: string;
+  stories: Story[];
 }
 
 const storiesData = {
@@ -71,10 +65,10 @@ const titles = {
   fr: "Histoires d'espoir",
 };
 
-export const StoriesCarousel = ({ lang }: StoriesCarouselProps) => {
+export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const stories = storiesData[lang as keyof typeof storiesData] || storiesData.en;
-  const title = titles[lang as keyof typeof titles] || titles.en;
+  // const stories = storiesData[lang as keyof typeof storiesData] || storiesData.en;
+  // const title = titles[lang as keyof typeof titles] || titles.en;
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
@@ -101,7 +95,7 @@ export const StoriesCarousel = ({ lang }: StoriesCarouselProps) => {
                 <div className="relative h-64 md:h-auto overflow-hidden">
                   <img
                     src={currentStory.image}
-                    alt={`${currentStory.name} from ${currentStory.origin}`}
+                    alt={`${currentStory.image} from ${currentStory.author}`}
                     className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
@@ -113,8 +107,8 @@ export const StoriesCarousel = ({ lang }: StoriesCarouselProps) => {
                     "{currentStory.quote}"
                   </blockquote>
                   <div>
-                    <p className="font-semibold text-foreground">{currentStory.name}</p>
-                    <p className="text-sm text-muted-foreground">{currentStory.origin}</p>
+                    <p className="font-semibold text-foreground">{currentStory.author}</p>
+                    <p className="text-sm text-muted-foreground">{currentStory.country}</p>
                   </div>
                 </div>
               </div>

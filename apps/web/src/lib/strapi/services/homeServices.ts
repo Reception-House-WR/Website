@@ -1,7 +1,7 @@
 import { fetchApi } from "@/lib/strapi/client"; 
 import { HomeStructure } from "../models/strapi/homeStructure";
 import { Partner } from "../models/home/partner";
-import { AppEvent } from "../models/event/event";
+import { UpcomingEvent } from "../models/event/event";
 
 export async function fetchHomePageSections() {
   return await fetchApi<{
@@ -12,10 +12,22 @@ export async function fetchHomePageSections() {
       sections: {
         on: {
           "stories.stories-carousel": {
-            populate: {stories: true}, 
+            populate: {
+              stories: {
+                populate: {
+                  image: true,       // 👈 populate the media field here
+                },
+              },
+            }, 
           },
           "donate.current-campaign": {
-            populate: {campaign: true}, 
+            populate: {
+              campaign: {
+                populate: {
+                  image: true,       // 👈 populate the media field here
+                },
+              },
+            }, 
           },
           "common.hero": {
             populate: {backgroundImage: true}, 
@@ -31,7 +43,7 @@ export async function fetchHomePageSections() {
 export async function fetchUpcomingEvents(limit = 4) {
   const today = new Date().toISOString().slice(0, 10);
 
-  return await fetchApi<{ data: AppEvent[] }>("/api/events", {
+  return await fetchApi<{ data: UpcomingEvent[] }>("/api/events", {
     filters: {
       date: {
         $gte: today, 

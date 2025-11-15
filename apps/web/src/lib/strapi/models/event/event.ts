@@ -1,13 +1,10 @@
-import { Image } from "../strapi/image";
-
-export interface AppEvent {
+export interface UpcomingEvent {
     title: string;
     description: string;
-    date: Date;
+    date: Date | null;
     time: string;
     location: string;
     isPaid: boolean;
     eventBriteURL?: string;
-    image: Image
-
+    image: string;
 }

@@ -1,4 +1,4 @@
-import { Campaign } from "../sections/home/Campaign";
+import { CampaignSection } from "../sections/home/CampaignSection";
 import { EventsCalendar } from "../sections/home/EventCalender";
 import { Hero } from "../sections/home/Hero";
 import { StoriesCarousel } from "../sections/home/StoriesCarousel";
@@ -11,13 +11,16 @@ export default async function Home() {
   const res = await fetchHomePage();
   console.log("Home page data:", res);
 
+  if (!res) {
+    return <div className="flex items-center justify-center py-5">Error loading home page data.</div>;
+  }
 
   return (
     <div className="">
-      <Hero lang="en" />
-      <StoriesCarousel lang="en" />
-      <Campaign lang="en" />
-      <EventsCalendar lang="en" />
+      <Hero title={res.hero.title} description={res.hero.description} imageUrl={res.hero.backgroundImageUrl} />
+      <StoriesCarousel title={res.storiesSection.section.title} desc={res.storiesSection.section.description} stories={res.storiesSection.stories} />
+      <CampaignSection title={res.currentCampaignSection.section.title} campaign={res.currentCampaignSection.campaign} />
+      <EventsCalendar title={res.upcomingEventsSection.section.title} desc={res.upcomingEventsSection.section.description} events={res.upcomingEventsSection.events} />
       <Partners lang="en" />
     </div>
   );

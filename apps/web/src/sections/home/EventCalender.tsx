@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Clock, MapPin, Calendar as CalendarIcon } from "lucide-react";
+import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
 // import eventOrientation from "@/assets/event-orientation.jpg";
 // import eventPotluck from "@/assets/event-potluck.jpg";
@@ -17,21 +18,10 @@ import { Clock, MapPin, Calendar as CalendarIcon } from "lucide-react";
 
 const testImage = 'assets/stories/story-1.jpg';
 
-interface Event {
-  id: number;
-  title: string;
-  date: Date;
-  time: string;
-  location: string;
-  image: {
-    url: string;
-    alt: string;
-  };
-  summary: string;
-}
-
 interface EventsCalendarProps {
-  lang: string;
+  title: string;
+  desc: string;
+  events: UpcomingEvent[];
 }
 
 const eventsData = {
@@ -157,21 +147,23 @@ const eventsData = {
   },
 };
 
-export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
-  const data = eventsData[lang as keyof typeof eventsData] || eventsData.en;
+export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => {
+  // const data = eventsData[lang as keyof typeof eventsData] || eventsData.en;
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [isLoading] = useState(false);
 
-  const eventDates = data.events.map(event => event.date);
+  const eventDates = events
+  .map(event => event.date)
+  .filter((date): date is Date => date !== null);
   
   // Display logic: show all events by default, filter when date is selected
   const displayedEvents = selectedDate
-    ? data.events.filter(event => 
-        event.date.getDate() === selectedDate.getDate() &&
+    ? events.filter(event => 
+        event.date && event.date.getDate() === selectedDate.getDate() &&
         event.date.getMonth() === selectedDate.getMonth() &&
         event.date.getFullYear() === selectedDate.getFullYear()
       )
-    : data.events;
+    : events;
 
   const hasEventsOnSelectedDate = selectedDate && displayedEvents.length > 0;
   const isEmptySelectedDate = selectedDate && displayedEvents.length === 0;
@@ -196,10 +188,10 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
   };
 
   const eventsCountText = displayedEvents.length === 1 
-    ? data.eventsCount 
-    : data.eventsCountPlural;
+    ? 'event' 
+    : 'events';
 
-  const dateFormatter = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-US', {
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -209,7 +201,7 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
         <h2 className="mb-12 text-center text-3xl font-bold text-foreground md:text-4xl">
-          {data.title}
+          {title}
         </h2>
 
         <div className="mx-auto max-w-6xl grid lg:grid-cols-[350px_1fr] gap-8 items-start">
@@ -234,7 +226,7 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <div className="h-2 w-2 rounded-full bg-primary"></div>
-                    <span>{lang === 'fr' ? 'Événements programmés' : 'Scheduled Events'}</span>
+                    <span>{'Scheduled Events'}</span>
                   </div>
                 </div>
               </div>
@@ -252,13 +244,13 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
               <div className="text-sm text-muted-foreground">
                 {selectedDate ? (
                   <span>
-                    {data.showingEventsFor} <strong className="text-foreground">{dateFormatter.format(selectedDate)}</strong>
+                    {'Showing Events For'} <strong className="text-foreground">{dateFormatter.format(selectedDate)}</strong>
                     {hasEventsOnSelectedDate && (
                       <> ({displayedEvents.length} {eventsCountText})</>
                     )}
                   </span>
                 ) : (
-                  <span>{data.selectDatePrompt}</span>
+                  <span>{'Select a date to filter events, or browse all upcoming events below'}</span>
                 )}
               </div>
               {selectedDate && (
@@ -267,10 +259,10 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
                   variant="outline"
                   size="sm"
                   className="shrink-0"
-                  aria-label={data.showAllButton}
+                  aria-label={'Show All Events'}
                 >
                   <CalendarIcon className="h-4 w-4 mr-2" aria-hidden="true" />
-                  {data.showAllButton}
+                  {'Show All Events'}
                 </Button>
               )}
             </div>
@@ -304,31 +296,31 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
                   <div className="max-w-sm mx-auto space-y-4">
                     <CalendarIcon className="h-12 w-12 mx-auto text-muted-foreground/50" aria-hidden="true" />
                     <p className="text-lg text-muted-foreground">
-                      {data.noEventsMessage}
+                      {'No events planned for this day'}
                     </p>
                     <Button
                       onClick={handleShowAllEvents}
                       variant="link"
                       className="text-primary hover:text-primary/80"
-                      aria-label={data.viewAllLink}
+                      aria-label={'View All Events'}
                     >
-                      {data.viewAllLink} →
+                      {'View All Events'} →
                     </Button>
                   </div>
                 </div>
               ) : (
                 // Event Cards
-                displayedEvents.map((event) => (
+                displayedEvents.map((event, id) => (
                   <Card 
-                    key={event.id}
+                    key={id}
                     className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
                   >
                     <CardContent className="p-0 sm:flex md:h-48">
                         {/* Event Image */}
                         <div className="relative md:aspect-auto overflow-hidden bg-muted h-full ">
                           <img
-                            src={'assets/stories/story-1.jpg'}
-                            alt={event.image.alt}
+                            src={event.image}
+                            alt={event.title}
                             loading="lazy"
                             className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
@@ -344,12 +336,7 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
                             <div className="flex items-start gap-3 text-sm text-muted-foreground">
                               <CalendarIcon className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
                               <span>
-                                {event.date.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-US', {
-                                  weekday: 'long',
-                                  month: 'long',
-                                  day: 'numeric',
-                                  year: 'numeric',
-                                })}
+                                {event.date?.toISOString().split('T')[0]}
                               </span>
                             </div>
                             <div className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -363,7 +350,7 @@ export const EventsCalendar = ({ lang }: EventsCalendarProps) => {
                           </div>
                           
                           <p className="text-sm text-muted-foreground line-clamp-2">
-                            {event.summary}
+                            {event.description}
                           </p>
                         </div>
                     </CardContent>
