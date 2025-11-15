@@ -7,6 +7,7 @@ import {
   type Employee,
   fetchDepartments,
 } from "@/lib/strapi"; // API fetching functions and types
+import { fetchAboutOurPeoplePage } from "@/lib/strapi/helpers/about/aboutOurPeopleHelper";
 
 // Fallback data used if fetching from Strapi fails
 const defaultHeroData: HeroData = {
@@ -39,6 +40,13 @@ async function getData() {
 export default async function OurPeople() {
   // Fetch data before rendering the page
   const { heroData, employees, departments } = await getData();
+
+
+  //NEW FUNCTION USING NEW BACKEND STRUCTURE-------------------------
+  //TODO: Fill all the data properly with the new structure
+  const res = await fetchAboutOurPeoplePage();
+  console.log("res:", res);
+  //------------------------------------------------------------------
 
   return (
     <>
