@@ -11,6 +11,21 @@ export interface CommonButton extends Struct.ComponentSchema {
   };
 }
 
+export interface CommonCard extends Struct.ComponentSchema {
+  collectionName: 'components_common_cards';
+  info: {
+    displayName: 'card';
+    icon: 'file';
+  };
+  attributes: {
+    buttonLabel: Schema.Attribute.String;
+    buttonURL: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface CommonCarousel extends Struct.ComponentSchema {
   collectionName: 'components_common_carousels';
   info: {
@@ -21,6 +36,21 @@ export interface CommonCarousel extends Struct.ComponentSchema {
     direction: Schema.Attribute.Enumeration<['asc', 'desc']>;
     limit: Schema.Attribute.Integer;
     sortBy: Schema.Attribute.Enumeration<['priority']>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface CommonGalleryCarousel extends Struct.ComponentSchema {
+  collectionName: 'components_common_gallery_carousels';
+  info: {
+    displayName: 'galleryCarousel';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    gallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -78,7 +108,9 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'common.button': CommonButton;
+      'common.card': CommonCard;
       'common.carousel': CommonCarousel;
+      'common.gallery-carousel': CommonGalleryCarousel;
       'common.hero': CommonHero;
       'common.section': CommonSection;
       'donate.current-campaign': DonateCurrentCampaign;

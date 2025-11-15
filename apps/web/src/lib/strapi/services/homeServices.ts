@@ -1,11 +1,11 @@
 import { fetchApi } from "@/lib/strapi/client"; 
-import { HomeStructure } from "../models/strapi/homeStructure";
+import { PageStructure } from "../models/strapi/pageStructure";
 import { Partner } from "../models/home/partner";
 import { UpcomingEvent } from "../models/event/event";
 
 export async function fetchHomePageSections() {
   return await fetchApi<{
-    data: HomeStructure[];
+    data: PageStructure[];
   }>("/api/web-pages", {
     filters: { identifier: { $eq: "home" } },
     populate: {
@@ -15,7 +15,7 @@ export async function fetchHomePageSections() {
             populate: {
               stories: {
                 populate: {
-                  image: true,       // 👈 populate the media field here
+                  image: true,       
                 },
               },
             }, 
@@ -24,7 +24,7 @@ export async function fetchHomePageSections() {
             populate: {
               campaign: {
                 populate: {
-                  image: true,       // 👈 populate the media field here
+                  image: true,       
                 },
               },
             }, 

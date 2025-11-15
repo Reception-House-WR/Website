@@ -594,6 +594,8 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'common.carousel',
         'common.button',
         'stories.stories-carousel',
+        'common.gallery-carousel',
+        'common.card',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;

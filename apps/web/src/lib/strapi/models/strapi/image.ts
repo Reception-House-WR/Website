@@ -18,3 +18,10 @@ export interface Image {
   };
   url: string;
 }
+
+
+export interface StrapiImageResponse {
+  url: string;
+  alternativeText: string | null;
+  caption: string | null;
+}

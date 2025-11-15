@@ -1,6 +1,6 @@
 import { SectionStrapi } from "./sectionStrapi";
 
-export type HomeStructure = {
+export type PageStructure = {
   id: number;
   title: string;
   identifier: string;
