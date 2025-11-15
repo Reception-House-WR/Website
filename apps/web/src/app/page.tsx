@@ -21,7 +21,7 @@ export default async function Home() {
       <StoriesCarousel title={res.storiesSection.section.title} desc={res.storiesSection.section.description} stories={res.storiesSection.stories} />
       <CampaignSection title={res.currentCampaignSection.section.title} campaign={res.currentCampaignSection.campaign} />
       <EventsCalendar title={res.upcomingEventsSection.section.title} desc={res.upcomingEventsSection.section.description} events={res.upcomingEventsSection.events} />
-      <Partners lang="en" />
+      <Partners title={res.partnersSection.section.title} desc={res.partnersSection.section.description} partners={res.partnersSection.partners} />
     </div>
   );
 }

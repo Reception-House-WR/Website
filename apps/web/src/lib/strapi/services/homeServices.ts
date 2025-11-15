@@ -62,7 +62,7 @@ export async function fetchUpcomingEvents(limit = 4) {
 export async function fetchAllPartners() {
   return await fetchApi<{ data: Partner[] }>("/api/partners", {
     sort: ["name:asc"],        
-    pagination: { pageSize: 1000 }, 
+    pagination: { pageSize: 100 }, 
     populate: {
       logo: true
     },
