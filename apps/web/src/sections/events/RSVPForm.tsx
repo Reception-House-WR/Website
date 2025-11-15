@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -55,6 +57,9 @@ interface RSVPFormProps {
 }
 
 export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,10 +72,50 @@ export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("RSVP Submitted:", values);
-    alert("RSVP Confirmed!");
-    onClose();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    if (!executeRecaptcha) {
+      console.error("reCAPTCHA not available");
+      setSubmitError("reCAPTCHA failed to load. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // 1. Get the reCAPTCHA token
+      const token = await executeRecaptcha("rsvpForm");
+
+      // 2. Send all data to backend API
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          eventTitle,
+          eventDate,
+          token,
+        }),
+      });
+
+      if (!response.ok) {
+        // Handle bot or server errors
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit RSVP.");
+      }
+
+      // 3. Success!
+      alert("RSVP Confirmed!");
+      onClose();
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitError(
+        error instanceof Error ? error.message : "An unknown error occurred."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -184,15 +229,21 @@ export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
         />
 
         <DialogFooter className="pt-4">
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
-          >
-            Confirm RSVP
-          </Button>
+          {submitError && (
+            <p className="text-sm text-destructive">{submitError}</p>
+          )}
+          <div className="flex w-full justify-end space-x-2">
+            <Button type="button" variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Confirm RSVP"}
+            </Button>
+          </div>
         </DialogFooter>
       </form>
     </Form>

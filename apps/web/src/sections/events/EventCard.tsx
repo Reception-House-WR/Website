@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { Calendar as CalendarIcon, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,7 +50,6 @@ export const EventCard = ({ event }: { event: Event }) => {
     }
   };
 
-  // --- This is the shared UI for the card itself ---
   const CardUI = (
     <Card className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0">
       <CardContent className="p-0 md:flex h-full">
@@ -107,10 +107,8 @@ export const EventCard = ({ event }: { event: Event }) => {
             </div>
           </div>
 
-          {/* --- CONDITIONAL BUTTON LOGIC --- */}
           {event.category === "upcoming" ? (
             event.isPaid ? (
-              // --- PAID EVENT BUTTON (Direct Link) ---
               <Button
                 size="lg"
                 className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
@@ -119,7 +117,6 @@ export const EventCard = ({ event }: { event: Event }) => {
                 RSVP on Eventbrite
               </Button>
             ) : (
-              // --- FREE EVENT BUTTON (Modal Trigger) ---
               <DialogTrigger asChild>
                 <Button
                   size="lg"
@@ -135,36 +132,46 @@ export const EventCard = ({ event }: { event: Event }) => {
               Event Ended
             </Button>
           )}
-          {/* --- End Conditional Button --- */}
         </div>
       </CardContent>
     </Card>
   );
+
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  if (!siteKey) {
+    // If key is missing, render the card but don't allow RSVP
+
+    console.error("reCAPTCHA site key is missing.");
+    return CardUI;
+  }
 
   // --- CONDITIONAL WRAPPER ---
   if (event.isPaid || event.category === "past") {
     return CardUI;
   }
 
-  // --- FREE, UPCOMING EVENT: Wrap in the Dialog ---
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      {CardUI} {/* This now contains the <DialogTrigger> */}
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">RSVP for Event</DialogTitle>
-          <DialogDescription className="text-base">
-            <span className="font-semibold text-foreground">{event.title}</span>
-            <br />
-            {displayDate} at {event.time}
-          </DialogDescription>
-        </DialogHeader>
-        <RSVPForm
-          eventTitle={event.title}
-          eventDate={`${displayDate} at ${event.time}`}
-          onClose={() => setIsDialogOpen(false)}
-        />
-      </DialogContent>
-    </Dialog>
+    <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        {CardUI}
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">RSVP for Event</DialogTitle>
+            <DialogDescription className="text-base">
+              <span className="font-semibold text-foreground">
+                {event.title}
+              </span>
+              <br />
+              {displayDate} at {event.time}
+            </DialogDescription>
+          </DialogHeader>
+          <RSVPForm
+            eventTitle={event.title}
+            eventDate={`${displayDate} at ${event.time}`}
+            onClose={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+    </GoogleReCaptchaProvider>
   );
 };
