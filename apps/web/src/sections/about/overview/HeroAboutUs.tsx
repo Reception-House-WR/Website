@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
-export default function HeroAboutUs () {
+export default function HeroAboutUs ({url, title, description}: {url: string; title: string; description: string}) {
     return (   
 
         <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="assets/hero-photo2.jpg"
+            src={url}
             alt="Community collaboration"
             className="w-full h-full object-cover"
           />
@@ -16,10 +16,10 @@ export default function HeroAboutUs () {
         <div className="relative container mx-auto px-4 h-full flex items-center">
           <div className="max-w-2xl text-white animate-fade-in-up">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Empowering New Beginnings for Refugees
+              {title}
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90">
-              We support refugees as they rebuild their lives in Canada — offering compassion, guidance, and a welcoming community where everyone can thrive.
+              {description}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="bg-[var(--rh-500)] hover:bg-[var(--rh-100)]/90 hover:text-[var(--rh-500)]">

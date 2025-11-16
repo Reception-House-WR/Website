@@ -9,14 +9,17 @@ export default async function Home() {
   
   const res = await fetchAboutOverviewPage();
   console.log("About overview page data:", res);
+  if (!res) {
+    return <div className="flex items-center justify-center py-5">Error loading about overview page data.</div>;
+  }
 
   return (
     <div className="">
-      <HeroAboutUs />
-      <WhoWeAre />
-      <CommunityInAction />
+      <HeroAboutUs url={res.hero.backgroundImageUrl} title={res.hero.title} description={res.hero.description} />
+      <WhoWeAre title={res.whoWeAreSection.title} description={res.whoWeAreSection.description} />
+      <CommunityInAction title={res.communitySection.title} gallery={res.communitySection.gallery} />
       <LinksToPages />
-      <BoardOfDirectors />
+      <BoardOfDirectors title={res.boardOfDirectorsSection.title} desc={res.boardOfDirectorsSection.description} image={res.boardOfDirectorsSection.image.url} buttonLabel={res.boardOfDirectorsSection.buttonLabel} />
     </div>
   );
 }
