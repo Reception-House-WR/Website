@@ -1,5 +1,4 @@
-// src/app/donate/components/CampaignsSection.tsx
-"use client"; // This component needs state, so it must be a client component
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";

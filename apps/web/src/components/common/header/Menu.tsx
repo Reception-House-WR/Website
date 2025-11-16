@@ -60,7 +60,7 @@ export const NAV = [
         label: "Contact Us",
         href: "/about/contact-us",
         description: "Get in touch or visit our offices.",
-      }
+      },
     ],
   },
 
@@ -139,7 +139,7 @@ export function MenuDesktop() {
           <Link
             href={item.href}
             className={cn(
-              "py-2 px-2 text-sm rounded-md",
+              "py-2 px-2 text-sm rounded-md flex items-center min-h-11",
               "hover:!bg-[var(--rh-500)] hover:text-white",
               "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
             )}
@@ -153,7 +153,7 @@ export function MenuDesktop() {
     return (
       <>
         <NavigationMenuTrigger
-          className="text-sm font-normal px-2 rounded-md bg-transparent
+          className="text-sm font-normal px-2 rounded-md bg-transparent flex items-center min-h-11
              hover:text-white hover:bg-[var(--rh-500)] 
              data-[state=open]:!bg-[var(--rh-500)] data-[state=open]:!text-white 
              transition-colors duration-200"
