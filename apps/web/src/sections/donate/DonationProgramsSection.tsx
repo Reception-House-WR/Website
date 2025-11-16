@@ -37,10 +37,7 @@ export default function DonationProgramsSection({
   programsData,
 }: DonationProgramsSectionProps) {
   return (
-    <section
-      id="donate-programs"
-      className="py-16 px-4 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50"
-    >
+    <section id="donate-programs" className="py-16 px-4 bg-[var(--background)]">
       <div className="container mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
           Where Your Donation Helps

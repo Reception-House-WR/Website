@@ -44,16 +44,14 @@ export default function DonateClient({
         />
 
         {/* --- All sections are now separate components --- */}
+        <CampaignsSection campaignsData={campaignsData} />
 
         <DonationProgramsSection programsData={programsData} />
-
-        <CampaignsSection campaignsData={campaignsData} />
 
         <InKindSection
           donationCategoriesData={donationCategoriesData}
           donatePageData={donatePageData}
         />
-
         <CtaSection />
       </main>
     </div>

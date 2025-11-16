@@ -45,16 +45,18 @@ export default function CampaignsSection({
               className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
             >
               <div className="relative h-64 md:h-80 overflow-hidden">
-                <Image
-                  src={
-                    campaignsData[currentIndex].image ||
-                    "/assets/default-placeholder.jpg"
-                  }
-                  alt={campaignsData[currentIndex].imageAlt}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+                  <Image
+                    src={
+                      campaignsData[currentIndex].image ||
+                      "/public/assets/campaign.png"
+                    }
+                    alt={campaignsData[currentIndex].imageAlt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                   <h3 className="text-3xl md:text-4xl font-bold mb-2">
                     {campaignsData[currentIndex].name}

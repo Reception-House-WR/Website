@@ -26,7 +26,7 @@ export default function InKindSection({
   // FIX: Make thrift partners dynamic from the prop
   const thriftPartners =
     donatePageData?.thriftPartners
-      .split("\n")
+      ?.split("\n")
       .filter((partner) => partner.trim() !== "") || [];
 
   return (
@@ -72,6 +72,7 @@ export default function InKindSection({
           ))}
         </div>
 
+        {/* --- Drop-Off Information Card --- */}
         <Card className="bg-muted border-2">
           <CardContent className="p-6 space-y-4">
             <h3 className="text-xl font-bold text-high-contrast flex items-center gap-2">
@@ -79,12 +80,24 @@ export default function InKindSection({
               Drop-Off Information
             </h3>
 
-            {/* --- FIX: DYNAMIC CONTENT --- */}
+            {/* --- FIX: DYNAMIC CONTENT & STYLING --- */}
+
+            {/* This style tag will only apply to elements inside this component */}
+            <style jsx global>{`
+              .drop-off-info p:first-child > strong:first-child {
+                color: var(--rh-orange-500) !important;
+              }
+            `}</style>
+
             {donatePageData ? (
               <>
-                <div className="text-high-contrast leading-relaxed markdown">
+                {/* I've added a 'drop-off-info' class here to scope the style above.
+                  This ensures it only affects this specific markdown block.
+                */}
+                <div className="text-high-contrast leading-relaxed markdown drop-off-info text-left">
                   <MarkdownRenderer content={donatePageData.dropOffInfo} />
                 </div>
+
                 {thriftPartners.length > 0 && (
                   <div>
                     <p className="font-semibold mb-2 text-high-contrast">
@@ -118,7 +131,7 @@ export default function InKindSection({
                   Questions? Email us at{" "}
                   <a
                     href="mailto:donations@receptionhouse.ca"
-                    className="text-[var(--rh-orange-5To-orange-500)] underline hover:no-underline font-medium"
+                    className="text-[var(--rh-orange-500)] underline hover:no-underline font-medium"
                   >
                     donations@receptionhouse.ca
                   </a>
