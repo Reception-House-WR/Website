@@ -1,7 +1,5 @@
-import { Image } from "../strapi/image";
-
 export interface Partner {
     name: string;
-    logo: Image;
+    logo: string;
     url: string;
 }

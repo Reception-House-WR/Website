@@ -1,7 +1,7 @@
 import { Hero } from "../common/hero";
 import { Section } from "../common/section";
 import { Campaign } from "../donate/campaign";
-import { AppEvent } from "../event/event";
+import { UpcomingEvent } from "../event/event";
 import { Story } from "../stories/story";
 import { Partner } from "./partner";
 
@@ -19,7 +19,7 @@ export interface HomeSections {
     }, 
     upcomingEventsSection: {
         section: Section;
-        events: AppEvent[]
+        events: UpcomingEvent[]
     }, 
     partnersSection: {
         section: Section;

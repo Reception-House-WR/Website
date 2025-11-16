@@ -79,6 +79,12 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
     buttonURL: campaignRaw?.campaign?.buttonURL ?? "",
   };
 
+  const partners : Partner[] = (partnersRes?.data ?? []).map((partner: any) => ({
+    name: partner.name,
+    url: partner.url,
+    logo: partner.logo?.url ?? null,
+  }));
+
   // console.log("events raw:", eventsRes);
 
   const events: UpcomingEvent[] = (eventsRes?.data ?? []).map((event: any) => {
@@ -135,7 +141,7 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
 
     partnersSection: {
       section: toSection(partnersRaw),
-      partners: (partnersRes?.data ?? []) as Partner[],
+      partners
     },
   };
 }
