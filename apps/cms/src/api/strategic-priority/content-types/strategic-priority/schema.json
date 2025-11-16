@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "strategic_priorities",
+  "info": {
+    "singularName": "strategic-priority",
+    "pluralName": "strategic-priorities",
+    "displayName": "Strategic Priority"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "priority": {
+      "type": "integer",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

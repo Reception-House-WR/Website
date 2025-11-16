@@ -29,7 +29,8 @@
         "common.button",
         "stories.stories-carousel",
         "common.gallery-carousel",
-        "common.card"
+        "common.card",
+        "about.impact"
       ]
     }
   }

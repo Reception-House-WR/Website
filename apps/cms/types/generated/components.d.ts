@@ -1,5 +1,17 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AboutImpact extends Struct.ComponentSchema {
+  collectionName: 'components_about_impacts';
+  info: {
+    displayName: 'impact';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    videoUrl: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface CommonButton extends Struct.ComponentSchema {
   collectionName: 'components_common_buttons';
   info: {
@@ -107,6 +119,7 @@ export interface StoriesStoriesCarousel extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'about.impact': AboutImpact;
       'common.button': CommonButton;
       'common.card': CommonCard;
       'common.carousel': CommonCarousel;
