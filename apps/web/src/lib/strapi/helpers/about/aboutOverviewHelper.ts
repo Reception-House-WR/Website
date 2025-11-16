@@ -90,6 +90,5 @@ export async function fetchAboutOverviewPage(): Promise<AboutOverviewSections | 
     whoWeAreSection: whoWeAreSection,
     communitySection: galleryCarousel,
     boardOfDirectorsSection: card
-    
   };
 }
