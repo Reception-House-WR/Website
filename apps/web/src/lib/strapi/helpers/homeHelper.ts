@@ -5,7 +5,11 @@ import { UpcomingEvent } from "../models/event/event";
 import { HomeSections } from "../models/home/homeSections";
 import { Partner } from "../models/home/partner";
 import { Story } from "../models/stories/story";
-import { fetchHomePageSections, fetchUpcomingEvents, fetchAllPartners } from "../services/homeServices";
+import {
+  fetchHomePageSections,
+  fetchUpcomingEvents,
+  fetchAllPartners,
+} from "../services/homeServices";
 
 export async function fetchHomePage(): Promise<HomeSections | null> {
   // Run all three requests in parallel for better performance
@@ -22,19 +26,19 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
 
   // Find each section by its Strapi component key
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero",
+    (s: any) => s.__component === "common.hero"
   ) as any;
 
   const storiesRaw = sections.find(
-    (s: any) => s.__component === "stories.stories-carousel",
+    (s: any) => s.__component === "stories.stories-carousel"
   ) as any;
 
   const campaignRaw = sections.find(
-    (s: any) => s.__component === "donate.current-campaign",
+    (s: any) => s.__component === "donate.current-campaign"
   ) as any;
 
   const commonSections = sections.filter(
-    (s: any) => s.__component === "common.section",
+    (s: any) => s.__component === "common.section"
   ) as any[];
 
   // For now: first common.section → Upcoming Events, second → Partners
@@ -73,7 +77,7 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
     image: campaignRaw?.campaign?.image?.[0]?.url ?? null,
     buttonLabel: campaignRaw?.campaign?.buttonLabel ?? "",
     buttonURL: campaignRaw?.campaign?.buttonURL ?? "",
-  }
+  };
 
   // console.log("events raw:", eventsRes);
 
@@ -126,7 +130,7 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
 
     upcomingEventsSection: {
       section: toSection(upcomingRaw),
-      events
+      events,
     },
 
     partnersSection: {
