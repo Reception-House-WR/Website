@@ -6,4 +6,5 @@ export interface InfoCard{
     description: string;
     subtitle2?: string;
     items: Item[];
+    desctiption2?: string;
 }

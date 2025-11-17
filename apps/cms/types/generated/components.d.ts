@@ -216,6 +216,7 @@ export interface ProgramsInfoCard extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
+    description2: Schema.Attribute.Text;
     items: Schema.Attribute.Component<'programs.item', true>;
     subtitle: Schema.Attribute.String;
     subtitle2: Schema.Attribute.String;
