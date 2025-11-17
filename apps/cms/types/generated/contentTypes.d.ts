@@ -656,6 +656,40 @@ export interface ApiStrategicPriorityStrategicPriority
   };
 }
 
+export interface ApiTimelineEventTimelineEvent
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'timeline_events';
+  info: {
+    displayName: 'Timeline Event';
+    pluralName: 'timeline-events';
+    singularName: 'timeline-event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::timeline-event.timeline-event'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    year: Schema.Attribute.Integer & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiValueValue extends Struct.CollectionTypeSchema {
   collectionName: 'values';
   info: {
@@ -1241,6 +1275,7 @@ declare module '@strapi/strapi' {
       'api::report.report': ApiReportReport;
       'api::story.story': ApiStoryStory;
       'api::strategic-priority.strategic-priority': ApiStrategicPriorityStrategicPriority;
+      'api::timeline-event.timeline-event': ApiTimelineEventTimelineEvent;
       'api::value.value': ApiValueValue;
       'api::web-page.web-page': ApiWebPageWebPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;

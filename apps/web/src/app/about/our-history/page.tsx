@@ -9,6 +9,7 @@ import {
   type TimelineEvent,
 } from "@/lib/strapi";
 import MarkdownRenderer from "@/components/common/MarkdownRenderer";
+import { fetchAboutOurHistoryPage } from "@/lib/strapi/helpers/about/aboutOurHistoryHelper";
 
 const defaultHistoryHeroData: HeroData = {
   title: "Our History",
@@ -48,6 +49,13 @@ async function getHistoryPageData() {
 }
 
 export default async function OurHistory() {
+
+  //NEW FUNCTION WITH NEW BACKEND -----------------------
+  const res = await fetchAboutOurHistoryPage();
+  console.log("Our History Page Data:", res);
+  //-----------------------------------------------------
+
+
   const { heroData, introText, closingText, timelineEvents } =
     await getHistoryPageData();
 
