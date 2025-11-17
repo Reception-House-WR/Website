@@ -7,6 +7,8 @@ import { Card } from "../common/card";
 import { Cards } from "../programs/cards";
 import { InfoCard } from "../programs/infoCard";
 import { OurPrograms } from "../programs/ourPrograms";
+import { ServiceOverview } from "../programs/serviceOverview";
+import { AnalyticsOverview } from "../programs/analyticOverview";
 
 export type SectionStrapi =
   | Hero
@@ -18,4 +20,6 @@ export type SectionStrapi =
   | Cards
   | InfoCard
   | OurPrograms
+  | AnalyticsOverview
+  | ServiceOverview
   ;

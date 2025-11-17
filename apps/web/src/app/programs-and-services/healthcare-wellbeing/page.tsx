@@ -1,7 +1,11 @@
 import { ServiceHero } from "@/components/common/ServiceHero";
+import { fetchProgramsHealthPage } from "@/lib/strapi/helpers/programs/healthHelpet";
 import HealthcareSection from "@/sections/programs-and-services/health/Healthcare";
 
-export default function Home(){
+export default async function Home(){
+
+  const res = await fetchProgramsHealthPage();
+  console.log("HEALTH PAGE DATA:", res);
   return (
     <div>
       <ServiceHero 

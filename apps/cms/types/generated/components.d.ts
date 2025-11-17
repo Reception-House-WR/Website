@@ -107,11 +107,21 @@ export interface DonateCurrentCampaign extends Struct.ComponentSchema {
 export interface ProgramsAnalytics extends Struct.ComponentSchema {
   collectionName: 'components_programs_analytics';
   info: {
-    displayName: 'analytics';
+    displayName: 'analytic';
   };
   attributes: {
     description: Schema.Attribute.String;
     metric: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ProgramsAnalyticsOverview extends Struct.ComponentSchema {
+  collectionName: 'components_programs_analytics_overviews';
+  info: {
+    displayName: 'analyticsOverview';
+  };
+  attributes: {
+    analytics: Schema.Attribute.Component<'programs.analytics', true>;
   };
 }
 
@@ -235,6 +245,7 @@ declare module '@strapi/strapi' {
       'common.section': CommonSection;
       'donate.current-campaign': DonateCurrentCampaign;
       'programs.analytics': ProgramsAnalytics;
+      'programs.analytics-overview': ProgramsAnalyticsOverview;
       'programs.cards': ProgramsCards;
       'programs.feature': ProgramsFeature;
       'programs.info-card': ProgramsInfoCard;

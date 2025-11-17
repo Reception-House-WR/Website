@@ -36,8 +36,8 @@
         "programs.info-card",
         "programs.cards",
         "programs.partner-section",
-        "programs.analytics",
-        "programs.service-overview"
+        "programs.service-overview",
+        "programs.analytics-overview"
       ]
     }
   }

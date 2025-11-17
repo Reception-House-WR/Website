@@ -754,8 +754,8 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'programs.info-card',
         'programs.cards',
         'programs.partner-section',
-        'programs.analytics',
         'programs.service-overview',
+        'programs.analytics-overview',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
