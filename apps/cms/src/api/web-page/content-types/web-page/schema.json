@@ -37,7 +37,10 @@
         "programs.cards",
         "programs.partner-section",
         "programs.service-overview",
-        "programs.analytics-overview"
+        "programs.analytics-overview",
+        "programs.benefits-section",
+        "common.cards-carousel",
+        "programs.analytics-section"
       ]
     }
   }

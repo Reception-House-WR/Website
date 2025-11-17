@@ -20,11 +20,6 @@
     },
     "bottomDescription": {
       "type": "text"
-    },
-    "simpleCards": {
-      "type": "component",
-      "component": "common.card",
-      "repeatable": true
     }
   },
   "config": {}

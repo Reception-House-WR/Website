@@ -38,6 +38,18 @@ export interface CommonCard extends Struct.ComponentSchema {
   };
 }
 
+export interface CommonCardsCarousel extends Struct.ComponentSchema {
+  collectionName: 'components_common_cards_carousels';
+  info: {
+    displayName: 'cardsCarousel';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'common.simple-card', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface CommonCarousel extends Struct.ComponentSchema {
   collectionName: 'components_common_carousels';
   info: {
@@ -82,6 +94,18 @@ export interface CommonHero extends Struct.ComponentSchema {
   };
 }
 
+export interface CommonListCard extends Struct.ComponentSchema {
+  collectionName: 'components_common_list_cards';
+  info: {
+    displayName: 'listCard';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'programs.list-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface CommonSection extends Struct.ComponentSchema {
   collectionName: 'components_common_sections';
   info: {
@@ -90,6 +114,18 @@ export interface CommonSection extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface CommonSimpleCard extends Struct.ComponentSchema {
+  collectionName: 'components_common_simple_cards';
+  info: {
+    displayName: 'simpleCard';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -122,6 +158,32 @@ export interface ProgramsAnalyticsOverview extends Struct.ComponentSchema {
   };
   attributes: {
     analytics: Schema.Attribute.Component<'programs.analytics', true>;
+  };
+}
+
+export interface ProgramsAnalyticsSection extends Struct.ComponentSchema {
+  collectionName: 'components_programs_analytics_sections';
+  info: {
+    displayName: 'analyticsSection';
+  };
+  attributes: {
+    analytics: Schema.Attribute.Component<'programs.analytics', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ProgramsBenefitsSection extends Struct.ComponentSchema {
+  collectionName: 'components_programs_benefits_sections';
+  info: {
+    displayName: 'benefitsSection';
+  };
+  attributes: {
+    bottomDescription: Schema.Attribute.Text;
+    buttonLabel: Schema.Attribute.String;
+    card: Schema.Attribute.Component<'common.list-card', false>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -171,6 +233,17 @@ export interface ProgramsItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ProgramsListItem extends Struct.ComponentSchema {
+  collectionName: 'components_programs_list_items';
+  info: {
+    displayName: 'listItem';
+  };
+  attributes: {
+    key: Schema.Attribute.String;
+    value: Schema.Attribute.Text;
+  };
+}
+
 export interface ProgramsOurPrograms extends Struct.ComponentSchema {
   collectionName: 'components_programs_our_programs';
   info: {
@@ -179,7 +252,6 @@ export interface ProgramsOurPrograms extends Struct.ComponentSchema {
   attributes: {
     bottomDescription: Schema.Attribute.Text;
     cards: Schema.Attribute.Component<'programs.info-card', true>;
-    simpleCards: Schema.Attribute.Component<'common.card', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     topDescription: Schema.Attribute.Text & Schema.Attribute.Required;
   };
@@ -239,17 +311,23 @@ declare module '@strapi/strapi' {
       'about.impact': AboutImpact;
       'common.button': CommonButton;
       'common.card': CommonCard;
+      'common.cards-carousel': CommonCardsCarousel;
       'common.carousel': CommonCarousel;
       'common.gallery-carousel': CommonGalleryCarousel;
       'common.hero': CommonHero;
+      'common.list-card': CommonListCard;
       'common.section': CommonSection;
+      'common.simple-card': CommonSimpleCard;
       'donate.current-campaign': DonateCurrentCampaign;
       'programs.analytics': ProgramsAnalytics;
       'programs.analytics-overview': ProgramsAnalyticsOverview;
+      'programs.analytics-section': ProgramsAnalyticsSection;
+      'programs.benefits-section': ProgramsBenefitsSection;
       'programs.cards': ProgramsCards;
       'programs.feature': ProgramsFeature;
       'programs.info-card': ProgramsInfoCard;
       'programs.item': ProgramsItem;
+      'programs.list-item': ProgramsListItem;
       'programs.our-programs': ProgramsOurPrograms;
       'programs.partner': ProgramsPartner;
       'programs.partner-section': ProgramsPartnerSection;

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_common_cards_carousels",
+  "info": {
+    "displayName": "cardsCarousel"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "component": "common.simple-card",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_common_list_cards",
+  "info": {
+    "displayName": "listCard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "component": "programs.list-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

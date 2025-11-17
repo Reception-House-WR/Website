@@ -9,6 +9,9 @@ import { InfoCard } from "../programs/infoCard";
 import { OurPrograms } from "../programs/ourPrograms";
 import { ServiceOverview } from "../programs/serviceOverview";
 import { AnalyticsOverview } from "../programs/analyticOverview";
+import { AnalyticsSection } from "../programs/analyticsSection";
+import { CardsCarousel } from "../programs/cardsCarousel";
+import { BenefitsSection } from "../programs/benefitsSection";
 
 export type SectionStrapi =
   | Hero
@@ -22,4 +25,7 @@ export type SectionStrapi =
   | OurPrograms
   | AnalyticsOverview
   | ServiceOverview
+  | AnalyticsSection
+  | CardsCarousel
+  | BenefitsSection
   ;
