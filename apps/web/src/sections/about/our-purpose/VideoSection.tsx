@@ -2,16 +2,43 @@
 import { Card } from '@/components/ui/card'
 import { Play } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export const VideoSection = () => {
+export const VideoSection = ({
+  title,
+  desc,
+  url
+}: {
+  title: string,
+  desc: string,
+  url: string
+}) => {
   const [playing, setPlaying] = useState(false)
+  const [videoId, setVideoId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!url) {
+      setVideoId(null);
+      return;
+    }
+
+    if (url.includes('youtu.be/')) {
+      const id = url.split('youtu.be/')[1].split('?')[0];
+      setVideoId(id);
+    } else if (url.includes('v=')) {
+      const id = url.split('v=')[1].split('&')[0];
+      setVideoId(id);
+    } else {
+      setVideoId(null);
+    }
+  }, [url]);
+  
   return (
     <div className="mb-20 animate-fade-in">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-4 text-foreground">See Our Impact</h2>
+        <h2 className="text-3xl font-bold mb-4 text-foreground">{title}</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Watch how we're making a difference in our community through the stories of those we serve.
+          {desc}
         </p>
       </div>
 
@@ -19,7 +46,6 @@ export const VideoSection = () => {
         <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
           {/* Replace with your YouTube video ID */}
           {(() => {
-            const videoId = 'wioQow3uayc'
             const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
 
             return playing ? (
