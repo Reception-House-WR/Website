@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_programs_items",
+  "info": {
+    "displayName": "item"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

@@ -104,6 +104,53 @@ export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   };
 }
 
+export interface ProgramsCards extends Struct.ComponentSchema {
+  collectionName: 'components_programs_cards';
+  info: {
+    displayName: 'cards';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'common.card', true>;
+  };
+}
+
+export interface ProgramsInfoCard extends Struct.ComponentSchema {
+  collectionName: 'components_programs_info_cards';
+  info: {
+    displayName: 'infoCard';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'programs.item', true>;
+    subtitle: Schema.Attribute.String;
+    subtitle2: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ProgramsItem extends Struct.ComponentSchema {
+  collectionName: 'components_programs_items';
+  info: {
+    displayName: 'item';
+  };
+  attributes: {
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ProgramsOurPrograms extends Struct.ComponentSchema {
+  collectionName: 'components_programs_our_programs';
+  info: {
+    displayName: 'ourPrograms';
+  };
+  attributes: {
+    bottomDescription: Schema.Attribute.Text;
+    cards: Schema.Attribute.Component<'programs.info-card', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    topDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
 export interface StoriesStoriesCarousel extends Struct.ComponentSchema {
   collectionName: 'components_stories_stories_carousels';
   info: {
@@ -127,6 +174,10 @@ declare module '@strapi/strapi' {
       'common.hero': CommonHero;
       'common.section': CommonSection;
       'donate.current-campaign': DonateCurrentCampaign;
+      'programs.cards': ProgramsCards;
+      'programs.info-card': ProgramsInfoCard;
+      'programs.item': ProgramsItem;
+      'programs.our-programs': ProgramsOurPrograms;
       'stories.stories-carousel': StoriesStoriesCarousel;
     }
   }

@@ -30,7 +30,11 @@
         "stories.stories-carousel",
         "common.gallery-carousel",
         "common.card",
-        "about.impact"
+        "about.impact",
+        "programs.our-programs",
+        "programs.item",
+        "programs.info-card",
+        "programs.cards"
       ]
     }
   }

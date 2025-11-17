@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_programs_info_cards",
+  "info": {
+    "displayName": "infoCard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "subtitle2": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "programs.item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -4,6 +4,9 @@ import { CurrentCampaign } from "../donate/currentCampaign";
 import { Section } from "../common/section";
 import { GalleryCarousel } from "../common/galleryCarousel";
 import { Card } from "../common/card";
+import { Cards } from "../programs/cards";
+import { InfoCard } from "../programs/infoCard";
+import { OurPrograms } from "../programs/ourPrograms";
 
 export type SectionStrapi =
   | Hero
@@ -11,4 +14,8 @@ export type SectionStrapi =
   | CurrentCampaign
   | Section
   | GalleryCarousel
-  | Card;
+  | Card
+  | Cards
+  | InfoCard
+  | OurPrograms
+  ;
