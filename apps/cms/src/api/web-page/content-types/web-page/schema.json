@@ -34,7 +34,10 @@
         "programs.our-programs",
         "programs.item",
         "programs.info-card",
-        "programs.cards"
+        "programs.cards",
+        "programs.partner-section",
+        "programs.analytics",
+        "programs.service-overview"
       ]
     }
   }

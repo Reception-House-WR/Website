@@ -63,7 +63,7 @@ export interface CommonGalleryCarousel extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -104,6 +104,17 @@ export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   };
 }
 
+export interface ProgramsAnalytics extends Struct.ComponentSchema {
+  collectionName: 'components_programs_analytics';
+  info: {
+    displayName: 'analytics';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    metric: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ProgramsCards extends Struct.ComponentSchema {
   collectionName: 'components_programs_cards';
   info: {
@@ -111,6 +122,18 @@ export interface ProgramsCards extends Struct.ComponentSchema {
   };
   attributes: {
     cards: Schema.Attribute.Component<'common.card', true>;
+  };
+}
+
+export interface ProgramsFeature extends Struct.ComponentSchema {
+  collectionName: 'components_programs_features';
+  info: {
+    displayName: 'feature';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -146,8 +169,45 @@ export interface ProgramsOurPrograms extends Struct.ComponentSchema {
   attributes: {
     bottomDescription: Schema.Attribute.Text;
     cards: Schema.Attribute.Component<'programs.info-card', true>;
+    simpleCards: Schema.Attribute.Component<'common.card', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     topDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface ProgramsPartner extends Struct.ComponentSchema {
+  collectionName: 'components_programs_partners';
+  info: {
+    displayName: 'partner';
+  };
+  attributes: {
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    name: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface ProgramsPartnerSection extends Struct.ComponentSchema {
+  collectionName: 'components_programs_partner_sections';
+  info: {
+    displayName: 'partnerSection';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    partners: Schema.Attribute.Component<'programs.partner', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ProgramsServiceOverview extends Struct.ComponentSchema {
+  collectionName: 'components_programs_service_overviews';
+  info: {
+    displayName: 'serviceOverview';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    features: Schema.Attribute.Component<'programs.feature', true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -174,10 +234,15 @@ declare module '@strapi/strapi' {
       'common.hero': CommonHero;
       'common.section': CommonSection;
       'donate.current-campaign': DonateCurrentCampaign;
+      'programs.analytics': ProgramsAnalytics;
       'programs.cards': ProgramsCards;
+      'programs.feature': ProgramsFeature;
       'programs.info-card': ProgramsInfoCard;
       'programs.item': ProgramsItem;
       'programs.our-programs': ProgramsOurPrograms;
+      'programs.partner': ProgramsPartner;
+      'programs.partner-section': ProgramsPartnerSection;
+      'programs.service-overview': ProgramsServiceOverview;
       'stories.stories-carousel': StoriesStoriesCarousel;
     }
   }
