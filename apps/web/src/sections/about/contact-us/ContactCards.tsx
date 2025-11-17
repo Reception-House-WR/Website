@@ -1,30 +1,8 @@
 import type { ComponentType, SVGProps } from "react";
 import { Card } from "@/components/ui/card";
 import { contactInfo as contactInfoType } from "@/lib/strapi/models/about/contactInfo";
-import { MapPin, Phone, Mail, Clock, Car } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Address",
-    details: ["700 – 101 Frederick St, Kitchener","N2H 6R2", "ON, Canada"],
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    details: ["Main: (519)-743-0445", "Fax: (555) 123-4568"],
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    details: ["info@receptionhouse.ca"],
-  },
-  {
-    icon: Clock,
-    title: "Office Hours",
-    details: ["Monday - Friday: 9am - 4:30pm", "Saturday and Sunday: Closed"],
-  },
-];
 const contactIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   "Phone": Phone,
   "Email": Mail,
