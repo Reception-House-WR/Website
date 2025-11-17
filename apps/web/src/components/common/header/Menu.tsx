@@ -134,21 +134,23 @@ export function MenuDesktop() {
 
   const ItemInner = (item: (typeof NAV)[number]) => {
     if (!item.children) {
-      return (
-        <NavigationMenuLink asChild data-active={isActive(item.href)}>
-          <Link
-            href={item.href}
-            className={cn(
-              // --- MODIFIED ---
-              // We add the AODA fix here to make all links 44px tall
-              "py-2 px-2 text-sm rounded-md flex items-center min-h-11",
-              "hover:!bg-[var(--rh-500)] hover:text-white",
-              "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
-            )}
-          >
-            {item.label}
-          </Link>
-        </NavigationMenuLink>
+        return (
+            <NavigationMenuLink
+              asChild
+              data-active={isActive(item.href)}
+              className="inline-flex items-center"
+            >
+              <Link
+                href={item.href}
+                className={cn(
+                  "flex flex-row items-center px-2 py-2 text-sm rounded-md min-h-11",
+                  "hover:!bg-[var(--rh-500)] hover:text-white",
+                  "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
+                )}
+              >
+                {item.label}
+              </Link>
+            </NavigationMenuLink>
       );
     }
 
