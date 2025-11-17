@@ -70,11 +70,11 @@ export default function StoriesClient({
 
                     <div className="w-full md:w-3/5 p-8 md:p-12 flex flex-col justify-center bg-white/80 backdrop-blur-sm">
                       <div className="inline-block mb-4">
-                        <span className="px-4 py-2 bg-[var(--rh-orange-500)] text-primary-foreground rounded-full text-sm font-semibold">
+                        <span className="px-4 py-2 bg-[var(--rh-green-600)] text-background rounded-full text-sm font-semibold">
                           Client Story
                         </span>
                       </div>
-                      <h3 className="text-3xl md:text-4xl font-bold text-[var(--rh-orange-500)] mb-4">
+                      <h3 className="text-3xl md:text-4xl font-bold text-[var(--rh-green-600)] mb-4">
                         {storiesData[currentIndex].name}'s Story
                       </h3>
                       <p className="text-base md:text-lg leading-relaxed text-high-contrast mb-6">
@@ -83,7 +83,7 @@ export default function StoriesClient({
                       <Button
                         asChild
                         size="lg"
-                        className="group/button w-fit bg-[var(--rh-500)] text-primary-foreground hover:bg-[var(--rh-400)]"
+                        className="group/button w-fit bg-[var(--rh-500)] text-background hover:bg-[var(--rh-400)]"
                       >
                         <a
                           href={storiesData[currentIndex].videoUrl}

@@ -13,7 +13,8 @@ const translations = {
   en: {
     title: "Current Campaign",
     campaignTitle: "Bringing Joy to Children, One Playground at a Time",
-    description: "By supporting our campaign, you’re helping us to create a safe, energetic space for refugee children to stay active and build strength. Playgrounds encourage physical activity that supports children’s growth, coordination, and confidence as they challenge themselves through play.  Your contribution will create an inviting space where kids can run, jump, and explore—nurturing healthy habits and joyful moments through active play.",
+    description:
+      "By supporting our campaign, you’re helping us to create a safe, energetic space for refugee children to stay active and build strength. Playgrounds encourage physical activity that supports children’s growth, coordination, and confidence as they challenge themselves through play.  Your contribution will create an inviting space where kids can run, jump, and explore—nurturing healthy habits and joyful moments through active play.",
     goal: "Goal: $50,000",
     raised: "Raised: $32,450",
     cta: "Support Now",
@@ -21,7 +22,8 @@ const translations = {
   fr: {
     title: "Campagne actuelle",
     campaignTitle: "Initiative Nouveaux Départs",
-    description: "Aidez-nous à fournir des ressources essentielles à 50 nouvelles familles arrivant ce mois-ci. Chaque contribution plante des graines d'espoir dans notre communauté.",
+    description:
+      "Aidez-nous à fournir des ressources essentielles à 50 nouvelles familles arrivant ce mois-ci. Chaque contribution plante des graines d'espoir dans notre communauté.",
     goal: "Objectif : 50 000 $",
     raised: "Collectés : 32 450 $",
     cta: "Soutenir maintenant",
@@ -34,11 +36,10 @@ const formatCurrency = (amount: number, lang: string) => {
     currency: "CAD",
     maximumFractionDigits: 0,
   }).format(amount);
-}
+};
 
 export const CampaignSection = ({ title, campaign }: FeaturedCampaignProps) => {
   const progress = (campaign.raised / campaign.goal) * 100;
-
 
   return (
     <section className="py-16 bg-background">
@@ -71,8 +72,12 @@ export const CampaignSection = ({ title, campaign }: FeaturedCampaignProps) => {
                 {/* Progress Bar */}
                 <div className="mb-6">
                   <div className="mb-2 flex justify-between text-sm">
-                    <span className="font-medium text-foreground bg-clip-text">{formatCurrency(campaign.raised, "en")}</span>
-                    <span className="text-muted-foreground">{formatCurrency(campaign.goal, "en")}</span>
+                    <span className="font-medium text-foreground bg-clip-text">
+                      {formatCurrency(campaign.raised, "en")}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {formatCurrency(campaign.goal, "en")}
+                    </span>
                   </div>
                   <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
                     <div
@@ -82,11 +87,20 @@ export const CampaignSection = ({ title, campaign }: FeaturedCampaignProps) => {
                       aria-valuenow={progress}
                       aria-valuemin={0}
                       aria-valuemax={100}
+                      aria-label="Donation campaign progress"
                     />
                   </div>
                 </div>
-                <Link href={campaign.buttonURL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full hover:cursor-pointer group bg-[var(--rh-500)] hover:bg-[var(--rh-400)] text-white">
+                <Link
+                  href={campaign.buttonURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto"
+                >
+                  <Button
+                    size="lg"
+                    className="w-full hover:cursor-pointer group bg-[var(--rh-500)] hover:bg-[var(--rh-400)] text-white"
+                  >
                     {campaign.buttonLabel}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>

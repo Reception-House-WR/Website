@@ -139,7 +139,9 @@ export function MenuDesktop() {
           <Link
             href={item.href}
             className={cn(
-              "py-2 px-2 text-sm rounded-md",
+              // --- MODIFIED ---
+              // We add the AODA fix here to make all links 44px tall
+              "py-2 px-2 text-sm rounded-md flex items-center min-h-11",
               "hover:!bg-[var(--rh-500)] hover:text-white",
               "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
             )}
@@ -153,10 +155,12 @@ export function MenuDesktop() {
     return (
       <>
         <NavigationMenuTrigger
-          className="text-sm font-normal px-2 rounded-md bg-transparent
-             hover:text-white hover:bg-[var(--rh-500)] 
-             data-[state=open]:!bg-[var(--rh-500)] data-[state=open]:!text-white 
-             transition-colors duration-200"
+          className={cn(
+            "text-sm font-normal px-2 py-2 rounded-md bg-transparent flex items-center min-h-11", // <-- ADDED PY-2
+            "hover:text-white hover:bg-[var(--rh-500)]",
+            "data-[state=open]:!bg-[var(--rh-500)] data-[state=open]:!text-white",
+            "transition-colors duration-200"
+          )}
         >
           {item.label}
         </NavigationMenuTrigger>
@@ -204,7 +208,6 @@ export function MenuDesktop() {
     </div>
   );
 }
-
 /* ====================== Mobile ====================== */
 
 export function MenuMobile() {

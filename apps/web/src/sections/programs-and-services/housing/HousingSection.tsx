@@ -127,10 +127,10 @@ export const HousingSection = () => {
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[var(--rh-500)] text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
                     ✓
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-foreground">
                     <strong className="text-foreground">
                       Reliable Tenants:
                     </strong>{" "}
@@ -139,10 +139,10 @@ export const HousingSection = () => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[var(--rh-500)] text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
                     ✓
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-foreground">
                     <strong className="text-foreground">
                       Ongoing Support:
                     </strong>{" "}
@@ -151,10 +151,10 @@ export const HousingSection = () => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[var(--rh-500)] text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
                     ✓
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-foreground">
                     <strong className="text-foreground">
                       Community Impact:
                     </strong>{" "}
@@ -163,10 +163,10 @@ export const HousingSection = () => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[var(--rh-500)] text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
                     ✓
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-foreground">
                     <strong className="text-foreground">
                       Mediation Services:
                     </strong>{" "}

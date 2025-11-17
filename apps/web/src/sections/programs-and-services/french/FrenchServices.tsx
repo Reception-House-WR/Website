@@ -162,7 +162,7 @@ const FrenchServicesSection = () => {
                     <CardTitle className="text-2xl mb-1">
                       {program.title}
                     </CardTitle>
-                    <CardDescription className="text-[var(--rh-red-500)] font-semibold">
+                    <CardDescription className="text-[var(--rh-500)] font-semibold">
                       {program.subtitle}
                     </CardDescription>
                   </div>
@@ -234,7 +234,7 @@ const FrenchServicesSection = () => {
                 <Button
                   variant="secondary"
                   size="lg"
-                  className={`bg-white ${service.buttonTextColor} hover:bg-white/80 w-full sm:w-auto`}
+                  className={`bg-white text-foreground hover:bg-white/80 w-full sm:w-auto`}
                 >
                   {service.buttonText}
                 </Button>
