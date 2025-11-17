@@ -2,7 +2,17 @@ import { Card } from '@/components/ui/card'
 import { Eye, Target } from 'lucide-react'
 import React from 'react'
 
-export const VisionMission = () => {
+export const VisionMission = ({
+    missionTitle,
+    missionDesc,
+    visionTitle,
+    visionDesc
+}: {
+    missionTitle: string,
+    missionDesc: string,
+    visionTitle: string,
+    visionDesc: string
+}) => {
   return (
     <>
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 mb-20">
