@@ -1,12 +1,24 @@
-"use client"; // Add this, as you're using env variables and components
+"use client"; 
 
+import { Card } from "@/lib/strapi/models/common/card";
 import ContactCards from "./ContactCards";
 import { ContactForm } from "./ContactForm";
 import ParkingInfo from "./ParkingInfo";
 import SocialMedia from "./SocialMedia";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { contactInfo } from "@/lib/strapi/models/about/contactInfo";
 
-export default function ContactUsPage() {
+export default function ContactUsPage({
+  title,
+  desc,
+  parkingSection,
+  contactInfoItems
+}: {
+  title: string,
+  desc: string,
+  parkingSection: Card,
+  contactInfoItems: contactInfo[]
+}) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   if (!siteKey) {
@@ -22,16 +34,15 @@ export default function ContactUsPage() {
             <div className="space-y-8 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-bold mb-6 text-foreground">
-                  Get in Touch
+                  {title}
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8">
-                  Whether you're seeking services, want to get involved, or have
-                  questions about our work, we'd love to hear from you.
+                  {desc}
                 </p>
               </div>
 
-              <ContactCards />
-              <ParkingInfo />
+              <ContactCards contactInfo={contactInfoItems} />
+              <ParkingInfo title={parkingSection.title} desc={parkingSection.description} url={parkingSection.image.url} />
               <SocialMedia />
             </div>
 

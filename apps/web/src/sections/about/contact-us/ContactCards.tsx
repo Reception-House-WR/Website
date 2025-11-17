@@ -1,5 +1,7 @@
+import type { ComponentType, SVGProps } from "react";
 import { Card } from "@/components/ui/card";
-import { MapPin, Phone, Mail, Clock, Car, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { contactInfo as contactInfoType } from "@/lib/strapi/models/about/contactInfo";
+import { MapPin, Phone, Mail, Clock, Car } from "lucide-react";
 
 const contactInfo = [
   {
@@ -23,12 +25,22 @@ const contactInfo = [
     details: ["Monday - Friday: 9am - 4:30pm", "Saturday and Sunday: Closed"],
   },
 ];
+const contactIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  "Phone": Phone,
+  "Email": Mail,
+  "Address": MapPin,
+  "Office Hours": Clock,
+}
 
-export default function ContactCards() {
+export default function ContactCards({
+    contactInfo
+}: {
+  contactInfo: contactInfoType[]
+}) {
     return (
         <div className="space-y-4">
             {contactInfo.map((info, index) => {
-            const Icon = info.icon;
+            const Icon = contactIcons[info.title];
             return (
                 <Card
                 key={info.title}
@@ -40,10 +52,8 @@ export default function ContactCards() {
                     <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                    <h3 className="font-bold text-lg mb-2 text-foreground">{info.title}</h3>
-                    {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-muted-foreground">{detail}</p>
-                    ))}
+                      <h3 className="font-bold text-lg mb-2 text-foreground">{info.title}</h3>
+                      <p className="text-muted-foreground whitespace-pre-line">{info.value}</p>
                     </div>
                 </div>
                 </Card>

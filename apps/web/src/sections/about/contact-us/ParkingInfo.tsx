@@ -1,7 +1,15 @@
 import { Card } from "@/components/ui/card";
 import { Car } from "lucide-react";
 
-export default function ParkingInfo() {
+export default function ParkingInfo({
+    title,
+    desc,
+    url
+}: {
+    title: string,
+    desc: string,
+    url: string
+}) {
     return (
         <Card className="p-6 bg-gradient-to-br from-blue-600/5 to-blue-300/5 border-2 border-accent/20">
             <div className="flex items-start gap-4">
@@ -9,17 +17,16 @@ export default function ParkingInfo() {
                 <Car className="w-6 h-6 text-blue-600" />
             </div>
             <div>
-                <h3 className="font-bold text-lg mb-2 text-foreground">Parking Information</h3>
+                <h3 className="font-bold text-lg mb-2 text-foreground">{title}</h3>
                 <p className="text-muted-foreground mb-2">
-                Free parking is available in our main lot and street parking on Community Drive. 
-                Accessible parking spaces are located near the main entrance.
+                {desc}
                 </p>
             </div>
             </div>
             <img
-            src="/assets/parking/1.png"
-            alt="Parking Map"
-            className="mt-4 w-full h-auto rounded-md border border-muted-foreground/10 shadow-sm"
+                src={url}
+                alt="Parking Map"
+                className="mt-4 w-full h-auto rounded-md border border-muted-foreground/10 shadow-sm"
             />
         </Card>
     );
