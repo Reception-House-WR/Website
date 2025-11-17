@@ -759,6 +759,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'programs.benefits-section',
         'common.cards-carousel',
         'programs.analytics-section',
+        'common.list-card',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;

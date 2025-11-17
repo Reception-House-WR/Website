@@ -1,7 +1,11 @@
 import { ServiceHero } from "@/components/common/ServiceHero";
+import { fetchProgramsChildrenPage } from "@/lib/strapi/helpers/programs/childrenHelper";
 import YouthSection from "@/sections/programs-and-services/children/YouthSection";
 
-export default function Home(){
+export default async function Home(){
+
+  const res = await fetchProgramsChildrenPage();
+  console.log("Children and Youth Page Data:", res);
   return (
     <div>
       <ServiceHero 
