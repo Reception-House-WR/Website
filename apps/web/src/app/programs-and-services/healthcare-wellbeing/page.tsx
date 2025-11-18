@@ -6,13 +6,17 @@ export default async function Home(){
 
   const res = await fetchProgramsHealthPage();
   console.log("HEALTH PAGE DATA:", res);
+
+  if (!res) {
+    return <div>Failed to load data</div>;
+  }
   return (
     <div>
       <ServiceHero 
-        title="Healthcare and Wellbeing"
-            description="Our healthcare navigation services ensure newcomers receive the care they need while overcoming language barriers, cultural differences, and unfamiliarity with the Canadian healthcare system."
-            />
-        <HealthcareSection />
+        title={res.hero.title}
+        description={res.hero.description}
+      />
+      <HealthcareSection />
     </div>
   );
 }
