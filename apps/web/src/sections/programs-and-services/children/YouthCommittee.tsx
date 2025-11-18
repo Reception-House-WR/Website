@@ -1,4 +1,6 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import { Item } from "@/lib/strapi/models/programs/item";
+import { StrapiImageResponse } from "@/lib/strapi/models/strapi/image";
 import { Users } from "lucide-react";
 
   const committeeImages = [
@@ -19,7 +21,23 @@ const benefits = [
   "Collaboration with local organizations and decision-makers",
 ];
 
-export function YouthCommittee(){
+export function YouthCommittee({
+  committeeImages,
+  title,
+  subtitle,
+  subtitle2,
+  desc,
+  desc2,
+  benefits
+}: {
+  committeeImages: StrapiImageResponse[];
+  title: string;
+  subtitle: string;
+  subtitle2: string;
+  desc: string;
+  desc2: string;
+  benefits: Item[];
+}){
     return(
         <div className="grid lg:grid-cols-2 gap-12 mb-12 my-8">
             <div className="relative animate-scale-in">
@@ -28,8 +46,8 @@ export function YouthCommittee(){
                   {committeeImages.map((image, index) => (
                     <CarouselItem key={index}>
                       <img 
-                        src={image.src}
-                        alt={image.alt}
+                        src={image.url}
+                        alt={image.alternativeText ?? "Youth Advisory Committee Image"}
                         className="rounded-2xl shadow-medium w-full h-[500px] object-cover transition-transform duration-500 hover:scale-105"
                       />
                     </CarouselItem>
@@ -46,19 +64,17 @@ export function YouthCommittee(){
                   <Users className="w-7 h-7 text-secondary" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Youth Advisory Committee</h3>
-                  <p className="text-black-foreground">Empowering young voices to shape our programs</p>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">{title}</h3>
+                  <p className="text-black-foreground">{subtitle}</p>
                 </div>
               </div>
 
               <p className="text-black-foreground leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                Our Youth Advisory Committee gives young newcomers a platform to advocate for their peers, 
-                share their experiences, and influence the services that impact their lives. Committee members 
-                develop leadership skills, build confidence, and create positive change in their community.
+                {desc}
               </p>
 
               <div className="space-y-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <h4 className="font-semibold text-foreground">Committee Activities:</h4>
+                <h4 className="font-semibold text-foreground">{subtitle2}</h4>
                 <ul className="space-y-2">
                   {benefits.map((benefit, index) => (
                      <li
@@ -66,7 +82,7 @@ export function YouthCommittee(){
                       className="flex items-start gap-2 text-sm text-black-foreground transition-transform duration-200 hover:translate-x-2"
                     >
                       <span className="text-[var(--rh-red-500)] mt-1">•</span>
-                      <span>{benefit}</span>
+                      <span>{benefit.value}</span>
                     </li>
                   ))}
                 </ul>
@@ -74,8 +90,7 @@ export function YouthCommittee(){
 
               <div className="p-4 bg-[var(--rh-green-500)]/50 rounded-lg animate-fade-in-up transition-all duration-300 hover:bg-secondary/20 hover:shadow-soft" style={{ animationDelay: '0.3s' }}>
                 <p className="text-sm text-foreground italic">
-                  "Being part of the Youth Committee helped me find my voice and realize I can make 
-                  a difference. Now I'm helping other youth like me." — YAC Member
+                  {desc2}
                 </p>
               </div>
             </div>
