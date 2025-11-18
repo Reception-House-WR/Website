@@ -12,6 +12,7 @@ import { AnalyticsOverview } from "../programs/analyticOverview";
 import { AnalyticsSection } from "../programs/analyticsSection";
 import { CardsCarousel } from "../programs/cardsCarousel";
 import { BenefitsSection } from "../programs/benefitsSection";
+import { ProgramCard } from "../programs/programCard";
 
 export type SectionStrapi =
   | Hero
@@ -28,4 +29,5 @@ export type SectionStrapi =
   | AnalyticsSection
   | CardsCarousel
   | BenefitsSection
+  | ProgramCard
   ;

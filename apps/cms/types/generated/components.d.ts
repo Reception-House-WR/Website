@@ -32,7 +32,7 @@ export interface CommonCard extends Struct.ComponentSchema {
   attributes: {
     buttonLabel: Schema.Attribute.String;
     buttonURL: Schema.Attribute.String;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -282,6 +282,20 @@ export interface ProgramsPartnerSection extends Struct.ComponentSchema {
   };
 }
 
+export interface ProgramsProgramCard extends Struct.ComponentSchema {
+  collectionName: 'components_programs_program_cards';
+  info: {
+    displayName: 'programCard';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    steps: Schema.Attribute.Component<'programs.list-item', true>;
+    time: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ProgramsServiceOverview extends Struct.ComponentSchema {
   collectionName: 'components_programs_service_overviews';
   info: {
@@ -332,6 +346,7 @@ declare module '@strapi/strapi' {
       'programs.our-programs': ProgramsOurPrograms;
       'programs.partner': ProgramsPartner;
       'programs.partner-section': ProgramsPartnerSection;
+      'programs.program-card': ProgramsProgramCard;
       'programs.service-overview': ProgramsServiceOverview;
       'stories.stories-carousel': StoriesStoriesCarousel;
     }
