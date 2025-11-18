@@ -1,3 +1,5 @@
+import { StrapiImageResponse } from "../strapi/image";
+
 export interface UpcomingEvent {
     title: string;
     description: string;
@@ -6,5 +8,5 @@ export interface UpcomingEvent {
     location: string;
     isPaid: boolean;
     eventBriteURL?: string;
-    image: string;
+    image: StrapiImageResponse;
 }

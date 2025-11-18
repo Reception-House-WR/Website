@@ -5,6 +5,7 @@ import { UpcomingEvent } from "../models/event/event";
 import { HomeSections } from "../models/home/homeSections";
 import { Partner } from "../models/home/partner";
 import { Story } from "../models/stories/story";
+import { StrapiImageResponse } from "../models/strapi/image";
 import {
   fetchHomePageSections,
   fetchUpcomingEvents,
@@ -88,33 +89,37 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
   // console.log("events raw:", eventsRes);
 
   const events: UpcomingEvent[] = (eventsRes?.data ?? []).map((event: any) => {
-    const dateStr = event?.date;
-    let parsedDate: Date | null = null;
+  const dateStr = event?.date;
+  let parsedDate: Date | null = null;
 
-    if (typeof dateStr === "string") {
-      const m = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      if (m) {
-        const year = Number(m[1]);
-        const month = Number(m[2]) - 1; // JS months are 0-based
-        const day = Number(m[3]);
-        parsedDate = new Date(year, month, day);
-      } else {
-        const ts = Date.parse(dateStr);
-        parsedDate = isNaN(ts) ? null : new Date(ts);
-      }
+  if (typeof dateStr === "string") {
+    const m = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m) {
+      const year = Number(m[1]);
+      const month = Number(m[2]) - 1;
+      const day = Number(m[3]);
+      parsedDate = new Date(year, month, day);
+    } else {
+      const ts = Date.parse(dateStr);
+      parsedDate = isNaN(ts) ? null : new Date(ts);
     }
+  }
 
-    return {
-      title: event.title,
-      description: event.description,
-      date: parsedDate,
-      time: event.time,
-      location: event.location,
-      isPaid: event.isPaid,
-      eventBriteURL: event.eventBriteURL,
-      image: event.image?.url ?? null,
-    } as UpcomingEvent;
-  });
+  return {
+    title: event.title ?? "",
+    description: event.description ?? "",
+    date: parsedDate,
+    time: event.time ?? "",
+    location: event.location ?? "",
+    isPaid: event.isPaid ?? false,
+    eventBriteURL: event.eventBriteURL ?? "",
+    image: {
+      url: event.image?.url ?? "",
+      alternativeText: event.image?.alternativeText ?? null,
+      caption: event.image?.caption ?? null,
+    } as StrapiImageResponse,
+  } as UpcomingEvent;
+});
 
   // console.log("events:", events);
 

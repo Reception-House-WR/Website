@@ -7,6 +7,7 @@ import {
   fetchEvents,
   type Event,
 } from "@/lib/strapi";
+import { fetchEventsPage } from "@/lib/strapi/helpers/eventsHelper";
 import EventsPageClient from "@/sections/events/EventsPageClient";
 
 // --- Default fallback data (used if Strapi fails) ---
@@ -26,6 +27,10 @@ async function getData() {
     fetchEvents(),
   ]);
 
+
+  //NEW BACKEND STRUCTURE------------
+  const res = await fetchEventsPage();
+  console.log("EVENTS: ", res)
   return {
     heroData: heroResult || defaultHeroData,
     allEventsData: eventsResult || defaultEvents,
