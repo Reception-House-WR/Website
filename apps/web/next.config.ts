@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "receptionhousestorageacc.blob.core.windows.net"
+      }
       // --- END ---
     ],
   },
