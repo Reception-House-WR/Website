@@ -41,7 +41,8 @@
         "programs.benefits-section",
         "common.cards-carousel",
         "programs.analytics-section",
-        "common.list-card"
+        "common.list-card",
+        "programs.program-card"
       ]
     }
   }
