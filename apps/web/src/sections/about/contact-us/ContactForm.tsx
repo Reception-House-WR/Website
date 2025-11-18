@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
+import { object, string, literal, infer as zInfer } from "zod";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 import { Button } from "@/components/ui/button";
@@ -17,20 +17,19 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 
-const contactFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
+const contactFormSchema = object({
+  firstName: string().min(1, "First name is required"),
+  lastName: string().min(1, "Last name is required"),
+  email: string().email("Invalid email address"),
+  phone: string()
     .regex(/^\d{10}$/, "Invalid phone number")
     .optional()
-    .or(z.literal("")),
-  subject: z.string().min(1, "Subject is required"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+    .or(literal("")),
+  subject: string().min(1, "Subject is required"),
+  message: string().min(10, "Message must be at least 10 characters"),
 });
 
-type ContactFormData = z.infer<typeof contactFormSchema>;
+type ContactFormData = zInfer<typeof contactFormSchema>;
 
 export const ContactForm = () => {
   // reCAPTCHA HOOK AND ERROR STATE
@@ -58,7 +57,6 @@ export const ContactForm = () => {
     setSubmitError(null);
 
     if (!executeRecaptcha) {
-      console.error("reCAPTCHA not available");
       setSubmitError("reCAPTCHA failed to load. Please try again.");
       return;
     }
@@ -82,7 +80,6 @@ export const ContactForm = () => {
       alert("Message sent successfully!");
       reset();
     } catch (error) {
-      console.error("Error submitting form:", error);
       setSubmitError(
         error instanceof Error ? error.message : "An unknown error occurred."
       );

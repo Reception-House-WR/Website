@@ -1,29 +1,55 @@
-"use client"; 
+"use client";
 
 import { Card } from "@/lib/strapi/models/common/card";
 import ContactCards from "./ContactCards";
-import { ContactForm } from "./ContactForm";
 import ParkingInfo from "./ParkingInfo";
 import SocialMedia from "./SocialMedia";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { contactInfo } from "@/lib/strapi/models/about/contactInfo";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+const LazyRecaptchaForm = dynamic(
+  () => import("./LazyRecaptchaForm").then((m) => m.default),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="text-muted-foreground text-sm">Loading form…</div>
+    ),
+  }
+);
 
 export default function ContactUsPage({
   title,
   desc,
   parkingSection,
-  contactInfoItems
+  contactInfoItems,
 }: {
-  title: string,
-  desc: string,
-  parkingSection: Card,
-  contactInfoItems: contactInfo[]
+  title: string;
+  desc: string;
+  parkingSection: Card;
+  contactInfoItems: contactInfo[];
 }) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-  if (!siteKey) {
-    console.error("reCAPTCHA site key is missing.");
-  }
+  const formRef = useRef<HTMLDivElement | null>(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  useEffect(() => {
+    if (!formRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsFormVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(formRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="py-16 bg-background">
@@ -36,31 +62,40 @@ export default function ContactUsPage({
                 <h2 className="text-3xl font-bold mb-6 text-foreground">
                   {title}
                 </h2>
-                <p className="text-lg text-muted-foreground mb-8">
-                  {desc}
-                </p>
+                <p className="text-lg text-muted-foreground mb-8">{desc}</p>
               </div>
 
               <ContactCards contactInfo={contactInfoItems} />
-              <ParkingInfo title={parkingSection.title} desc={parkingSection.description} url={parkingSection.image.url} />
+              <ParkingInfo
+                title={parkingSection.title}
+                desc={parkingSection.description}
+                url={parkingSection.image?.url ?? ""}
+              />
               <SocialMedia />
             </div>
 
             {/* Contact Form */}
-            {siteKey ? (
-              <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
-                <ContactForm />
-              </GoogleReCaptchaProvider>
-            ) : (
-              <div>
-                <p className="text-lg text-destructive">
-                  Contact form is temporarily unavailable.
-                </p>
-                <p className="text-muted-foreground">
-                  (reCAPTCHA site key is missing)
-                </p>
-              </div>
-            )}
+            {/* RIGHT COLUMN — LAZY LOADED FORM */}
+            <div ref={formRef} className="min-h-[680px] flex flex-col">
+              {isFormVisible ? (
+                siteKey ? (
+                  <LazyRecaptchaForm siteKey={siteKey} />
+                ) : (
+                  <div>
+                    <p className="text-lg text-destructive">
+                      Contact form is temporarily unavailable.
+                    </p>
+                    <p className="text-muted-foreground">
+                      (reCAPTCHA site key is missing)
+                    </p>
+                  </div>
+                )
+              ) : (
+                <div className="text-sm text-muted-foreground">
+                  Scroll to load form…
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
