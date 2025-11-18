@@ -2,7 +2,7 @@ interface ProgramCardProps {
   title: string;
   description: string;
   imageSrc: string;
-  imageAlt: string;
+  imageAlt?: string;
 }
 
 export const ProgramCard = ({ title, description, imageSrc, imageAlt }: ProgramCardProps) => {
@@ -11,7 +11,7 @@ export const ProgramCard = ({ title, description, imageSrc, imageAlt }: ProgramC
       <div className="aspect-video overflow-hidden">
         <img 
           src={imageSrc} 
-          alt={imageAlt}
+          alt={imageAlt || title}
           className="w-full h-full object-cover hover:scale-105 transition-smooth"
         />
       </div>

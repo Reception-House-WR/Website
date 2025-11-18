@@ -5,13 +5,18 @@ import { HousingSection } from "@/sections/programs-and-services/housing/Housing
 export default async function Home(){
   const res = await fetchProgramsHousingPage();
   console.log("Housing Page Data:", res);
+
+  if (!res) {
+    return <div>Failed to load data</div>;
+  }
+
   return (
     <div>
       <ServiceHero
-        title="Temporary Accommodation and Housing"
-        description="Building communities by connecting newcomers with safe, welcoming homes in Waterloo Region."
+        title={res.hero.title}
+        description={res.hero.description}
       />
-      <HousingSection />
+      <HousingSection buttonLabel={res.benefitsSection.buttonLabel} bottomDesc={res.benefitsSection.bottomDescription} benefitsCard={res.benefitsSection.card} benefitsTitle={res.benefitsSection.title} benefitsDesc={res.benefitsSection.description} featuresTitle={res.featuresSection.title} featuresDesc={res.featuresSection.description} features={res.featuresSection.cards} analytics={res.analyticsSection.analytics} analyticsTitle={res.analyticsSection.title} analyticsDesc={res.analyticsSection.description} />
     </div>
   );
 }
