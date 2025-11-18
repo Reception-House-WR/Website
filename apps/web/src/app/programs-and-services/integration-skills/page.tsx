@@ -1,7 +1,12 @@
 import { ServiceHero } from "@/components/common/ServiceHero";
+import { fetchProgramsIntegrationPage } from "@/lib/strapi/helpers/programs/integrationHelper";
 import TrainingSection from "@/sections/programs-and-services/skills-training/TrainingSection";
 
-export default function Home(){
+export default async function Home(){
+
+  const res = await fetchProgramsIntegrationPage();
+  console.log("Integration and Skills Training Page Data:", res);
+  
   return (
     <div>
        <ServiceHero
