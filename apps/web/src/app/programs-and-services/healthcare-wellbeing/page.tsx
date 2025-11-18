@@ -16,7 +16,7 @@ export default async function Home(){
         title={res.hero.title}
         description={res.hero.description}
       />
-      <HealthcareSection />
+      <HealthcareSection analyticsMetric={res.analyticsSection.analytics[0].metric} analyticsDesc={res.analyticsSection.analytics[0].description} partners={res.partnerSection.partners} serviceTitle={res.serviceSection.title} serviceDesc={res.serviceSection.description} services={res.serviceSection.features} gallery={res.gallerySection.gallery} partnerTitle={res.partnerSection.title} partnerDesc={res.partnerSection.description} />
     </div>
   );
 }
