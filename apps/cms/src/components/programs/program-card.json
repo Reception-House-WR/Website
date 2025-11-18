@@ -5,10 +5,10 @@
   },
   "options": {},
   "attributes": {
-    "time": {
+    "title": {
       "type": "string"
     },
-    "title": {
+    "time": {
       "type": "string"
     },
     "description": {
@@ -28,6 +28,11 @@
         "videos",
         "audios"
       ]
+    },
+    "button": {
+      "type": "component",
+      "component": "common.button",
+      "repeatable": false
     }
   },
   "config": {}

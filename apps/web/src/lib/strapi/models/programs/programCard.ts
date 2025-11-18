@@ -1,3 +1,4 @@
+import { Button } from "../common/button";
 import { StrapiImageResponse } from "../strapi/image";
 
 export interface ProgramCard {
@@ -9,5 +10,5 @@ export interface ProgramCard {
         value: string;
     }[];
     image: StrapiImageResponse
-    
+    button?: Button
 }

@@ -42,7 +42,8 @@
         "common.cards-carousel",
         "programs.analytics-section",
         "common.list-card",
-        "programs.program-card"
+        "programs.program-card",
+        "programs.french-overview"
       ]
     }
   }

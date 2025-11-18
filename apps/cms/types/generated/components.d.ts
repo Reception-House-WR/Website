@@ -209,6 +209,18 @@ export interface ProgramsFeature extends Struct.ComponentSchema {
   };
 }
 
+export interface ProgramsFrenchOverview extends Struct.ComponentSchema {
+  collectionName: 'components_programs_french_overviews';
+  info: {
+    displayName: 'frenchOverview';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'programs.info-card', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ProgramsInfoCard extends Struct.ComponentSchema {
   collectionName: 'components_programs_info_cards';
   info: {
@@ -288,6 +300,7 @@ export interface ProgramsProgramCard extends Struct.ComponentSchema {
     displayName: 'programCard';
   };
   attributes: {
+    button: Schema.Attribute.Component<'common.button', false>;
     description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     steps: Schema.Attribute.Component<'programs.list-item', true>;
@@ -340,6 +353,7 @@ declare module '@strapi/strapi' {
       'programs.benefits-section': ProgramsBenefitsSection;
       'programs.cards': ProgramsCards;
       'programs.feature': ProgramsFeature;
+      'programs.french-overview': ProgramsFrenchOverview;
       'programs.info-card': ProgramsInfoCard;
       'programs.item': ProgramsItem;
       'programs.list-item': ProgramsListItem;
