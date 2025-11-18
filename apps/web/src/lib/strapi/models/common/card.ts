@@ -5,7 +5,7 @@ export interface Card {
     id: number;
     title: string;
     description: string;
-    image: StrapiImageResponse;
+    image?: StrapiImageResponse;
     buttonLabel: string;
     buttonUrl: string;
 }

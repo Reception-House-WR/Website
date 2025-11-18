@@ -1,7 +1,11 @@
 import { ServiceHero } from "@/components/common/ServiceHero";
+import { fetchProgramsFrenchPage } from "@/lib/strapi/helpers/programs/frenchHelper";
 import FrenchServicesSection from "@/sections/programs-and-services/french/FrenchServices";
 
-export default function Home() {
+export default async function Home() {
+
+  const res = await fetchProgramsFrenchPage();
+  console.log("French Services Page Data:", res);
   return (
     <div>
       <ServiceHero
