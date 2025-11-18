@@ -1,7 +1,11 @@
 import { ServiceHero } from "@/components/common/ServiceHero";
+import { fetchProgramsEmploymentPage } from "@/lib/strapi/helpers/programs/employmentHelper";
 import { EmploymentSection } from "@/sections/programs-and-services/employment/EmploymentSection";
 
-export default function Home(){
+export default async function Home(){
+
+  const res = await fetchProgramsEmploymentPage();
+  console.log("Employment Page Data:", res);
   return (
     <div>
       <ServiceHero
