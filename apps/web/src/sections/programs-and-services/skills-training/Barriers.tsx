@@ -1,55 +1,48 @@
-const barriers = [
-  {
-    title: "Housing Challenges",
-    description:
-      "Finding affordable, safe housing in an unfamiliar city without local references or credit history.",
-  },
-  {
-    title: "Employment Barriers",
-    description:
-      "Navigating credential recognition, gaining Canadian work experience, and understanding workplace culture.",
-  },
-  {
-    title: "Language & Cultural Adjustment",
-    description:
-      "Learning a new language while adapting to Canadian systems, values, and social norms.",
-  },
-];
+import { Feature } from "@/lib/strapi/models/programs/feature";
 
-export default function Barriers() {
+export default function Barriers({
+  title,
+  desc,
+  features,
+  galleryTitle,
+  galleryDesc
+}: {
+  title: string;
+  desc: string;
+  features: Feature[];
+  galleryTitle: string;
+  galleryDesc: string;
+}) {
   return (
     <section >
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="mb-16">
           <h2 className="text-4xl font-bold mb-8 text-foreground text-center">
-            Overcoming Barriers Together
+            {title}
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground mb-6">
-            When refugees and immigrants arrive in Canada, they face numerous challenges as they work
-            to rebuild their lives in a new country. Understanding these barriers is the first step in
-            providing effective support.
+            {desc}
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {barriers.map((barrier) => (
-              <div key={barrier.title} className="bg-card rounded-lg p-6 shadow-soft">
+            {features.map((feature) => (
+              <div key={feature.title} className="bg-card rounded-lg p-6 shadow-soft">
                 <h3 className="text-xl font-semibold mb-3 text-card-foreground">
-                  {barrier.title}
+                  {feature.title}
                 </h3>
-                <p className="text-muted-foreground">{barrier.description}</p>
+                <p className="text-muted-foreground">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
       <div >
-            <h2 className="text-4xl font-bold text-foreground text-center">
-              How We Help
-            </h2>
-            <p className="text-lg leading-relaxed text-muted-foreground text-center max-w-3xl mx-auto mb-12">
-              Reception House provides comprehensive training and support programs designed to help newcomers 
-              overcome these barriers and successfully integrate into their new community.
-            </p>
+          <h2 className="text-4xl font-bold text-foreground text-center">
+            {galleryTitle}
+          </h2>
+          <p className="text-lg leading-relaxed text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+            {galleryDesc}
+          </p>
         </div>
     </section>
   );
