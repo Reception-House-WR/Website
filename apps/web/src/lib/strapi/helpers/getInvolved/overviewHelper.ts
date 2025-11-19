@@ -45,7 +45,6 @@ export async function fetchGetInvolvedOverviewPage(): Promise<overviewSections |
   const pageRes = await fetchGetInvolvedOverviewPageSections();
   const page = pageRes?.data?.[0];
 
-  console.log("RAW ", page)
   if (!page) return null;
 
   const sections = page.sections ?? [];
