@@ -11,7 +11,7 @@
     "description": {
       "type": "text"
     },
-    "volunteer_testimonials": {
+    "testimonials": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::volunteer-testimonial.volunteer-testimonial"
