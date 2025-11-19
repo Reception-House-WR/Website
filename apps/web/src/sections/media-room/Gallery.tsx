@@ -1,8 +1,13 @@
 "use client";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlayIcon } from 'lucide-react';
-import React, { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PlayIcon } from "lucide-react";
+import React, { useState } from "react";
 
 interface MediaItem {
   id: number;
@@ -21,7 +26,8 @@ const mediaItems: MediaItem[] = [
     thumbnail: "/assets/rap.jpg",
     url: "/assets/rap.jpg",
     alt: "Community members welcoming newcomer family at airport arrival",
-    caption: "Volunteers welcoming a newcomer family at the airport, showcasing the warm community support that defines Reception House's mission.",
+    caption:
+      "Volunteers welcoming a newcomer family at the airport, showcasing the warm community support that defines Reception House's mission.",
   },
   {
     id: 2,
@@ -29,7 +35,8 @@ const mediaItems: MediaItem[] = [
     thumbnail: "/assets/rap.jpg",
     url: "/assets/rap.jpg",
     alt: "Children participating in language learning activities",
-    caption: "Children engaging in interactive language learning activities at our community center, building skills and friendships.",
+    caption:
+      "Children engaging in interactive language learning activities at our community center, building skills and friendships.",
   },
   {
     id: 3,
@@ -37,8 +44,10 @@ const mediaItems: MediaItem[] = [
     thumbnail: "/assets/rap.jpg",
     url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     alt: "Video: A Day in the Life at Reception House",
-    caption: "Experience a typical day at Reception House through the stories of staff, volunteers, and newcomer families.",
-    videoCaption: "This video includes English captions and a full transcript is available below.",
+    caption:
+      "Experience a typical day at Reception House through the stories of staff, volunteers, and newcomer families.",
+    videoCaption:
+      "This video includes English captions and a full transcript is available below.",
   },
   {
     id: 4,
@@ -46,7 +55,8 @@ const mediaItems: MediaItem[] = [
     thumbnail: "/assets/rap.jpg",
     url: "/assets/rap.jpg",
     alt: "Employment counselor meeting with newcomer client",
-    caption: "One-on-one employment counseling helps newcomers navigate the Canadian job market and build successful careers.",
+    caption:
+      "One-on-one employment counseling helps newcomers navigate the Canadian job market and build successful careers.",
   },
   {
     id: 5,
@@ -54,7 +64,8 @@ const mediaItems: MediaItem[] = [
     thumbnail: "/assets/rap.jpg",
     url: "/assets/rap.jpg",
     alt: "Community cultural celebration event with diverse participants",
-    caption: "Annual cultural celebration bringing together newcomers and long-time residents in a spirit of community and understanding.",
+    caption:
+      "Annual cultural celebration bringing together newcomers and long-time residents in a spirit of community and understanding.",
   },
   {
     id: 6,
@@ -62,14 +73,18 @@ const mediaItems: MediaItem[] = [
     thumbnail: "/assets/rap.jpg",
     url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     alt: "Video: Success Stories - From Arrival to Integration",
-    caption: "Hear firsthand accounts from refugees who have successfully rebuilt their lives in Waterloo Region with Reception House support.",
-    videoCaption: "This video includes English captions and a full transcript is available below.",
+    caption:
+      "Hear firsthand accounts from refugees who have successfully rebuilt their lives in Waterloo Region with Reception House support.",
+    videoCaption:
+      "This video includes English captions and a full transcript is available below.",
   },
 ];
 
 export const Gallery = () => {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
-  const [activeTab, setActiveTab] = useState<"all" | "images" | "videos">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "images" | "videos">(
+    "all"
+  );
 
   const filteredMedia = mediaItems.filter((item) => {
     if (activeTab === "all") return true;
@@ -78,13 +93,13 @@ export const Gallery = () => {
     return true;
   });
   return (
-    <section 
+    <section
       className="py-16 md:py-24 bg-muted/30"
       aria-labelledby="gallery-heading"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 
+          <h2
             id="gallery-heading"
             className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl"
           >
@@ -94,13 +109,53 @@ export const Gallery = () => {
             Visual stories of hope, resilience, and community support
           </p>
         </div>
+        <Tabs
+          value={activeTab}
+          onValueChange={(v) => setActiveTab(v as typeof activeTab)}
+          className="mb-8"
+        >
+          <TabsList aria-label="Filter media gallery">
+            <TabsTrigger id="tab-all" value="all" aria-controls="panel-all">
+              All Media
+            </TabsTrigger>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="mb-8">
-          <TabsList className="mx-auto flex w-fit">
-            <TabsTrigger value="all">All Media</TabsTrigger>
-            <TabsTrigger value="images">Photos</TabsTrigger>
-            <TabsTrigger value="videos">Videos</TabsTrigger>
+            <TabsTrigger
+              id="tab-images"
+              value="images"
+              aria-controls="panel-images"
+            >
+              Photos
+            </TabsTrigger>
+
+            <TabsTrigger
+              id="tab-videos"
+              value="videos"
+              aria-controls="panel-videos"
+            >
+              Videos
+            </TabsTrigger>
           </TabsList>
+
+          <div
+            id="panel-all"
+            role="tabpanel"
+            aria-labelledby="tab-all"
+            hidden={activeTab !== "all"}
+          />
+
+          <div
+            id="panel-images"
+            role="tabpanel"
+            aria-labelledby="tab-images"
+            hidden={activeTab !== "images"}
+          />
+
+          <div
+            id="panel-videos"
+            role="tabpanel"
+            aria-labelledby="tab-videos"
+            hidden={activeTab !== "videos"}
+          />
         </Tabs>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -120,26 +175,34 @@ export const Gallery = () => {
                 {item.type === "video" && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                     <div className="rounded-full bg-[var(--rh-500)] p-4 transition-transform group-hover:scale-110">
-                      <PlayIcon className="h-8 w-8 text-white" aria-hidden="true" />
+                      <PlayIcon
+                        className="h-8 w-8 text-white"
+                        aria-hidden="true"
+                      />
                     </div>
                   </div>
                 )}
               </div>
               <div className="p-4">
-                <p className="text-sm text-foreground/80 line-clamp-2">{item.caption}</p>
+                <p className="text-sm text-foreground/80 line-clamp-2">
+                  {item.caption}
+                </p>
               </div>
             </button>
           ))}
         </div>
       </div>
 
-      <Dialog open={!!selectedMedia} onOpenChange={() => setSelectedMedia(null)}>
+      <Dialog
+        open={!!selectedMedia}
+        onOpenChange={() => setSelectedMedia(null)}
+      >
         <DialogContent
           className="max-w-4xl"
           aria-describedby="media-description"
         >
           <DialogTitle className="sr-only">
-            {selectedMedia?.alt}
+            {selectedMedia?.alt || "Media Preview"}
           </DialogTitle>
           {selectedMedia && (
             <>
@@ -163,7 +226,9 @@ export const Gallery = () => {
                 )}
               </div>
               <DialogDescription id="media-description" className="space-y-2">
-                <span className="text-base text-foreground">{selectedMedia.caption}</span>
+                <span className="text-base text-foreground">
+                  {selectedMedia.caption}
+                </span>
                 {selectedMedia.videoCaption && (
                   <span className="text-sm text-muted-foreground italic">
                     {selectedMedia.videoCaption}
@@ -175,5 +240,5 @@ export const Gallery = () => {
         </DialogContent>
       </Dialog>
     </section>
-  )
-}
+  );
+};
