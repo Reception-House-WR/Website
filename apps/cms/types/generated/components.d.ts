@@ -23,6 +23,18 @@ export interface CommonButton extends Struct.ComponentSchema {
   };
 }
 
+export interface CommonButtonSection extends Struct.ComponentSchema {
+  collectionName: 'components_common_button_sections';
+  info: {
+    displayName: 'buttonSection';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'common.button', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface CommonCard extends Struct.ComponentSchema {
   collectionName: 'components_common_cards';
   info: {
@@ -94,6 +106,19 @@ export interface CommonHero extends Struct.ComponentSchema {
   };
 }
 
+export interface CommonIconCard extends Struct.ComponentSchema {
+  collectionName: 'components_common_icon_cards';
+  info: {
+    displayName: 'iconCard';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'common.button', true>;
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface CommonListCard extends Struct.ComponentSchema {
   collectionName: 'components_common_list_cards';
   info: {
@@ -137,6 +162,18 @@ export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   attributes: {
     campaign: Schema.Attribute.Relation<'oneToOne', 'api::campaign.campaign'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GetInvolvedCardsSection extends Struct.ComponentSchema {
+  collectionName: 'components_get_involved_cards_sections';
+  info: {
+    displayName: 'cardsSection';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'common.icon-card', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -338,15 +375,18 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'about.impact': AboutImpact;
       'common.button': CommonButton;
+      'common.button-section': CommonButtonSection;
       'common.card': CommonCard;
       'common.cards-carousel': CommonCardsCarousel;
       'common.carousel': CommonCarousel;
       'common.gallery-carousel': CommonGalleryCarousel;
       'common.hero': CommonHero;
+      'common.icon-card': CommonIconCard;
       'common.list-card': CommonListCard;
       'common.section': CommonSection;
       'common.simple-card': CommonSimpleCard;
       'donate.current-campaign': DonateCurrentCampaign;
+      'get-involved.cards-section': GetInvolvedCardsSection;
       'programs.analytics': ProgramsAnalytics;
       'programs.analytics-overview': ProgramsAnalyticsOverview;
       'programs.analytics-section': ProgramsAnalyticsSection;

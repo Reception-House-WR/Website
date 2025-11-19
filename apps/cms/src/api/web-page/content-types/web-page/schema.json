@@ -43,7 +43,9 @@
         "programs.analytics-section",
         "common.list-card",
         "programs.program-card",
-        "programs.french-overview"
+        "programs.french-overview",
+        "get-involved.cards-section",
+        "common.button-section"
       ]
     }
   }

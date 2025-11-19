@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_common_button_sections",
+  "info": {
+    "displayName": "buttonSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "button": {
+      "type": "component",
+      "component": "common.button",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
