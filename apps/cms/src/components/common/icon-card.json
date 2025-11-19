@@ -14,7 +14,7 @@
     "icon": {
       "type": "string"
     },
-    "button": {
+    "buttons": {
       "type": "component",
       "component": "common.button",
       "repeatable": true

@@ -11,7 +11,7 @@
     "description": {
       "type": "text"
     },
-    "button": {
+    "buttons": {
       "type": "component",
       "component": "common.button",
       "repeatable": true

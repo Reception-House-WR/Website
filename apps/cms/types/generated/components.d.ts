@@ -29,7 +29,7 @@ export interface CommonButtonSection extends Struct.ComponentSchema {
     displayName: 'buttonSection';
   };
   attributes: {
-    button: Schema.Attribute.Component<'common.button', true>;
+    buttons: Schema.Attribute.Component<'common.button', true>;
     description: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
@@ -112,7 +112,7 @@ export interface CommonIconCard extends Struct.ComponentSchema {
     displayName: 'iconCard';
   };
   attributes: {
-    button: Schema.Attribute.Component<'common.button', true>;
+    buttons: Schema.Attribute.Component<'common.button', true>;
     description: Schema.Attribute.Text;
     icon: Schema.Attribute.String;
     title: Schema.Attribute.String;
