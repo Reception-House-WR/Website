@@ -109,26 +109,53 @@ export const Gallery = () => {
             Visual stories of hope, resilience, and community support
           </p>
         </div>
-
         <Tabs
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as typeof activeTab)}
           className="mb-8"
         >
-          <TabsList
-            className="mx-auto flex w-fit"
-            aria-label="Filter media gallery"
-          >
-            <TabsTrigger value="all" aria-label="Show all media">
+          <TabsList aria-label="Filter media gallery">
+            <TabsTrigger id="tab-all" value="all" aria-controls="panel-all">
               All Media
             </TabsTrigger>
-            <TabsTrigger value="images" aria-label="Show images only">
+
+            <TabsTrigger
+              id="tab-images"
+              value="images"
+              aria-controls="panel-images"
+            >
               Photos
             </TabsTrigger>
-            <TabsTrigger value="videos" aria-label="Show videos only">
+
+            <TabsTrigger
+              id="tab-videos"
+              value="videos"
+              aria-controls="panel-videos"
+            >
               Videos
             </TabsTrigger>
           </TabsList>
+
+          <div
+            id="panel-all"
+            role="tabpanel"
+            aria-labelledby="tab-all"
+            hidden={activeTab !== "all"}
+          />
+
+          <div
+            id="panel-images"
+            role="tabpanel"
+            aria-labelledby="tab-images"
+            hidden={activeTab !== "images"}
+          />
+
+          <div
+            id="panel-videos"
+            role="tabpanel"
+            aria-labelledby="tab-videos"
+            hidden={activeTab !== "videos"}
+          />
         </Tabs>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
