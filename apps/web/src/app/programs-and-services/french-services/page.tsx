@@ -6,13 +6,18 @@ export default async function Home() {
 
   const res = await fetchProgramsFrenchPage();
   console.log("French Services Page Data:", res);
+
+  if (!res) {
+    return <div>Failed to load data</div>;
+  }
+
   return (
     <div>
       <ServiceHero
-        title="French Services"
-        description="See all our French Services."
+        title={res.hero.title}
+        description={res.hero.description}
       />
-      <FrenchServicesSection />
+      <FrenchServicesSection redirectLink={res.bottomCard.buttonUrl} buttonLabel={res.bottomCard.buttonLabel} cardTitle={res.bottomCard.title} cardDesc={res.bottomCard.description} resources={res.servicesSection.resources} cafe={res.servicesSection.cafe} cards={res.overvireSection.cards} title={res.overvireSection.title} desc={res.overvireSection.description} />
     </div>
   );
 }

@@ -4,5 +4,4 @@ export interface FrenchOverview {
     title: string;
     description: string;
     cards: InfoCard[];
-    
 }

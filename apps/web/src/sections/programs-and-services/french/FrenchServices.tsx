@@ -8,141 +8,53 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react"; // Added for React.ElementType
+import { InfoCard } from "@/lib/strapi/models/programs/infoCard";
+import { ProgramCard } from "@/lib/strapi/models/programs/programCard";
+import Link from "next/link";
 
-const partnershipPrograms = [
-  {
-    icon: Globe,
-    title: "Collège Boréal Partnership",
-    subtitle: "Francophone Settlement Services",
-    description:
-      "Through our collaboration with Collège Boréal, we provide comprehensive settlement support in French, including employment services, community orientation, and integration assistance specifically tailored for francophone newcomers.",
-    services: [
-      "Orientation et intégration communautaire en français",
-      "Services d'emploi et développement de carrière",
-      "Soutien à la navigation des services gouvernementaux",
-      "Connexions avec la communauté francophone locale",
-    ],
-    servicesTitle: "Services Offerts:",
-    color: "primary",
-  },
-  {
-    icon: Users,
-    title: "Projet Bienvenue",
-    subtitle: "Community Building & Support",
-    description:
-      "The Bienvenue Project creates welcoming spaces for French-speaking newcomers to connect, share experiences, and build supportive networks. We facilitate cultural events, peer support groups, and community integration activities.",
-    services: [
-      "Groupes de soutien par les pairs francophones",
-      "Événements culturels et célébrations communautaires",
-      "Ateliers d'intégration et de développement des compétences",
-      "Mentorat et accompagnement personnalisé",
-    ],
-    servicesTitle: "Program Highlights:",
-    color: "secondary",
-  },
+const partnershipIcons = [
+  Globe,
+  Users,
 ];
 
-type DetailVideo = { type: "video"; label: string; value: string };
-type DetailSession = {
-  type: "session";
-  icon: string;
-  label: string;
-  value: string;
-};
-type DetailLocation = {
-  type: "location";
-  icon: string;
-  label: string;
-  value: string;
-};
-type Detail = DetailVideo | DetailSession | DetailLocation;
-interface AdditionalService {
-  id: string;
-  icon: React.ElementType;
+const FrenchServicesSection = ({
+  title,
+  desc,
+  cards,
+  cafe,
+  resources,
+  cardTitle,
+  cardDesc,
+  buttonLabel,
+  redirectLink
+}: {
   title: string;
-  description: string;
-  details: Detail[];
-  buttonText: string;
-  backgroundClasses: string;
-  buttonTextColor: string;
-}
-
-const additionalServices: AdditionalService[] = [
-  {
-    id: "cafe",
-    icon: Coffee,
-    title: "Café Français",
-    description:
-      "Join us for informal French conversation sessions where newcomers can practice their French, meet other francophone community members, and enjoy coffee and connection in a relaxed setting.",
-    details: [
-      {
-        type: "session",
-        icon: "📅",
-        label: "Upcoming Sessions",
-        value: "Third Friday of each month, 2:00 PM - 4:00 PM",
-      },
-      {
-        type: "location",
-        icon: "📍",
-        label: "Location",
-        value: "Reception House, 97 Glasgow Street, Kitchener",
-      },
-    ],
-    buttonText: "Register for French Café",
-    backgroundClasses:
-      "bg-gradient-to-br from-[var(--rh-red-500)] to-[var(--rh-red-300)]",
-    buttonTextColor: "text-[var(--rh-red-500)]",
-  },
-  {
-    id: "video",
-    icon: TvMinimalPlay,
-    title: "Ressources Vidéo",
-    description:
-      "Access helpful video resources in French covering settlement topics, community information, and success stories from francophone newcomers who have built their lives in Waterloo Region.",
-    details: [
-      {
-        type: "video",
-        label: "Getting Started in Canada",
-        value: "Essential orientation for new arrivals",
-      },
-      {
-        type: "video",
-        label: "Employment Resources",
-        value: "Job search tips and workplace integration",
-      },
-      {
-        type: "video",
-        label: "Community Stories",
-        value: "Success stories from francophone newcomers",
-      },
-    ],
-    buttonText: "Watch French Videos",
-    backgroundClasses:
-      "bg-gradient-to-br from-[var(--rh-400)] to-[var(--rh-200)]",
-    buttonTextColor: "text-[var(--rh-500)]",
-  },
-];
-
-const FrenchServicesSection = () => {
+  desc: string;
+  cards: InfoCard[];
+  cafe: ProgramCard;
+  resources: ProgramCard;
+  cardTitle: string;
+  cardDesc: string;
+  buttonLabel: string;
+  redirectLink: string;
+}) => {
   return (
     <section className="py-10">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Services en Français
+              {title}
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Nous offrons des services en français pour soutenir les nouveaux
-              arrivants francophones dans leur intégration à la région de
-              Waterloo. Through our partnership with Collège Boréal and the
-              Bienvenue Project, we ensure French-speaking newcomers feel
-              welcomed and supported.
+              {desc}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {partnershipPrograms.map((program, index) => (
+            {cards.map((program, index) => {
+              const Icon = partnershipIcons[index % partnershipIcons.length];
+            return (
               <Card
                 key={index}
                 className="shadow-md hover:shadow-xl transition-all duration-300 animate-fade-in-up"
@@ -151,12 +63,12 @@ const FrenchServicesSection = () => {
                 <CardHeader className="flex flex-row items-start gap-6 mb-2">
                   <div
                     className={`w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      program.color === "primary"
+                      index % 2 === 0
                         ? "bg-[var(--rh-500)]/80"
                         : "bg-[var(--rh-yellow-500)]/80"
                     }`}
                   >
-                    <program.icon className="w-8 h-8 text-white " />
+                    <Icon className="w-8 h-8 text-white " />
                   </div>
                   <div>
                     <CardTitle className="text-2xl mb-1">
@@ -173,10 +85,10 @@ const FrenchServicesSection = () => {
                   </p>
                   <div className="space-y-2">
                     <h4 className="font-semibold text-foreground">
-                      {program.servicesTitle}
+                      {program.subtitle2}
                     </h4>
                     <ul className="space-y-2">
-                      {program.services.map((service, idx) => (
+                      {program.items.map((service, idx) => (
                         <li
                           key={idx}
                           className="flex items-start gap-2 text-sm text-muted-foreground"
@@ -184,51 +96,36 @@ const FrenchServicesSection = () => {
                           <span className="text-[var(--rh-red-500)] mt-1">
                             •
                           </span>
-                          <span>{service}</span>
+                          <span>{service.value}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )})}
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            {additionalServices.map((service, index) => (
               <div
-                key={service.id}
-                className={`${service.backgroundClasses} p-8 rounded-2xl text-white shadow-medium animate-fade-in`}
-                style={{ animationDelay: `${index * 0.2}s` }}
+                className={`bg-gradient-to-br from-[var(--rh-red-500)] to-[var(--rh-red-300)] p-8 rounded-2xl text-white shadow-medium animate-fade-in`}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <service.icon className="w-8 h-8" />
-                  <h3 className="text-2xl font-bold">{service.title}</h3>
+                  <Coffee className="w-8 h-8" />
+                  <h3 className="text-2xl font-bold">{cafe.title}</h3>
                 </div>
                 <p className="text-white/95 mb-6 leading-relaxed">
-                  {service.description}
+                  {cafe.description}
                 </p>
                 <div className="space-y-3 mb-6">
-                  {service.details.map((detail, idx) =>
-                    detail.type === "video" ? (
+                  {cafe.steps.map((step, idx) =>
                       <div
                         key={idx}
                         className="bg-white/10 p-4 rounded-lg transition-colors duration-200 hover:bg-white/20"
                       >
-                        <p className="font-semibold mb-1">{detail.label}</p>
-                        <p className="text-sm text-white/90">{detail.value}</p>
+                        <p className="font-semibold mb-1">{step.key}</p>
+                        <p className="text-sm text-white/90">{step.value}</p>
                       </div>
-                    ) : (
-                      <div key={idx} className="flex items-start gap-2">
-                        <span className="text-white/90">{detail.icon}</span>
-                        <div>
-                          <p className="font-semibold">{detail.label}</p>
-                          <p className="text-sm text-white/90">
-                            {detail.value}
-                          </p>
-                        </div>
-                      </div>
-                    )
                   )}
                 </div>
                 <Button
@@ -236,27 +133,61 @@ const FrenchServicesSection = () => {
                   size="lg"
                   className={`bg-white text-foreground hover:bg-white/80 w-full sm:w-auto`}
                 >
-                  {service.buttonText}
+                  <Link href={cafe.button?.url || "#"}>
+                  {cafe.button?.label}
+                  </Link>
                 </Button>
               </div>
-            ))}
           </div>
+
+            <div
+                className={`bg-gradient-to-br from-[var(--rh-400)] to-[var(--rh-200)] p-8 rounded-2xl text-white shadow-medium animate-fade-in`}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <TvMinimalPlay className="w-8 h-8" />
+                  <h3 className="text-2xl font-bold">{resources.title}</h3>
+                </div>
+                <p className="text-white/95 mb-6 leading-relaxed">
+                  {resources.description}
+                </p>
+                <div className="space-y-3 mb-6">
+                  {resources.steps.map((step, idx) =>
+                      <div
+                        key={idx}
+                        className="bg-white/10 p-4 rounded-lg transition-colors duration-200 hover:bg-white/20"
+                      >
+                        <p className="font-semibold mb-1">{step.key}</p>
+                        <p className="text-sm text-white/90">{step.value}</p>
+                      </div>
+                  )}
+                </div>
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className={`bg-white text-foreground hover:bg-white/80 w-full sm:w-auto`}
+                >
+                  <Link href={resources.button?.url || "#"}>
+                    {resources.button?.label}
+                  </Link>
+                </Button>
+              </div>
 
           <div className="mt-12 text-center bg-muted p-8 rounded-2xl animate-fade-in">
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              Besoin d'aide en français?
+              {cardTitle}
             </h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Our French services team is here to support you. Contact us to
-              learn more about francophone programs, upcoming events, or to
-              connect with French-speaking settlement counselors.
+              {cardDesc}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
+              {/* TODO: Add redirect link */}
               <Button
                 size="lg"
                 className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
               >
-                Contact French Services
+                <Link href={redirectLink}>
+                  {buttonLabel}
+                </Link>
               </Button>
               <Button
                 size="lg"
