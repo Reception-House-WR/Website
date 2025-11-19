@@ -21,7 +21,7 @@
     },
     "country": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "image": {
       "type": "media",
@@ -33,6 +33,9 @@
         "videos",
         "audios"
       ]
+    },
+    "videoUrl": {
+      "type": "string"
     }
   }
 }
