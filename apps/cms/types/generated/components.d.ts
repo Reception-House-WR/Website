@@ -19,7 +19,7 @@ export interface CommonButton extends Struct.ComponentSchema {
   };
   attributes: {
     label: Schema.Attribute.String & Schema.Attribute.Required;
-    url: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
   };
 }
 
@@ -162,6 +162,21 @@ export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   attributes: {
     campaign: Schema.Attribute.Relation<'oneToOne', 'api::campaign.campaign'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GetInvolvedBenefitCard extends Struct.ComponentSchema {
+  collectionName: 'components_get_involved_benefit_cards';
+  info: {
+    displayName: 'benefitCard';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -386,6 +401,7 @@ declare module '@strapi/strapi' {
       'common.section': CommonSection;
       'common.simple-card': CommonSimpleCard;
       'donate.current-campaign': DonateCurrentCampaign;
+      'get-involved.benefit-card': GetInvolvedBenefitCard;
       'get-involved.cards-section': GetInvolvedCardsSection;
       'programs.analytics': ProgramsAnalytics;
       'programs.analytics-overview': ProgramsAnalyticsOverview;

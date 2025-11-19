@@ -45,7 +45,8 @@
         "programs.program-card",
         "programs.french-overview",
         "get-involved.cards-section",
-        "common.button-section"
+        "common.button-section",
+        "get-involved.benefits-card-section"
       ]
     }
   }
