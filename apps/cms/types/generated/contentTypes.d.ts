@@ -533,6 +533,39 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiJobOpeningJobOpening extends Struct.CollectionTypeSchema {
+  collectionName: 'job_openings';
+  info: {
+    displayName: 'Job Opening';
+    pluralName: 'job-openings';
+    singularName: 'job-opening';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    contract: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    department: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::job-opening.job-opening'
+    > &
+      Schema.Attribute.Private;
+    mode: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    role: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.Text;
+  };
+}
+
 export interface ApiPartnerPartner extends Struct.CollectionTypeSchema {
   collectionName: 'partners';
   info: {
@@ -1320,6 +1353,7 @@ declare module '@strapi/strapi' {
       'api::campaign.campaign': ApiCampaignCampaign;
       'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;
+      'api::job-opening.job-opening': ApiJobOpeningJobOpening;
       'api::partner.partner': ApiPartnerPartner;
       'api::report.report': ApiReportReport;
       'api::story.story': ApiStoryStory;
