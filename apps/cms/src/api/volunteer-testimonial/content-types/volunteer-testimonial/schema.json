@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "volunteer_testimonials",
+  "info": {
+    "singularName": "volunteer-testimonial",
+    "pluralName": "volunteer-testimonials",
+    "displayName": "Volunteer testimonial"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "quote": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

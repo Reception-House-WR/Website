@@ -203,6 +203,22 @@ export interface GetInvolvedCardsSection extends Struct.ComponentSchema {
   };
 }
 
+export interface GetInvolvedVolunteerTestimonialsCarousel
+  extends Struct.ComponentSchema {
+  collectionName: 'components_get_involved_volunteer_testimonials_carousels';
+  info: {
+    displayName: 'volunteerTestimonialsCarousel';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+    volunteer_testimonials: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-testimonial.volunteer-testimonial'
+    >;
+  };
+}
+
 export interface ProgramsAnalytics extends Struct.ComponentSchema {
   collectionName: 'components_programs_analytics';
   info: {
@@ -415,6 +431,7 @@ declare module '@strapi/strapi' {
       'get-involved.benefit-card': GetInvolvedBenefitCard;
       'get-involved.benefits-card-section': GetInvolvedBenefitsCardSection;
       'get-involved.cards-section': GetInvolvedCardsSection;
+      'get-involved.volunteer-testimonials-carousel': GetInvolvedVolunteerTestimonialsCarousel;
       'programs.analytics': ProgramsAnalytics;
       'programs.analytics-overview': ProgramsAnalyticsOverview;
       'programs.analytics-section': ProgramsAnalyticsSection;
