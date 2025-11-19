@@ -6,13 +6,18 @@ export default async function Home(){
 
   const res = await fetchProgramsEmploymentPage();
   console.log("Employment Page Data:", res);
+
+  if (!res) {
+    return <div>Failed to load data</div>;
+  }
+
   return (
     <div>
       <ServiceHero
-          title="Employment Services"
-          description="Empowering newcomers to achieve meaningful employment and build successful careers in Waterloo Region."
+          title={res.hero.title}
+          description={res.hero.description}
       />
-      <EmploymentSection />
+      <EmploymentSection buttonLabel={res.benefitsSection.buttonLabel} benefitsTitle={res.benefitsSection.title} benefitsDesc={res.benefitsSection.description} benefitsBottomDesc={res.benefitsSection.bottomDescription} benefitsCard={res.benefitsSection.card} title={res.featuresSection.title} desc={res.featuresSection.description} cards={res.featuresSection.cards} />
     </div>
   );
 }

@@ -6,10 +6,6 @@ export default function TrainingSection(){
 
 
     return(
-        <div className="bg-[var(--rh-yellow-500)]/10 py-20">
-            <Barriers/>
-            <Images/>
-            <RapAndCss/>
-        </div>
+
     );
 }
