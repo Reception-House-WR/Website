@@ -10,6 +10,7 @@ import {
 } from "@/lib/strapi";
 import DonateClient from "@/sections/donate/DonateClient";
 
+
 export const revalidate = 60; // Revalidate every 60 seconds
 
 const defaultHeroData: HeroData = {
