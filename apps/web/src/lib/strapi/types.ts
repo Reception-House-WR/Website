@@ -1,5 +1,7 @@
 // --- Strapi API Response Type Definitions ---
 
+import { StrapiImageResponse } from "./models/strapi/image";
+
 export interface StrapiImageFormat {
   url: string;
   width: number;
@@ -142,11 +144,10 @@ export interface TimelineEvent {
 export interface Event {
   title: string;
   description: string;
-  date: string;
+  date: Date | null;
   time: string;
   location: string;
-  image: string | null;
-  category: "upcoming" | "past";
+  image: StrapiImageResponse;
   isPaid: boolean;
   eventbriteUrl?: string;
 }

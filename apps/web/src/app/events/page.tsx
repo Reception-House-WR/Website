@@ -1,6 +1,3 @@
-// app/events/page.tsx
-export const dynamic = "force-dynamic";
-
 import {
   fetchPageHero,
   type HeroData,
@@ -10,36 +7,14 @@ import {
 import { fetchEventsPage } from "@/lib/strapi/helpers/eventsHelper";
 import EventsPageClient from "@/sections/events/EventsPageClient";
 
-// --- Default fallback data (used if Strapi fails) ---
-const defaultHeroData: HeroData = {
-  title: "Community Events",
-  description:
-    "Join us in our upcoming events and community activities. Your participation helps us build a more welcoming community for newcomers.",
-  imageUrl: "/assets/timeline/timeline5.jpg",
-};
-
-const defaultEvents: Event[] = [];
-
-// --- Fetch data on the server ---
-async function getData() {
-  const [heroResult, eventsResult] = await Promise.all([
-    fetchPageHero("events-hero"),
-    fetchEvents(),
-  ]);
-
-
-  //NEW BACKEND STRUCTURE------------
-  const res = await fetchEventsPage();
-  console.log("EVENTS: ", res)
-  return {
-    heroData: heroResult || defaultHeroData,
-    allEventsData: eventsResult || defaultEvents,
-  };
-}
-
 // --- Events Page (Server Component) ---
-export default async function EventsPage() {
-  const { heroData, allEventsData } = await getData();
+export default async function Page() {
+  const res = await fetchEventsPage();
+  console.log(res)
 
-  return <EventsPageClient heroData={heroData} allEventsData={allEventsData} />;
+  if (!res) {
+    return <div>Failed to load data</div>;
+  }
+
+  return <EventsPageClient allEventsData={res.events} heroTitle={res.hero.title} heroImage={res.hero.backgroundImageUrl} heroDesc={res.hero.description} />;
 }

@@ -5,28 +5,40 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EventCalendar } from "./EventCalendar";
 import { type HeroData, type Event } from "@/lib/strapi";
 import { EventCard } from "./EventCard";
+import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
 // --- Main Events Page Client Component ---
 interface EventsPageClientProps {
-  heroData: HeroData;
-  allEventsData: Event[];
+  allEventsData: UpcomingEvent[];
+  heroTitle: string;
+  heroImage?: string;
+  heroDesc: string;
 }
 
 export default function EventsPageClient({
-  heroData,
   allEventsData,
+  heroTitle,
+  heroImage,
+  heroDesc
 }: EventsPageClientProps) {
-  const calendarEvents = allEventsData.map((event, index) => ({
-    id: index,
-    title: event.title,
-    date: event.date,
-    category: event.category,
-  }));
+  const calendarEvents = allEventsData.map((event, index) => {
+    const eventDate = event.date ? new Date(event.date) : null;
+    const isUpcoming = eventDate ? eventDate.getTime() >= Date.now() : false;
+
+    return {
+      id: index,
+      title: event.title,
+      date: eventDate ? eventDate.toISOString() : new Date("2025-01-01").toISOString(),
+      category: isUpcoming ? "upcoming" : "past",
+    };
+  });
 
   const upcomingEvents = allEventsData.filter(
-    (event) => event.category === "upcoming"
+    (event) => event.date && new Date(event.date).getTime() >= Date.now()
   );
-  const pastEvents = allEventsData.filter((event) => event.category === "past");
+  const pastEvents = allEventsData.filter(
+    (event) => event.date && new Date(event.date).getTime() < Date.now()
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,7 +49,7 @@ export default function EventsPageClient({
       >
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroData.imageUrl})` }}
+          style={{ backgroundImage: `url(${heroImage})` }}
         >
           <div
             className="absolute inset-0"
@@ -50,9 +62,9 @@ export default function EventsPageClient({
               <CalendarIcon className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {heroData.title}
+              {heroTitle}
             </h1>
-            <p className="text-xl text-white/90">{heroData.description}</p>
+            <p className="text-xl text-white/90">{heroDesc}</p>
           </div>
         </div>
       </section>
@@ -73,7 +85,7 @@ export default function EventsPageClient({
                 <div className="space-y-6">
                   {upcomingEvents.length > 0 ? (
                     upcomingEvents.map((event) => (
-                      <EventCard key={event.title} event={event} />
+                      <EventCard key={event.title} event={event} category="upcoming" />
                     ))
                   ) : (
                     <p className="text-muted-foreground">
@@ -87,7 +99,7 @@ export default function EventsPageClient({
                 <div className="space-y-6">
                   {pastEvents.length > 0 ? (
                     pastEvents.map((event) => (
-                      <EventCard key={event.title} event={event} />
+                      <EventCard key={event.title} event={event} category="past" />
                     ))
                   ) : (
                     <p className="text-muted-foreground">
@@ -100,9 +112,11 @@ export default function EventsPageClient({
               <TabsContent value="all" className="mt-6">
                 <div className="space-y-6">
                   {allEventsData.length > 0 ? (
-                    allEventsData.map((event, id) => (
-                      <EventCard key={id} event={event} />
-                    ))
+                    allEventsData.map((event, id) => {
+                      const category = event.date && new Date(event.date).getTime() >= Date.now() ? "upcoming" : "past";
+                      return (
+                      <EventCard key={id} event={event} category={category} />
+                    )})
                   ) : (
                     <p className="text-muted-foreground">
                       No events to show right now.
