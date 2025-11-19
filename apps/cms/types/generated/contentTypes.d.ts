@@ -716,6 +716,38 @@ export interface ApiValueValue extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiVolunteerTestimonialVolunteerTestimonial
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'volunteer_testimonials';
+  info: {
+    displayName: 'Volunteer testimonial';
+    pluralName: 'volunteer-testimonials';
+    singularName: 'volunteer-testimonial';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::volunteer-testimonial.volunteer-testimonial'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    quote: Schema.Attribute.Text;
+    role: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
   collectionName: 'web_pages';
   info: {
@@ -765,6 +797,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'get-involved.cards-section',
         'common.button-section',
         'get-involved.benefits-card-section',
+        'get-involved.volunteer-testimonials-carousel',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -1293,6 +1326,7 @@ declare module '@strapi/strapi' {
       'api::strategic-priority.strategic-priority': ApiStrategicPriorityStrategicPriority;
       'api::timeline-event.timeline-event': ApiTimelineEventTimelineEvent;
       'api::value.value': ApiValueValue;
+      'api::volunteer-testimonial.volunteer-testimonial': ApiVolunteerTestimonialVolunteerTestimonial;
       'api::web-page.web-page': ApiWebPageWebPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
