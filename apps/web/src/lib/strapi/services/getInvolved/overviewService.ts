@@ -13,13 +13,13 @@ export async function fetchGetInvolvedOverviewPageSections() {
             populate: {backgroundImage: true}, 
           },
           "common.button-section" : {
-            populate: {buttons: true}
+            populate: {button: true}
           }, 
           "get-involved.cards-section": {
             populate: {
                 cards: {
                     populate: {
-                        buttons: true
+                        button: true
                     }
                 }
             }

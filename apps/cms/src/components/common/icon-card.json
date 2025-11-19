@@ -14,10 +14,10 @@
     "icon": {
       "type": "string"
     },
-    "buttons": {
+    "button": {
       "type": "component",
       "component": "common.button",
-      "repeatable": true
+      "repeatable": false
     }
   },
   "config": {}

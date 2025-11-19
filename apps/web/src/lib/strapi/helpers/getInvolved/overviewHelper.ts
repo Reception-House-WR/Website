@@ -22,22 +22,16 @@ const toButton = (b: any): Button => ({
 const toButtonSection = (s: any): ButtonSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
-  buttons: Array.isArray(s?.buttons)
-    ? s.button.map((b: any) => toButton(b))
-    : [],
+  button: toButton(s?.button ?? {}),   
 });
 
 const toIconCard = (c: any): IconCard => ({
   title: c?.title ?? "",
   description: c?.description ?? "",
   icon: c?.icon ?? "",
-  buttons: Array.isArray(c?.buttons)
-    ? c.buttons.map((b: any) => ({
-        label: b?.label ?? "",
-        url: b?.url ?? "",
-      }))
-    : [],
+  button: toButton(c?.button ?? {}),  
 });
+
 
 
 const toCardsSection = (s: any): CardsSection => ({
