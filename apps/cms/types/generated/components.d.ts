@@ -211,11 +211,11 @@ export interface GetInvolvedVolunteerTestimonialsCarousel
   };
   attributes: {
     description: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
-    volunteer_testimonials: Schema.Attribute.Relation<
+    testimonials: Schema.Attribute.Relation<
       'oneToMany',
       'api::volunteer-testimonial.volunteer-testimonial'
     >;
+    title: Schema.Attribute.String;
   };
 }
 
