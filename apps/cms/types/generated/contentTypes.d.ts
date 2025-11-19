@@ -764,6 +764,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'programs.french-overview',
         'get-involved.cards-section',
         'common.button-section',
+        'get-involved.benefits-card-section',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;

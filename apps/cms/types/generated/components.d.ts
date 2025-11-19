@@ -180,6 +180,17 @@ export interface GetInvolvedBenefitCard extends Struct.ComponentSchema {
   };
 }
 
+export interface GetInvolvedBenefitsCardSection extends Struct.ComponentSchema {
+  collectionName: 'components_get_involved_benefits_card_sections';
+  info: {
+    displayName: 'benefitsCardSection';
+  };
+  attributes: {
+    benefits: Schema.Attribute.Component<'get-involved.benefit-card', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface GetInvolvedCardsSection extends Struct.ComponentSchema {
   collectionName: 'components_get_involved_cards_sections';
   info: {
@@ -402,6 +413,7 @@ declare module '@strapi/strapi' {
       'common.simple-card': CommonSimpleCard;
       'donate.current-campaign': DonateCurrentCampaign;
       'get-involved.benefit-card': GetInvolvedBenefitCard;
+      'get-involved.benefits-card-section': GetInvolvedBenefitsCardSection;
       'get-involved.cards-section': GetInvolvedCardsSection;
       'programs.analytics': ProgramsAnalytics;
       'programs.analytics-overview': ProgramsAnalyticsOverview;
