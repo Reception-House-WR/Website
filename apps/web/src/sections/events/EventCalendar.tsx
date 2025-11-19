@@ -28,7 +28,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
     .filter((event) => event.category === "upcoming")
     .map((event) => {
       const date = new Date(event.date);
-      date.setUTCDate(date.getUTCDate() + 1); // Adjust timezone offset
+      date.setUTCDate(date.getUTCDate()); // Adjust timezone offset
       return date;
     });
 

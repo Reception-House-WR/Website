@@ -23,18 +23,18 @@ import {
 import { RSVPForm } from "./RSVPForm";
 
 // --- Helper: Format date for display (now co-located with the component) ---
-function formatDisplayDate(isoDate: string) {
-  const date = new Date(isoDate);
-  date.setUTCDate(date.getUTCDate() + 1);
-  return date.toLocaleDateString("en-US", {
+function formatDisplayDate(isoDate: Date | null): string {
+  if (!isoDate) return "Date not available";
+  const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
     day: "numeric",
-  });
+  };
+  return new Date(isoDate).toLocaleDateString(undefined, options);
 }
 
 // --- Event Card (individual event) ---
-export const EventCard = ({ event }: { event: Event }) => {
+export const EventCard = ({ event, category }: { event: Event; category: "upcoming" | "past" }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const displayDate = formatDisplayDate(event.date);
 
@@ -58,7 +58,7 @@ export const EventCard = ({ event }: { event: Event }) => {
         <div className="w-full h-48 md:h-auto md:w-1/3  bg-muted/50 flex-shrink-0">
           {event.image ? (
             <img
-              src={event.image}
+              src={event.image.url}
               alt={event.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
@@ -78,7 +78,7 @@ export const EventCard = ({ event }: { event: Event }) => {
           <CardTitle className="text-2xl mb-2">{event.title}</CardTitle>
           {/* Badges Section */}
           <div className="flex flex-wrap gap-2 mb-3">
-            {event.category === "upcoming" && (
+            {category === "upcoming" && (
               <Badge className="font-medium border-0 text-foreground bg-[var(--rh-yellow-300)] hover:bg-[var(--rh-yellow-200)]">
                 Upcoming
               </Badge>
@@ -109,7 +109,7 @@ export const EventCard = ({ event }: { event: Event }) => {
           </div>
 
           {/* --- CONDITIONAL BUTTON LOGIC --- */}
-          {event.category === "upcoming" ? (
+          {category === "upcoming" ? (
             event.isPaid ? (
               // --- PAID EVENT BUTTON (Direct Link) ---
               <Button
@@ -152,7 +152,7 @@ export const EventCard = ({ event }: { event: Event }) => {
 
 
   // --- CONDITIONAL WRAPPER ---
-  if (event.isPaid || event.category === "past") {
+  if (event.isPaid || category === "past") {
     return CardUI;
   }
 
