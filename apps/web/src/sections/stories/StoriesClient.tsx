@@ -6,60 +6,66 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PageHero } from "@/components/ui/pageHero";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import { type HeroData, type Story } from "@/lib/strapi";
 import type { ReactNode } from "react";
+import { Story } from "@/lib/strapi/models/stories/story";
 
 interface StoriesClientProps {
-  heroData: HeroData;
-  storiesData: Story[];
-  heroIcon?: ReactNode;
+  heroTitle: string;
+  heroDesc: string;
+  heroImage?: string;
+  bodyTitle: string;
+  bodyDesc: string;
+  stories: Story[];
 }
 
 export default function StoriesClient({
-  heroData,
-  storiesData,
-  heroIcon,
+  heroTitle,
+  heroDesc,
+  heroImage,
+  bodyTitle,
+  bodyDesc,
+  stories
 }: StoriesClientProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === storiesData.length - 1 ? 0 : prevIndex + 1
+      prevIndex === stories.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? storiesData.length - 1 : prevIndex - 1
+      prevIndex === 0 ? stories.length - 1 : prevIndex - 1
     );
   };
 
   return (
     <div className="min-h-screen bg-background">
       <main id="main-content">
-        <PageHero heroData={heroData} icon={heroIcon} />
+        <PageHero heroTitle={heroTitle} heroDesc={heroDesc} heroImage={heroImage} />
 
         <section className="py-16 px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
           <div className="container mx-auto max-w-4xl">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
-              Inspiring Journeys of Hope
+              {bodyTitle}
             </h2>
             <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Real people, real transformations, real impact in our community
+              {bodyDesc}
             </p>
 
-            {storiesData.length > 0 ? (
+            {stories.length > 0 ? (
               <div className="relative">
                 <Card
-                  key={storiesData[currentIndex].id}
+                  key={stories[currentIndex].author}
                   className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
                 >
                   <CardContent className="p-0 md:flex h-full">
                     <div className="relative w-full h-48 md:h-auto md:w-1/3 flex-shrink-0 overflow-hidden bg-muted">
-                      {storiesData[currentIndex].image ? (
+                      {stories[currentIndex].image ? (
                         <img
-                          src={storiesData[currentIndex].image!}
-                          alt={storiesData[currentIndex].imageAlt}
+                          src={stories[currentIndex].image}
+                          alt={`${stories[currentIndex].author}'s photo`}
                           className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           loading="lazy"
                         />
@@ -68,28 +74,28 @@ export default function StoriesClient({
                       )}
                     </div>
 
-                    <div className="w-full md:w-3/5 p-8 md:p-12 flex flex-col justify-center bg-white/80 backdrop-blur-sm">
+                    <div className="w-full md:w-3/5 p-6 md:py-8 md:px-6 flex flex-col justify-center bg-white/80 backdrop-blur-sm">
                       <div className="inline-block mb-4">
                         <span className="px-4 py-2 bg-[var(--rh-green-600)] text-background rounded-full text-sm font-semibold">
                           Client Story
                         </span>
                       </div>
                       <h3 className="text-3xl md:text-4xl font-bold text-[var(--rh-green-600)] mb-4">
-                        {storiesData[currentIndex].name}'s Story
+                        {stories[currentIndex].author}'s Story
                       </h3>
-                      <p className="text-base md:text-lg leading-relaxed text-high-contrast mb-6">
-                        {storiesData[currentIndex].story}
+                      <p className="text-base md:text-md leading-relaxed text-high-contrast mb-6">
+                        {stories[currentIndex].quote}
                       </p>
                       <Button
                         asChild
                         size="lg"
-                        className="group/button w-fit bg-[var(--rh-500)] text-background hover:bg-[var(--rh-400)]"
+                        className="group/button w-fit hover:cursor-pointer bg-[var(--rh-500)] text-background hover:bg-[var(--rh-400)]"
                       >
                         <a
-                          href={storiesData[currentIndex].videoUrl}
+                          href={stories[currentIndex].videoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Watch ${storiesData[currentIndex].name}'s video interview`}
+                          aria-label={`Watch ${stories[currentIndex].author}'s video interview`}
                         >
                           Watch Video Interview
                           <ExternalLink className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
@@ -111,7 +117,7 @@ export default function StoriesClient({
                   </Button>
 
                   <div className="flex gap-2">
-                    {storiesData.map((_, index) => (
+                    {stories.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setCurrentIndex(index)}

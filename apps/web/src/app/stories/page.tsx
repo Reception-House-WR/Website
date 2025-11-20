@@ -43,11 +43,18 @@ export default async function StoriesPage() {
   console.log("STORIES: ", res); 
   //-----------------------------------
 
+  if (!res) {
+    return <div>Failed to load data</div>;
+  }
+
   return (
     <StoriesClient
-      heroData={heroData}
-      storiesData={storiesData}
-      heroIcon={<Users className="w-8 h-8 text-white" />}
+      heroTitle={res.hero.title}
+      heroDesc={res.hero.description}
+      heroImage={res.hero.backgroundImageUrl}
+      bodyTitle={res.body.section.title}
+      bodyDesc={res.body.section.description}
+      stories={res.body.stories}
     />
   );
 }
