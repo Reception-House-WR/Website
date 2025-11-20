@@ -829,6 +829,7 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'common.button-section',
         'get-involved.benefits-card-section',
         'get-involved.volunteer-testimonials-carousel',
+        'donate.campaigns',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;

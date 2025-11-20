@@ -154,6 +154,18 @@ export interface CommonSimpleCard extends Struct.ComponentSchema {
   };
 }
 
+export interface DonateCampaigns extends Struct.ComponentSchema {
+  collectionName: 'components_donate_campaigns';
+  info: {
+    displayName: 'campaigns';
+  };
+  attributes: {
+    campaigns: Schema.Attribute.Relation<'oneToMany', 'api::campaign.campaign'>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   collectionName: 'components_donate_current_campaigns';
   info: {
@@ -427,6 +439,7 @@ declare module '@strapi/strapi' {
       'common.list-card': CommonListCard;
       'common.section': CommonSection;
       'common.simple-card': CommonSimpleCard;
+      'donate.campaigns': DonateCampaigns;
       'donate.current-campaign': DonateCurrentCampaign;
       'get-involved.benefit-card': GetInvolvedBenefitCard;
       'get-involved.benefits-card-section': GetInvolvedBenefitsCardSection;
