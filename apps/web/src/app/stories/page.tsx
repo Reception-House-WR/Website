@@ -8,6 +8,7 @@ import {
 } from "@/lib/strapi";
 import StoriesClient from "../../sections/stories/StoriesClient";
 import { Users } from "lucide-react";
+import { fetchStoriesPage } from "@/lib/strapi/helpers/storiesHelper";
 
 export const revalidate = 60;
 
@@ -34,6 +35,13 @@ async function getData() {
 
 export default async function StoriesPage() {
   const { heroData, storiesData } = await getData();
+
+
+  //NEW FUNCTIONS USING NEW BACKEND ---
+  //CREATED BY camila
+  const res = await fetchStoriesPage();
+  console.log("STORIES: ", res); 
+  //-----------------------------------
 
   return (
     <StoriesClient

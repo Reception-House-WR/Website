@@ -3,4 +3,5 @@ export interface Story{
     quote: string;
     country: string;
     image: string;
+    videoUrl: string;
 }
