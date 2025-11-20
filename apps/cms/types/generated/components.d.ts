@@ -268,6 +268,46 @@ export interface GetInvolvedVolunteerTestimonialsCarousel
   };
 }
 
+export interface MediaRoomKits extends Struct.ComponentSchema {
+  collectionName: 'components_media_room_kits';
+  info: {
+    displayName: 'kitCard';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    kit: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MediaRoomMediaKitSection extends Struct.ComponentSchema {
+  collectionName: 'components_media_room_media_kit_sections';
+  info: {
+    displayName: 'mediaKitSection';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    kits: Schema.Attribute.Component<'media-room.kits', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface MediaRoomReleasesSection extends Struct.ComponentSchema {
+  collectionName: 'components_media_room_releases_sections';
+  info: {
+    displayName: 'releasesSection';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    pressReleases: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::press-release.press-release'
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ProgramsAnalytics extends Struct.ComponentSchema {
   collectionName: 'components_programs_analytics';
   info: {
@@ -485,6 +525,9 @@ declare module '@strapi/strapi' {
       'get-involved.benefits-card-section': GetInvolvedBenefitsCardSection;
       'get-involved.cards-section': GetInvolvedCardsSection;
       'get-involved.volunteer-testimonials-carousel': GetInvolvedVolunteerTestimonialsCarousel;
+      'media-room.kits': MediaRoomKits;
+      'media-room.media-kit-section': MediaRoomMediaKitSection;
+      'media-room.releases-section': MediaRoomReleasesSection;
       'programs.analytics': ProgramsAnalytics;
       'programs.analytics-overview': ProgramsAnalyticsOverview;
       'programs.analytics-section': ProgramsAnalyticsSection;

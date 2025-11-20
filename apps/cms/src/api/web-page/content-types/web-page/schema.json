@@ -50,7 +50,9 @@
         "get-involved.volunteer-testimonials-carousel",
         "donate.campaigns",
         "donate.list-cards-section",
-        "donate.drop-off-card"
+        "donate.drop-off-card",
+        "media-room.releases-section",
+        "media-room.media-kit-section"
       ]
     }
   }

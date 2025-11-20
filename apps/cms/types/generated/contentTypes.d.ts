@@ -530,6 +530,37 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGalleryGallery extends Struct.CollectionTypeSchema {
+  collectionName: 'galleries';
+  info: {
+    displayName: 'Gallery';
+    pluralName: 'galleries';
+    singularName: 'gallery';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    isImage: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::gallery.gallery'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    videoUrl: Schema.Attribute.Text;
+  };
+}
+
 export interface ApiJobOpeningJobOpening extends Struct.CollectionTypeSchema {
   collectionName: 'job_openings';
   info: {
@@ -591,6 +622,39 @@ export interface ApiPartnerPartner extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiPressReleasePressRelease
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'press_releases';
+  info: {
+    displayName: 'press-release';
+    pluralName: 'press-releases';
+    singularName: 'press-release';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::press-release.press-release'
+    > &
+      Schema.Attribute.Private;
+    longDesc: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    shortDesc: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -829,6 +893,8 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'donate.campaigns',
         'donate.list-cards-section',
         'donate.drop-off-card',
+        'media-room.releases-section',
+        'media-room.media-kit-section',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -1351,8 +1417,10 @@ declare module '@strapi/strapi' {
       'api::campaign.campaign': ApiCampaignCampaign;
       'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;
+      'api::gallery.gallery': ApiGalleryGallery;
       'api::job-opening.job-opening': ApiJobOpeningJobOpening;
       'api::partner.partner': ApiPartnerPartner;
+      'api::press-release.press-release': ApiPressReleasePressRelease;
       'api::report.report': ApiReportReport;
       'api::story.story': ApiStoryStory;
       'api::strategic-priority.strategic-priority': ApiStrategicPriorityStrategicPriority;
