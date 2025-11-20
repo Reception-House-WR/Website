@@ -48,7 +48,9 @@
         "common.button-section",
         "get-involved.benefits-card-section",
         "get-involved.volunteer-testimonials-carousel",
-        "donate.campaigns"
+        "donate.campaigns",
+        "donate.list-cards-section",
+        "donate.drop-off-card"
       ]
     }
   }

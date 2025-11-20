@@ -448,10 +448,7 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     goal: Schema.Attribute.BigInteger & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -830,6 +827,8 @@ export interface ApiWebPageWebPage extends Struct.CollectionTypeSchema {
         'get-involved.benefits-card-section',
         'get-involved.volunteer-testimonials-carousel',
         'donate.campaigns',
+        'donate.list-cards-section',
+        'donate.drop-off-card',
       ]
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;

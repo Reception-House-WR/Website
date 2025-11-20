@@ -177,6 +177,43 @@ export interface DonateCurrentCampaign extends Struct.ComponentSchema {
   };
 }
 
+export interface DonateDropOffCard extends Struct.ComponentSchema {
+  collectionName: 'components_donate_drop_off_cards';
+  info: {
+    displayName: 'dropOffCard';
+  };
+  attributes: {
+    bottomText: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'programs.item', true>;
+    note: Schema.Attribute.Text;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DonateList extends Struct.ComponentSchema {
+  collectionName: 'components_donate_lists';
+  info: {
+    displayName: 'list';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'programs.item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DonateListCardsSection extends Struct.ComponentSchema {
+  collectionName: 'components_donate_list_cards_sections';
+  info: {
+    displayName: 'listCardsSection';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'donate.list', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface GetInvolvedBenefitCard extends Struct.ComponentSchema {
   collectionName: 'components_get_involved_benefit_cards';
   info: {
@@ -441,6 +478,9 @@ declare module '@strapi/strapi' {
       'common.simple-card': CommonSimpleCard;
       'donate.campaigns': DonateCampaigns;
       'donate.current-campaign': DonateCurrentCampaign;
+      'donate.drop-off-card': DonateDropOffCard;
+      'donate.list': DonateList;
+      'donate.list-cards-section': DonateListCardsSection;
       'get-involved.benefit-card': GetInvolvedBenefitCard;
       'get-involved.benefits-card-section': GetInvolvedBenefitsCardSection;
       'get-involved.cards-section': GetInvolvedCardsSection;
