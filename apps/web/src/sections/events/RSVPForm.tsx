@@ -29,14 +29,13 @@ const formSchema = z.object({
     .optional()
     .refine(
       (val) => {
-        // If the field is empty (it's optional), it's valid.
         if (!val) return true;
 
         // Strip all non-digit characters
         const digits = val.replace(/\D/g, "");
 
         // Check if the remaining digits are within a reasonable length
-        // (e.g., at least 10 for a standard number)
+
         return digits.length >= 10 && digits.length <= 15;
       },
       {
@@ -84,10 +83,10 @@ export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
     }
 
     try {
-      // 1. Get the reCAPTCHA token
+      // Get the reCAPTCHA token
       const token = await executeRecaptcha("rsvpForm");
 
-      // 2. Send all data to backend API
+      // Send all data to backend API
       const response = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -105,7 +104,7 @@ export function RSVPForm({ eventTitle, eventDate, onClose }: RSVPFormProps) {
         throw new Error(errorData.message || "Failed to submit RSVP.");
       }
 
-      // 3. Success!
+      // Success!
       alert("RSVP Confirmed!");
       onClose();
     } catch (error) {

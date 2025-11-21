@@ -1,4 +1,3 @@
-// src/app/donate/components/DonationProgramsSection.tsx
 import {
   Card,
   CardContent,
@@ -40,7 +39,7 @@ interface DonationProgramsSectionProps {
 export default function DonationProgramsSection({
   title,
   desc,
-  programsData
+  programsData,
 }: DonationProgramsSectionProps) {
   return (
     <section id="donate-programs" className="py-16 px-4 bg-[var(--background)]">

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import Img from 'next/image'
+import Img from "next/image";
 import { Employee } from "@/lib/strapi/models/about/employee";
 
 interface TeamDirectoryProps {
@@ -116,7 +116,7 @@ export default function TeamDirectory({
                     </p>
                     <Badge
                       variant="secondary"
-                      className="mb-3 font-medium border-0 bg-[var(--rh-yellow-200)]" // Using yellow override
+                      className="mb-3 font-medium border-0 bg-[var(--rh-yellow-200)]"
                     >
                       {employee.department || "Unknown Dept"}
                     </Badge>

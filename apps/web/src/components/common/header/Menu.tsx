@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,7 +15,7 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
-// --- IMPORTS FOR MOBILE MENU ---
+// Mobile menu components
 import {
   Sheet,
   SheetContent,
@@ -134,23 +134,23 @@ export function MenuDesktop() {
 
   const ItemInner = (item: (typeof NAV)[number]) => {
     if (!item.children) {
-        return (
-            <NavigationMenuLink
-              asChild
-              data-active={isActive(item.href)}
-              className="inline-flex items-center"
-            >
-              <Link
-                href={item.href}
-                className={cn(
-                  "flex flex-row items-center px-2 py-2 text-sm rounded-md min-h-11",
-                  "hover:!bg-[var(--rh-500)] hover:text-white",
-                  "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
-                )}
-              >
-                {item.label}
-              </Link>
-            </NavigationMenuLink>
+      return (
+        <NavigationMenuLink
+          asChild
+          data-active={isActive(item.href)}
+          className="inline-flex items-center"
+        >
+          <Link
+            href={item.href}
+            className={cn(
+              "flex flex-row items-center px-2 py-2 text-sm rounded-md min-h-11",
+              "hover:!bg-[var(--rh-500)] hover:text-white",
+              "data-[active=true]:bg-gray-900 data-[active=true]:text-white"
+            )}
+          >
+            {item.label}
+          </Link>
+        </NavigationMenuLink>
       );
     }
 
@@ -158,7 +158,7 @@ export function MenuDesktop() {
       <>
         <NavigationMenuTrigger
           className={cn(
-            "text-sm font-normal px-2 py-2 rounded-md bg-transparent flex items-center min-h-11", // <-- ADDED PY-2
+            "text-sm font-normal px-2 py-2 rounded-md bg-transparent flex items-center min-h-11",
             "hover:text-white hover:bg-[var(--rh-500)]",
             "data-[state=open]:!bg-[var(--rh-500)] data-[state=open]:!text-white",
             "transition-colors duration-200"
@@ -194,7 +194,6 @@ export function MenuDesktop() {
   };
 
   return (
-    // lg:block to match Toolbar.tsx
     <div className="hidden lg:block">
       <NavigationMenu className="relative">
         <NavigationMenuList className="gap-1">
@@ -213,10 +212,11 @@ export function MenuDesktop() {
 /* ====================== Mobile ====================== */
 
 export function MenuMobile() {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    // lg:hidden to match Toolbar.tsx
     <div className="block lg:hidden">
-      <Sheet>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" aria-label="Open menu">
             <Menu className="h-5 w-5" />
@@ -228,8 +228,6 @@ export function MenuMobile() {
           className="w-[92vw] sm:w-96 p-4"
           aria-describedby="mobile-menu-desc"
         >
-          {" "}
-          {/* <-- aria-described by */}
           <div className="mb-4 text-lg font-semibold">Reception House</div>
           <SheetHeader className="sr-only">
             <SheetTitle>Site navigation</SheetTitle>
@@ -237,6 +235,7 @@ export function MenuMobile() {
               Browse and open sections and pages of Reception House.
             </SheetDescription>
           </SheetHeader>
+
           <nav className="space-y-2">
             {NAV.map((item) =>
               item.children ? (
@@ -250,14 +249,17 @@ export function MenuMobile() {
                         <Link
                           href={item.href}
                           className="block py-2 text-sm opacity-90"
+                          onClick={() => setIsOpen(false)}
                         >
                           Overview
                         </Link>
+
                         {item.children.map((sub) => (
                           <Link
                             key={sub.href}
                             href={sub.href}
                             className="block py-2 text-sm opacity-90"
+                            onClick={() => setIsOpen(false)}
                           >
                             {sub.label}
                           </Link>
@@ -271,6 +273,7 @@ export function MenuMobile() {
                   key={item.label}
                   href={item.href}
                   className="block py-2 text-base"
+                  onClick={() => setIsOpen(false)}
                 >
                   {item.label}
                 </Link>

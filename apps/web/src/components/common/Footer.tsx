@@ -97,7 +97,6 @@ export const Footer = () => {
                     href="https://maps.google.com/?q=101+Frederick+St,+Kitchener,+ON+N2H+6R2"
                     target="_blank"
                     rel="noopener noreferrer"
-                    // --- MODIFIED ---
                     className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
                     aria-label="View our location on Google Maps: 101 Frederick St, Kitchener, ON N2H 6R2"
                   >
@@ -109,7 +108,6 @@ export const Footer = () => {
                   <Phone className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                   <a
                     href="tel:+15197446549"
-                    // --- MODIFIED ---
                     className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
                     aria-label="Call us at 519-744-6549"
                   >
@@ -121,7 +119,6 @@ export const Footer = () => {
                   <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                   <a
                     href="mailto:info@receptionhouse.ca"
-                    // --- MODIFIED ---
                     className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
                     aria-label="Email us at info@receptionhouse.ca"
                   >
@@ -147,7 +144,6 @@ export const Footer = () => {
                 contact{" "}
                 <a
                   href="mailto:info@receptionhouse.ca"
-                  // --- MODIFIED ---
                   className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors font-medium flex items-center min-h-11"
                 >
                   info@receptionhouse.ca
@@ -165,9 +161,8 @@ export const Footer = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    // --- MODIFIED ---
                     className="hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-opacity flex items-center justify-center min-h-11 w-11"
-                    aria-label={`Visit our ${social.name} page`} // <-- Improved ARIA label
+                    aria-label={`Visit our ${social.name} page`}
                     key={social.name}
                   >
                     <Icon className="w-6 h-6 text-black" />
@@ -192,7 +187,6 @@ export const Footer = () => {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        // --- MODIFIED ---
                         className="underline decoration-transparent hover:decoration-inherit focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2 focus:ring-offset-yellow-300 rounded-sm flex items-center min-h-11"
                       >
                         {link.label}
@@ -215,7 +209,6 @@ export const Footer = () => {
           >
             <Link
               href="/privacy"
-              // --- MODIFIED ---
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
             >
               Privacy Policy
@@ -223,7 +216,6 @@ export const Footer = () => {
             <span aria-hidden="true">•</span>
             <Link
               href="/accessibility"
-              // --- MODIFIED ---
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
             >
               Accessibility
@@ -231,7 +223,6 @@ export const Footer = () => {
             <span aria-hidden="true">•</span>
             <Link
               href="/terms"
-              // --- MODIFIED ---
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
             >
               Terms of Use

@@ -1,4 +1,3 @@
-// src/app/donate/DonateClient.tsx
 "use client";
 
 import { PageHero } from "@/components/ui/pageHero";
@@ -10,9 +9,6 @@ import { Campaign } from "@/lib/strapi/models/donate/campaign";
 import { IconCard } from "@/lib/strapi/models/common/iconCard";
 import { List } from "@/lib/strapi/models/donate/list";
 import { DropOffCard } from "@/lib/strapi/models/donate/dropOffCard";
-
-// 1. Import your new section components
-
 
 // --- Component Props ---
 interface DonateClientProps {
@@ -35,7 +31,7 @@ interface DonateClientProps {
   ctaButtonUrl: string;
 }
 
-// 2. Your main component is now clean and easy to read
+// main component
 export default function DonateClient({
   heroTitle,
   heroDesc,
@@ -65,11 +61,18 @@ export default function DonateClient({
           heroImage={heroImage}
         />
 
-        {/* --- All sections are now separate components --- */}
-        <CampaignsSection campaignTitle={campaignTitle} campaignDesc={campaignDesc} campaignsData={campaignsData} />
+        <CampaignsSection
+          campaignTitle={campaignTitle}
+          campaignDesc={campaignDesc}
+          campaignsData={campaignsData}
+        />
 
-        <DonationProgramsSection title={programsTitle} desc={programsDesc} programsData={programsCards} />
-    
+        <DonationProgramsSection
+          title={programsTitle}
+          desc={programsDesc}
+          programsData={programsCards}
+        />
+
         <InKindSection
           title={inKindTitle}
           desc={inKindDesc}
@@ -77,7 +80,12 @@ export default function DonateClient({
           dropOff={dropOff}
         />
 
-        <CtaSection title={ctaTitle} desc={ctaDesc} buttonText={ctaButtonText} buttonUrl={ctaButtonUrl} />
+        <CtaSection
+          title={ctaTitle}
+          desc={ctaDesc}
+          buttonText={ctaButtonText}
+          buttonUrl={ctaButtonUrl}
+        />
       </main>
     </div>
   );

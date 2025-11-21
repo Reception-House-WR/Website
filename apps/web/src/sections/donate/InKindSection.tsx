@@ -1,4 +1,3 @@
-// src/app/donate/components/InKindSection.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin } from "lucide-react";
 import { List } from "@/lib/strapi/models/donate/list";
@@ -27,7 +26,7 @@ export default function InKindSection({
   donationCards,
   dropOff,
 }: InKindSectionProps) {
-  // FIX: Make thrift partners dynamic from the prop
+  // thrift partners
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
@@ -49,7 +48,6 @@ export default function InKindSection({
             >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  {/* <span className="text-2xl">{card.emoji}</span> */}
                   {card.title}
                 </CardTitle>
               </CardHeader>
@@ -79,42 +77,37 @@ export default function InKindSection({
               {dropOff.title}
             </h3>
 
-            {/* --- FIX: DYNAMIC CONTENT & STYLING --- */}
+            {/* --- DYNAMIC CONTENT & STYLING --- */}
 
-            {/* This style tag will only apply to elements inside this component */}
             <style jsx global>{`
               .drop-off-info p:first-child > strong:first-child {
                 color: var(--rh-orange-500) !important;
               }
             `}</style>
 
-              <>
-                {/* I've added a 'drop-off-info' class here to scope the style above.
-                  This ensures it only affects this specific markdown block.
-                */}
-                <div className="text-high-contrast leading-relaxed markdown drop-off-info text-left">
-                  {`Please Note: ${dropOff.note}`}
-                </div>
+            <>
+              <div className="text-high-contrast leading-relaxed markdown drop-off-info text-left">
+                {`Please Note: ${dropOff.note}`}
+              </div>
 
-                {dropOff.items.length > 0 && (
-                  <div>
-                    <p className="font-semibold mb-2 text-high-contrast">
-                      {dropOff.subtitle}
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {dropOff.items.map((item, index) => (
-                        <span
-                          key={index}
-                          className="text-sm text-muted-foreground"
-                        >
-                          • {item.value}
-                        </span>
-                      ))}
-                    </div>
+              {dropOff.items.length > 0 && (
+                <div>
+                  <p className="font-semibold mb-2 text-high-contrast">
+                    {dropOff.subtitle}
+                  </p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {dropOff.items.map((item, index) => (
+                      <span
+                        key={index}
+                        className="text-sm text-muted-foreground"
+                      >
+                        • {item.value}
+                      </span>
+                    ))}
                   </div>
-                )}
-              </>
-            {/* --- END FIX --- */}
+                </div>
+              )}
+            </>
 
             <div className="pt-4 border-t border-border">
               <p className="flex items-center gap-2 text-high-contrast">

@@ -1,4 +1,3 @@
-// app/events/EventCalendar.tsx
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,12 +22,12 @@ interface EventCalendarProps {
 export function EventCalendar({ events }: EventCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  // Convert event date strings to Date objects
+  // Converting event date strings to Date objects
   const eventDates = events
     .filter((event) => event.category === "upcoming")
     .map((event) => {
       const date = new Date(event.date);
-      date.setUTCDate(date.getUTCDate()); // Adjust timezone offset
+      date.setUTCDate(date.getUTCDate());
       return date;
     });
 

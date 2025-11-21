@@ -13,7 +13,7 @@ import React, { useState } from "react";
 export const Gallery = ({
   title,
   desc,
-  mediaItems
+  mediaItems,
 }: {
   title: string;
   desc: string;
@@ -25,7 +25,9 @@ export const Gallery = ({
   );
 
   const newMediaItems = mediaItems.map((item) => ({
-    videoUrl: item.videoUrl ? item.videoUrl.replace("watch?v=", "embed/") : undefined,
+    videoUrl: item.videoUrl
+      ? item.videoUrl.replace("watch?v=", "embed/")
+      : undefined,
     description: item.description,
     isImage: item.isImage,
     image: item.image,
@@ -109,12 +111,12 @@ export const Gallery = ({
               key={id}
               onClick={() => setSelectedMedia(item)}
               className="group relative overflow-hidden rounded-lg bg-muted transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              aria-label={`View ${item.image?.alternativeText || 'media item'}`}
+              aria-label={`View ${item.image?.alternativeText || "media item"}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={item.image?.url}
-                  alt={item.image?.alternativeText || 'Thumbnail'}
+                  alt={item.image?.alternativeText || "Thumbnail"}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {item.isImage === false && (
@@ -155,14 +157,16 @@ export const Gallery = ({
                 {selectedMedia.isImage ? (
                   <img
                     src={selectedMedia.image?.url}
-                    alt={selectedMedia.image?.alternativeText || 'media item'}
+                    alt={selectedMedia.image?.alternativeText || "media item"}
                     className="w-full rounded-lg"
                   />
                 ) : (
                   <div className="aspect-video">
                     <iframe
                       src={selectedMedia.videoUrl}
-                      title={selectedMedia.image?.alternativeText || 'media item'}
+                      title={
+                        selectedMedia.image?.alternativeText || "media item"
+                      }
                       className="h-full w-full rounded-lg"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen

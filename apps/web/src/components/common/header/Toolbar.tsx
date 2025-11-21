@@ -19,7 +19,6 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
   return (
     <header className="sticky top-0 z-50 w-full  border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        {/* Mobile (<640) */}
         <div className="flex items-center h-16 sm:hidden">
           <div className="flex items-center gap-2 shrink-0">
             <MenuMobile />
@@ -39,7 +38,6 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
           </div>
         </div>
 
-        {/* Tablet+Desktop (≥640) */}
         <div className="hidden sm:flex h-16 items-center gap-4">
           <div className="flex items-center gap-2 shrink-0">
             <div className="block lg:hidden">

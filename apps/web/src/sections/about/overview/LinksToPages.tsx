@@ -7,8 +7,6 @@ import {
   Mail,
   Target,
   Users,
-  // Si necesitas el icono de cadenita en otro lado:
-  // Link as LinkIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -20,11 +18,36 @@ type QuickLink = {
 };
 
 const quickLinks: QuickLink[] = [
-  { title: "Our People", path: "/our-people", icon: Users, description: "Meet our dedicated team members" },
-  { title: "Our Purpose", path: "/purpose", icon: Target, description: "Our mission, vision, and values" },
-  { title: "Our History", path: "/our-history", icon: History, description: "Journey of impact and growth" },
-  { title: "Contact Us", path: "/contact", icon: Mail, description: "Get in touch with us" },
-  { title: "Careers", path: "/careers", icon: Briefcase, description: "Join our team" },
+  {
+    title: "Our People",
+    path: "/our-people",
+    icon: Users,
+    description: "Meet our dedicated team members",
+  },
+  {
+    title: "Our Purpose",
+    path: "/purpose",
+    icon: Target,
+    description: "Our mission, vision, and values",
+  },
+  {
+    title: "Our History",
+    path: "/our-history",
+    icon: History,
+    description: "Journey of impact and growth",
+  },
+  {
+    title: "Contact Us",
+    path: "/contact",
+    icon: Mail,
+    description: "Get in touch with us",
+  },
+  {
+    title: "Careers",
+    path: "/careers",
+    icon: Briefcase,
+    description: "Join our team",
+  },
 ];
 
 export default function LinkToPages() {

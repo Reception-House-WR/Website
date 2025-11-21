@@ -22,7 +22,7 @@ import {
 import { RSVPForm } from "./RSVPForm";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
-// --- Helper: Format date for display (now co-located with the component) ---
+// --- Helper: Format date for display ---
 function formatDisplayDate(isoDate: Date | null): string {
   if (!isoDate) return "Date not available";
   const options: Intl.DateTimeFormatOptions = {
@@ -34,14 +34,20 @@ function formatDisplayDate(isoDate: Date | null): string {
 }
 
 // --- Event Card (individual event) ---
-export const EventCard = ({ event, category }: { event: UpcomingEvent; category: "upcoming" | "past" }) => {
+export const EventCard = ({
+  event,
+  category,
+}: {
+  event: UpcomingEvent;
+  category: "upcoming" | "past";
+}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const displayDate = formatDisplayDate(event.date);
 
   // --- Handler for PAID event button ---
   const handlePaidRSVP = () => {
     if (event.eventBriteURL) {
-      window.open(event.eventBriteURL , "_blank", "noopener,noreferrer");
+      window.open(event.eventBriteURL, "_blank", "noopener,noreferrer");
     } else {
       console.error(
         "This is a paid event, but no Eventbrite URL was provided."
@@ -50,7 +56,7 @@ export const EventCard = ({ event, category }: { event: UpcomingEvent; category:
     }
   };
 
-  // --- This is the shared UI for the card itself ---
+  // --- This is the shared UI for the card ---
   const CardUI = (
     <Card className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0">
       <CardContent className="p-0 md:flex h-full">
@@ -108,10 +114,10 @@ export const EventCard = ({ event, category }: { event: UpcomingEvent; category:
             </div>
           </div>
 
-          {/* --- CONDITIONAL BUTTON LOGIC --- */}
+          {/* --- Conditional Button --- */}
           {category === "upcoming" ? (
             event.isPaid ? (
-              // --- PAID EVENT BUTTON (Direct Link) ---
+              // --- PAID EVENT BUTTON ---
               <Button
                 size="lg"
                 className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
@@ -120,7 +126,7 @@ export const EventCard = ({ event, category }: { event: UpcomingEvent; category:
                 RSVP on Eventbrite
               </Button>
             ) : (
-              // --- FREE EVENT BUTTON (Modal Trigger) ---
+              // --- FREE EVENT BUTTON ---
               <DialogTrigger asChild>
                 <Button
                   size="lg"
@@ -131,12 +137,11 @@ export const EventCard = ({ event, category }: { event: UpcomingEvent; category:
               </DialogTrigger>
             )
           ) : (
-            // --- PAST EVENT BUTTON (Disabled) ---
+            // --- PAST EVENT BUTTON ---
             <Button size="lg" disabled>
               Event Ended
             </Button>
           )}
-          {/* --- End Conditional Button --- */}
         </div>
       </CardContent>
     </Card>
@@ -144,39 +149,37 @@ export const EventCard = ({ event, category }: { event: UpcomingEvent; category:
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   if (!siteKey) {
-    // If key is missing, render the card but don't allow RSVP
-
     console.error("reCAPTCHA site key is missing.");
     return CardUI;
   }
 
-
-  // --- CONDITIONAL WRAPPER ---
   if (event.isPaid || category === "past") {
     return CardUI;
   }
 
-  // --- FREE, UPCOMING EVENT: Wrap in the Dialog ---
+  // --- FREE, UPCOMING EVENT ---
   return (
     <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      {CardUI} {/* This now contains the <DialogTrigger> */}
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">RSVP for Event</DialogTitle>
-          <DialogDescription className="text-base">
-            <span className="font-semibold text-foreground">{event.title}</span>
-            <br />
-            {displayDate} at {event.time}
-          </DialogDescription>
-        </DialogHeader>
-        <RSVPForm
-          eventTitle={event.title}
-          eventDate={`${displayDate} at ${event.time}`}
-          onClose={() => setIsDialogOpen(false)}
-        />
-      </DialogContent>
-    </Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        {CardUI}
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">RSVP for Event</DialogTitle>
+            <DialogDescription className="text-base">
+              <span className="font-semibold text-foreground">
+                {event.title}
+              </span>
+              <br />
+              {displayDate} at {event.time}
+            </DialogDescription>
+          </DialogHeader>
+          <RSVPForm
+            eventTitle={event.title}
+            eventDate={`${displayDate} at ${event.time}`}
+            onClose={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </GoogleReCaptchaProvider>
   );
 };

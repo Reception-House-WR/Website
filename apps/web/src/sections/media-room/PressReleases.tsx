@@ -1,15 +1,26 @@
-"use client"
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { PressRelease } from '@/lib/strapi/models/mediaRoom/pressRelease'
-import { CalendarIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
-import { useState } from 'react'
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { PressRelease } from "@/lib/strapi/models/mediaRoom/pressRelease";
+import { CalendarIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
 
 export const PressReleases = ({
   title,
   desc,
-  releases
+  releases,
 }: {
   title: string;
   desc: string;
@@ -30,18 +41,22 @@ export const PressReleases = ({
   };
 
   const formatDate = (dateString: Date): string => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
-    <section 
+    <section
       className="py-16 md:py-24"
       aria-labelledby="press-releases-heading"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 
+          <h2
             id="press-releases-heading"
             className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl"
           >
@@ -53,7 +68,7 @@ export const PressReleases = ({
         </div>
 
         <div className="mx-auto max-w-4xl space-y-4">
-            {releases.map((release, id) => (
+          {releases.map((release, id) => (
             <Collapsible
               key={id}
               open={openItems.has(id)}
@@ -61,14 +76,26 @@ export const PressReleases = ({
             >
               <Card className="transition-all duration-300 hover:shadow-md">
                 <CardHeader>
-                  <img src={release.image.url} className="h-80 w-full rounded-md object-cover" />
+                  <div className="relative h-80 w-full mb-4 overflow-hidden rounded-md">
+                    <Image
+                      src={release.image.url}
+                      alt={release.image.alternativeText || release.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
                         <CalendarIcon className="h-4 w-4" aria-hidden="true" />
-                        <p className='text-muted-foreground text-xs'>{formatDate(release.date)}</p>
+                        <p className="text-muted-foreground text-xs">
+                          {formatDate(release.date)}
+                        </p>
                       </div>
-                      <CardTitle className="mb-2 text-xl">{release.title}</CardTitle>
+                      <CardTitle className="mb-2 text-xl">
+                        {release.title}
+                      </CardTitle>
                       <CardDescription className="text-base">
                         {release.shortDesc}
                       </CardDescription>
@@ -85,9 +112,15 @@ export const PressReleases = ({
                         }
                       >
                         {openItems.has(id) ? (
-                          <ChevronUpIcon className="h-5 w-5" aria-hidden="true" />
+                          <ChevronUpIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
                         ) : (
-                          <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+                          <ChevronDownIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
                         )}
                       </Button>
                     </CollapsibleTrigger>
@@ -96,7 +129,9 @@ export const PressReleases = ({
                 <CollapsibleContent>
                   <CardContent className="pt-0">
                     <div className="rounded-lg bg-muted/50 p-4">
-                      <p className="text-foreground/90 leading-relaxed">{release.longDesc}</p>
+                      <p className="text-foreground/90 leading-relaxed">
+                        {release.longDesc}
+                      </p>
                     </div>
                   </CardContent>
                 </CollapsibleContent>
@@ -106,5 +141,5 @@ export const PressReleases = ({
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

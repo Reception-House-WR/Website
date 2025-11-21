@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PageHero } from "@/components/ui/pageHero";
@@ -65,11 +66,14 @@ export default function StoriesClient({
                   <CardContent className="p-0 md:flex h-full">
                     <div className="relative w-full h-48 md:h-auto md:w-1/3 flex-shrink-0 overflow-hidden bg-muted">
                       {stories[currentIndex].image ? (
-                        <img
+                        <Image
                           src={stories[currentIndex].image}
                           alt={`${stories[currentIndex].author}'s photo`}
-                          className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
+                          fill
+                          priority={true}
+                          fetchPriority="high"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center p-6" />

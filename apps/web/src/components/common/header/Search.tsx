@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Search as SearchIcon } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Search as SearchIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogTrigger,
@@ -11,29 +11,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 type SearchProps = {
-  onSearch?: (query: string) => void
-  placeholder?: string
-  className?: string
-}
+  onSearch?: (query: string) => void;
+  placeholder?: string;
+  className?: string;
+};
 
 export default function Search({
   onSearch,
   placeholder = "Search...",
   className,
 }: SearchProps) {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState("");
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSearch?.(query)
-  }
+    e.preventDefault();
+    onSearch?.(query);
+  };
 
   return (
     <div className={cn("flex items-center w-full", className)}>
-      {/* ≥1280px: inline  */}
       <form
         onSubmit={handleSubmit}
         className="hidden xl:flex flex-1 min-w-[180px] max-w-2xl"
@@ -51,7 +50,6 @@ export default function Search({
         </div>
       </form>
 
-      {/* md–lg-1 (≈768–1023): inline  */}
       <form
         onSubmit={handleSubmit}
         className="hidden md:flex lg:hidden w-full min-w-[180px]"
@@ -69,7 +67,6 @@ export default function Search({
         </div>
       </form>
 
-      {/* lg–xl-1: icon */}
       <div className="hidden lg:flex xl:hidden">
         <Dialog>
           <DialogTrigger asChild>
@@ -100,7 +97,6 @@ export default function Search({
         </Dialog>
       </div>
 
-      {/* < md (mobile): icon */}
       <div className="md:hidden">
         <Dialog>
           <DialogTrigger asChild>
@@ -131,5 +127,5 @@ export default function Search({
         </Dialog>
       </div>
     </div>
-  )
+  );
 }
