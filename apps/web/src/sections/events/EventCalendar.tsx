@@ -23,19 +23,17 @@ export function EventCalendar({ events }: EventCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   // Parse dates as local time to prevent timezone shifts
-  const eventDates = events
-    .filter((event) => event.category === "upcoming")
-    .map((event) => {
-      if (!event.date) return new Date();
+  const eventDates = events.map((event) => {
+    if (!event.date) return new Date();
 
-      const parts = event.date.split("-");
+    const parts = event.date.split("-");
 
-      return new Date(
-        parseInt(parts[0]),
-        parseInt(parts[1]) - 1,
-        parseInt(parts[2])
-      );
-    });
+    return new Date(
+      parseInt(parts[0]),
+      parseInt(parts[1]) - 1,
+      parseInt(parts[2])
+    );
+  });
 
   // Get events for the selected date
   const eventsOnSelectedDate = selectedDate
