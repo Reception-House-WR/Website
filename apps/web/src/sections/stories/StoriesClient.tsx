@@ -1,4 +1,3 @@
-// src/app/stories/StoriesClient.tsx
 "use client";
 
 import { useState } from "react";
@@ -6,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PageHero } from "@/components/ui/pageHero";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import type { ReactNode } from "react";
 import { Story } from "@/lib/strapi/models/stories/story";
 
 interface StoriesClientProps {
@@ -24,7 +22,7 @@ export default function StoriesClient({
   heroImage,
   bodyTitle,
   bodyDesc,
-  stories
+  stories,
 }: StoriesClientProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,7 +41,11 @@ export default function StoriesClient({
   return (
     <div className="min-h-screen bg-background">
       <main id="main-content">
-        <PageHero heroTitle={heroTitle} heroDesc={heroDesc} heroImage={heroImage} />
+        <PageHero
+          heroTitle={heroTitle}
+          heroDesc={heroDesc}
+          heroImage={heroImage}
+        />
 
         <section className="py-16 px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
           <div className="container mx-auto max-w-4xl">

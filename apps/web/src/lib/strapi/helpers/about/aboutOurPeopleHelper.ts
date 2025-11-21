@@ -4,27 +4,45 @@ import { Hero } from "../../models/common/hero";
 import { Section } from "../../models/common/section";
 import { fetchAboutOurPeople, fetchAllEmployees } from "../../services/about/ourPeopleService";
 
-const toSection = (s: any): Section => ({
+//Raw Strapi section type
+type RawStrapiComponent = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+};
+
+//Raw employee type from Strapi
+type RawEmployee = {
+  name?: string;
+  role?: string;
+  department?: string;
+  email?: string;
+  image?: { url?: string };
+};
+
+const toSection = (s?: RawStrapiComponent): Section => ({
   id: s?.id ?? 0,
   __component: "common.section",
   title: s?.title ?? "",
   description: s?.description ?? "",
 });
 
-const toHero = (s: any): Hero => ({
+const toHero = (s?: RawStrapiComponent): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url,
 });
 
-const toEmployee = (e: any): Employee => ({
-  name: e?.name ?? "",
-  role: e?.role ?? "",
-  department: e?.department ?? "",
-  email: e?.email ?? "",
-  imageUrl: e?.image?.url ?? "",
+const toEmployee = (e: RawEmployee): Employee => ({
+  name: e.name ?? "",
+  role: e.role ?? "",
+  department: e.department ?? "",
+  email: e.email ?? "",
+  imageUrl: e.image?.url ?? "",
 });
 
 export async function fetchAboutOurPeoplePage(): Promise<AboutOurPeopleSections | null> {
@@ -36,21 +54,21 @@ export async function fetchAboutOurPeoplePage(): Promise<AboutOurPeopleSections 
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawStrapiComponent[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero",
-  ) as any;
+    (s) => s.__component === "common.hero"
+  );
 
   const notFoundRaw = sections.find(
-    (s: any) => s.__component === "common.section",
-  ) as any;
+    (s) => s.__component === "common.section"
+  );
 
-  const hero = toHero(heroRaw ?? {});
-  const notFound = toSection(notFoundRaw ?? {});
+  const hero = toHero(heroRaw);
+  const notFound = toSection(notFoundRaw);
 
-  const people: Employee[] = (employeesRes?.data ?? []).map((e: any) =>
-    toEmployee(e),
+  const people: Employee[] = (employeesRes?.data ?? []).map((e) =>
+    toEmployee(e as RawEmployee)
   );
 
   //DISTINCT departments 

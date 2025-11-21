@@ -5,11 +5,11 @@ import DonateClient from "@/sections/donate/DonateClient";
 export default async function DonatePage() {
   const res = await fetchDonationPage();
   console.log("DONATE PAGE", res)
+  
   if (!res) {
-    throw new Error("Failed to fetch donation page data");
+    return <div className="flex items-center justify-center py-5">Error loading donate page data.</div>;
   }
 
-  // --- FIX 4: Pass all props to the client component ---
   return (
     <DonateClient
       heroTitle={res.hero.title}

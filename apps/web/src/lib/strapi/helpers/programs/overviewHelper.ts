@@ -6,37 +6,62 @@ import { OurPrograms } from "../../models/programs/ourPrograms";
 import { ProgramSections } from "../../models/programs/programSections";
 import { fetchProgramsOverviewections } from "../../services/programs/overviewService";
 
+type RawItem = {
+  value?: string;
+};
 
+type RawInfoCard = {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  subtitle2?: string;
+  items?: RawItem[];
+  description2?: string;
+};
 
-const toHero = (s: any): Hero => ({
+type RawStrapiSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+  cards?: RawInfoCard[] | unknown[]; 
+  topDescription?: string;
+  bottomDescription?: string;
+};
+
+const toHero = (s?: RawStrapiSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url,
 });
 
-const toCardsSection = (s: any): Cards => ({
-  cards: (s?.cards ?? []) as any,
+const toCardsSection = (s?: RawStrapiSection): Cards => ({
+  cards: (s?.cards ?? []) as Cards["cards"],
 });
 
-const toItem = (i: any): Item => ({
-  value: i?.value ?? "",
+const toItem = (i: RawItem): Item => ({
+  value: i.value ?? "",
 });
 
-const toInfoCard = (c: any): InfoCard => ({
-  title: c?.title ?? "",
-  subtitle: c?.subtitle ?? "",
-  description: c?.description ?? "",
-  subtitle2: c?.subtitle2 ?? "",
-  items: (c?.items ?? []).map(toItem),
+const toInfoCard = (c: RawInfoCard): InfoCard => ({
+  title: c.title ?? "",
+  subtitle: c.subtitle ?? "",
+  description: c.description ?? "",
+  subtitle2: c.subtitle2 ?? "",
+  items: (c.items ?? []).map(toItem),
+  description2: c.description2 ?? "",
 });
 
-const toOurProgramsSection = (s: any): OurPrograms => ({
+const toOurProgramsSection = (s?: RawStrapiSection): OurPrograms => ({
   title: s?.title ?? "",
   topDescription: s?.topDescription ?? "",
   bottomDescription: s?.bottomDescription ?? "",
-  cards: (s?.cards ?? []).map(toInfoCard),
+  cards: (s?.cards ?? []).map((card) =>
+    toInfoCard(card as RawInfoCard),
+  ),
 });
 
 export async function fetchProgramsOverviewPage(): Promise<ProgramSections | null> {
@@ -46,23 +71,23 @@ export async function fetchProgramsOverviewPage(): Promise<ProgramSections | nul
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawStrapiSection[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero"
-  ) as any;
+    (s) => s.__component === "common.hero",
+  );
 
   const servicesRaw = sections.find(
-    (s: any) => s.__component === "programs.cards"
-  ) as any;
+    (s) => s.__component === "programs.cards",
+  );
 
   const ourProgramsRaw = sections.find(
-    (s: any) => s.__component === "programs.our-programs"
-  ) as any;
+    (s) => s.__component === "programs.our-programs",
+  );
 
-  const hero = toHero(heroRaw ?? {});
-  const servicesSection = toCardsSection(servicesRaw ?? {});
-  const ourProgramsSection = toOurProgramsSection(ourProgramsRaw ?? {});
+  const hero = toHero(heroRaw);
+  const servicesSection = toCardsSection(servicesRaw);
+  const ourProgramsSection = toOurProgramsSection(ourProgramsRaw);
 
   return {
     title: page.title,

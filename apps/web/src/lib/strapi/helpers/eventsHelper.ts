@@ -1,18 +1,43 @@
 import { Hero } from "../models/common/hero";
 import { UpcomingEvent } from "../models/event/event";
 import { EventSections } from "../models/event/eventSections";
-import { StrapiImageResponse } from "../models/strapi/image";
 import { fetcEventPageSections, fetchEvents } from "../services/eventsService";
 
-const toHero = (s: any): Hero => ({
+type RawHeroSection = {
+  id?: number;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+};
+
+type RawEvent = {
+  title?: string;
+  description?: string;
+  date?: string;
+  time?: string;
+  location?: string;
+  isPaid?: boolean;
+  eventBriteURL?: string;
+  image?: {
+    url?: string;
+    alternativeText?: string | null;
+    caption?: string | null;
+  };
+};
+
+type RawSection = RawHeroSection & {
+  __component?: string;
+};
+
+const toHero = (s?: RawHeroSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url,
 });
 
-const toEvent = (event: any): UpcomingEvent => {
+const toEvent = (event: RawEvent): UpcomingEvent => {
   const dateStr = event?.date;
   let parsedDate: Date | null = null;
 
@@ -41,10 +66,9 @@ const toEvent = (event: any): UpcomingEvent => {
       url: event.image?.url ?? "",
       alternativeText: event.image?.alternativeText ?? null,
       caption: event.image?.caption ?? null,
-    } as StrapiImageResponse,
+    },
   };
 };
-
 
 export async function fetchEventsPage(): Promise<EventSections | null> {
   const [pageRes, eventsRes] = await Promise.all([
@@ -55,15 +79,16 @@ export async function fetchEventsPage(): Promise<EventSections | null> {
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawSection[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero"
-  ) as any;
+    (s) => s.__component === "common.hero"
+  );
 
-  const hero = toHero(heroRaw ?? {});
+  const hero = toHero(heroRaw);
+  const rawEvents = (eventsRes?.data ?? []) as unknown as RawEvent[];
 
-  const events: UpcomingEvent[] = (eventsRes?.data ?? []).map(toEvent);
+  const events: UpcomingEvent[] = rawEvents.map((e) => toEvent(e));
 
   return {
     identifier: page.identifier,

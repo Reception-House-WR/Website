@@ -38,8 +38,8 @@ export default function RapAndCss({
 
             <div className="pt-4">
               <img
-                src={rapSection.image.url}
-                alt={rapSection.image.alternativeText || "Instructor helping students during orientation session"}
+                src={rapSection.image?.url}
+                alt={rapSection.image?.alternativeText || "Instructor helping students during orientation session"}
                 className="rounded-lg shadow-soft w-full"
               />
             </div>
@@ -72,8 +72,8 @@ export default function RapAndCss({
 
             <div className="pt-4">
               <img
-                src={cssSection.image.url}
-                alt={cssSection.image.alternativeText || "Group of diverse adults engaged in language class"}
+                src={cssSection.image?.url}
+                alt={cssSection.image?.alternativeText || "Group of diverse adults engaged in language class"}
                 className="rounded-lg shadow-soft w-full"
               />
             </div>

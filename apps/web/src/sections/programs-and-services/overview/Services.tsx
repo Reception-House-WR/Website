@@ -29,8 +29,8 @@ export default function Services({
             >
               {/* Background Image */}
               <img 
-                src={service.image.url} 
-                alt={service.image.alternativeText || service.title}
+                src={service.image?.url} 
+                alt={service.image?.alternativeText || service.title}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               

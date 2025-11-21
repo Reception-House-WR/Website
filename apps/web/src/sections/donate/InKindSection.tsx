@@ -1,8 +1,6 @@
 // src/app/donate/components/InKindSection.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin } from "lucide-react";
-import MarkdownRenderer from "@/components/common/MarkdownRenderer";
-import type { DonationCategory, DonatePageData } from "@/lib/strapi";
 import { List } from "@/lib/strapi/models/donate/list";
 import { DropOffCard } from "@/lib/strapi/models/donate/dropOffCard";
 

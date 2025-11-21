@@ -10,15 +10,86 @@ import { strapiDocument } from "../models/strapi/document";
 import { StrapiImageResponse } from "../models/strapi/image";
 import { fetchMediaRoomPageSections, fetchGalleryItems } from "../services/mediaRoomService";
 
-const toHero = (s: any): Hero => ({
+type RawImage = {
+  url?: string;
+  alternativeText?: string | null;
+  caption?: string | null;
+};
+
+type RawBaseSection = {
+  __component?: string;
+};
+
+type RawHeroSection = RawBaseSection & {
+  id?: number;
+  title?: string;
+  description?: string;
+  backgroundImage?: RawImage[];
+};
+
+type RawKitCard = {
+  title?: string;
+  description?: string;
+  icon?: string;
+  kit?: strapiDocument;
+};
+
+type RawMediaKitSection = RawBaseSection & {
+  title?: string;
+  description?: string;
+  kits?: RawKitCard[];
+};
+
+type RawPressRelease = {
+  date?: string;
+  title?: string;
+  shortDesc?: string;
+  longDesc?: string;
+  image?: RawImage;
+};
+
+type RawReleasesSection = RawBaseSection & {
+  title?: string;
+  description?: string;
+  pressReleases?: RawPressRelease[];
+};
+
+type RawCommonSection = RawBaseSection & {
+  id?: number;
+  title?: string;
+  description?: string;
+};
+
+type RawGalleryItem = {
+  description?: string;
+  isImage?: boolean;
+  image?: RawImage;
+  videoUrl?: string;
+};
+
+type RawSection =
+  | RawHeroSection
+  | RawMediaKitSection
+  | RawReleasesSection
+  | RawCommonSection;
+
+/* ---------- small helpers ---------- */
+
+const toStrapiImage = (img?: RawImage): StrapiImageResponse => ({
+  url: img?.url ?? "",
+  alternativeText: img?.alternativeText ?? null,
+  caption: img?.caption ?? null,
+});
+
+const toHero = (s?: RawHeroSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url,
 });
 
-const toSection = (s: any): Section => ({
+const toSection = (s?: RawCommonSection): Section => ({
   id: s?.id ?? 0,
   __component: "common.section",
   title: s?.title ?? "",
@@ -27,49 +98,41 @@ const toSection = (s: any): Section => ({
 
 /* ---------- Media kit ---------- */
 
-const toKitCard = (k: any): KitCard => {
-  const kitRaw = k?.kit ?? null; // viene como media/file de Strapi
+const toKitCard = (k: RawKitCard): KitCard => ({
+  title: k.title ?? "",
+  description: k.description ?? "",
+  icon: k.icon ?? "",
+  kit:
+    k.kit ??
+    ({
+      url: "",
+      alternativeText: null,
+      caption: null,
+    } as StrapiImageResponse),
+});
 
-  return {
-    title: k?.title ?? "",
-    description: k?.description ?? "",
-    icon: k?.icon ?? "",
-    // el objeto original de Strapi tiene url, name, etc., así que sirve
-    kit:
-      (kitRaw as StrapiImageResponse | strapiDocument) ??
-      ({ url: "" } as StrapiImageResponse),
-  };
-};
-
-const toMediaKitSection = (s: any): MediaKitSection => ({
+const toMediaKitSection = (s?: RawMediaKitSection): MediaKitSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
-  kits: (s?.kits ?? []).map(toKitCard),
+  kits: (s?.kits ?? []).map((k) => toKitCard(k)),
 });
 
 /* ---------- Press releases ---------- */
 
-const parseDate = (value: any): Date => {
-  if (typeof value === "string") {
-    const ts = Date.parse(value);
-    if (!Number.isNaN(ts)) return new Date(ts);
-  }
-  return new Date(0); // fallback
-};
+const parseDate = (value?: string): Date =>
+  value && !Number.isNaN(Date.parse(value))
+    ? new Date(value)
+    : new Date(0);
 
-const toPressRelease = (p: any): PressRelease => ({
-  date: parseDate(p?.date),
-  title: p?.title ?? "",
-  shortDesc: p?.shortDesc ?? "",
-  longDesc: p?.longDesc ?? "",
-  image: (p?.image as StrapiImageResponse) ?? {
-    url: "",
-    alternativeText: null,
-    caption: null,
-  },
+const toPressRelease = (p: RawPressRelease): PressRelease => ({
+  date: parseDate(p.date),
+  title: p.title ?? "",
+  shortDesc: p.shortDesc ?? "",
+  longDesc: p.longDesc ?? "",
+  image: toStrapiImage(p.image),
 });
 
-const toReleasesSection = (s: any): ReleasesSection => ({
+const toReleasesSection = (s?: RawReleasesSection): ReleasesSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   pressReleases: (s?.pressReleases ?? []).map(toPressRelease),
@@ -77,11 +140,11 @@ const toReleasesSection = (s: any): ReleasesSection => ({
 
 /* ---------- Gallery (photos & videos) ---------- */
 
-const toGalleryItem = (g: any): GalleryItem => ({
-  description: g?.description ?? "",
-  isImage: !!g?.isImage,
-  image: g?.isImage ? ((g?.image as StrapiImageResponse) ?? undefined) : undefined,
-  videoUrl: !g?.isImage ? g?.videoUrl ?? undefined : undefined,
+const toGalleryItem = (g: RawGalleryItem): GalleryItem => ({
+  description: g.description ?? "",
+  isImage: !!g.isImage,
+  image: g.isImage ? toStrapiImage(g.image) : undefined,
+  videoUrl: !g.isImage ? g.videoUrl ?? undefined : undefined,
 });
 
 
@@ -94,29 +157,32 @@ export async function fetchMediaRoomPage(): Promise<MediaRoomSections | null> {
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawSection[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero",
-  ) as any;
+    (s) => s.__component === "common.hero",
+  ) as RawHeroSection | undefined;
 
   const mediaKitRaw = sections.find(
-    (s: any) => s.__component === "media-room.media-kit-section",
-  ) as any;
+    (s) => s.__component === "media-room.media-kit-section",
+  ) as RawMediaKitSection | undefined;
 
   const releasesRaw = sections.find(
-    (s: any) => s.__component === "media-room.releases-section",
-  ) as any;
+    (s) => s.__component === "media-room.releases-section",
+  ) as RawReleasesSection | undefined;
 
   const photosSectionRaw = sections.find(
-    (s: any) => s.__component === "common.section",
-  ) as any;
+    (s) => s.__component === "common.section",
+  ) as RawCommonSection | undefined;
 
-  const hero = toHero(heroRaw ?? {});
-  const mediaKitSection = toMediaKitSection(mediaKitRaw ?? {});
-  const releasesSection = toReleasesSection(releasesRaw ?? {});
-  const photosSection = toSection(photosSectionRaw ?? {});
-  const media: GalleryItem[] = (galleryRes?.data ?? []).map(toGalleryItem);
+  const hero = toHero(heroRaw);
+  const mediaKitSection = toMediaKitSection(mediaKitRaw);
+  const releasesSection = toReleasesSection(releasesRaw);
+  const photosSection = toSection(photosSectionRaw);
+
+  const media: GalleryItem[] = (galleryRes?.data ?? []).map((g) =>
+    toGalleryItem(g as RawGalleryItem),
+  );
 
   return {
     identifier: page.identifier,

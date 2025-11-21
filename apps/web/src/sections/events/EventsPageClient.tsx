@@ -3,7 +3,6 @@
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EventCalendar } from "./EventCalendar";
-import { type HeroData, type Event } from "@/lib/strapi";
 import { EventCard } from "./EventCard";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
@@ -19,7 +18,7 @@ export default function EventsPageClient({
   allEventsData,
   heroTitle,
   heroImage,
-  heroDesc
+  heroDesc,
 }: EventsPageClientProps) {
   const calendarEvents = allEventsData.map((event, index) => {
     const eventDate = event.date ? new Date(event.date) : null;
@@ -28,7 +27,9 @@ export default function EventsPageClient({
     return {
       id: index,
       title: event.title,
-      date: eventDate ? eventDate.toISOString() : new Date("2025-01-01").toISOString(),
+      date: eventDate
+        ? eventDate.toISOString()
+        : new Date("2025-01-01").toISOString(),
       category: isUpcoming ? "upcoming" : "past",
     };
   });
@@ -61,9 +62,7 @@ export default function EventsPageClient({
             <div className="inline-flex items-center justify-center w-16 h-16 bg-black/30 backdrop-blur-sm rounded-full mb-4">
               <CalendarIcon className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {heroTitle}
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{heroTitle}</h1>
             <p className="text-xl text-white/90">{heroDesc}</p>
           </div>
         </div>
@@ -85,7 +84,11 @@ export default function EventsPageClient({
                 <div className="space-y-6">
                   {upcomingEvents.length > 0 ? (
                     upcomingEvents.map((event) => (
-                      <EventCard key={event.title} event={event} category="upcoming" />
+                      <EventCard
+                        key={event.title}
+                        event={event}
+                        category="upcoming"
+                      />
                     ))
                   ) : (
                     <p className="text-muted-foreground">
@@ -99,7 +102,11 @@ export default function EventsPageClient({
                 <div className="space-y-6">
                   {pastEvents.length > 0 ? (
                     pastEvents.map((event) => (
-                      <EventCard key={event.title} event={event} category="past" />
+                      <EventCard
+                        key={event.title}
+                        event={event}
+                        category="past"
+                      />
                     ))
                   ) : (
                     <p className="text-muted-foreground">
@@ -113,10 +120,15 @@ export default function EventsPageClient({
                 <div className="space-y-6">
                   {allEventsData.length > 0 ? (
                     allEventsData.map((event, id) => {
-                      const category = event.date && new Date(event.date).getTime() >= Date.now() ? "upcoming" : "past";
+                      const category =
+                        event.date &&
+                        new Date(event.date).getTime() >= Date.now()
+                          ? "upcoming"
+                          : "past";
                       return (
-                      <EventCard key={id} event={event} category={category} />
-                    )})
+                        <EventCard key={id} event={event} category={category} />
+                      );
+                    })
                   ) : (
                     <p className="text-muted-foreground">
                       No events to show right now.

@@ -6,9 +6,10 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+import Img from 'next/image'
 import { Employee } from "@/lib/strapi/models/about/employee";
 
-// Define the props this component expects from its parent (page.tsx)
 interface TeamDirectoryProps {
   departments: string[];
   employees: Employee[];
@@ -18,12 +19,13 @@ export default function TeamDirectory({
   departments,
   employees,
 }: TeamDirectoryProps) {
-  // State for managing the search input value
+  //State for managing the search input value
   const [searchQuery, setSearchQuery] = useState("");
-  // State for managing the currently selected department filter
+
+  //State for managing the currently selected department filter
   const [selectedDepartment, setSelectedDepartment] = useState("All");
 
-  // Filter the employees array based on current search query and selected department
+  //Filter the employees array based on current search query and selected department
   const filteredEmployees = employees.filter((employee) => {
     const nameMatches =
       employee.name?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
@@ -86,9 +88,11 @@ export default function TeamDirectory({
                 <div className="space-y-4">
                   {/* Display Employee Image or Initials Fallback */}
                   {employee.imageUrl ? (
-                    <img
+                    <Img
                       src={employee.imageUrl}
                       alt={employee.name || "Employee"}
+                      width={80}
+                      height={80}
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   ) : (

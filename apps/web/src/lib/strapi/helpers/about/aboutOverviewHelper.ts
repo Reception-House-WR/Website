@@ -5,8 +5,29 @@ import { Hero } from "../../models/common/hero";
 import { Section } from "../../models/common/section";
 import { fetchAboutOverview } from "../../services/about/overviewService";
 
+type RawStrapiSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+  gallery?: {
+    url?: string;
+    alternativeText?: string | null;
+    caption?: string | null;
+  }[];
+  image?: {
+    url?: string;
+    alternativeText?: string | null;
+    caption?: string | null;
+  };
+  buttonLabel?: string;
+  buttonUrl?: string;
+  buttonURL?: string;
+};
+
 //common.section
-const toSection = (s: any): Section => ({
+const toSection = (s?: RawStrapiSection): Section => ({
   id: s?.id ?? 0,
   __component: "common.section",
   title: s?.title ?? "",
@@ -14,43 +35,43 @@ const toSection = (s: any): Section => ({
 });
 
 //common.hero
-const toHero = (s: any): Hero => ({
+const toHero = (s?: RawStrapiSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? undefined,
 });
 
 //common.gallery-carousel
-const toGalleryCarousel = (s: any): GalleryCarousel => ({
+const toGalleryCarousel = (s?: RawStrapiSection): GalleryCarousel => ({
   id: s?.id ?? 0,
   __component: "common.gallery-carousel",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  gallery: (s?.gallery ?? []).map((item: any) => ({
-    url: item?.url ?? null,
+  gallery: (s?.gallery ?? []).map((item) => ({
+    url: item?.url ?? "",
     alternativeText: item?.alternativeText ?? "",
     caption: item?.caption ?? "",
   })),
 });
 
 //common.card
-const toCard = (s: any): Card => ({
+const toCard = (s?: RawStrapiSection): Card => ({
   id: s?.id ?? 0,
   __component: "common.card",
   title: s?.title ?? "",
   description: s?.description ?? "",
   buttonLabel: s?.buttonLabel ?? "",
   buttonUrl: s?.buttonUrl ?? s?.buttonURL ?? "",
-
-  image: {
-    url: s?.image?.url ?? "",
-    alternativeText: s?.image?.alternativeText ?? null,
-    caption: s?.image?.caption ?? null,
-  },
+  image: s?.image
+    ? {
+        url: s.image.url ?? "",
+        alternativeText: s.image.alternativeText ?? null,
+        caption: s.image.caption ?? null,
+      }
+    : undefined,
 });
-
 
 export async function fetchAboutOverviewPage(): Promise<AboutOverviewSections | null> {
   const pageRes = await fetchAboutOverview();
@@ -58,36 +79,34 @@ export async function fetchAboutOverviewPage(): Promise<AboutOverviewSections | 
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawStrapiSection[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero",
-  ) as any;
+    (s) => s.__component === "common.hero"
+  );
 
   const whoWeAreRaw = sections.find(
-    (s: any) => s.__component === "common.section",
-  ) as any;
+    (s) => s.__component === "common.section"
+  );
 
   const communityRaw = sections.find(
-    (s: any) => s.__component === "common.gallery-carousel",
-  ) as any;
+    (s) => s.__component === "common.gallery-carousel"
+  );
 
   const boardCardRaw = sections.find(
-    (s: any) => s.__component === "common.card",
-  ) as any;
+    (s) => s.__component === "common.card"
+  );
 
   const hero = toHero(heroRaw);
-  const whoWeAreSection = whoWeAreRaw ? toSection(whoWeAreRaw) : toSection({});
-  const galleryCarousel = communityRaw
-    ? toGalleryCarousel(communityRaw)
-    : toGalleryCarousel({});
-  const card = boardCardRaw ? toCard(boardCardRaw) : toCard({});
+  const whoWeAreSection = toSection(whoWeAreRaw);
+  const galleryCarousel = toGalleryCarousel(communityRaw);
+  const card = toCard(boardCardRaw);
 
   return {
     title: page.title,
     identifier: page.identifier,
     hero,
-    whoWeAreSection: whoWeAreSection,
+    whoWeAreSection,
     communitySection: galleryCarousel,
     boardOfDirectorsSection: card
   };

@@ -9,6 +9,6 @@ export interface ProgramCard {
         key: string;
         value: string;
     }[];
-    image: StrapiImageResponse
+    image: StrapiImageResponse | null
     button?: Button
 }

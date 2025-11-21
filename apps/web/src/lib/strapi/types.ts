@@ -144,7 +144,7 @@ export interface TimelineEvent {
 export interface Event {
   title: string;
   description: string;
-  date: Date | null;
+  date: string | null;
   time: string;
   location: string;
   image: StrapiImageResponse;

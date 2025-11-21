@@ -19,7 +19,7 @@ export default async function Home() {
       <WhoWeAre title={res.whoWeAreSection.title} description={res.whoWeAreSection.description} />
       <CommunityInAction title={res.communitySection.title} gallery={res.communitySection.gallery} />
       <LinksToPages />
-      <BoardOfDirectors title={res.boardOfDirectorsSection.title} desc={res.boardOfDirectorsSection.description} image={res.boardOfDirectorsSection.image.url} buttonLabel={res.boardOfDirectorsSection.buttonLabel} />
+      <BoardOfDirectors title={res.boardOfDirectorsSection.title} desc={res.boardOfDirectorsSection.description} image={res.boardOfDirectorsSection.image?.url} buttonLabel={res.boardOfDirectorsSection.buttonLabel} />
     </div>
   );
 }
