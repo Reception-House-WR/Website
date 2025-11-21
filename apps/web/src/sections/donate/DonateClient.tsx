@@ -2,10 +2,8 @@
 "use client";
 
 import { PageHero } from "@/components/ui/pageHero";
-import { HeartHandshake } from "lucide-react";
 import {
   type HeroData,
-  type Campaign,
   type DonationCategory,
   type DonatePageData,
   type DonationProgram,
@@ -14,46 +12,78 @@ import CampaignsSection from "./CampaignsSection";
 import CtaSection from "./CtaSection";
 import DonationProgramsSection from "./DonationProgramsSection";
 import InKindSection from "./InKindSection";
+import { Campaign } from "@/lib/strapi/models/donate/campaign";
+import { IconCard } from "@/lib/strapi/models/common/iconCard";
+import { List } from "@/lib/strapi/models/donate/list";
+import { DropOffCard } from "@/lib/strapi/models/donate/dropOffCard";
 
 // 1. Import your new section components
 
 
 // --- Component Props ---
 interface DonateClientProps {
-  heroData: HeroData;
+  heroTitle: string;
+  heroDesc: string;
+  heroImage?: string;
+  campaignTitle: string;
+  campaignDesc: string;
   campaignsData: Campaign[];
-  donationCategoriesData: DonationCategory[];
-  donatePageData: DonatePageData | null;
-  programsData: DonationProgram[];
+  programsTitle: string;
+  programsDesc: string;
+  programsCards: IconCard[];
+  inKindTitle: string;
+  inKindDesc: string;
+  inKindCards: List[];
+  dropOff: DropOffCard;
+  ctaTitle: string;
+  ctaDesc: string;
+  ctaButtonText: string;
+  ctaButtonUrl: string;
 }
 
 // 2. Your main component is now clean and easy to read
 export default function DonateClient({
-  heroData,
+  heroTitle,
+  heroDesc,
+  heroImage,
   campaignsData,
-  donationCategoriesData,
-  donatePageData,
-  programsData,
+  campaignTitle,
+  campaignDesc,
+  programsTitle,
+  programsDesc,
+  programsCards,
+  inKindTitle,
+  inKindDesc,
+  inKindCards,
+  dropOff,
+  ctaTitle,
+  ctaDesc,
+  ctaButtonText,
+  ctaButtonUrl,
 }: DonateClientProps) {
   return (
     <div className="min-h-screen bg-background">
       <main id="main-content">
         {/* Hero Section */}
         <PageHero
-          heroData={heroData}
-          icon={<HeartHandshake className="w-8 h-8 text-white" />}
+          heroTitle={heroTitle}
+          heroDesc={heroDesc}
+          heroImage={heroImage}
         />
 
         {/* --- All sections are now separate components --- */}
-        <CampaignsSection campaignsData={campaignsData} />
+        <CampaignsSection campaignTitle={campaignTitle} campaignDesc={campaignDesc} campaignsData={campaignsData} />
 
-        <DonationProgramsSection programsData={programsData} />
-
+        <DonationProgramsSection title={programsTitle} desc={programsDesc} programsData={programsCards} />
+    
         <InKindSection
-          donationCategoriesData={donationCategoriesData}
-          donatePageData={donatePageData}
+          title={inKindTitle}
+          desc={inKindDesc}
+          donationCards={inKindCards}
+          dropOff={dropOff}
         />
-        <CtaSection />
+
+        <CtaSection title={ctaTitle} desc={ctaDesc} buttonText={ctaButtonText} buttonUrl={ctaButtonUrl} />
       </main>
     </div>
   );
