@@ -24,16 +24,21 @@ export default function EventsPageClient({
     const eventDate = event.date ? new Date(event.date) : null;
     const isUpcoming = eventDate ? eventDate.getTime() >= Date.now() : false;
 
+    let localDateString = "";
+    if (eventDate) {
+      const year = eventDate.getFullYear();
+      const month = String(eventDate.getMonth() + 1).padStart(2, "0");
+      const day = String(eventDate.getDate()).padStart(2, "0");
+      localDateString = `${year}-${month}-${day}`;
+    }
+
     return {
       id: index,
       title: event.title,
-      date: eventDate
-        ? eventDate.toISOString()
-        : new Date("2025-01-01").toISOString(),
+      date: localDateString,
       category: isUpcoming ? "upcoming" : "past",
     };
   });
-
   const upcomingEvents = allEventsData.filter(
     (event) => event.date && new Date(event.date).getTime() >= Date.now()
   );

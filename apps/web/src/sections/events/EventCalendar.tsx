@@ -22,13 +22,19 @@ interface EventCalendarProps {
 export function EventCalendar({ events }: EventCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  // Converting event date strings to Date objects
+  // Parse dates as local time to prevent timezone shifts
   const eventDates = events
     .filter((event) => event.category === "upcoming")
     .map((event) => {
-      const date = new Date(event.date);
-      date.setUTCDate(date.getUTCDate());
-      return date;
+      if (!event.date) return new Date();
+
+      const parts = event.date.split("-");
+
+      return new Date(
+        parseInt(parts[0]),
+        parseInt(parts[1]) - 1,
+        parseInt(parts[2])
+      );
     });
 
   // Get events for the selected date
@@ -79,9 +85,10 @@ export function EventCalendar({ events }: EventCalendarProps) {
         {selectedDate && eventsOnSelectedDate.length > 0 && (
           <div className="space-y-2 pt-2 w-full">
             <h4 className="font-semibold text-sm text-muted-foreground">
-              Events on{" "}
+              Events on
               {selectedDate.toLocaleDateString("en-US", {
-                month: "short",
+                year: "numeric",
+                month: "long",
                 day: "numeric",
               })}
               :
