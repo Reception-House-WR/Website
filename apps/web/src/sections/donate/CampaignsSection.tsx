@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Campaign } from "@/lib/strapi/models/donate/campaign";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 // --- Component ---
 interface CampaignsSectionProps {
@@ -71,6 +72,27 @@ export default function CampaignsSection({
                 <p className="text-lg leading-relaxed text-high-contrast mb-6">
                   {campaignsData[currentIndex].description}
                 </p>
+                <div className="mb-6">
+                  <div className="mb-2 flex justify-between text-sm">
+                    <span className="font-medium text-foreground bg-clip-text">
+                      {formatCurrency(campaignsData[currentIndex].raised, "en")}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {formatCurrency(campaignsData[currentIndex].goal, "en")}
+                    </span>
+                  </div>
+                  <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full bg-gradient-to-r from-[var(--rh-yellow-500)] to-[var(--rh-red-500)] transition-all duration-500"
+                      style={{ width: `${(campaignsData[currentIndex].raised / campaignsData[currentIndex].goal) * 100}%` }}
+                      role="progressbar"
+                      aria-valuenow={(campaignsData[currentIndex].raised / campaignsData[currentIndex].goal) * 100}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label="Donation campaign progress"
+                    />
+                  </div>
+                </div>
                 <Button
                   size="lg"
                   className="w-full md:w-auto bg-[var(--rh-orange-500)] text-primary-foreground hover:bg-[var(--rh-orange-400)]"
