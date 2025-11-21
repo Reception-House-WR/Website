@@ -1,6 +1,5 @@
 "use client";
 import { NAV } from "@/components/common/header/Menu";
-import SocialMedia from "@/sections/about/contact-us/SocialMedia";
 import { useMemo } from "react";
 import Link from "next/link";
 import {

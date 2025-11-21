@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { History } from "lucide-react";
+import  Img  from 'next/image';
 import MarkdownRenderer from "@/components/common/MarkdownRenderer";
 import { fetchAboutOurHistoryPage } from "@/lib/strapi/helpers/about/aboutOurHistoryHelper";
 
@@ -100,11 +101,14 @@ export default async function OurHistory() {
                       }`}
                     >
                       {event.image?.url && (
-                        <img
-                          src={event.image.url}
-                          alt={event.image.alternativeText || `Image for ${event.title}`}
-                          className="w-full max-w-[400px] object-cover rounded-lg shadow-lg border border-gray-200 hover:border-primary transition-colors duration-300"
-                        />
+                        <div className="relative w-full max-w-[400px] h-[250px]">
+                          <Img
+                            src={event.image.url}
+                            alt={event.image.alternativeText || `Image for ${event.title}`}
+                            fill
+                            className="object-cover rounded-lg shadow-lg border border-gray-200 hover:border-primary transition-colors duration-300"
+                          />
+                        </div>
                       )}
                     </div>
                   </div>

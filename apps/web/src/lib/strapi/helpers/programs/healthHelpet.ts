@@ -10,61 +10,99 @@ import { ServiceOverview } from "../../models/programs/serviceOverview";
 import { StrapiImageResponse } from "../../models/strapi/image";
 import { fetchProgramsHealthSections } from "../../services/programs/healthService";
 
-const toHero = (s: any): Hero => ({
+type RawFeature = {
+  title?: string;
+  description?: string;
+  icon?: string;
+};
+
+type RawPartner = {
+  name?: string;
+  logo?: StrapiImageResponse;
+  url?: string;
+};
+
+type RawImage = {
+  url?: string;
+  alternativeText?: string | null;
+  caption?: string | null;
+};
+
+type RawAnalytic = {
+  metric?: string;
+  description?: string;
+};
+
+type RawStrapiSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+  features?: RawFeature[];
+  partners?: RawPartner[];
+  gallery?: RawImage[];
+  analytics?: RawAnalytic[];
+};
+
+const toHero = (s?: RawStrapiSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url,
 });
 
-const toFeature = (f: any): Feature => ({
-  title: f?.title ?? "",
-  description: f?.description ?? "",
-  icon: f?.icon ?? "",
+const toFeature = (f: RawFeature): Feature => ({
+  title: f.title ?? "",
+  description: f.description ?? "",
+  icon: f.icon ?? "",
 });
 
-const toServiceOverview = (s: any): ServiceOverview => ({
+const toServiceOverview = (s?: RawStrapiSection): ServiceOverview => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   features: (s?.features ?? []).map(toFeature),
 });
 
-const toPartner = (p: any): Partner => ({
-  name: p?.name ?? "",
-  logo: (p?.logo as StrapiImageResponse) ?? null,
-  url: p?.url ?? "",
+const toPartner = (p: RawPartner): Partner => ({
+  name: p.name ?? "",
+  logo:
+    p.logo ?? {
+      url: "",
+      alternativeText: null,
+      caption: null,
+    },
+  url: p.url ?? "",
 });
 
-const toPartnerSection = (s: any): PartnerSection => ({
+const toPartnerSection = (s?: RawStrapiSection): PartnerSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   partners: (s?.partners ?? []).map(toPartner),
 });
 
-const toGalleryCarousel = (s: any): GalleryCarousel => ({
+const toGalleryCarousel = (s?: RawStrapiSection): GalleryCarousel => ({
   id: s?.id ?? 0,
   __component: "common.gallery-carousel",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  gallery: (s?.gallery ?? []).map((item: any) => ({
-    url: item?.url ?? null,
-    alternativeText: item?.alternativeText ?? "",
-    caption: item?.caption ?? "",
+  gallery: (s?.gallery ?? []).map((item) => ({
+    url: item.url ?? "",
+    alternativeText: item.alternativeText ?? "",
+    caption: item.caption ?? "",
   })),
 });
 
-const toAnalytic = (a: any): Analytic => ({
-  metric: a?.metric ?? "",
-  description: a?.description ?? "",
+const toAnalytic = (a: RawAnalytic): Analytic => ({
+  metric: a.metric ?? "",
+  description: a.description ?? "",
 });
 
-const toAnalyticsSection = (s: any): AnalyticsOverview => ({
-  __component: "programs.analytics-overview",
+const toAnalyticsSection = (s?: RawStrapiSection): AnalyticsOverview => ({
+  __component: "programs.analytics-overview" as const,
   analytics: (s?.analytics ?? []).map(toAnalytic),
 });
-
-
 
 export async function fetchProgramsHealthPage(): Promise<HealthSections | null> {
   const pageRes = await fetchProgramsHealthSections();
@@ -74,41 +112,38 @@ export async function fetchProgramsHealthPage(): Promise<HealthSections | null> 
 
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawStrapiSection[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero"
-  ) as any;
+    (s) => s.__component === "common.hero"
+  );
 
   const serviceRaw = sections.find(
-    (s: any) => s.__component === "programs.service-overview"
-  ) as any;
+    (s) => s.__component === "programs.service-overview"
+  );
 
   const partnerRaw = sections.find(
-    (s: any) => s.__component === "programs.partner-section"
-  ) as any;
+    (s) => s.__component === "programs.partner-section"
+  );
 
   const galleryRaw = sections.find(
-    (s: any) => s.__component === "common.gallery-carousel"
-  ) as any;
+    (s) => s.__component === "common.gallery-carousel"
+  );
 
-    const analyticsRaw = sections.find(
-    (s: any) => s.__component === "programs.analytics-overview"
-    ) as any;
+  const analyticsRaw = sections.find(
+    (s) => s.__component === "programs.analytics-overview"
+  );
 
-  const hero = toHero(heroRaw ?? {});
-  const serviceSection = toServiceOverview(serviceRaw ?? {});
-  const partnerSection = toPartnerSection(partnerRaw ?? {});
-  const gallerySection = toGalleryCarousel(galleryRaw ?? {});
+  const hero = toHero(heroRaw);
+  const serviceSection = toServiceOverview(serviceRaw);
+  const partnerSection = toPartnerSection(partnerRaw);
+  const gallerySection = toGalleryCarousel(galleryRaw);
   const analyticsSection: AnalyticsOverview = analyticsRaw
-  ? toAnalyticsSection(analyticsRaw)
-  : {
-      __component: "programs.analytics-overview",
-      analytics: [] as Analytic[],
-    };
-
-
-
+    ? toAnalyticsSection(analyticsRaw)
+    : {
+        __component: "programs.analytics-overview",
+        analytics: [],
+      };
 
   return {
     title: page.title,

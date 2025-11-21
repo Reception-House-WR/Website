@@ -1,3 +1,4 @@
+import Img from 'next/image'
 interface ProgramCardProps {
   title: string;
   description: string;
@@ -8,11 +9,12 @@ interface ProgramCardProps {
 export const ProgramCard = ({ title, description, imageSrc, imageAlt }: ProgramCardProps) => {
   return (
     <article className="bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-hover transition-smooth flex-1 w-full">
-      <div className="aspect-video overflow-hidden">
-        <img 
-          src={imageSrc} 
+      <div className="relative aspect-video overflow-hidden">
+        <Img
+          src={imageSrc}
           alt={imageAlt || title}
-          className="w-full h-full object-cover hover:scale-105 transition-smooth"
+          fill
+          className="object-cover hover:scale-105 transition-smooth"
         />
       </div>
       <div className="p-6">

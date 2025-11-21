@@ -1,12 +1,13 @@
 import * as LucideIcons from "lucide-react";
-import type { ComponentProps, ComponentType } from "react";
+import type { LucideProps } from "lucide-react";
+import type { ComponentType } from "react";
 
 type IconName = keyof typeof LucideIcons;
-type AnyIcon = ComponentType<any>;
+type AnyIcon = ComponentType<LucideProps>;
 type DynamicIconProps = {
   name: IconName;
   fallback?: IconName;
-} & ComponentProps<AnyIcon>;
+} & LucideProps;
 
 export default function DynamicIcon({ name, fallback = "HelpCircle", ...props }: DynamicIconProps) {
   const Icons = LucideIcons as unknown as Record<string, AnyIcon>;

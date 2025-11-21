@@ -9,92 +9,128 @@ import { ProgramCard } from "../../models/programs/programCard";
 import { StrapiImageResponse } from "../../models/strapi/image";
 import { fetchProgramsFrenchections } from "../../services/programs/frenchService";
 
-const toHero = (s: any): Hero => ({
+type RawStrapiSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  subtitle?: string;
+  subtitle2?: string;
+  description2?: string;
+  backgroundImage?: { url?: string }[];
+
+  cards?: RawInfoCard[];
+  items?: RawItem[];
+  steps?: RawStep[];
+  image?: StrapiImageResponse;
+  button?: RawButton;
+};
+
+type RawItem = {
+  value?: string;
+};
+
+type RawButton = {
+  label?: string;
+  url?: string;
+};
+
+type RawInfoCard = {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  subtitle2?: string;
+  description2?: string;
+  items?: RawItem[];
+};
+
+type RawStep = {
+  key?: string;
+  value?: string;
+};
+
+//MAPPERS 
+
+const toHero = (s?: RawStrapiSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url,
 });
 
-const toItem = (i: any): Item => ({
-  value: i?.value ?? "",
+const toItem = (i: RawItem): Item => ({
+  value: i.value ?? "",
 });
 
-const toInfoCard = (s: any): InfoCard => ({
+const toInfoCard = (s: RawInfoCard): InfoCard => ({
+  title: s.title ?? "",
+  subtitle: s.subtitle ?? "",
+  description: s.description ?? "",
+  subtitle2: s.subtitle2 ?? "",
+  items: (s.items ?? []).map(toItem),
+  description2: s.description2 ?? "",
+});
+
+const toFrenchOverview = (s?: RawStrapiSection): FrenchOverview => ({
   title: s?.title ?? "",
-  subtitle: s?.subtitle ?? "",
   description: s?.description ?? "",
-  subtitle2: s?.subtitle2 ?? "",
-  items: (s?.items ?? []).map(toItem),
-  description2: s?.description2 ?? "",
+  cards: (s?.cards ?? []).map((c) => toInfoCard(c)),
 });
 
-const toFrenchOverview = (s: any): FrenchOverview => ({
-  title: s?.title ?? "",
-  description: s?.description ?? "",
-  cards: (s?.cards ?? []).map(toInfoCard),
-});
-
-const toButton = (b: any): Button => ({
+const toButton = (b?: RawButton): Button => ({
   label: b?.label ?? "",
   url: b?.url ?? "",
 });
 
-const toProgramCard = (p: any): ProgramCard => ({
-  time: p?.time ?? "",
-  title: p?.title ?? "",
-  description: p?.description ?? "",
-  steps: (p?.steps ?? []).map((st: any) => ({
-    key: st?.key ?? "",
-    value: st?.value ?? "",
+const toProgramCard = (p: RawStrapiSection): ProgramCard => ({
+  time: (p as any)?.time ?? "",
+  title: p.title ?? "",
+  description: p.description ?? "",
+  steps: (p.steps ?? []).map((st) => ({
+    key: st.key ?? "",
+    value: st.value ?? "",
   })),
-  image: (p?.image as StrapiImageResponse) ?? null,
-  button: p?.button ? toButton(p.button) : undefined,
+  image: p.image ?? { url: "", alternativeText: null, caption: null },
+  button: p.button ? toButton(p.button) : undefined,
 });
 
-const toCard = (c: any): Card => ({
+const toCard = (c: RawStrapiSection): Card => ({
   __component: "common.card",
-  id: c?.id ?? 0,
-  title: c?.title ?? "",
-  description: c?.description ?? "",
-  image: (c?.image as StrapiImageResponse) ?? undefined,
-  buttonLabel: c?.buttonLabel ?? "",
-  buttonUrl: c?.buttonURL ?? "",
+  id: c.id ?? 0,
+  title: c.title ?? "",
+  description: c.description ?? "",
+  image: c.image,
+  buttonLabel: (c as any).buttonLabel ?? "",
+  buttonUrl: (c as any).buttonURL ?? "",
 });
 
+//---------------- MAIN FUNCTION ----------------
 
 export async function fetchProgramsFrenchPage(): Promise<FrenchSections | null> {
   const pageRes = await fetchProgramsFrenchections();
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawStrapiSection[];
 
-  const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero"
-  ) as any;
-
-  const overviewRaw = sections.find(
-    (s: any) => s.__component === "programs.french-overview"
-  ) as any;
+  const heroRaw = sections.find((s) => s.__component === "common.hero");
+  const overviewRaw = sections.find((s) => s.__component === "programs.french-overview");
 
   const programCardsRaw = sections.filter(
-    (s: any) => s.__component === "programs.program-card"
-  ) as any[];
+    (s) => s.__component === "programs.program-card"
+  );
 
-  const bottomCardRaw = sections.find(
-    (s: any) => s.__component === "common.card"
-  ) as any;
+  const bottomCardRaw = sections.find((s) => s.__component === "common.card");
 
-  const cafeRaw = programCardsRaw[0] ?? {};
-  const resourcesRaw = programCardsRaw[1] ?? {};
+  const cafeRaw = programCardsRaw[0];
+  const resourcesRaw = programCardsRaw[1];
 
-  const hero = toHero(heroRaw ?? {});
-  const overvireSection = toFrenchOverview(overviewRaw ?? {}); 
+  const hero = toHero(heroRaw);
+  const overvireSection = toFrenchOverview(overviewRaw);
   const servicesSection = {
-    cafe: toProgramCard(cafeRaw),
-    resources: toProgramCard(resourcesRaw),
+    cafe: toProgramCard(cafeRaw ?? {}),
+    resources: toProgramCard(resourcesRaw ?? {}),
   };
   const bottomCard = bottomCardRaw ? toCard(bottomCardRaw) : toCard({});
 

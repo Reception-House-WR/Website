@@ -6,40 +6,59 @@ import { CardsSection } from "../../models/getInvolved/cardsSection";
 import { overviewSections } from "../../models/getInvolved/overviewSections";
 import { fetchGetInvolvedOverviewPageSections } from "../../services/getInvolved/overviewService";
 
-const toHero = (s: any): Hero => ({
+type RawStrapiSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+  button?: RawButton;
+  cards?: RawIconCard[];
+};
+
+type RawButton = {
+  label?: string;
+  url?: string;
+};
+
+type RawIconCard = {
+  title?: string;
+  description?: string;
+  icon?: string;
+  button?: RawButton;
+};
+
+const toHero = (s?: RawStrapiSection): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? undefined,
 });
 
-const toButton = (b: any): Button => ({
+const toButton = (b?: RawButton): Button => ({
   label: b?.label ?? "",
   url: b?.url ?? "",
 });
 
-const toButtonSection = (s: any): ButtonSection => ({
+const toButtonSection = (s?: RawStrapiSection): ButtonSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
-  button: toButton(s?.button ?? {}),   
+  button: toButton(s?.button),
 });
 
-const toIconCard = (c: any): IconCard => ({
-  title: c?.title ?? "",
-  description: c?.description ?? "",
-  icon: c?.icon ?? "",
-  button: toButton(c?.button ?? {}),  
+const toIconCard = (c: RawIconCard): IconCard => ({
+  title: c.title ?? "",
+  description: c.description ?? "",
+  icon: c.icon ?? "",
+  button: toButton(c.button),
 });
 
-
-
-const toCardsSection = (s: any): CardsSection => ({
+const toCardsSection = (s?: RawStrapiSection): CardsSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
-  cards: (s?.cards ?? []).map(toIconCard),
+  cards: (s?.cards ?? []).map((c) => toIconCard(c)),
 });
-
 
 export async function fetchGetInvolvedOverviewPage(): Promise<overviewSections | null> {
   const pageRes = await fetchGetInvolvedOverviewPageSections();
@@ -47,23 +66,23 @@ export async function fetchGetInvolvedOverviewPage(): Promise<overviewSections |
 
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawStrapiSection[];
 
   const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero"
-  ) as any;
+    (s) => s.__component === "common.hero"
+  );
 
   const impactRaw = sections.find(
-    (s: any) => s.__component === "common.button-section"
-  ) as any;
+    (s) => s.__component === "common.button-section"
+  );
 
   const waysRaw = sections.find(
-    (s: any) => s.__component === "get-involved.cards-section"
-  ) as any;
+    (s) => s.__component === "get-involved.cards-section"
+  );
 
-  const hero = toHero(heroRaw ?? {});
-  const impactSection = toButtonSection(impactRaw ?? {});
-  const waysSection = toCardsSection(waysRaw ?? {});
+  const hero = toHero(heroRaw);
+  const impactSection = toButtonSection(impactRaw);
+  const waysSection = toCardsSection(waysRaw);
 
   return {
     identifier: page.identifier,
