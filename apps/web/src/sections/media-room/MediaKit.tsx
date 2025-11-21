@@ -1,6 +1,8 @@
 "use client";
+import DynamicIcon from '@/components/common/DynamicIcon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { KitCard } from '@/lib/strapi/models/mediaRoom/kitCard';
 import { BookOpenIcon, DownloadIcon, FileTextIcon, ImageIcon } from 'lucide-react';
 
 const mediaKitItems = [
@@ -34,11 +36,17 @@ const mediaKitItems = [
   },
 ];
 
-export const MediaKit = () => {
-  const handleDownload = (filename: string, title: string) => {
-    // In a real implementation, this would trigger an actual download
-    console.log(`Downloading: ${filename}`);
-    // You would typically use: window.open(`/media-kit/${filename}`, '_blank');
+export const MediaKit = ({
+  title,
+  desc,
+  kits
+}: {
+  title: string;
+  desc: string;
+  kits: KitCard[]
+}) => {
+  const handleDownload = (url: string) => {
+    window.open(url, '_blank');
   };
   return (
     <section 
@@ -51,33 +59,32 @@ export const MediaKit = () => {
             id="media-kit-heading"
             className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl"
           >
-            Media Kit
+            {title}
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Download our official media resources for your articles and publications
+            {desc}
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {mediaKitItems.map((item) => {
-            const Icon = item.icon;
+          {kits.map((item, id) => {
             return (
               <Card
-                key={item.id}
+                key={id}
                 className="group transition-all duration-300 hover:shadow-lg"
                 style={{ boxShadow: 'var(--card-shadow)' }}
               >
                 <CardHeader>
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--rh-500)]/10 text-[var(--rh-500)] transition-colors group-hover:bg-[var(--rh-500)] group-hover:text-white">
-                    <Icon className="h-6 w-6" aria-hidden="true" />
+                    <DynamicIcon name={item.icon} className="h-6 w-6" aria-hidden="true" />
                   </div>
                   <CardTitle className="text-lg">{item.title}</CardTitle>
                   <CardDescription>{item.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button
-                    onClick={() => handleDownload(item.filename, item.title)}
-                    className="w-full gap-2"
+                    onClick={() => handleDownload(item.kit.url)}
+                    className="w-full gap-2 hover:cursor-pointer"
                     variant="outline"
                     aria-label={`Download ${item.title}`}
                   >

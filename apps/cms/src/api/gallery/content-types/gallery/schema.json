@@ -19,17 +19,8 @@
     },
     "image": {
       "type": "media",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "isImage"
-            },
-            true
-          ]
-        }
-      },
       "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",

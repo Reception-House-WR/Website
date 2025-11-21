@@ -6,90 +6,35 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GalleryItem } from "@/lib/strapi/models/mediaRoom/galleryItem";
 import { PlayIcon } from "lucide-react";
 import React, { useState } from "react";
 
-interface MediaItem {
-  id: number;
-  type: "image" | "video";
-  thumbnail: string;
-  url: string;
-  alt: string;
-  caption: string;
-  videoCaption?: string;
-}
-
-const mediaItems: MediaItem[] = [
-  {
-    id: 1,
-    type: "image",
-    thumbnail: "/assets/rap.jpg",
-    url: "/assets/rap.jpg",
-    alt: "Community members welcoming newcomer family at airport arrival",
-    caption:
-      "Volunteers welcoming a newcomer family at the airport, showcasing the warm community support that defines Reception House's mission.",
-  },
-  {
-    id: 2,
-    type: "image",
-    thumbnail: "/assets/rap.jpg",
-    url: "/assets/rap.jpg",
-    alt: "Children participating in language learning activities",
-    caption:
-      "Children engaging in interactive language learning activities at our community center, building skills and friendships.",
-  },
-  {
-    id: 3,
-    type: "video",
-    thumbnail: "/assets/rap.jpg",
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    alt: "Video: A Day in the Life at Reception House",
-    caption:
-      "Experience a typical day at Reception House through the stories of staff, volunteers, and newcomer families.",
-    videoCaption:
-      "This video includes English captions and a full transcript is available below.",
-  },
-  {
-    id: 4,
-    type: "image",
-    thumbnail: "/assets/rap.jpg",
-    url: "/assets/rap.jpg",
-    alt: "Employment counselor meeting with newcomer client",
-    caption:
-      "One-on-one employment counseling helps newcomers navigate the Canadian job market and build successful careers.",
-  },
-  {
-    id: 5,
-    type: "image",
-    thumbnail: "/assets/rap.jpg",
-    url: "/assets/rap.jpg",
-    alt: "Community cultural celebration event with diverse participants",
-    caption:
-      "Annual cultural celebration bringing together newcomers and long-time residents in a spirit of community and understanding.",
-  },
-  {
-    id: 6,
-    type: "video",
-    thumbnail: "/assets/rap.jpg",
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    alt: "Video: Success Stories - From Arrival to Integration",
-    caption:
-      "Hear firsthand accounts from refugees who have successfully rebuilt their lives in Waterloo Region with Reception House support.",
-    videoCaption:
-      "This video includes English captions and a full transcript is available below.",
-  },
-];
-
-export const Gallery = () => {
-  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+export const Gallery = ({
+  title,
+  desc,
+  mediaItems
+}: {
+  title: string;
+  desc: string;
+  mediaItems: GalleryItem[];
+}) => {
+  const [selectedMedia, setSelectedMedia] = useState<GalleryItem | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "images" | "videos">(
     "all"
   );
 
-  const filteredMedia = mediaItems.filter((item) => {
+  const newMediaItems = mediaItems.map((item) => ({
+    videoUrl: item.videoUrl ? item.videoUrl.replace("watch?v=", "embed/") : undefined,
+    description: item.description,
+    isImage: item.isImage,
+    image: item.image,
+  }));
+
+  const filteredMedia = newMediaItems.filter((item) => {
     if (activeTab === "all") return true;
-    if (activeTab === "images") return item.type === "image";
-    if (activeTab === "videos") return item.type === "video";
+    if (activeTab === "images") return item.isImage;
+    if (activeTab === "videos") return item.isImage === false;
     return true;
   });
   return (
@@ -103,10 +48,10 @@ export const Gallery = () => {
             id="gallery-heading"
             className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl"
           >
-            Photos & Videos
+            {title}
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Visual stories of hope, resilience, and community support
+            {desc}
           </p>
         </div>
         <Tabs
@@ -159,20 +104,20 @@ export const Gallery = () => {
         </Tabs>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredMedia.map((item) => (
+          {filteredMedia.map((item, id) => (
             <button
-              key={item.id}
+              key={id}
               onClick={() => setSelectedMedia(item)}
               className="group relative overflow-hidden rounded-lg bg-muted transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              aria-label={`View ${item.alt}`}
+              aria-label={`View ${item.image?.alternativeText || 'media item'}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
-                  src={item.thumbnail}
-                  alt={item.alt}
+                  src={item.image?.url}
+                  alt={item.image?.alternativeText || 'Thumbnail'}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                {item.type === "video" && (
+                {item.isImage === false && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                     <div className="rounded-full bg-[var(--rh-500)] p-4 transition-transform group-hover:scale-110">
                       <PlayIcon
@@ -185,7 +130,7 @@ export const Gallery = () => {
               </div>
               <div className="p-4">
                 <p className="text-sm text-foreground/80 line-clamp-2">
-                  {item.caption}
+                  {item.description}
                 </p>
               </div>
             </button>
@@ -202,22 +147,22 @@ export const Gallery = () => {
           aria-describedby="media-description"
         >
           <DialogTitle className="sr-only">
-            {selectedMedia?.alt || "Media Preview"}
+            {selectedMedia?.image?.alternativeText || "Media Preview"}
           </DialogTitle>
           {selectedMedia && (
             <>
               <div className="relative">
-                {selectedMedia.type === "image" ? (
+                {selectedMedia.isImage ? (
                   <img
-                    src={selectedMedia.url}
-                    alt={selectedMedia.alt}
+                    src={selectedMedia.image?.url}
+                    alt={selectedMedia.image?.alternativeText || 'media item'}
                     className="w-full rounded-lg"
                   />
                 ) : (
                   <div className="aspect-video">
                     <iframe
-                      src={selectedMedia.url}
-                      title={selectedMedia.alt}
+                      src={selectedMedia.videoUrl}
+                      title={selectedMedia.image?.alternativeText || 'media item'}
                       className="h-full w-full rounded-lg"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -227,11 +172,11 @@ export const Gallery = () => {
               </div>
               <DialogDescription id="media-description" className="space-y-2">
                 <span className="text-base text-foreground">
-                  {selectedMedia.caption}
+                  {selectedMedia.description}
                 </span>
-                {selectedMedia.videoCaption && (
+                {selectedMedia.description && (
                   <span className="text-sm text-muted-foreground italic">
-                    {selectedMedia.videoCaption}
+                    {selectedMedia.description}
                   </span>
                 )}
               </DialogDescription>
