@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { type Event } from "@/lib/strapi";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { RSVPForm } from "./RSVPForm";
+import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
 // --- Helper: Format date for display (now co-located with the component) ---
 function formatDisplayDate(isoDate: Date | null): string {
@@ -34,14 +34,14 @@ function formatDisplayDate(isoDate: Date | null): string {
 }
 
 // --- Event Card (individual event) ---
-export const EventCard = ({ event, category }: { event: Event; category: "upcoming" | "past" }) => {
+export const EventCard = ({ event, category }: { event: UpcomingEvent; category: "upcoming" | "past" }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const displayDate = formatDisplayDate(event.date);
 
   // --- Handler for PAID event button ---
   const handlePaidRSVP = () => {
-    if (event.eventbriteUrl) {
-      window.open(event.eventbriteUrl, "_blank", "noopener,noreferrer");
+    if (event.eventBriteURL) {
+      window.open(event.eventBriteURL , "_blank", "noopener,noreferrer");
     } else {
       console.error(
         "This is a paid event, but no Eventbrite URL was provided."

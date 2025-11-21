@@ -38,8 +38,8 @@ export const Partners = ({ title, desc, partners }: PartnersSectionProps) => {
               <div className="text-center">
                 <div className="w-24 h-16 mx-auto mb-2 flex items-center justify-center">
                   <img
-                    src={partner.logo}
-                    alt={partner.name}
+                    src={partner.logo.url}
+                    alt={partner.logo.alternativeText || partner.name}
                     className="max-h-14 w-auto object-contain"
                     loading="lazy"
                   />

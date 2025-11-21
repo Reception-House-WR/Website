@@ -14,7 +14,6 @@ import {
   Handshake,
   type LucideIcon,
 } from "lucide-react";
-import type { DonationProgram } from "@/lib/strapi";
 import { IconCard } from "@/lib/strapi/models/common/iconCard";
 import DynamicIcon from "@/components/common/DynamicIcon";
 import Link from "next/link";

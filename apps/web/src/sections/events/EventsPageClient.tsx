@@ -3,7 +3,6 @@
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EventCalendar } from "./EventCalendar";
-import { type HeroData, type Event } from "@/lib/strapi";
 import { EventCard } from "./EventCard";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 

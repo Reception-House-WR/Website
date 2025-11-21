@@ -10,7 +10,7 @@ export default function BoardOfDirectors({
 }: {
   title: string;
   desc: string;
-  image: string;
+  image?: string;
   buttonLabel: string;
 }) {
 
@@ -18,11 +18,13 @@ export default function BoardOfDirectors({
         <Card className="overflow-hidden shadow-card animate-fade-in mx-8">
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative h-64 md:h-auto">
-                <img
-                  src={image}
-                  alt="Board of Directors"
-                  className="w-full h-full object-cover"
-                />
+                {image && (
+                  <img
+                    src={image}
+                    alt="Board of Directors"
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-accent/5 to-primary/5">
                 <h3 className="text-3xl font-bold mb-4 text-foreground">{title}</h3>

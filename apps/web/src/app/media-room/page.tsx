@@ -8,9 +8,11 @@ const Page = async () => {
 
   const res = await fetchMediaRoomPage();
   console.log("MEDIA ROOM ", res);
+
   if (!res) {
-    throw new Error("Failed to fetch media room page data");
+    return <div className="flex items-center justify-center py-5">Error loading media room page data.</div>;
   }
+  
   return (
     <main className="min-h-screen">
       <HeroSection title={res.hero.title} desc={res.hero.description} />

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from "react";
-// import { Link } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,143 +8,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Clock, MapPin, Calendar as CalendarIcon } from "lucide-react";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
-// import eventOrientation from "@/assets/event-orientation.jpg";
-// import eventPotluck from "@/assets/event-potluck.jpg";
-// import eventWorkshop from "@/assets/event-workshop.jpg";
-// import eventFestival from "@/assets/event-festival.jpg";
-
-// import testImage from 'assets/stories/story-1.jpg'
-
-const testImage = 'assets/stories/story-1.jpg';
-
 interface EventsCalendarProps {
   title: string;
   desc: string;
   events: UpcomingEvent[];
 }
-
-const eventsData = {
-  en: {
-    title: "Upcoming Events",
-    showAllButton: "Show All Events",
-    noEventsMessage: "No events planned for this day.",
-    viewAllLink: "View all events",
-    showingEventsFor: "Showing events for",
-    eventsCount: "event",
-    eventsCountPlural: "events",
-    selectDatePrompt: "Select a date to filter events, or browse all upcoming events below",
-    events: [
-      {
-        id: 1,
-        title: "Newcomer Orientation Session",
-        date: new Date(2025, 2, 15),
-        time: "2:00 PM - 4:00 PM",
-        location: "Reception House Main Hall",
-        image: {
-          url: testImage,
-          alt: "Diverse newcomers sitting in a welcoming orientation session",
-        },
-        summary: "Learn about available services and connect with our support team.",
-      },
-      {
-        id: 2,
-        title: "Community Potluck Dinner",
-        date: new Date(2025, 2, 22),
-        time: "6:00 PM - 9:00 PM",
-        location: "Community Center",
-        image: {
-          url: testImage,
-          alt: "People sharing food at a vibrant community potluck dinner",
-        },
-        summary: "Bring a dish to share! All welcome to this multicultural feast.",
-      },
-      {
-        id: 3,
-        title: "Job Skills Workshop",
-        date: new Date(2025, 2, 28),
-        time: "10:00 AM - 12:00 PM",
-        location: "Training Room B",
-        image: {
-          url: testImage,
-          alt: "Professional training session with people learning job skills",
-        },
-        summary: "Resume building, interview prep, and networking strategies.",
-      },
-      {
-        id: 4,
-        title: "Children's Cultural Festival",
-        date: new Date(2025, 3, 5),
-        time: "1:00 PM - 5:00 PM",
-        location: "Victoria Park",
-        image: {
-          url: testImage,
-          alt: "Children celebrating at a colorful cultural festival",
-        },
-        summary: "Music, dance, crafts, and games celebrating diverse cultures.",
-      },
-    ],
-  },
-  fr: {
-    title: "Événements à venir",
-    showAllButton: "Afficher tous les événements",
-    noEventsMessage: "Aucun événement prévu pour ce jour.",
-    viewAllLink: "Voir tous les événements",
-    showingEventsFor: "Affichage des événements pour",
-    eventsCount: "événement",
-    eventsCountPlural: "événements",
-    selectDatePrompt: "Sélectionnez une date pour filtrer les événements, ou parcourez tous les événements à venir ci-dessous",
-    events: [
-      {
-        id: 1,
-        title: "Session d'orientation pour nouveaux arrivants",
-        date: new Date(2025, 2, 15),
-        time: "14h00 - 16h00",
-        location: "Salle principale de Reception House",
-        image: {
-          url: testImage,
-          alt: "Nouveaux arrivants lors d'une session d'orientation accueillante",
-        },
-        summary: "Découvrez les services disponibles et connectez-vous avec notre équipe.",
-      },
-      {
-        id: 2,
-        title: "Repas-partage communautaire",
-        date: new Date(2025, 2, 22),
-        time: "18h00 - 21h00",
-        location: "Centre communautaire",
-        image: {
-          url: testImage,
-          alt: "Personnes partageant de la nourriture lors d'un repas-partage communautaire",
-        },
-        summary: "Apportez un plat à partager ! Tous sont les bienvenus à ce festin multiculturel.",
-      },
-      {
-        id: 3,
-        title: "Atelier de compétences professionnelles",
-        date: new Date(2025, 2, 28),
-        time: "10h00 - 12h00",
-        location: "Salle de formation B",
-        image: {
-          url: testImage,
-          alt: "Session de formation professionnelle avec apprentissage des compétences",
-        },
-        summary: "Rédaction de CV, préparation aux entretiens et stratégies de réseautage.",
-      },
-      {
-        id: 4,
-        title: "Festival culturel pour enfants",
-        date: new Date(2025, 3, 5),
-        time: "13h00 - 17h00",
-        location: "Parc Victoria",
-        image: {
-          url: testImage,
-          alt: "Enfants célébrant lors d'un festival culturel coloré",
-        },
-        summary: "Musique, danse, artisanat et jeux célébrant diverses cultures.",
-      },
-    ],
-  },
-};
 
 export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => {
   // const data = eventsData[lang as keyof typeof eventsData] || eventsData.en;
@@ -319,8 +186,8 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                         {/* Event Image */}
                         <div className="relative md:aspect-auto overflow-hidden bg-muted h-full ">
                           <img
-                            src={event.image}
-                            alt={event.title}
+                            src={event.image?.url}
+                            alt={event.image?.alternativeText || event.title}
                             loading="lazy"
                             className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />

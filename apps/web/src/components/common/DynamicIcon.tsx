@@ -5,7 +5,7 @@ import type { ComponentType } from "react";
 type IconName = keyof typeof LucideIcons;
 type AnyIcon = ComponentType<LucideProps>;
 type DynamicIconProps = {
-  name: IconName;
+  name: string;
   fallback?: IconName;
 } & LucideProps;
 

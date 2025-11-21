@@ -2,12 +2,6 @@
 "use client";
 
 import { PageHero } from "@/components/ui/pageHero";
-import {
-  type HeroData,
-  type DonationCategory,
-  type DonatePageData,
-  type DonationProgram,
-} from "@/lib/strapi";
 import CampaignsSection from "./CampaignsSection";
 import CtaSection from "./CtaSection";
 import DonationProgramsSection from "./DonationProgramsSection";
