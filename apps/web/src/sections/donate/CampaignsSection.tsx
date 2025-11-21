@@ -5,15 +5,20 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Campaign } from "@/lib/strapi";
+import { Campaign } from "@/lib/strapi/models/donate/campaign";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 // --- Component ---
 interface CampaignsSectionProps {
   campaignsData: Campaign[];
+  campaignTitle: string;
+  campaignDesc: string;
 }
 
 export default function CampaignsSection({
   campaignsData,
+  campaignTitle,
+  campaignDesc,
 }: CampaignsSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -33,15 +38,15 @@ export default function CampaignsSection({
     <section className="py-16 px-4 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50">
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
-          Current Campaigns
+          {campaignTitle}
         </h2>
         <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Join our active campaigns making a difference right now
+          {campaignDesc}
         </p>
         {campaignsData.length > 0 ? (
           <div className="relative">
             <Card
-              key={campaignsData[currentIndex].id}
+              key={campaignsData[currentIndex].goal}
               className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
             >
               <div className="relative h-64 md:h-80 overflow-hidden">
@@ -51,7 +56,7 @@ export default function CampaignsSection({
                       campaignsData[currentIndex].image ||
                       "/public/assets/campaign.png"
                     }
-                    alt={campaignsData[currentIndex].imageAlt}
+                    alt={campaignsData[currentIndex].name || "Campaign Image"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -67,6 +72,27 @@ export default function CampaignsSection({
                 <p className="text-lg leading-relaxed text-high-contrast mb-6">
                   {campaignsData[currentIndex].description}
                 </p>
+                <div className="mb-6">
+                  <div className="mb-2 flex justify-between text-sm">
+                    <span className="font-medium text-foreground bg-clip-text">
+                      {formatCurrency(campaignsData[currentIndex].raised, "en")}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {formatCurrency(campaignsData[currentIndex].goal, "en")}
+                    </span>
+                  </div>
+                  <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full bg-gradient-to-r from-[var(--rh-yellow-500)] to-[var(--rh-red-500)] transition-all duration-500"
+                      style={{ width: `${(campaignsData[currentIndex].raised / campaignsData[currentIndex].goal) * 100}%` }}
+                      role="progressbar"
+                      aria-valuenow={(campaignsData[currentIndex].raised / campaignsData[currentIndex].goal) * 100}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label="Donation campaign progress"
+                    />
+                  </div>
+                </div>
                 <Button
                   size="lg"
                   className="w-full md:w-auto bg-[var(--rh-orange-500)] text-primary-foreground hover:bg-[var(--rh-orange-400)]"

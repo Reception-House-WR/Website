@@ -12,84 +12,150 @@ import {
   fetchAllPartners,
 } from "../services/homeServices";
 
-export async function fetchHomePage(): Promise<HomeSections | null> {
-  // Run all three requests in parallel for better performance
-  const [pageRes, eventsRes, partnersRes] = await Promise.all([
-    fetchHomePageSections(),
-    fetchUpcomingEvents(4),
-    fetchAllPartners(),
-  ]);
+type RawImage = {
+  url?: string;
+  alternativeText?: string | null;
+  caption?: string | null;
+};
 
-  const page = pageRes?.data?.[0];
-  if (!page) return null;
+type RawStory = {
+  author?: string;
+  quote?: string;
+  country?: string;
+  videoUrl?: string;
+  image?: RawImage | RawImage[];
+};
 
-  const sections = page.sections ?? [];
+type RawHeroSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+};
 
-  // Find each section by its Strapi component key
-  const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero"
-  ) as any;
+type RawStoriesSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  stories?: RawStory[];
+};
 
-  const storiesRaw = sections.find(
-    (s: any) => s.__component === "stories.stories-carousel"
-  ) as any;
-
-  const campaignRaw = sections.find(
-    (s: any) => s.__component === "donate.current-campaign"
-  ) as any;
-
-  const commonSections = sections.filter(
-    (s: any) => s.__component === "common.section"
-  ) as any[];
-
-  // For now: first common.section → Upcoming Events, second → Partners
-  const upcomingRaw = commonSections[0];
-  const partnersRaw = commonSections[1];
-
-  // Helper to convert a Strapi "common.section" component into our Section view model
-  const toSection = (s: any): Section => ({
-    id: s?.id ?? 0,
-    __component: "common.section",
-    title: s?.title ?? "",
-    description: s?.description ?? "",
-  });
-
-  // Build the Hero view model from the Strapi hero component
-  const hero: Hero = {
-    id: heroRaw?.id ?? 0,
-    __component: "common.hero",
-    title: heroRaw?.title ?? "",
-    description: heroRaw?.description ?? "",
-    backgroundImageUrl: heroRaw?.backgroundImage[0].url ?? null,
+type RawCampaignSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+  campaign?: {
+    name?: string;
+    description?: string;
+    raised?: number;
+    goal?: number;
+    image?: RawImage | RawImage[];
+    buttonURL?: string;
+    buttonLabel?: string;
   };
+};
 
-  const stories: Story[] = (storiesRaw?.stories ?? []).map((story: any) => ({
-    author: story.author,
-    country: story.country,
-    image: story.image?.[0]?.url ?? null,
-    quote: story.quote,
-  }));
+type RawCommonSection = {
+  id?: number;
+  __component?: string;
+  title?: string;
+  description?: string;
+};
 
-  const campaign: Campaign = {
-    name: campaignRaw?.campaign?.name ?? "",
-    description: campaignRaw?.campaign?.description ?? "",
-    goal: campaignRaw?.campaign?.goal ?? 0,
-    raised: campaignRaw?.campaign?.raised ?? 0,
-    image: campaignRaw?.campaign?.image?.[0]?.url ?? null,
-    buttonLabel: campaignRaw?.campaign?.buttonLabel ?? "",
-    buttonURL: campaignRaw?.campaign?.buttonURL ?? "",
+type RawHomeSection =
+  | RawHeroSection
+  | RawStoriesSection
+  | RawCampaignSection
+  | RawCommonSection;
+
+type RawPartner = {
+  name?: string;
+  url?: string;
+  logo?: RawImage;
+};
+
+type RawEvent = {
+  title?: string;
+  description?: string;
+  date?: string;
+  time?: string;
+  location?: string;
+  isPaid?: boolean;
+  eventBriteURL?: string;
+  image?: RawImage;
+};
+
+const getImageUrl = (img?: RawImage | RawImage[]): string => {
+  if (!img) return "";
+
+  return Array.isArray(img)
+    ? img[0]?.url ?? ""
+    : img.url ?? "";
+};
+
+/* ---------- helpers ---------- */
+
+const getBackgroundImageUrl = (
+  images?: { url?: string }[],
+): string | undefined => images?.[0]?.url;
+
+const toStrapiImage = (img?: RawImage | RawImage[]): StrapiImageResponse => {
+  const raw = Array.isArray(img) ? img[0] : img;
+
+  return {
+    url: raw?.url ?? "",
+    alternativeText: raw?.alternativeText ?? null,
+    caption: raw?.caption ?? null,
   };
+};
 
-  const partners : Partner[] = (partnersRes?.data ?? []).map((partner: any) => ({
-    name: partner.name,
-    url: partner.url,
-    logo: partner.logo?.url ?? null,
-  }));
+const toSection = (s?: RawCommonSection): Section => ({
+  id: s?.id ?? 0,
+  __component: "common.section",
+  title: s?.title ?? "",
+  description: s?.description ?? "",
+});
 
-  // console.log("events raw:", eventsRes);
+const toHero = (s?: RawHeroSection): Hero => ({
+  id: s?.id ?? 0,
+  __component: "common.hero",
+  title: s?.title ?? "",
+  description: s?.description ?? "",
+  backgroundImageUrl: getBackgroundImageUrl(s?.backgroundImage),
+});
 
-  const events: UpcomingEvent[] = (eventsRes?.data ?? []).map((event: any) => {
-  const dateStr = event?.date;
+const toStory = (story: RawStory): Story => ({
+  author: story.author ?? "",
+  quote: story.quote ?? "",
+  country: story.country ?? "",
+  videoUrl: story.videoUrl ?? "",
+  image: getImageUrl(story.image),
+});
+
+const toCampaign = (section?: RawCampaignSection): Campaign => {
+  const c = section?.campaign ?? {};
+  return {
+    name: c.name ?? "",
+    description: c.description ?? "",
+    goal: c.goal ?? 0,
+    raised: c.raised ?? 0,
+    image:getImageUrl(c.image),
+    buttonLabel: c.buttonLabel ?? "",
+    buttonURL: c.buttonURL ?? "",
+  };
+};
+
+const toPartner = (p: RawPartner): Partner => ({
+  name: p.name ?? "",
+  url: p.url ?? "",
+  logo: toStrapiImage(p.logo),
+});
+
+const toEvent = (event: RawEvent): UpcomingEvent => {
+  const dateStr = event.date;
   let parsedDate: Date | null = null;
 
   if (typeof dateStr === "string") {
@@ -113,15 +179,55 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
     location: event.location ?? "",
     isPaid: event.isPaid ?? false,
     eventBriteURL: event.eventBriteURL ?? "",
-    image: {
-      url: event.image?.url ?? "",
-      alternativeText: event.image?.alternativeText ?? null,
-      caption: event.image?.caption ?? null,
-    } as StrapiImageResponse,
-  } as UpcomingEvent;
-});
+    image: toStrapiImage(event.image),
+  };
+};
 
-  // console.log("events:", events);
+
+export async function fetchHomePage(): Promise<HomeSections | null> {
+  const [pageRes, eventsRes, partnersRes] = await Promise.all([
+    fetchHomePageSections(),
+    fetchUpcomingEvents(4),
+    fetchAllPartners(),
+  ]);
+
+  const page = pageRes?.data?.[0];
+  if (!page) return null;
+
+  const sections = (page.sections ?? []) as RawHomeSection[];
+
+  const heroRaw = sections.find(
+    (s) => s.__component === "common.hero",
+  ) as RawHeroSection | undefined;
+
+  const storiesRaw = sections.find(
+    (s) => s.__component === "stories.stories-carousel",
+  ) as RawStoriesSection | undefined;
+
+  const campaignRaw = sections.find(
+    (s) => s.__component === "donate.current-campaign",
+  ) as RawCampaignSection | undefined;
+
+  const commonSections = sections.filter(
+    (s) => s.__component === "common.section",
+  ) as RawCommonSection[];
+
+  const upcomingRaw = commonSections[0];
+  const partnersSectionRaw = commonSections[1];
+
+  const hero = toHero(heroRaw);
+
+  const stories: Story[] = (storiesRaw?.stories ?? []).map(toStory);
+
+  const campaign: Campaign = toCampaign(campaignRaw);
+
+  const partners: Partner[] = (partnersRes?.data ?? []).map((p) =>
+    toPartner(p as RawPartner),
+  );
+
+  const rawEvents = (eventsRes?.data ?? []) as unknown as RawEvent[];
+
+  const events: UpcomingEvent[] = rawEvents.map((e) => toEvent(e));
 
   return {
     title: page.title,
@@ -145,8 +251,8 @@ export async function fetchHomePage(): Promise<HomeSections | null> {
     },
 
     partnersSection: {
-      section: toSection(partnersRaw),
-      partners
+      section: toSection(partnersSectionRaw),
+      partners,
     },
   };
 }

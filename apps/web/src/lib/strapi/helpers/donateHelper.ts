@@ -13,74 +13,152 @@ import { Item } from "../models/programs/item";
 import { StrapiImageResponse } from "../models/strapi/image";
 import { fetchDonatePageSections } from "../services/donateService";
 
+type RawHero = {
+  id?: number;
+  title?: string;
+  description?: string;
+  backgroundImage?: { url?: string }[];
+};
+
+type RawButton = {
+  label?: string;
+  url?: string;
+};
+
+type RawCampaign = {
+  name?: string;
+  description?: string;
+  raised?: number;
+  goal?: number;
+  image?: StrapiImageResponse;
+  buttonURL?: string;
+  buttonLabel?: string;
+};
+
+type RawIconCard = {
+  title?: string;
+  description?: string;
+  icon?: string;
+  button?: RawButton;
+};
+
+type RawListItem = { value?: string };
+
+type RawList = {
+  title?: string;
+  items?: RawListItem[];
+};
+
+type RawDropOff = {
+  title?: string;
+  note?: string;
+  subtitle?: string;
+  items?: RawListItem[];
+  bottomText?: string;
+};
+
+type RawListCardSection = {
+  title?: string;
+  description?: string;
+  cards?: RawList[];
+};
+
+type RawButtonSection = {
+  title?: string;
+  description?: string;
+  button?: RawButton;
+};
+
+type RawCampaignsSection = {
+  title?: string;
+  description?: string;
+  campaigns?: RawCampaign[];
+};
+
+type RawCardsSection = {
+  title?: string;
+  description?: string;
+  cards?: RawIconCard[];
+};
+
+type RawSection = {
+  __component?: string;
+} & RawHero &
+  RawCampaignsSection &
+  RawCardsSection &
+  RawListCardSection &
+  RawDropOff &
+  RawButtonSection;
+
+
+// ---------- MAPPERS ---------- //
+
 const toHero = (s: any): Hero => ({
   id: s?.id ?? 0,
   __component: "common.hero",
   title: s?.title ?? "",
   description: s?.description ?? "",
-  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? null,
+  backgroundImageUrl: s?.backgroundImage?.[0]?.url ?? undefined, 
 });
 
-const toButton = (b: any): Button => ({
+const toButton = (b?: RawButton): Button => ({
   label: b?.label ?? "",
   url: b?.url ?? "",
 });
 
-/* ---------- campaigns section ---------- */
-
-const toCampaign = (c: any): Campaign => ({
-  name: c?.name ?? "",
-  description: c?.description ?? "",
-  raised: c?.raised ?? 0,
-  goal: c?.goal ?? 0,
-  image:
-    (c?.image as StrapiImageResponse | undefined)?.url ?? "", // string url
-  buttonURL: c?.buttonURL ?? "",
-  buttonLabel: c?.buttonLabel ?? "",
+// Campaign card
+const toCampaign = (c: RawCampaign): Campaign => ({
+  name: c.name ?? "",
+  description: c.description ?? "",
+  raised: c.raised ?? 0,
+  goal: c.goal ?? 0,
+  image: c.image?.url ?? "",
+  buttonURL: c.buttonURL ?? "",
+  buttonLabel: c.buttonLabel ?? "",
 });
 
-const toCampaignsSection = (s: any): CampaignsSection => ({
+// Campaigns section
+const toCampaignsSection = (s?: RawCampaignsSection): CampaignsSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
-  // ojo: tu interfaz se llama cammpaigns (con doble m)
   cammpaigns: (s?.campaigns ?? []).map(toCampaign),
 });
 
-/* ---------- whereHelps: cards section ---------- */
-
-const toIconCard = (c: any): IconCard => ({
-  title: c?.title ?? "",
-  description: c?.description ?? "",
-  icon: c?.icon ?? "",
-  button: toButton(c?.button ?? {}),
+// IconCard
+const toIconCard = (c: RawIconCard): IconCard => ({
+  title: c.title ?? "",
+  description: c.description ?? "",
+  icon: c.icon ?? "",
+  button: toButton(c.button),
 });
 
-const toCardsSection = (s: any): CardsSection => ({
+// Cards section
+const toCardsSection = (s?: RawCardsSection): CardsSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   cards: (s?.cards ?? []).map(toIconCard),
 });
 
-/* ---------- in-kind donations: list cards ---------- */
-
-const toItem = (i: any): Item => ({
-  value: i?.value ?? "",
+// List item
+const toItem = (i: RawListItem): Item => ({
+  value: i.value ?? "",
 });
 
-const toList = (l: any): List => ({
-  title: l?.title ?? "",
-  items: (l?.items ?? []).map(toItem),
+// List block
+const toList = (l: RawList): List => ({
+  title: l.title ?? "",
+  items: (l.items ?? []).map(toItem),
 });
 
-const toListCardSection = (s: any): ListCardSection => ({
+// List card section
+const toListCardSection = (s?: RawListCardSection): ListCardSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   cards: (s?.cards ?? []).map(toList),
 });
 
-/* ---------- drop-off card ---------- */
-
-const toDropOffCard = (s: any): DropOffCard => ({
+// Drop-off card
+const toDropOffCard = (s?: RawDropOff): DropOffCard => ({
   title: s?.title ?? "",
   note: s?.note ?? "",
   subtitle: s?.subtitle ?? "",
@@ -88,52 +166,44 @@ const toDropOffCard = (s: any): DropOffCard => ({
   bottomText: s?.bottomText ?? "",
 });
 
-/* ---------- bottom general button section ---------- */
-
-const toButtonSection = (s: any): ButtonSection => ({
+// Button section
+const toButtonSection = (s?: RawButtonSection): ButtonSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
-  button: toButton(s?.button ?? {}),
+  button: toButton(s?.button),
 });
 
+
+// ---------- MAIN FETCH ---------- //
 
 export async function fetchDonationPage(): Promise<DonateSections | null> {
   const pageRes = await fetchDonatePageSections();
   const page = pageRes?.data?.[0];
   if (!page) return null;
 
-  const sections = page.sections ?? [];
+  const sections = (page.sections ?? []) as RawSection[];
 
-  const heroRaw = sections.find(
-    (s: any) => s.__component === "common.hero",
-  ) as any;
+  const hero = toHero(sections.find(s => s.__component === "common.hero"));
 
-  const campaignsRaw = sections.find(
-    (s: any) => s.__component === "donate.campaigns",
-  ) as any;
+  const campaignsSection = toCampaignsSection(
+    sections.find(s => s.__component === "donate.campaigns"),
+  );
 
-  const whereHelpsRaw = sections.find(
-    (s: any) => s.__component === "get-involved.cards-section",
-  ) as any;
+  const whereHelpsSection = toCardsSection(
+    sections.find(s => s.__component === "get-involved.cards-section"),
+  );
 
-  const inKindRaw = sections.find(
-    (s: any) => s.__component === "donate.list-cards-section",
-  ) as any;
+  const inKindDonationsSection = toListCardSection(
+    sections.find(s => s.__component === "donate.list-cards-section"),
+  );
 
-  const dropOffRaw = sections.find(
-    (s: any) => s.__component === "donate.drop-off-card",
-  ) as any;
+  const dropOffSection = toDropOffCard(
+    sections.find(s => s.__component === "donate.drop-off-card"),
+  );
 
-  const bottomRaw = sections.find(
-    (s: any) => s.__component === "common.button-section",
-  ) as any;
-
-  const hero = toHero(heroRaw ?? {});
-  const campaignsSection = toCampaignsSection(campaignsRaw ?? {});
-  const whereHelpsSection = toCardsSection(whereHelpsRaw ?? {});
-  const inKindDonationsSection = toListCardSection(inKindRaw ?? {});
-  const dropOffSection = toDropOffCard(dropOffRaw ?? {});
-  const bottomGeneralSection = toButtonSection(bottomRaw ?? {});
+  const bottomGeneralSection = toButtonSection(
+    sections.find(s => s.__component === "common.button-section"),
+  );
 
   return {
     title: page.title,

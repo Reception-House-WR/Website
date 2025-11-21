@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { formatCurrency } from "@/lib/formatCurrency";
 import { Campaign } from "@/lib/strapi/models/donate/campaign";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -8,36 +9,6 @@ interface FeaturedCampaignProps {
   title: string;
   campaign: Campaign;
 }
-
-const translations = {
-  en: {
-    title: "Current Campaign",
-    campaignTitle: "Bringing Joy to Children, One Playground at a Time",
-    description:
-      "By supporting our campaign, you’re helping us to create a safe, energetic space for refugee children to stay active and build strength. Playgrounds encourage physical activity that supports children’s growth, coordination, and confidence as they challenge themselves through play.  Your contribution will create an inviting space where kids can run, jump, and explore—nurturing healthy habits and joyful moments through active play.",
-    goal: "Goal: $50,000",
-    raised: "Raised: $32,450",
-    cta: "Support Now",
-  },
-  fr: {
-    title: "Campagne actuelle",
-    campaignTitle: "Initiative Nouveaux Départs",
-    description:
-      "Aidez-nous à fournir des ressources essentielles à 50 nouvelles familles arrivant ce mois-ci. Chaque contribution plante des graines d'espoir dans notre communauté.",
-    goal: "Objectif : 50 000 $",
-    raised: "Collectés : 32 450 $",
-    cta: "Soutenir maintenant",
-  },
-};
-
-const formatCurrency = (amount: number, lang: string) => {
-  return new Intl.NumberFormat(lang, {
-    style: "currency",
-    currency: "CAD",
-    maximumFractionDigits: 0,
-  }).format(amount);
-};
-
 export const CampaignSection = ({ title, campaign }: FeaturedCampaignProps) => {
   const progress = (campaign.raised / campaign.goal) * 100;
 
