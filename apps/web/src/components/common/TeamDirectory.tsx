@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { type Employee } from "@/lib/strapi";
+import { Employee } from "@/lib/strapi/models/about/employee";
 
 // Define the props this component expects from its parent (page.tsx)
 interface TeamDirectoryProps {

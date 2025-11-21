@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin } from "lucide-react";
 import MarkdownRenderer from "@/components/common/MarkdownRenderer";
 import type { DonationCategory, DonatePageData } from "@/lib/strapi";
+import { List } from "@/lib/strapi/models/donate/list";
+import { DropOffCard } from "@/lib/strapi/models/donate/dropOffCard";
 
 // --- Helpers ---
 const colorMap: Record<string, string> = {
@@ -15,54 +17,53 @@ const colorMap: Record<string, string> = {
 
 // --- Component ---
 interface InKindSectionProps {
-  donationCategoriesData: DonationCategory[];
-  donatePageData: DonatePageData | null;
+  title: string;
+  desc: string;
+  donationCards: List[];
+  dropOff: DropOffCard;
 }
 
 export default function InKindSection({
-  donationCategoriesData,
-  donatePageData,
+  title,
+  desc,
+  donationCards,
+  dropOff,
 }: InKindSectionProps) {
   // FIX: Make thrift partners dynamic from the prop
-  const thriftPartners =
-    donatePageData?.thriftPartners
-      ?.split("\n")
-      .filter((partner) => partner.trim() !== "") || [];
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
-          In-Kind Donations
+          {title}
         </h2>
         <p className="text-lg text-center mb-12 text-muted-foreground max-w-3xl mx-auto">
-          Your support through in-kind donations is invaluable. Please consider
-          donating any of the following items:
+          {desc}
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {donationCategoriesData.map((category) => (
+          {donationCards.map((card, id) => (
             <Card
-              key={category.id}
+              key={id}
               className={`border-2 hover:shadow-lg transition-all duration-300 ${
-                colorMap[category.color] || colorMap.blue
+                colorMap.blue
               }`}
             >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <span className="text-2xl">{category.emoji}</span>
-                  {category.title}
+                  {/* <span className="text-2xl">{card.emoji}</span> */}
+                  {card.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {category.items.map((item) => (
-                    <li key={item.id} className="flex items-start">
+                  {card.items.map((item, id) => (
+                    <li key={item.value} className="flex items-start">
                       <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
                         ✓
                       </span>
                       <span className="text-high-contrast font-medium">
-                        {item.name}
+                        {item.value}
                       </span>
                     </li>
                   ))}
@@ -77,7 +78,7 @@ export default function InKindSection({
           <CardContent className="p-6 space-y-4">
             <h3 className="text-xl font-bold text-high-contrast flex items-center gap-2">
               <MapPin className="h-5 w-5 text-[var(--rh-orange-500)]" />
-              Drop-Off Information
+              {dropOff.title}
             </h3>
 
             {/* --- FIX: DYNAMIC CONTENT & STYLING --- */}
@@ -89,53 +90,38 @@ export default function InKindSection({
               }
             `}</style>
 
-            {donatePageData ? (
               <>
                 {/* I've added a 'drop-off-info' class here to scope the style above.
                   This ensures it only affects this specific markdown block.
                 */}
                 <div className="text-high-contrast leading-relaxed markdown drop-off-info text-left">
-                  <MarkdownRenderer content={donatePageData.dropOffInfo} />
+                  {`Please Note: ${dropOff.note}`}
                 </div>
 
-                {thriftPartners.length > 0 && (
+                {dropOff.items.length > 0 && (
                   <div>
                     <p className="font-semibold mb-2 text-high-contrast">
-                      For furniture, household items, or clothing, please
-                      consider our community thrift partners:
+                      {dropOff.subtitle}
                     </p>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {thriftPartners.map((partner, index) => (
+                      {dropOff.items.map((item, index) => (
                         <span
                           key={index}
                           className="text-sm text-muted-foreground"
                         >
-                          • {partner}
+                          • {item.value}
                         </span>
                       ))}
                     </div>
                   </div>
                 )}
               </>
-            ) : (
-              <p className="text-muted-foreground">
-                Drop-off information is currently unavailable.
-              </p>
-            )}
             {/* --- END FIX --- */}
 
             <div className="pt-4 border-t border-border">
               <p className="flex items-center gap-2 text-high-contrast">
                 <Mail className="h-5 w-5 text-[var(--rh-orange-500)]" />
-                <span>
-                  Questions? Email us at{" "}
-                  <a
-                    href="mailto:donations@receptionhouse.ca"
-                    className="text-[var(--rh-orange-500)] underline hover:no-underline font-medium"
-                  >
-                    donations@receptionhouse.ca
-                  </a>
-                </span>
+                {dropOff.bottomText}
               </p>
             </div>
           </CardContent>

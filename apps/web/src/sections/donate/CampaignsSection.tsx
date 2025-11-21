@@ -5,15 +5,19 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Campaign } from "@/lib/strapi";
+import { Campaign } from "@/lib/strapi/models/donate/campaign";
 
 // --- Component ---
 interface CampaignsSectionProps {
   campaignsData: Campaign[];
+  campaignTitle: string;
+  campaignDesc: string;
 }
 
 export default function CampaignsSection({
   campaignsData,
+  campaignTitle,
+  campaignDesc,
 }: CampaignsSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -33,15 +37,15 @@ export default function CampaignsSection({
     <section className="py-16 px-4 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50">
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-high-contrast">
-          Current Campaigns
+          {campaignTitle}
         </h2>
         <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Join our active campaigns making a difference right now
+          {campaignDesc}
         </p>
         {campaignsData.length > 0 ? (
           <div className="relative">
             <Card
-              key={campaignsData[currentIndex].id}
+              key={campaignsData[currentIndex].goal}
               className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
             >
               <div className="relative h-64 md:h-80 overflow-hidden">
@@ -51,7 +55,7 @@ export default function CampaignsSection({
                       campaignsData[currentIndex].image ||
                       "/public/assets/campaign.png"
                     }
-                    alt={campaignsData[currentIndex].imageAlt}
+                    alt={campaignsData[currentIndex].name || "Campaign Image"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
