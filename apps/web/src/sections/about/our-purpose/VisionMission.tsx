@@ -20,10 +20,9 @@ export const VisionMission = ({
                 <div className="w-14 h-14 bg-[var(--rh-500)] rounded-full flex items-center justify-center mb-6">
                     <Target className="w-7 h-7 text-white" />
                 </div>
-                <h2 className="text-3xl font-bold mb-4 text-foreground">Our Mission</h2>
+                <h2 className="text-3xl font-bold mb-4 text-foreground">{missionTitle}</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                    Guide and support refugees and newcomers with the resources, connections, and
-                    opportunities they need to build independent successful lives in Canada.
+                    {missionDesc}
                 </p>
             </Card>
 
@@ -31,10 +30,9 @@ export const VisionMission = ({
                 <div className="w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center mb-6">
                 <Eye className="w-7 h-7 text-white" />
                 </div>
-                <h2 className="text-3xl font-bold mb-4 text-foreground">Our Vision</h2>
+                <h2 className="text-3xl font-bold mb-4 text-foreground">{visionTitle}</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                    A future where every newcomer finds belonging, security, and the opportunity to build a
-                    fulfilling life.
+                    {visionDesc}
                 </p>
             </Card>
         </div>

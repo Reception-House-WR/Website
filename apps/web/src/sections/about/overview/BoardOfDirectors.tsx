@@ -31,9 +31,6 @@ export default function BoardOfDirectors({
                 <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
                   {desc}
                 </p>
-                <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                  Share your expertise with Reception House to help us realize our mission at <b> info@receptionhouse.ca </b>
-                </p>
                 <Button  className="w-fit">
                   {buttonLabel} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
