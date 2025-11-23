@@ -1,10 +1,10 @@
-// src/app/donate/page.tsx
+
 import { fetchDonationPage } from "@/lib/strapi/helpers/donateHelper";
 import DonateClient from "@/sections/donate/DonateClient";
 
 export default async function DonatePage() {
   const res = await fetchDonationPage();
-  console.log("DONATE PAGE", res)
+  // console.log("DONATE PAGE", res)
   
   if (!res) {
     return <div className="flex items-center justify-center py-5">Error loading donate page data.</div>;

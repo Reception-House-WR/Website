@@ -68,8 +68,8 @@ export async function fetchAboutOurHistoryPage(): Promise<OurHistorySections | n
     (s) => s.__component === "common.section"
   );
 
-  //[0]: timeline
-  //[1]: note
+  //0: timeline
+  //1: note
   const timelineSectionRaw = commonSections[0];
   const noteSectionRaw = commonSections[1];
 

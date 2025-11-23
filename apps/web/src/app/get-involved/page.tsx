@@ -5,7 +5,8 @@ import WaysToGetInvolved from "@/sections/get-involved/overview/WaysToGetInvolve
 
 export default async function Home() {
     const res = await fetchGetInvolvedOverviewPage();
-    console.log("OVERVIEW: ", res)
+    // console.log("OVERVIEW: ", res)
+
     if (!res) {
         return <div>Failed to load data</div>;
     }

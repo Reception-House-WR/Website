@@ -5,7 +5,7 @@ import FrenchServicesSection from "@/sections/programs-and-services/french/Frenc
 export default async function Home() {
 
   const res = await fetchProgramsFrenchPage();
-  console.log("French Services Page Data:", res);
+  // console.log("French Services Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

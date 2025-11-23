@@ -8,17 +8,13 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"; // Make sure you've installed this
+} from "@/components/ui/carousel"; 
 
 interface AccessibleCarouselProps {
   children: React.ReactNode;
   ariaLabel: string;
 }
 
-/**
- * A wrapper for the shadcn/ui Carousel that adds an accessible
- * sr-only heading to describe the carousel's purpose.
- */
 export default function AccessibleCarousel({
   children,
   ariaLabel,
@@ -38,7 +34,7 @@ export default function AccessibleCarousel({
         {React.Children.map(children, (child, index) => (
           <CarouselItem
             key={index}
-            className="md:basis-1/1 lg:basis-1/1" // Show one slide at a time
+            className="md:basis-1/1 lg:basis-1/1" 
           >
             {child}
           </CarouselItem>

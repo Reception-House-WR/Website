@@ -6,7 +6,8 @@ import React from 'react'
 const page = async () => {
 
   const res = await fetchCareersPage();
-  console.log("CAREERS ", res);
+  // console.log("CAREERS ", res);
+  
   if (!res) {
     return <div>Failed to load data</div>;
   }

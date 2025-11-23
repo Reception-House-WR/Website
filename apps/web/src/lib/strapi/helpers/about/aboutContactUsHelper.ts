@@ -7,7 +7,7 @@ import { StrapiImageResponse } from "../../models/strapi/image";
 import { fetchAboutContactUs } from "../../services/about/contactUsService";
 
 
-// Generic raw component type from Strapi
+//Generic raw component type from Strapi
 type RawStrapiComponent = {
   id?: number;
   __component?: string;
@@ -62,8 +62,8 @@ export async function fetchContactUsPage(): Promise<ContactUsSections | null> {
     (s) => s.__component === "common.section"
   );
 
-  // [0] -> principal section (title + description)
-  // [1..n] -> items of contct (phone, email, address, etc.)
+  // 0 -> principal section (title + description)
+  // 1..n -> items of contct (phone, email, address,...)
   const infoSectionRaw = sectionRaws[0];
   const contactInfoRaws = sectionRaws.slice(1);
 

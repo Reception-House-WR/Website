@@ -11,7 +11,7 @@ import { VisionMission } from '@/sections/about/our-purpose/VisionMission'
 const page = async () => {
 
   const res = await fetchOurPurposePage();
-  console.log("Our Purpose page data:", res);
+  // console.log("Our Purpose page data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

@@ -1,9 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Value } from "@/lib/strapi/models/about/value";
-import { ShieldCheck, Users, Rocket, MessageSquare, Lightbulb, HeartIcon } from "lucide-react";
-
-
-
+import { HeartIcon } from "lucide-react";
 
 export const CoreValues = ({
   title,

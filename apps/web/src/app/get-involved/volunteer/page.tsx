@@ -8,7 +8,8 @@ import HeroGetInvolved from "@/sections/get-involved/overview/HeroGetInvolved";
 
 export default async function Home() {
     const res = await fetchGetInvolvedVolunteerPage();
-    console.log("volunteer: ", res)
+    // console.log("volunteer: ", res)
+
     if (!res) {
         return <div>Failed to load data</div>;
     }

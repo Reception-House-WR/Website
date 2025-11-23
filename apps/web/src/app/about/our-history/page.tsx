@@ -8,7 +8,7 @@ import { fetchAboutOurHistoryPage } from "@/lib/strapi/helpers/about/aboutOurHis
 export default async function OurHistory() {
 
   const res = await fetchAboutOurHistoryPage();
-  console.log("Our History Page Data:", res);
+  // console.log("Our History Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;
@@ -44,7 +44,7 @@ export default async function OurHistory() {
         </div>
       </section>
 
-      {/* Introduction & Timeline Section */}
+      {/* Introduction and timeline */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           {/* Introduction */}
@@ -117,7 +117,7 @@ export default async function OurHistory() {
             </div>
           </div>
 
-          {/* Closing Statement */}
+          {/* Note section */}
           <div className="max-w-4xl mx-auto mt-20 text-center animate-fade-in">
             <Card className="p-10 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 border-2 border-primary/20 shadow-[var(--shadow-card)]">
               <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">

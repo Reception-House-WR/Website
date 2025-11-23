@@ -11,7 +11,7 @@ import { Item } from "../../models/programs/item";
 import { StrapiImageResponse } from "../../models/strapi/image";
 import { fetchProgramsChildrenSections } from "../../services/programs/childrenService";
 
-// ---------- RAW TYPES ----------
+//RAW TYPES 
 type RawStrapiSection = {
   id?: number;
   __component?: string;
@@ -51,7 +51,7 @@ type RawListCard = {
   items?: { key?: string; value?: string }[];
 };
 
-// ---------- MAPPERS ----------
+//MAPPERS
 
 const toHero = (s?: RawStrapiSection): Hero => ({
   id: s?.id ?? 0,
@@ -120,8 +120,6 @@ const toListCard = (c: RawListCard): ListCard => ({
     value: it.value ?? "",
   })),
 });
-
-// ---------- MAIN FUNCTION ----------
 
 export async function fetchProgramsChildrenPage(): Promise<ChildrenSection | null> {
   const pageRes = await fetchProgramsChildrenSections();

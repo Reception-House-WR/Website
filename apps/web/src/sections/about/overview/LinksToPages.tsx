@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import {
   ArrowRight,
-  Briefcase,
   History,
   Mail,
   Target,

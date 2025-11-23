@@ -5,7 +5,7 @@ import { EmploymentSection } from "@/sections/programs-and-services/employment/E
 export default async function Home(){
 
   const res = await fetchProgramsEmploymentPage();
-  console.log("Employment Page Data:", res);
+  // console.log("Employment Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

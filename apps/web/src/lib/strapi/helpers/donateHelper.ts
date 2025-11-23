@@ -91,7 +91,7 @@ type RawSection = {
   RawButtonSection;
 
 
-// ---------- MAPPERS ---------- //
+//MAPPERS 
 
 const toHero = (s: any): Hero => ({
   id: s?.id ?? 0,
@@ -106,7 +106,7 @@ const toButton = (b?: RawButton): Button => ({
   url: b?.url ?? "",
 });
 
-// Campaign card
+//Campaign card
 const toCampaign = (c: RawCampaign): Campaign => ({
   name: c.name ?? "",
   description: c.description ?? "",
@@ -117,14 +117,14 @@ const toCampaign = (c: RawCampaign): Campaign => ({
   buttonLabel: c.buttonLabel ?? "",
 });
 
-// Campaigns section
+//Campaigns section
 const toCampaignsSection = (s?: RawCampaignsSection): CampaignsSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   cammpaigns: (s?.campaigns ?? []).map(toCampaign),
 });
 
-// IconCard
+//IconCard
 const toIconCard = (c: RawIconCard): IconCard => ({
   title: c.title ?? "",
   description: c.description ?? "",
@@ -132,32 +132,32 @@ const toIconCard = (c: RawIconCard): IconCard => ({
   button: toButton(c.button),
 });
 
-// Cards section
+//Cards section
 const toCardsSection = (s?: RawCardsSection): CardsSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   cards: (s?.cards ?? []).map(toIconCard),
 });
 
-// List item
+//List item
 const toItem = (i: RawListItem): Item => ({
   value: i.value ?? "",
 });
 
-// List block
+//List block
 const toList = (l: RawList): List => ({
   title: l.title ?? "",
   items: (l.items ?? []).map(toItem),
 });
 
-// List card section
+//List card section
 const toListCardSection = (s?: RawListCardSection): ListCardSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   cards: (s?.cards ?? []).map(toList),
 });
 
-// Drop-off card
+//Drop off card
 const toDropOffCard = (s?: RawDropOff): DropOffCard => ({
   title: s?.title ?? "",
   note: s?.note ?? "",
@@ -166,15 +166,12 @@ const toDropOffCard = (s?: RawDropOff): DropOffCard => ({
   bottomText: s?.bottomText ?? "",
 });
 
-// Button section
+//Button section
 const toButtonSection = (s?: RawButtonSection): ButtonSection => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   button: toButton(s?.button),
 });
-
-
-// ---------- MAIN FETCH ---------- //
 
 export async function fetchDonationPage(): Promise<DonateSections | null> {
   const pageRes = await fetchDonatePageSections();

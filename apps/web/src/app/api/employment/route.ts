@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { z } from "zod";
 
-// Zod schema
+//Zod schema
 const employmentFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
@@ -19,14 +19,15 @@ interface RecaptchaResponse {
 }
 
 export async function POST(request: Request) {
-  // --- Environment Variables ---
+  //Environment vars
   const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
   const GMAIL_USER = process.env.GMAIL_USER;
   const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
   const STRAPI_URL = process.env.STRAPI_API_URL;
   const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+  const RECEIVER_EMAIL = process.env.RECEIVER_EMAIL;
 
-  // --- Configuration Check ---
+  //Configuration Check
   if (
     !RECAPTCHA_SECRET_KEY ||
     !GMAIL_USER ||
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
 
     const { token, ...formData } = validation.data;
 
-    // --- Verify reCAPTCHA First ---
+    //Verifing reCAPTCHA 
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${token}`;
     const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
     const recaptchaData = (await recaptchaResponse.json()) as RecaptchaResponse;
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // --- Save to Strapi ---
+    //Save in strapi
     try {
       const strapiPayload = {
         data: {
@@ -100,16 +101,16 @@ export async function POST(request: Request) {
       console.error("Strapi Connection Error:", strapiError);
     }
 
-    // --- Send Emails (Nodemailer) ---
+    //Sending Emails 
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
     });
 
-    // Email to Admin/Staff
+    //Email to Admin/Staff
     await transporter.sendMail({
       from: `"Reception House Web" <${GMAIL_USER}>`,
-      to: "mariacamila.villamizarhernandez@gmail.com",
+      to: RECEIVER_EMAIL,
       replyTo: formData.email,
       subject: "New Employment Partnership Inquiry",
       html: `
@@ -125,7 +126,7 @@ export async function POST(request: Request) {
       `,
     });
 
-    // Auto-reply to User
+    //Reply to User
     await transporter.sendMail({
       from: `"Reception House" <${GMAIL_USER}>`,
       to: formData.email,

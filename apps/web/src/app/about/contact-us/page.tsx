@@ -6,7 +6,7 @@ import HeroContactUs from '@/sections/about/contact-us/HeroContactUs'
 const page = async () => {
 
   const res = await fetchContactUsPage();
-  console.log("Contact Us Page Data:", res);
+  // console.log("Contact Us Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

@@ -12,7 +12,7 @@ interface RSVPRequest {
   token: string;
 }
 
-// Response structure from Google reCAPTCHA
+//reCAPTCHA response
 interface RecaptchaResponse {
   success: boolean;
   score: number;
@@ -27,26 +27,26 @@ export async function POST(request: Request) {
     const body = (await request.json()) as RSVPRequest;
     const { token } = body;
 
-    // 1. Verify the reCAPTCHA token
+    //Verifying reCAPTCHA token
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`;
-
     const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
-
     const recaptchaData = (await recaptchaResponse.json()) as RecaptchaResponse;
 
-    // 2. Check the verification score
+    //Checking score
     if (recaptchaData.success && recaptchaData.score >= 0.3) {
-      // Send a success response back to the form
+      
+      //Send a success response back to the form
       return NextResponse.json({ message: "RSVP Confirmed!" }, { status: 200 });
+
     } else {
-      // FAILED
+      //FAILED
       console.warn(
         "reCAPTCHA verification failed:",
         recaptchaData["error-codes"]
       );
       return NextResponse.json(
         { message: "reCAPTCHA verification failed." },
-        { status: 403 } // 403 Forbidden
+        { status: 403 } //403 Forbidden
       );
     }
   } catch (error) {

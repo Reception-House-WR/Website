@@ -4,7 +4,7 @@ import { HousingSection } from "@/sections/programs-and-services/housing/Housing
 
 export default async function Home(){
   const res = await fetchProgramsHousingPage();
-  console.log("Housing Page Data:", res);
+  // console.log("Housing Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

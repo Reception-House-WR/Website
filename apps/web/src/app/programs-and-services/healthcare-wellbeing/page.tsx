@@ -5,7 +5,7 @@ import HealthcareSection from "@/sections/programs-and-services/health/Healthcar
 export default async function Home(){
 
   const res = await fetchProgramsHealthPage();
-  console.log("HEALTH PAGE DATA:", res);
+  // console.log("HEALTH PAGE DATA:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

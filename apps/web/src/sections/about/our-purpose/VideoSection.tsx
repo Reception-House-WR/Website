@@ -44,7 +44,6 @@ export const VideoSection = ({
 
       <Card className="overflow-hidden shadow-soft">
         <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-          {/* Replace with your YouTube video ID */}
           {(() => {
             const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
 

@@ -2,10 +2,9 @@ import { Users } from "lucide-react"; // Icon for Hero section
 import TeamDirectory from "../../../components/common/TeamDirectory"; // Client Component for interactive directory
 import { fetchAboutOurPeoplePage } from "@/lib/strapi/helpers/about/aboutOurPeopleHelper";
 
-// Main Page Component - Renders on the Server
 export default async function OurPeople() {
   const res = await fetchAboutOurPeoplePage();
-  console.log("res:", res);
+  // console.log("res:", res);
 
   if (!res) {
     return (
@@ -17,7 +16,7 @@ export default async function OurPeople() {
 
   return (
     <>
-      {/* Hero Section */}
+      {/*Hero Section*/}
       <section
         className="relative h-[40vh] min-h-[300px] overflow-hidden bg-gray-200"
         role="banner"
@@ -28,7 +27,7 @@ export default async function OurPeople() {
           >
             <div
               className="absolute inset-0 "
-              style={{ background: "var(--hero-gradient)" }} // Gradient overlay defined in CSS
+              style={{ background: "var(--hero-gradient)" }} 
             />
           </div>
         {/* Hero Content */}
@@ -45,8 +44,7 @@ export default async function OurPeople() {
         </div>
       </section>
 
-      {/* Team Directory Section */}
-      {/* Renders the client component responsible for filtering and displaying employees */}
+      {/*Team Directory */}
       <TeamDirectory departments={res.departments} employees={res.people} />
     </>
   );

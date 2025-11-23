@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { z } from "zod";
 
-// Zod schema for server-side validation (includes reCAPTCHA token)
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -13,7 +12,7 @@ const contactFormSchema = z.object({
   token: z.string().min(1, "reCAPTCHA token is required"),
 });
 
-// Response structure from Google reCAPTCHA
+//response structure from Google reCAPTCHA
 interface RecaptchaResponse {
   success: boolean;
   score: number;
@@ -21,12 +20,13 @@ interface RecaptchaResponse {
 }
 
 export async function POST(request: Request) {
-  // --- Get all required environment variables ---
+  //Env vars
   const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
   const GMAIL_USER = process.env.GMAIL_USER;
   const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
+  const RECEIVER_EMAIL = process.env.RECEIVER_EMAIL;
 
-  // --- Check for server configuration errors ---
+  //Checking errors
   if (!RECAPTCHA_SECRET_KEY || !GMAIL_USER || !GMAIL_APP_PASSWORD) {
     console.error("Contact API Error: Missing environment variables.");
     return NextResponse.json(
@@ -37,8 +37,6 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-
-    // Validate the incoming data
     const validation = contactFormSchema.safeParse(body);
 
     if (!validation.success) {
@@ -54,16 +52,16 @@ export async function POST(request: Request) {
 
     const { token, ...formData } = validation.data;
 
-    // Verify the reCAPTCHA token
+    //Verifying reCAPTCHA token
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${token}`;
 
     const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
     const recaptchaData = (await recaptchaResponse.json()) as RecaptchaResponse;
 
-    // Check the verification score
+    //Check verification score
     if (recaptchaData.success && recaptchaData.score >= 0.5) {
-      // SUCCESS: User is likely human & data is valid
 
+      //SUCCESS
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -72,10 +70,10 @@ export async function POST(request: Request) {
         },
       });
 
-      // Email to team
+      //Email to team
       await transporter.sendMail({
         from: `"Reception House" <${GMAIL_USER}>`,
-        to: "mariacamila.villamizarhernandez@gmail.com",
+        to: RECEIVER_EMAIL,
         replyTo: formData.email,
         subject: `New Contact Form: ${formData.subject}`,
         html: `
@@ -89,7 +87,7 @@ export async function POST(request: Request) {
         `,
       });
 
-      // Email to user
+      //Email to user
       await transporter.sendMail({
         from: `"Reception House" <${GMAIL_USER}>`,
         to: formData.email,
@@ -110,7 +108,7 @@ export async function POST(request: Request) {
         { status: 200 }
       );
     } else {
-      // FAILED: User is likely a bot
+      //FAILED
       console.warn(
         "reCAPTCHA verification failed:",
         recaptchaData["error-codes"]

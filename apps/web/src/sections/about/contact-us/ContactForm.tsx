@@ -32,7 +32,7 @@ const contactFormSchema = object({
 type ContactFormData = zInfer<typeof contactFormSchema>;
 
 export const ContactForm = () => {
-  // reCAPTCHA HOOK AND ERROR STATE
+  //reCAPTCHA HOOK AND ERROR STATE
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [submitError, setSubmitError] = useState<string | null>(null);
 

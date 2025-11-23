@@ -5,7 +5,8 @@ import YouthSection from "@/sections/programs-and-services/children/YouthSection
 export default async function Home(){
 
   const res = await fetchProgramsChildrenPage();
-  console.log("Children and Youth Page Data:", res);
+  // console.log("Children and Youth Page Data:", res);
+
   if (!res) {
     return <div>Failed to load data</div>;
   }

@@ -4,13 +4,6 @@ import { Card } from "@/components/ui/card";
 import { AboutReport } from "@/lib/strapi/models/about/report";
 import { Download, FileText } from "lucide-react";
 
-const reports = [
-  { year: "2024", title: "Annual Report", size: "2.4 MB" },
-  { year: "2024", title: "Financial Statement", size: "1.8 MB" },
-  { year: "2023", title: "Annual Report", size: "2.1 MB" },
-  { year: "2023", title: "Financial Statement", size: "1.6 MB" },
-];
-
 export const Reports = ({
   title,
   desc,

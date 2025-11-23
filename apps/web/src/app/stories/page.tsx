@@ -5,7 +5,7 @@ import { fetchStoriesPage } from "@/lib/strapi/helpers/storiesHelper";
 export default async function StoriesPage() {
 
   const res = await fetchStoriesPage();
-  console.log("STORIES: ", res); 
+  // console.log("STORIES: ", res); 
 
   if (!res) {
     return <div>Failed to load data</div>;

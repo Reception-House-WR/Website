@@ -7,7 +7,7 @@ import { PressReleases } from '@/sections/media-room/PressReleases'
 const Page = async () => {
 
   const res = await fetchMediaRoomPage();
-  console.log("MEDIA ROOM ", res);
+  // console.log("MEDIA ROOM ", res);
 
   if (!res) {
     return <div className="flex items-center justify-center py-5">Error loading media room page data.</div>;

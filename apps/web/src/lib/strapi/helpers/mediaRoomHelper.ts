@@ -73,7 +73,7 @@ type RawSection =
   | RawReleasesSection
   | RawCommonSection;
 
-/* ---------- small helpers ---------- */
+/* ----------- helpers ---------- */
 
 const toStrapiImage = (img?: RawImage): StrapiImageResponse => ({
   url: img?.url ?? "",
@@ -96,7 +96,7 @@ const toSection = (s?: RawCommonSection): Section => ({
   description: s?.description ?? "",
 });
 
-/* ---------- Media kit ---------- */
+/* ---------- Media kit ----------- */
 
 const toKitCard = (k: RawKitCard): KitCard => ({
   title: k.title ?? "",
@@ -117,7 +117,7 @@ const toMediaKitSection = (s?: RawMediaKitSection): MediaKitSection => ({
   kits: (s?.kits ?? []).map((k) => toKitCard(k)),
 });
 
-/* ---------- Press releases ---------- */
+/* ------------ Press releases ---------- */
 
 const parseDate = (value?: string): Date =>
   value && !Number.isNaN(Date.parse(value))
@@ -138,7 +138,7 @@ const toReleasesSection = (s?: RawReleasesSection): ReleasesSection => ({
   pressReleases: (s?.pressReleases ?? []).map(toPressRelease),
 });
 
-/* ---------- Gallery (photos & videos) ---------- */
+/* ---------- Gallery (photos and videos) ------------ */
 
 const toGalleryItem = (g: RawGalleryItem): GalleryItem => ({
   description: g.description ?? "",

@@ -172,7 +172,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Right Column: Navigation */}
+          {/*Right Column: Navigation */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {cols.map((col, idx) => (
               <nav key={col.title} aria-labelledby={`footer-col-${idx}`}>
@@ -198,7 +198,7 @@ export const Footer = () => {
             ))}
           </div>
         </div>
-        {/* Bottom Bar */}
+        {/*Bottom Bar */}
         <div className="border-t border-foreground/10 pt-6 text-center">
           <p className="text-sm mb-2">
             © 2025 Reception House Waterloo Region | All rights reserved

@@ -23,6 +23,8 @@ export async function POST(request: Request) {
   const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
   const STRAPI_URL = process.env.STRAPI_API_URL;
   const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+  const RECEIVER_EMAIL = process.env.RECEIVER_EMAIL;
+  
 
   if (
     !RECAPTCHA_SECRET_KEY ||
@@ -51,7 +53,7 @@ export async function POST(request: Request) {
 
     const { token, ...formData } = validation.data;
 
-    // --- Verify reCAPTCHA ---
+    //Verifying reCAPTCHA
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${token}`;
     const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
     const recaptchaData = (await recaptchaResponse.json()) as RecaptchaResponse;
@@ -63,7 +65,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // --- Save to Strapi ---
+    //Save to Strapi
     try {
       const strapiPayload = {
         data: {
@@ -102,7 +104,7 @@ export async function POST(request: Request) {
     // Email to Admin/Staff
     await transporter.sendMail({
       from: `"Reception House Web" <${GMAIL_USER}>`,
-      to: "mariacamila.villamizarhernandez@gmail.com",
+      to: RECEIVER_EMAIL,
       replyTo: formData.email,
       subject: "New Housing Partnership Inquiry",
       html: `
@@ -118,7 +120,7 @@ export async function POST(request: Request) {
       `,
     });
 
-    // Auto-reply to User
+    //Reply to User
     await transporter.sendMail({
       from: `"Reception House" <${GMAIL_USER}>`,
       to: formData.email,

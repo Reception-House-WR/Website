@@ -96,7 +96,7 @@ const getImageUrl = (img?: RawImage | RawImage[]): string => {
     : img.url ?? "";
 };
 
-/* ---------- helpers ---------- */
+//helpers 
 
 const getBackgroundImageUrl = (
   images?: { url?: string }[],

@@ -7,7 +7,7 @@ import ServicesHero from "@/sections/programs-and-services/overview/ServicesHero
 export default async function Page() {
 
   const res = await fetchProgramsOverviewPage();
-  console.log("Programs Overview Page Data:", res);
+  // console.log("Programs Overview Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;

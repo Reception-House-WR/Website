@@ -7,7 +7,7 @@ import RapAndCss from "@/sections/programs-and-services/skills-training/RapAndCs
 export default async function Home(){
 
   const res = await fetchProgramsIntegrationPage();
-  console.log("Integration and Skills Training Page Data:", res);
+  // console.log("Integration and Skills Training Page Data:", res);
 
   if (!res) {
     return <div>Failed to load data</div>;
