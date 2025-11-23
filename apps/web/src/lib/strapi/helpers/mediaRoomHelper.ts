@@ -143,7 +143,7 @@ const toReleasesSection = (s?: RawReleasesSection): ReleasesSection => ({
 const toGalleryItem = (g: RawGalleryItem): GalleryItem => ({
   description: g.description ?? "",
   isImage: !!g.isImage,
-  image: g.isImage ? toStrapiImage(g.image) : undefined,
+  image: toStrapiImage(g.image) ,
   videoUrl: !g.isImage ? g.videoUrl ?? undefined : undefined,
 });
 
@@ -153,6 +153,7 @@ export async function fetchMediaRoomPage(): Promise<MediaRoomSections | null> {
     fetchMediaRoomPageSections(),
     fetchGalleryItems(),
   ]);
+
 
   const page = pageRes?.data?.[0];
   if (!page) return null;

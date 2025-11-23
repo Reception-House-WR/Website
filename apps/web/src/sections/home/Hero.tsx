@@ -42,9 +42,12 @@ export const Hero = ({ title, description, imageUrl }: HeroProps) => {
             
           </Button>
           </Link>
+
+          <Link href="/programs-and-services">
           <Button variant="outline" size="lg" className="bg-card/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-card/20">
             Learn More
           </Button>
+          </Link>
         </div>
       </div>
     </section>

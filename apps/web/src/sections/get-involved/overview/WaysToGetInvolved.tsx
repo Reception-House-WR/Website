@@ -36,7 +36,7 @@ export default function WaysToGetInvolved({
                 asChild
                 className="w-full md:w-auto mx-5 bg-[var(--rh-500)]"
               >
-                <a href={volunteerCard.button.url} target="_blank">
+                <a href={volunteerCard.button.url}>
                   {volunteerCard.button.label}
                 </a>
               </Button>
@@ -54,7 +54,7 @@ export default function WaysToGetInvolved({
                 {rentCard.description}
               </p>
               <Button asChild className="w-full md:w-auto bg-[var(--rh-500)]">
-                <a href={rentCard.button.url} target="_blank">{rentCard.button.label}</a>
+                <a href={rentCard.button.url} >{rentCard.button.label}</a>
               </Button>
             </CardContent>
           </Card>

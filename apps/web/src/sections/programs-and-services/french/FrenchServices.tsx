@@ -187,14 +187,6 @@ const FrenchServicesSection = ({
               >
                 <Link href={redirectLink}>{buttonLabel}</Link>
               </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-[var(--rh-500)] text-[var(--rh-500)] hover:bg-[var(--rh-50)] hover:text-[var(--rh-500)] h-12"
-              >
-                View All Programs
-              </Button>
             </div>
           </div>
         </div>

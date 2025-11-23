@@ -23,24 +23,20 @@ export default function Services({
             return (
             <a
               key={index}
-              href={service.buttonUrl} // ej: "#health-and-wellbeing"
+              href={service.buttonUrl} 
               className="group relative h-64 rounded-xl overflow-hidden cursor-pointer animate-fade-in-up block"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {/* Background Image */}
               <img 
                 src={service.image?.url} 
                 alt={service.image?.alternativeText || service.title}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               
-              {/* Default Overlay for Readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
               
-              {/* Teal Hover Overlay - slides from top-right */}
               <div className="absolute inset-0 bg-[var(--rh-500)]/90 translate-x-full translate-y-[-100%] group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500 ease-out origin-top-right" />
               
-              {/* Content */}
               <div className="relative h-full flex flex-col items-center justify-end p-6 text-center z-10">
                 <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 transition-all duration-300 group-hover:scale-110 group-hover:bg-white/30">
                   <DynamicIcon className="w-6 h-6 text-white" />

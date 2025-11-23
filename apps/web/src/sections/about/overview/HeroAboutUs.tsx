@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroAboutUs ({url, title, description}: {url?: string; title: string; description: string}) {
     return (   
@@ -24,12 +25,16 @@ export default function HeroAboutUs ({url, title, description}: {url?: string; t
               {description}
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-[var(--rh-500)] hover:bg-[var(--rh-100)]/90 hover:text-[var(--rh-500)]">
-                Learn More <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-foreground">
-                Get Involved
-              </Button>
+              <Link href="/about/purpose">
+                <Button size="lg" className="bg-[var(--rh-500)] hover:bg-[var(--rh-100)]/90 hover:text-[var(--rh-500)]">
+                  Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/get-involved">
+                <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-foreground">
+                  Get Involved
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

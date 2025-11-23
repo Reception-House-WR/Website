@@ -19,6 +19,7 @@ export default function SocialMedia() {
                 <a
                     key={social.name}
                     href={social.url}
+                    target="_blank"
                     className="w-12 h-12 bg-muted hover:bg-[var(--rh-500)] rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group"
                     aria-label={social.name}
                 >
