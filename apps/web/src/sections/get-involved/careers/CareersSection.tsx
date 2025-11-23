@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { IconCard } from '@/lib/strapi/models/common/iconCard';
 import { BenefitCard } from '@/lib/strapi/models/getInvolved/benefitCard';
 import { JobOpening } from '@/lib/strapi/models/getInvolved/jobPosting';
-import { Briefcase, DollarSign, ExternalLink, GraduationCap, Heart, HeartPulse, Home, TrendingUp, Users } from 'lucide-react';
+import { Briefcase, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 
 export const CareersSection = ({
@@ -26,13 +26,8 @@ export const CareersSection = ({
   openingsDesc: string;
   openings: JobOpening[];
 }) => {
-    // In a real application, this would be fetched from Bamboo API
-
-
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
-
       {/* Working at Reception House Section */}
       <section className="py-12 bg-muted/30" aria-labelledby="culture-heading">
         <div className="container mx-auto px-4">

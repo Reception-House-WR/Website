@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 
-const volunteer_opportunities_url =
-  "https://www.vomevolunteer.com/organization-details/5ddf59c9-92ac-4daa-82c5-11f9c66b1d0b?/#home";
 export default function MakeImpact({
   title,
   desc,

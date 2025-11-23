@@ -23,7 +23,6 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
   .map(event => event.date)
   .filter((date): date is Date => date !== null);
   
-  // Display logic: show all events by default, filter when date is selected
   const displayedEvents = selectedDate
     ? events.filter(event => 
         event.date && event.date.getDate() === selectedDate.getDate() &&
@@ -72,6 +71,7 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
         </h2>
 
         <div className="mx-auto max-w-6xl grid lg:grid-cols-[350px_1fr] gap-8 items-start">
+
           {/* Left Calendar */}
           <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-shadow lg:sticky lg:top-4 ">
             <CardContent className="p-4 flex flex-col items-center">
@@ -137,7 +137,6 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
             {/* Events List */}
             <div className="space-y-4 max-h-[800px] overflow-y-auto pr-2 scroll-smooth focus-within:ring-2 focus-within:ring-primary/20 rounded-lg">
               {isLoading ? (
-                // Loading Skeletons
                 Array.from({ length: 3 }).map((_, i) => (
                   <Card key={i} className="overflow-hidden py-0">
                     <CardContent className="p-0">
@@ -154,7 +153,7 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                   </Card>
                 ))
               ) : isEmptySelectedDate ? (
-                // Empty State for Selected Date with No Events
+                //Empty State for Date with No Events
                 <div 
                   className="text-center py-16 px-4"
                   role="status"
@@ -176,7 +175,7 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                   </div>
                 </div>
               ) : (
-                // Event Cards
+                //Event Cards
                 displayedEvents.map((event, id) => (
                   <Card 
                     key={id}

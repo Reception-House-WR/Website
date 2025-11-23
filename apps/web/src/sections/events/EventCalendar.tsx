@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 
-// --- Types ---
+//Types 
 interface Event {
   id: number;
   title: string;
@@ -18,11 +18,11 @@ interface EventCalendarProps {
   events: Event[];
 }
 
-// --- Calendar Sidebar Component ---
+//Calendar Sidebar Component 
 export function EventCalendar({ events }: EventCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  // Parse dates as local time to prevent timezone shifts
+  //Parse dates as local time to prevent timezone shifts
   const eventDates = events.map((event) => {
     if (!event.date) return new Date();
 
@@ -35,7 +35,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
     );
   });
 
-  // Get events for the selected date
+  //Get events for the selected date
   const eventsOnSelectedDate = selectedDate
     ? events.filter(
         (event) => event.date === format(selectedDate, "yyyy-MM-dd")

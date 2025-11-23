@@ -3,38 +3,7 @@ import DynamicIcon from '@/components/common/DynamicIcon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { KitCard } from '@/lib/strapi/models/mediaRoom/kitCard';
-import { BookOpenIcon, DownloadIcon, FileTextIcon, ImageIcon } from 'lucide-react';
-
-const mediaKitItems = [
-  {
-    id: 1,
-    title: "Organization Logo Pack",
-    description: "High-resolution logos in PNG, SVG, and vector formats",
-    icon: ImageIcon,
-    filename: "reception-house-logos.zip",
-  },
-  {
-    id: 2,
-    title: "Organizational Overview",
-    description: "Comprehensive PDF with our mission, vision, and impact statistics",
-    icon: FileTextIcon,
-    filename: "organizational-overview.pdf",
-  },
-  {
-    id: 3,
-    title: "Brand Guidelines",
-    description: "Complete guide to our visual identity and messaging",
-    icon: BookOpenIcon,
-    filename: "brand-guidelines.pdf",
-  },
-  {
-    id: 4,
-    title: "Key Facts & Statistics",
-    description: "Latest data on our programs and community impact",
-    icon: FileTextIcon,
-    filename: "key-facts-2024.pdf",
-  },
-];
+import { DownloadIcon } from 'lucide-react';
 
 export const MediaKit = ({
   title,

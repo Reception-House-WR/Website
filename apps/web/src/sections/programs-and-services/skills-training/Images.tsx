@@ -1,18 +1,6 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { StrapiImageResponse } from "@/lib/strapi/models/strapi/image";
 
-const images = [
-    { 
-        src: "/assets/skills/1.png", alt: "Skills Training Image 1"
-    }, 
-    {
-        src: "/assets/skills/2.png", alt: "Skills Training Image 2"
-    }, 
-    {
-        src: "/assets/skills/3.png", alt: "Skills Training Image 2"
-    }
-    
-]
 export default function Images({
   images
 }: {

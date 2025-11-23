@@ -6,7 +6,6 @@ import { EventCalendar } from "./EventCalendar";
 import { EventCard } from "./EventCard";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
-// --- Main Events Page Client Component ---
 interface EventsPageClientProps {
   allEventsData: UpcomingEvent[];
   heroTitle: string;

@@ -16,37 +16,6 @@ import { Analytic } from "@/lib/strapi/models/programs/analytic";
 import { SimpleCard } from "@/lib/strapi/models/common/simpleCard";
 import { ListCard } from "@/lib/strapi/models/common/listCard";
 
-const programs = [
-  {
-    title: "Housing Search Support",
-    description:
-      "We help newcomers find safe, affordable housing in Waterloo Region through partnerships with local landlords and property managers.",
-    imageSrc: "/assets/stories/story-1.jpg",
-    imageAlt: "Family moving into new apartment with support",
-  },
-  {
-    title: "Tenant Education",
-    description:
-      "Learn about tenant rights, responsibilities, and how to maintain a positive relationship with landlords in your new community.",
-    imageSrc: "/assets/stories/story-2.jpg",
-    imageAlt: "Education session about tenant rights",
-  },
-  {
-    title: "Emergency Housing",
-    description:
-      "Temporary accommodation services for newcomers who need immediate housing support while transitioning to permanent residences.",
-    imageSrc: "/assets/stories/story-3.jpg",
-    imageAlt: "Temporary accommodation facility",
-  },
-  {
-    title: "Emergency Housing",
-    description:
-      "Temporary accommodation services for newcomers who need immediate housing support while transitioning to permanent residences.",
-    imageSrc: "/assets/stories/story-3.jpg",
-    imageAlt: "Temporary accommodation facility",
-  },
-];
-
 const parseNumberWithSuffix = (input: string) => {
   const match = input.match(/^(\d+)(\D*)$/);
   if (match) {

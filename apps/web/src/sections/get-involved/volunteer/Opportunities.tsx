@@ -1,37 +1,7 @@
 import DynamicIcon from "@/components/common/DynamicIcon";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { IconCard } from "@/lib/strapi/models/common/iconCard";
-import { BookOpen, HandHeart, Languages, Calendar, FileText, ExternalLink } from "lucide-react";
 
-const opportunities = [
-    {
-      icon: BookOpen,
-      title: "Language & Literacy Support",
-      description: "Help newcomers improve their English skills through conversation practice and literacy support.",
-    },
-    {
-      icon: HandHeart,
-      title: "Settlement Assistance",
-      description: "Guide families through accessing services, navigating systems, and adjusting to their new community.",
-    },
-    {
-      icon: Languages,
-      title: "Cultural Orientation",
-      description: "Share knowledge about local customs, services, and community resources to help ease the transition.",
-    },
-    {
-      icon: Calendar,
-      title: "Event Support",
-      description: "Help organize and run community events that celebrate diversity and build connections.",
-    },
-    {
-      icon: FileText,
-      title: "Administrative Support",
-      description: "Assist with office tasks, data entry, and organizational projects that keep our programs running smoothly.",
-    },
-  ];
-  
 export default function Opportunities({
   title,
   desc,

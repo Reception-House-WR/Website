@@ -11,64 +11,9 @@ interface StoriesCarouselProps {
   stories: Story[];
 }
 
-const storiesData = {
-  en: [
-    {
-      id: 1,
-      image: 'assets/stories/story-1.jpg',
-      quote: "Reception House gave us more than a home—they gave us hope and a community that embraced us with open arms.",
-      name: "Amira & Family",
-      origin: "Syria",
-    },
-    {
-      id: 2,
-      image: 'assets/stories/story-2.jpg',
-      quote: "With their support, I was able to continue my education and build a future I once thought was impossible.",
-      name: "Hassan",
-      origin: "Afghanistan",
-    },
-    {
-      id: 3,
-      image: 'assets/stories/story-3.jpg',
-      quote: "The volunteers became our first friends in Canada. They showed us kindness when we needed it most.",
-      name: "Maria",
-      origin: "Colombia",
-    },
-  ],
-  fr: [
-    {
-      id: 1,
-      image: 'assets/stories/story-1.jpg',
-      quote: "Reception House nous a donné plus qu'un foyer—ils nous ont donné de l'espoir et une communauté qui nous a accueillis à bras ouverts.",
-      name: "Amira & Famille",
-      origin: "Syrie",
-    },
-    {
-      id: 2,
-      image: 'assets/stories/story-2.jpg',
-      quote: "Avec leur soutien, j'ai pu poursuivre mes études et construire un avenir que je pensais impossible.",
-      name: "Hassan",
-      origin: "Afghanistan",
-    },
-    {
-      id: 3,
-      image: 'assets/stories/story-3.jpg',
-      quote: "Les bénévoles sont devenus nos premiers amis au Canada. Ils nous ont montré de la gentillesse quand nous en avions le plus besoin.",
-      name: "Maria",
-      origin: "Colombie",
-    },
-  ],
-};
-
-const titles = {
-  en: "Stories of Hope",
-  fr: "Histoires d'espoir",
-};
 
 export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // const stories = storiesData[lang as keyof typeof storiesData] || storiesData.en;
-  // const title = titles[lang as keyof typeof titles] || titles.en;
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);

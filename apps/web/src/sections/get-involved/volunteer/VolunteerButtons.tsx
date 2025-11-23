@@ -23,6 +23,7 @@ export default function VolunteerButtons({
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        
         {/* General Application */}
         <div className="rounded-2xl border border-gray-200 shadow-sm bg-white p-6 flex flex-col">
           <div className="mb-4 flex justify-center">

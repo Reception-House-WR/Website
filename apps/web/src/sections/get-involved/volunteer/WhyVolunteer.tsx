@@ -1,7 +1,6 @@
 import DynamicIcon from "@/components/common/DynamicIcon";
 import { Card, CardContent } from "@/components/ui/card";
 import { BenefitCard } from "@/lib/strapi/models/getInvolved/benefitCard";
-import { Heart, Users, Globe } from "lucide-react";
   
 export default function WhyVolunteer({
   title,

@@ -10,7 +10,6 @@ interface PartnersSectionProps {
 }
 
 export const Partners = ({ title, desc, partners }: PartnersSectionProps) => {
-  // const t = translations[lang as keyof typeof translations] || translations.en;
 
   return (
     <section className="py-16 bg-background">

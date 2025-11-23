@@ -22,6 +22,7 @@ export default function WaysToGetInvolved({
           {title}
         </h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          
           {/* Volunteer Card */}
           <Card className="shadow-medium hover:shadow-strong transition-shadow group">
             <CardContent className="p-8">

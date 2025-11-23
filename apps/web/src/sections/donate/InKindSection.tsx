@@ -3,7 +3,7 @@ import { Mail, MapPin } from "lucide-react";
 import { List } from "@/lib/strapi/models/donate/list";
 import { DropOffCard } from "@/lib/strapi/models/donate/dropOffCard";
 
-// --- Helpers ---
+//Helpers 
 const colorMap: Record<string, string> = {
   blue: "hover:border-[var(--rh-500)] bg-gradient-to-br from-blue-50 to-cyan-50",
   pink: "hover:border-[var(--rh-orange-500)] bg-gradient-to-br from-purple-50 to-pink-50",
@@ -12,7 +12,6 @@ const colorMap: Record<string, string> = {
   rose: "hover:border-[var(--rh-orange-300)] bg-gradient-to-br from-pink-50 to-rose-50",
 };
 
-// --- Component ---
 interface InKindSectionProps {
   title: string;
   desc: string;
@@ -26,7 +25,6 @@ export default function InKindSection({
   donationCards,
   dropOff,
 }: InKindSectionProps) {
-  // thrift partners
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
@@ -77,8 +75,7 @@ export default function InKindSection({
               {dropOff.title}
             </h3>
 
-            {/* --- DYNAMIC CONTENT & STYLING --- */}
-
+            {/* --- DYNAMIC STYLING --- */}
             <style jsx global>{`
               .drop-off-info p:first-child > strong:first-child {
                 color: var(--rh-orange-500) !important;

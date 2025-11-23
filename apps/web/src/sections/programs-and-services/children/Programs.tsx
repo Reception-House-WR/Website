@@ -50,7 +50,6 @@ export default function Programs({
               </div>
               <CardContent className="p-6 space-y-3">
                 <p className="text-sm text-muted-foreground leading-relaxed">{program.description}</p>
-                {/* <p className="text-xs text-muted-foreground leading-relaxed">{program.details}</p> */}
               </CardContent>
             </Card>
           </CarouselItem>

@@ -73,7 +73,7 @@ export default function RapAndCss({
             <div className="pt-4">
               <img
                 src={cssSection.image?.url}
-                alt={cssSection.image?.alternativeText || "Group of diverse adults engaged in language class"}
+                alt={cssSection.image?.alternativeText || ""}
                 className="rounded-lg shadow-soft w-full"
               />
             </div>

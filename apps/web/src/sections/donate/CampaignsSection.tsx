@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Campaign } from "@/lib/strapi/models/donate/campaign";
 import { formatCurrency } from "@/lib/formatCurrency";
 
-// --- Component ---
 interface CampaignsSectionProps {
   campaignsData: Campaign[];
   campaignTitle: string;

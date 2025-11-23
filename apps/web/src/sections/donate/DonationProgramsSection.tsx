@@ -6,30 +6,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Home,
-  Briefcase,
-  Heart,
-  Handshake,
-  type LucideIcon,
-} from "lucide-react";
 import { IconCard } from "@/lib/strapi/models/common/iconCard";
 import DynamicIcon from "@/components/common/DynamicIcon";
 import Link from "next/link";
 
-// --- Helpers ---
-const iconMap: Record<string, LucideIcon> = {
-  Home: Home,
-  Briefcase: Briefcase,
-  Heart: Heart,
-  Handshake: Handshake,
-};
-
-const getProgramIcon = (iconName: string): LucideIcon => {
-  return iconMap[iconName] || Heart; // Default to Heart
-};
-
-// --- Component ---
 interface DonationProgramsSectionProps {
   programsData: IconCard[];
   title: string;

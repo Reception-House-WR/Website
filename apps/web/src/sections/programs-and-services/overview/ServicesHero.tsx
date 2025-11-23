@@ -19,7 +19,6 @@ export default function ServicesHero({
             <div className="absolute inset-0 bg-gradient-to-r from-[var(--rh-500)]/90 via-[var(--rh-500)]/70 to-transparent"></div>
         </div>
 
-        {/* Content */}
         <div className="relative z-10 container mx-auto px-6 py-20 max-w-4xl">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in-up">
                 {title}

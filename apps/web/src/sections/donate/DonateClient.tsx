@@ -30,8 +30,6 @@ interface DonateClientProps {
   ctaButtonText: string;
   ctaButtonUrl: string;
 }
-
-// main component
 export default function DonateClient({
   heroTitle,
   heroDesc,
@@ -54,7 +52,6 @@ export default function DonateClient({
   return (
     <div className="min-h-screen bg-background">
       <main id="main-content">
-        {/* Hero Section */}
         <PageHero
           heroTitle={heroTitle}
           heroDesc={heroDesc}

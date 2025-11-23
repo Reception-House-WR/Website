@@ -3,23 +3,6 @@ import { Item } from "@/lib/strapi/models/programs/item";
 import { StrapiImageResponse } from "@/lib/strapi/models/strapi/image";
 import { Users } from "lucide-react";
 
-  const committeeImages = [
-    {
-      src: "/assets/services/youth-programs/committee/youth-committee-meeting.jpg",
-      alt: "Youth Advisory Committee members collaborating"
-    },
-    {
-      src: "/assets/services/youth-programs/committee/youth-committee-presentation.jpg",
-      alt: "Youth committee meeting and discussion"
-    }
-  ];
-
-const benefits = [
-  "Monthly meetings to discuss youth needs and program improvements",
-  "Community advocacy and public speaking opportunities",
-  "Event planning and peer mentorship initiatives",
-  "Collaboration with local organizations and decision-makers",
-];
 
 export function YouthCommittee({
   committeeImages,

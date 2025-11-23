@@ -33,7 +33,7 @@ export const EmploymentSection = ({
   benefitsCard: ListCard;
   buttonLabel: string;
 }) => {
-  // Gets reCAPTCHA site key from environment variables
+  //reCAPTCHA key
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   return (
