@@ -562,6 +562,43 @@ export interface ApiGalleryGallery extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiInquiryInquiry extends Struct.CollectionTypeSchema {
+  collectionName: 'inquiries';
+  info: {
+    displayName: 'Inquiry';
+    pluralName: 'inquiries';
+    singularName: 'inquiry';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currentStatus: Schema.Attribute.Enumeration<
+      ['new', 'contacted', 'resolved']
+    > &
+      Schema.Attribute.DefaultTo<'new'>;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inquiry.inquiry'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+    organization: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<['employer', 'landlord']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiJobOpeningJobOpening extends Struct.CollectionTypeSchema {
   collectionName: 'job_openings';
   info: {
@@ -1419,6 +1456,7 @@ declare module '@strapi/strapi' {
       'api::employee.employee': ApiEmployeeEmployee;
       'api::event.event': ApiEventEvent;
       'api::gallery.gallery': ApiGalleryGallery;
+      'api::inquiry.inquiry': ApiInquiryInquiry;
       'api::job-opening.job-opening': ApiJobOpeningJobOpening;
       'api::partner.partner': ApiPartnerPartner;
       'api::press-release.press-release': ApiPressReleasePressRelease;

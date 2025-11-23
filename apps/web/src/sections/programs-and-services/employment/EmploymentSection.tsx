@@ -1,9 +1,18 @@
-import { Card } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { ProgramCard } from "../../../components/common/ProgramCard"
+"use client";
+
+import { Card } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { ProgramCard } from "../../../components/common/ProgramCard";
 import { PartnerDialog } from "../../../components/common/PartnerDialog";
 import { SimpleCard } from "@/lib/strapi/models/common/simpleCard";
 import { ListCard } from "@/lib/strapi/models/common/listCard";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 export const EmploymentSection = ({
   title,
@@ -13,7 +22,7 @@ export const EmploymentSection = ({
   benefitsDesc,
   benefitsBottomDesc,
   benefitsCard,
-  buttonLabel
+  buttonLabel,
 }: {
   title: string;
   desc: string;
@@ -24,9 +33,12 @@ export const EmploymentSection = ({
   benefitsCard: ListCard;
   buttonLabel: string;
 }) => {
+  // Gets reCAPTCHA site key from environment variables
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   return (
     <div>
-        <section className="py-10">
+      <section className="py-10">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-4 text-foreground">
             {title}
@@ -40,16 +52,21 @@ export const EmploymentSection = ({
             className="relative w-full"
           >
             <CarouselContent>
-                {cards.map((card, index) => (
+              {cards.map((card, index) => (
                 <CarouselItem
-                    key={index}
-                    className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3" 
+                  key={index}
+                  className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
                 >
-                    <Card className='p-0 min-h-110'>
-                        <ProgramCard title={card.title} description={card.description} imageSrc={card.image.url} imageAlt={card.image.alternativeText || card.title} />
-                    </Card>
+                  <Card className="p-0 min-h-110">
+                    <ProgramCard
+                      title={card.title}
+                      description={card.description}
+                      imageSrc={card.image.url}
+                      imageAlt={card.image.alternativeText || card.title}
+                    />
+                  </Card>
                 </CarouselItem>
-                ))}
+              ))}
             </CarouselContent>
 
             <CarouselPrevious className="!absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10" />
@@ -57,7 +74,7 @@ export const EmploymentSection = ({
           </Carousel>
         </div>
       </section>
-      
+
       <section className="py-10 bg-gradient-warm">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -69,7 +86,7 @@ export const EmploymentSection = ({
                 {benefitsDesc}
               </p>
             </div>
-            
+
             <div className="bg-card rounded-lg p-8 mb-4 shadow-soft">
               <h3 className="text-2xl font-semibold mb-6 text-card-foreground">
                 {benefitsCard.title}
@@ -90,22 +107,28 @@ export const EmploymentSection = ({
                 ))}
               </ul>
             </div>
-            
+
             <div className="text-center">
-              <PartnerDialog
-                type="employer"
-                buttonText={buttonLabel}
-                title="Hire Through Reception House"
-                description="Connect with talented newcomers ready to contribute to your team. Fill out this form to explore hiring opportunities."
-              />
-              
-              <p className="mt-6 text-muted-foreground">
-                {benefitsBottomDesc}
-              </p>
+              {siteKey ? (
+                <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
+                  <PartnerDialog
+                    type="employer"
+                    buttonText={buttonLabel}
+                    title="Hire Through Reception House"
+                    description="Connect with talented newcomers ready to contribute to your team. Fill out this form to explore hiring opportunities."
+                  />
+                </GoogleReCaptchaProvider>
+              ) : (
+                <p className="text-destructive">
+                  Form unavailable: Missing reCAPTCHA key.
+                </p>
+              )}
+
+              <p className="mt-6 text-muted-foreground">{benefitsBottomDesc}</p>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
