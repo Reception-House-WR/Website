@@ -2,8 +2,9 @@ import { fetchApi } from "@/lib/strapi/client";
 import { PageStructure } from "../models/strapi/pageStructure";
 import { Partner } from "../models/home/partner";
 import { UpcomingEvent } from "../models/event/event";
+import { Locale } from "../internationalization/i18n";
 
-export async function fetchHomePageSections() {
+export async function fetchHomePageSections(locale: Locale) {
   return await fetchApi<{
     data: PageStructure[];
   }>("/api/web-pages", {
@@ -37,10 +38,11 @@ export async function fetchHomePageSections() {
       },
     },
     pagination: { pageSize: 1 },
+    locale
   });
 }
 
-export async function fetchUpcomingEvents(limit = 4) {
+export async function fetchUpcomingEvents(locale: Locale, limit = 4) {
   const today = new Date().toISOString().slice(0, 10);
 
   return await fetchApi<{ data: UpcomingEvent[] }>("/api/events", {
@@ -56,6 +58,7 @@ export async function fetchUpcomingEvents(limit = 4) {
     populate: {
       image: true, 
     },
+    locale
   });
 }
 
@@ -65,6 +68,6 @@ export async function fetchAllPartners() {
     pagination: { pageSize: 100 }, 
     populate: {
       logo: true
-    },
+    }
   });
 }

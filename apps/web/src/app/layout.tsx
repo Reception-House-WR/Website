@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ClientToolbar from "@/components/common/header/ClientToolbar";
-import { DonateButton } from "@/components/common/DonateButton";
-import Footer from "@/components/common/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,16 +27,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:ring-2 focus:ring-ring"
-        >
-          Skip to main content
-        </a>
-        <ClientToolbar />
-        <main id="main-content">{children}</main>
-        <DonateButton lang="en" />
-        <Footer />
+        {children}
       </body>
     </html>
   );

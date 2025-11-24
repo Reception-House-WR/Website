@@ -1,3 +1,4 @@
+import { Locale } from "../internationalization/i18n";
 import { Hero } from "../models/common/hero";
 import { Section } from "../models/common/section";
 import { Campaign } from "../models/donate/campaign";
@@ -184,10 +185,10 @@ const toEvent = (event: RawEvent): UpcomingEvent => {
 };
 
 
-export async function fetchHomePage(): Promise<HomeSections | null> {
+export async function fetchHomePage(locale: Locale): Promise<HomeSections | null> {
   const [pageRes, eventsRes, partnersRes] = await Promise.all([
-    fetchHomePageSections(),
-    fetchUpcomingEvents(4),
+    fetchHomePageSections(locale),
+    fetchUpcomingEvents(locale, 4),
     fetchAllPartners(),
   ]);
 
