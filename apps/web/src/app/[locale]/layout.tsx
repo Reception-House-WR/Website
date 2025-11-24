@@ -31,7 +31,7 @@ export default function LocaleLayout({
         Skip to main content
       </a>
 
-      <ClientToolbar /* si luego quieres, le pasas el locale */ />
+      <ClientToolbar />
 
       <main id="main-content">{children}</main>
 
