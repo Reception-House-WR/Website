@@ -7,7 +7,7 @@ import { fetchHomePage } from "@/lib/strapi/helpers/homeHelper";
 
 export default async function Home() {
   const res = await fetchHomePage();
-  console.log("Home page data:", res);
+  // console.log("Home page data:", res);
 
   if (!res) {
     return (
