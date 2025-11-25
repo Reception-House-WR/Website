@@ -48,3 +48,10 @@ jobs:
             ${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:latest
           cache-from: type=registry,ref=${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:buildcache,mode=max
+
+      - name: Deploy CMS container to Web App (Strapi)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'WebApp-Back-Dev'
+          publish-profile: ${{ secrets.AZURE_STRAPI_PUBLISH_PROFILE }}
+          images: '${{ env.ACR_LOGIN_SERVER }}/${{ env.CMS_IMAGE_NAME }}:${{ steps.vars.outputs.SHA_TAG }}'
