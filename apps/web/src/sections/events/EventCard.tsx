@@ -147,7 +147,7 @@ export const EventCard = ({
     </Card>
   );
 
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
   if (!siteKey) {
     console.error("reCAPTCHA site key is missing.");
     return CardUI;

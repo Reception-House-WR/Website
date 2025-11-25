@@ -29,7 +29,7 @@ export default function ContactUsPage({
   parkingSection: Card;
   contactInfoItems: contactInfo[];
 }) {
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
 
   const formRef = useRef<HTMLDivElement | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);

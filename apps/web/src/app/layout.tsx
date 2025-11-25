@@ -5,6 +5,8 @@ import ClientToolbar from "@/components/common/header/ClientToolbar";
 import { DonateButton } from "@/components/common/DonateButton";
 import Footer from "@/components/common/Footer";
 
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

@@ -21,10 +21,10 @@ interface RecaptchaResponse {
 
 export async function POST(request: Request) {
   //Env vars
-  const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
-  const GMAIL_USER = process.env.GMAIL_USER;
-  const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
-  const RECEIVER_EMAIL = process.env.RECEIVER_EMAIL;
+  const RECAPTCHA_SECRET_KEY = process.env["RECAPTCHA_SECRET_KEY"];
+  const GMAIL_USER = process.env["GMAIL_USER"];
+  const GMAIL_APP_PASSWORD = process.env["GMAIL_APP_PASSWORD"];
+  const RECEIVER_EMAIL = process.env["RECEIVER_EMAIL"];
 
   //Checking errors
   if (!RECAPTCHA_SECRET_KEY || !GMAIL_USER || !GMAIL_APP_PASSWORD) {

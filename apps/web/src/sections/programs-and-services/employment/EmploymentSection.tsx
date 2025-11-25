@@ -34,7 +34,7 @@ export const EmploymentSection = ({
   buttonLabel: string;
 }) => {
   //reCAPTCHA key
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
 
   return (
     <div>
