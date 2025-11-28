@@ -39,7 +39,7 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
                 {/* Image */}
                 <div className="relative h-64 md:h-auto overflow-hidden">
                   
-                  {(currentStory.image && <img
+                  {(currentStory?.image && <img
                     src={currentStory.image}
                     alt={`${currentStory.image} from ${currentStory.author}`}
                     className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
@@ -50,7 +50,7 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
                 <div className="flex flex-col justify-center p-8 md:p-12">
                   <Quote className="h-8 w-8 text-teal-500 mb-4" aria-hidden="true" />
                   <blockquote className="mb-6 text-lg text-foreground italic">
-                    "{currentStory.quote}"
+                    "{currentStory?.quote}"
                   </blockquote>
                   <div>
                     <p className="font-semibold text-foreground">{currentStory.author}</p>
