@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import Search from "./Search";
 import LanguageToggle from "./LanguageToggle";
 import { MenuDesktop, MenuMobile } from "./Menu";
+import { SECTIONS_INDEX } from "@/lib/search/sectionsIndex";
 
 type ToolbarProps = {
   currentLang: "en" | "fr";
@@ -12,9 +13,9 @@ type ToolbarProps = {
 };
 
 export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
-  const handleSearch = useCallback((q: string) => {
-    console.log("Searching for:", q);
-  }, []);
+  // const handleSearch = useCallback((q: string) => {
+  //   console.log("Searching for:", q);
+  // }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full  border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
@@ -30,7 +31,7 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
           <div className="flex-1" />
 
           <div className="flex items-center gap-2 shrink-0">
-            <Search onSearch={handleSearch} />
+            <Search items={SECTIONS_INDEX} />
             <LanguageToggle
               currentLang={currentLang}
               onToggle={onLanguageToggle}
@@ -53,7 +54,7 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
 
           <div className="ml-auto flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <div className="flex-1 min-w-0">
-              <Search onSearch={handleSearch} />
+              <Search items={SECTIONS_INDEX} />
             </div>
             <LanguageToggle
               currentLang={currentLang}
