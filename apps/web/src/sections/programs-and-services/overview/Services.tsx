@@ -27,11 +27,12 @@ export default function Services({
               className="group relative h-64 rounded-xl overflow-hidden cursor-pointer animate-fade-in-up block"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <img 
-                src={service.image?.url} 
+              
+              {(service.image?.url && <img 
+                src={service.image.url} 
                 alt={service.image?.alternativeText || service.title}
                 className="absolute inset-0 w-full h-full object-cover"
-              />
+              />)}
               
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
               

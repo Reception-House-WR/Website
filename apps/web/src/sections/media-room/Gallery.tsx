@@ -114,11 +114,11 @@ export const Gallery = ({
               aria-label={`View ${item.image?.alternativeText || "media item"}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={item.image?.url}
+                {(item.image?.url && <img
+                  src={item.image.url}
                   alt={item.image?.alternativeText || "Thumbnail"}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+                />)}
                 {item.isImage === false && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                     <div className="rounded-full bg-[var(--rh-500)] p-4 transition-transform group-hover:scale-110">

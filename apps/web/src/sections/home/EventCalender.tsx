@@ -184,12 +184,13 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                     <CardContent className="p-0 sm:flex md:h-48">
                         {/* Event Image */}
                         <div className="relative md:aspect-auto overflow-hidden bg-muted h-full ">
-                          <img
-                            src={event.image?.url}
+                          
+                          {(event.image.url && <img
+                            src={event.image.url}
                             alt={event.image?.alternativeText || event.title}
                             loading="lazy"
                             className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
+                          />)}
                         </div>
                         
                         {/* Event Details */}

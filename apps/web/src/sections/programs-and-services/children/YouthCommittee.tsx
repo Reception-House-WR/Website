@@ -28,11 +28,11 @@ export function YouthCommittee({
                 <CarouselContent>
                   {committeeImages.map((image, index) => (
                     <CarouselItem key={index}>
-                      <img 
+                      {(image.url && <img 
                         src={image.url}
                         alt={image.alternativeText ?? "Youth Advisory Committee Image"}
                         className="rounded-2xl shadow-medium w-full h-[500px] object-cover transition-transform duration-500 hover:scale-105"
-                      />
+                      />)}
                     </CarouselItem>
                   ))}
                 </CarouselContent>
