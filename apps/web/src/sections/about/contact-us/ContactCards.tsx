@@ -18,7 +18,7 @@ export default function ContactCards({
     return (
         <div className="space-y-4">
             {contactInfo.map((info, index) => {
-            const Icon = contactIcons[info.title];
+            const Icon = contactIcons[info?.title];
             return (
                 <Card
                 key={info.title}
@@ -30,8 +30,8 @@ export default function ContactCards({
                     <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg mb-2 text-foreground">{info.title}</h3>
-                      <p className="text-muted-foreground whitespace-pre-line">{info.value}</p>
+                      <h3 className="font-bold text-lg mb-2 text-foreground">{info?.title}</h3>
+                      <p className="text-muted-foreground whitespace-pre-line">{info?.value}</p>
                     </div>
                 </div>
                 </Card>

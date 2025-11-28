@@ -55,7 +55,7 @@ export const HousingSection = ({
   buttonLabel: string;
   bottomDesc: string;
 }) => {
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
 
   return (
     <>

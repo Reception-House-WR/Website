@@ -15,10 +15,10 @@ const Page = async () => {
   
   return (
     <main className="min-h-screen">
-      <HeroSection title={res.hero.title} desc={res.hero.description} />
-      <MediaKit kits={res.mediaKitSection.kits} title={res.mediaKitSection.title} desc={res.mediaKitSection.description} />
-      <PressReleases title={res.releasesSection.title} desc={res.releasesSection.description} releases={res.releasesSection.pressReleases} />
-      <Gallery mediaItems={res.photosAndVideos.media} title={res.photosAndVideos.section.title} desc={res.photosAndVideos.section.description} />
+      <HeroSection title={res.hero?.title || ""} desc={res.hero?.description || ""} />
+      <MediaKit kits={res.mediaKitSection?.kits || []} title={res.mediaKitSection?.title || ""} desc={res.mediaKitSection?.description || ""} />
+      <PressReleases title={res.releasesSection?.title || ""} desc={res.releasesSection?.description || ""} releases={res.releasesSection?.pressReleases || []} />
+      <Gallery mediaItems={res.photosAndVideos?.media || []} title={res.photosAndVideos?.section?.title || ""} desc={res.photosAndVideos?.section?.description || ""} />
     </main>
   )
 }

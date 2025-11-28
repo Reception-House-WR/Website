@@ -29,13 +29,13 @@ export default function StoriesClient({
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === stories.length - 1 ? 0 : prevIndex + 1
+      prevIndex === stories?.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? stories.length - 1 : prevIndex - 1
+      prevIndex === 0 ? stories?.length - 1 : prevIndex - 1
     );
   };
 
@@ -57,18 +57,18 @@ export default function StoriesClient({
               {bodyDesc}
             </p>
 
-            {stories.length > 0 ? (
+            {stories?.length > 0 ? (
               <div className="relative">
                 <Card
-                  key={stories[currentIndex].author}
+                  key={stories[currentIndex]?.author}
                   className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
                 >
                   <CardContent className="p-0 md:flex h-full">
                     <div className="relative w-full h-48 md:h-auto md:w-1/3 flex-shrink-0 overflow-hidden bg-muted">
-                      {stories[currentIndex].image ? (
+                      {stories[currentIndex]?.image ? (
                         <Image
-                          src={stories[currentIndex].image}
-                          alt={`${stories[currentIndex].author}'s photo`}
+                          src={stories[currentIndex]?.image}
+                          alt={`${stories[currentIndex]?.author}'s photo`}
                           fill
                           priority={true}
                           fetchPriority="high"
@@ -87,10 +87,10 @@ export default function StoriesClient({
                         </span>
                       </div>
                       <h3 className="text-3xl md:text-4xl font-bold text-[var(--rh-green-600)] mb-4">
-                        {stories[currentIndex].author}'s Story
+                        {stories[currentIndex]?.author}'s Story
                       </h3>
                       <p className="text-base md:text-md leading-relaxed text-high-contrast mb-6">
-                        {stories[currentIndex].quote}
+                        {stories[currentIndex]?.quote}
                       </p>
                       <Button
                         asChild
@@ -98,7 +98,7 @@ export default function StoriesClient({
                         className="group/button w-fit hover:cursor-pointer bg-[var(--rh-500)] text-background hover:bg-[var(--rh-400)]"
                       >
                         <a
-                          href={stories[currentIndex].videoUrl}
+                          href={stories[currentIndex]?.videoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Watch ${stories[currentIndex].author}'s video interview`}

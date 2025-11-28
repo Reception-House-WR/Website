@@ -15,20 +15,20 @@ export default async function DonatePage() {
       heroTitle={res.hero.title}
       heroDesc={res.hero.description}
       heroImage={res.hero.backgroundImageUrl}
-      campaignsData={res.campaignsSection.cammpaigns}
-      campaignTitle={res.campaignsSection.title}
-      campaignDesc={res.campaignsSection.description}
-      programsTitle={res.whereHelpsSection.title}
-      programsDesc={res.whereHelpsSection.description}
-      programsCards={res.whereHelpsSection.cards}
-      inKindTitle={res.inKindDonationsSection.title}
-      inKindDesc={res.inKindDonationsSection.description}
-      inKindCards={res.inKindDonationsSection.cards}
-      dropOff={res.dropOffSection}
-      ctaTitle={res.bottomGeneralSection.title}
-      ctaDesc={res.bottomGeneralSection.description}
-      ctaButtonText={res.bottomGeneralSection.button.label}
-      ctaButtonUrl={res.bottomGeneralSection.button.url}
+      campaignsData={res?.campaignsSection?.cammpaigns || []}
+      campaignTitle={res?.campaignsSection?.title || ""}
+      campaignDesc={res?.campaignsSection?.description || ""}
+      programsTitle={res?.whereHelpsSection?.title || ""}
+      programsDesc={res?.whereHelpsSection?.description || ""}
+      programsCards={res?.whereHelpsSection?.cards || []}
+      inKindTitle={res?.inKindDonationsSection?.title || ""}
+      inKindDesc={res?.inKindDonationsSection?.description || ""}
+      inKindCards={res?.inKindDonationsSection?.cards || []}
+      dropOff={res?.dropOffSection || {}}
+      ctaTitle={res?.bottomGeneralSection?.title || ""}
+      ctaDesc={res?.bottomGeneralSection?.description || ""}
+      ctaButtonText={res?.bottomGeneralSection?.button?.label || ""}
+      ctaButtonUrl={res?.bottomGeneralSection?.button?.url || ""}
     />
   );
 }

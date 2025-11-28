@@ -26,15 +26,15 @@ export const CoreValues = ({
             // const Icon = value.icon;
             return (
                 <Card
-                key={value.name}
+                key={value?.name}
                 className="p-6 text-center hover:shadow-soft transition-all duration-300 border-2 hover:border-[var(--rh-500)] animate-scale-in min-w-40 max-w-80"
                 style={{ animationDelay: `${index * 100}ms` }}
                 >
                 <div className="w-16 h-16 bg-[var(--rh-500)] rounded-full flex items-center justify-center mx-auto mb-4">
                     <HeartIcon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-foreground">{value.name}</h3>
-                <p className="text-muted-foreground">{value.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-foreground">{value?.name}</h3>
+                <p className="text-muted-foreground">{value?.description}</p>
                 </Card>
             );
             })}

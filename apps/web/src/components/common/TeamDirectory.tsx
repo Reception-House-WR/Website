@@ -28,14 +28,14 @@ export default function TeamDirectory({
   //Filter the employees array based on current search query and selected department
   const filteredEmployees = employees.filter((employee) => {
     const nameMatches =
-      employee.name?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
+      employee?.name?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
     const roleMatches =
-      employee.role?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
+      employee?.role?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
     const matchesSearch = nameMatches || roleMatches;
 
     const matchesDepartment =
       selectedDepartment === "All" ||
-      employee.department === selectedDepartment;
+      employee?.department === selectedDepartment;
     return matchesSearch && matchesDepartment;
   });
 
@@ -81,16 +81,16 @@ export default function TeamDirectory({
             {/* Render a card for each employee in the filtered list */}
             {filteredEmployees.map((employee, index) => (
               <Card
-                key={employee.email || index}
+                key={employee?.email || index}
                 className="p-6 bg-card rounded-lg border-2 border-transparent hover:border-primary hover:shadow-soft transition-all duration-300 animate-scale-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="space-y-4">
                   {/* Display Employee Image or Initials Fallback */}
-                  {employee.imageUrl ? (
+                  {employee?.imageUrl ? (
                     <Img
-                      src={employee.imageUrl}
-                      alt={employee.name || "Employee"}
+                      src={employee?.imageUrl}
+                      alt={employee?.name || "Employee"}
                       width={80}
                       height={80}
                       className="w-20 h-20 rounded-full object-cover"
@@ -98,7 +98,7 @@ export default function TeamDirectory({
                   ) : (
                     <div className="w-20 h-20 bg-[var(--rh-500)] rounded-full flex items-center justify-center">
                       <span className="text-primary-foreground text-2xl font-bold">
-                        {employee.name
+                        {employee?.name
                           ?.split(" ")
                           .map((n) => n[0])
                           .join("") || "??"}
@@ -109,19 +109,19 @@ export default function TeamDirectory({
                   {/* Employee Information */}
                   <div>
                     <h3 className="text-xl font-bold text-foreground mb-1">
-                      {employee.name || "Unknown Employee"}
+                      {employee?.name || "Unknown Employee"}
                     </h3>
                     <p className="text-muted-foreground font-medium mb-2">
-                      {employee.role || "Unknown Role"}
+                      {employee?.role || "Unknown Role"}
                     </p>
                     <Badge
                       variant="secondary"
                       className="mb-3 font-medium border-0 bg-[var(--rh-yellow-200)]"
                     >
-                      {employee.department || "Unknown Dept"}
+                      {employee?.department || "Unknown Dept"}
                     </Badge>
                     <p className="text-sm text-muted-foreground">
-                      {employee.email || "No Email Provided"}
+                      {employee?.email || "No Email Provided"}
                     </p>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function TeamDirectory({
           </div>
 
           {/* Message shown when no employees match the current filters */}
-          {filteredEmployees.length === 0 && (
+          {filteredEmployees?.length === 0 && (
             <div className="text-center py-16">
               <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <p className="text-xl text-muted-foreground">

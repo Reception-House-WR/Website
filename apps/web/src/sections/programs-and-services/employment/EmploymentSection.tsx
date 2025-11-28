@@ -34,7 +34,7 @@ export const EmploymentSection = ({
   buttonLabel: string;
 }) => {
   //reCAPTCHA key
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
 
   return (
     <div>
@@ -59,10 +59,10 @@ export const EmploymentSection = ({
                 >
                   <Card className="p-0 min-h-110">
                     <ProgramCard
-                      title={card.title}
-                      description={card.description}
-                      imageSrc={card.image.url}
-                      imageAlt={card.image.alternativeText || card.title}
+                      title={card?.title}
+                      description={card?.description}
+                      imageSrc={card?.image?.url}
+                      imageAlt={card?.image?.alternativeText || card?.title}
                     />
                   </Card>
                 </CarouselItem>
@@ -89,17 +89,17 @@ export const EmploymentSection = ({
 
             <div className="bg-card rounded-lg p-8 mb-4 shadow-soft">
               <h3 className="text-2xl font-semibold mb-6 text-card-foreground">
-                {benefitsCard.title}
+                {benefitsCard?.title}
               </h3>
               <ul className="space-y-4">
-                {benefitsCard.items.map((item, index) => (
+                {benefitsCard?.items.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 mt-1">
                       ✓
                     </div>
                     <p className="text-muted-foreground">
                       <strong className="text-card-foreground">
-                        {item.key}{" "}
+                        {item?.key}{" "}
                       </strong>
                       {item.value}
                     </p>

@@ -77,27 +77,29 @@ export const PressReleases = ({
               <Card className="transition-all duration-300 hover:shadow-md">
                 <CardHeader>
                   <div className="relative h-80 w-full mb-4 overflow-hidden rounded-md">
-                    <Image
-                      src={release.image.url}
-                      alt={release.image.alternativeText || release.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    {release?.image?.url && (
+                      <Image
+                        src={release?.image?.url}
+                        alt={release?.image?.alternativeText || release?.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
+                    )}
                   </div>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
                         <CalendarIcon className="h-4 w-4" aria-hidden="true" />
                         <p className="text-muted-foreground text-xs">
-                          {formatDate(release.date)}
+                          {formatDate(release?.date)}
                         </p>
                       </div>
                       <CardTitle className="mb-2 text-xl">
-                        {release.title}
+                        {release?.title}
                       </CardTitle>
                       <CardDescription className="text-base">
-                        {release.shortDesc}
+                        {release?.shortDesc}
                       </CardDescription>
                     </div>
                     <CollapsibleTrigger asChild>
@@ -107,8 +109,8 @@ export const PressReleases = ({
                         className="shrink-0"
                         aria-label={
                           openItems.has(id)
-                            ? `Collapse ${release.title}`
-                            : `Expand ${release.title}`
+                            ? `Collapse ${release?.title}`
+                            : `Expand ${release?.title}`
                         }
                       >
                         {openItems.has(id) ? (
@@ -130,7 +132,7 @@ export const PressReleases = ({
                   <CardContent className="pt-0">
                     <div className="rounded-lg bg-muted/50 p-4">
                       <p className="text-foreground/90 leading-relaxed">
-                        {release.longDesc}
+                        {release?.longDesc}
                       </p>
                     </div>
                   </CardContent>

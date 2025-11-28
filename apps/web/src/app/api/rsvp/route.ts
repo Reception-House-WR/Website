@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const { token } = body;
 
     //Verifying reCAPTCHA token
-    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`;
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env["RECAPTCHA_SECRET_KEY"]}&response=${token}`;
     const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
     const recaptchaData = (await recaptchaResponse.json()) as RecaptchaResponse;
 

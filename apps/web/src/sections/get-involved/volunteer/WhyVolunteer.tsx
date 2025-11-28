@@ -24,11 +24,12 @@ export default function WhyVolunteer({
                 >
                 <CardContent className="p-0 absolute inset-0">
                     <div className="relative h-full">
-                    <img
-                        src={benefit.backgroundImageUrl}
-                        alt={benefit.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                    {benefit.backgroundImageUrl && (
+                      <img
+                          src={benefit.backgroundImageUrl}
+                          alt={benefit.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />)}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-black/95 transition-all duration-300" />
                     <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
                         <div className="bg-[var(--rh-500)]/90 w-14 h-14 rounded-full flex items-center justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300">

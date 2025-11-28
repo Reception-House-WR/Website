@@ -23,7 +23,7 @@ export default async function OurPeople() {
       >
           <div
             className="absolute inset-0 z-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${res.hero.backgroundImageUrl})` }}
+            style={{ backgroundImage: `url(${res.hero?.backgroundImageUrl})` }}
           >
             <div
               className="absolute inset-0 "
@@ -37,15 +37,15 @@ export default async function OurPeople() {
               <Users className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {res.hero.title}
+              {res.hero?.title}
             </h1>
-            <p className="text-xl text-white/90">{res.hero.description}</p>
+            <p className="text-xl text-white/90">{res.hero?.description}</p>
           </div>
         </div>
       </section>
 
       {/*Team Directory */}
-      <TeamDirectory departments={res.departments} employees={res.people} />
+      <TeamDirectory departments={res?.departments || []} employees={res?.people || []} />
     </>
   );
 }

@@ -29,7 +29,7 @@ export default function ContactUsPage({
   parkingSection: Card;
   contactInfoItems: contactInfo[];
 }) {
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
 
   const formRef = useRef<HTMLDivElement | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -39,7 +39,7 @@ export default function ContactUsPage({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0]?.isIntersecting) {
           setIsFormVisible(true);
           observer.disconnect();
         }
@@ -67,8 +67,8 @@ export default function ContactUsPage({
 
               <ContactCards contactInfo={contactInfoItems} />
               <ParkingInfo
-                title={parkingSection.title}
-                desc={parkingSection.description}
+                title={parkingSection?.title}
+                desc={parkingSection?.description}
                 url={parkingSection.image?.url ?? ""}
               />
               <SocialMedia />
