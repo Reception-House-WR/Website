@@ -15,9 +15,9 @@ export default async function Page() {
   
   return (
     <div>
-      <ServicesHero title={res?.hero.title} desc={res?.hero.description} url={res?.hero.backgroundImageUrl} />
-      <Services services={res?.servicesSection} />
-      <Programs title={res?.ourProgramsSection.title} desc={res?.ourProgramsSection.topDescription} bottomDesc={res?.ourProgramsSection.bottomDescription} cards={res?.ourProgramsSection.cards} />
+      <ServicesHero title={res?.hero?.title || ""} desc={res?.hero?.description || ""} url={res?.hero?.backgroundImageUrl || ""} />
+      <Services services={res?.servicesSection || []} />
+      <Programs title={res?.ourProgramsSection?.title || ""} desc={res?.ourProgramsSection?.topDescription || ""} bottomDesc={res?.ourProgramsSection?.bottomDescription || ""} cards={res?.ourProgramsSection?.cards || []} />
     </div>
   );
 }

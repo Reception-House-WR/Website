@@ -25,18 +25,18 @@ export const Gallery = ({
   );
 
   const newMediaItems = mediaItems.map((item) => ({
-    videoUrl: item.videoUrl
+    videoUrl: item?.videoUrl
       ? item.videoUrl.replace("watch?v=", "embed/")
       : undefined,
-    description: item.description,
-    isImage: item.isImage,
-    image: item.image,
+    description: item?.description,
+    isImage: item?.isImage,
+    image: item?.image,
   }));
 
   const filteredMedia = newMediaItems.filter((item) => {
     if (activeTab === "all") return true;
-    if (activeTab === "images") return item.isImage;
-    if (activeTab === "videos") return item.isImage === false;
+    if (activeTab === "images") return item?.isImage;
+    if (activeTab === "videos") return item?.isImage === false;
     return true;
   });
   return (
@@ -114,7 +114,7 @@ export const Gallery = ({
               aria-label={`View ${item.image?.alternativeText || "media item"}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
-                {(item.image?.url && <img
+                {(item?.image?.url && <img
                   src={item.image.url}
                   alt={item.image?.alternativeText || "Thumbnail"}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -132,7 +132,7 @@ export const Gallery = ({
               </div>
               <div className="p-4">
                 <p className="text-sm text-foreground/80 line-clamp-2">
-                  {item.description}
+                  {item?.description}
                 </p>
               </div>
             </button>
@@ -154,18 +154,18 @@ export const Gallery = ({
           {selectedMedia && (
             <>
               <div className="relative">
-                {selectedMedia.isImage ? (
+                {selectedMedia?.isImage ? (
                   <img
-                    src={selectedMedia.image?.url}
-                    alt={selectedMedia.image?.alternativeText || "media item"}
+                    src={selectedMedia?.image?.url}
+                    alt={selectedMedia?.image?.alternativeText || "media item"}
                     className="w-full rounded-lg"
                   />
                 ) : (
                   <div className="aspect-video">
                     <iframe
-                      src={selectedMedia.videoUrl}
+                      src={selectedMedia?.videoUrl}
                       title={
-                        selectedMedia.image?.alternativeText || "media item"
+                        selectedMedia?.image?.alternativeText || "media item"
                       }
                       className="h-full w-full rounded-lg"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -176,11 +176,11 @@ export const Gallery = ({
               </div>
               <DialogDescription id="media-description" className="space-y-2">
                 <span className="text-base text-foreground">
-                  {selectedMedia.description}
+                  {selectedMedia?.description}
                 </span>
-                {selectedMedia.description && (
+                {selectedMedia?.description && (
                   <span className="text-sm text-muted-foreground italic">
-                    {selectedMedia.description}
+                    {selectedMedia?.description}
                   </span>
                 )}
               </DialogDescription>

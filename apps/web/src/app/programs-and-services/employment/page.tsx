@@ -17,7 +17,7 @@ export default async function Home(){
           title={res.hero.title}
           description={res.hero.description}
       />
-      <EmploymentSection buttonLabel={res.benefitsSection.buttonLabel} benefitsTitle={res.benefitsSection.title} benefitsDesc={res.benefitsSection.description} benefitsBottomDesc={res.benefitsSection.bottomDescription} benefitsCard={res.benefitsSection.card} title={res.featuresSection.title} desc={res.featuresSection.description} cards={res.featuresSection.cards} />
+      <EmploymentSection buttonLabel={res.benefitsSection?.buttonLabel || ""} benefitsTitle={res.benefitsSection?.title || ""} benefitsDesc={res.benefitsSection?.description || ""} benefitsBottomDesc={res.benefitsSection?.bottomDescription || ""} benefitsCard={res.benefitsSection?.card || []} title={res.featuresSection?.title || ""} desc={res.featuresSection?.description || ""} cards={res.featuresSection?.cards || []} />
     </div>
   );
 }

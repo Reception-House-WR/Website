@@ -39,7 +39,7 @@ export default function ContactUsPage({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0]?.isIntersecting) {
           setIsFormVisible(true);
           observer.disconnect();
         }
@@ -67,8 +67,8 @@ export default function ContactUsPage({
 
               <ContactCards contactInfo={contactInfoItems} />
               <ParkingInfo
-                title={parkingSection.title}
-                desc={parkingSection.description}
+                title={parkingSection?.title}
+                desc={parkingSection?.description}
                 url={parkingSection.image?.url ?? ""}
               />
               <SocialMedia />

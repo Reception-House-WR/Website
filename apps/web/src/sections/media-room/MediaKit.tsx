@@ -45,17 +45,17 @@ export const MediaKit = ({
               >
                 <CardHeader>
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--rh-500)]/10 text-[var(--rh-500)] transition-colors group-hover:bg-[var(--rh-500)] group-hover:text-white">
-                    <DynamicIcon name={item.icon} className="h-6 w-6" aria-hidden="true" />
+                    <DynamicIcon name={item?.icon} className="h-6 w-6" aria-hidden="true" />
                   </div>
-                  <CardTitle className="text-lg">{item.title}</CardTitle>
-                  <CardDescription>{item.description}</CardDescription>
+                  <CardTitle className="text-lg">{item?.title}</CardTitle>
+                  <CardDescription>{item?.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button
-                    onClick={() => handleDownload(item.kit.url)}
+                    onClick={() => handleDownload(item?.kit?.url)}
                     className="w-full gap-2 hover:cursor-pointer"
                     variant="outline"
-                    aria-label={`Download ${item.title}`}
+                    aria-label={`Download ${item?.title}`}
                   >
                     <DownloadIcon className="h-4 w-4" aria-hidden="true" />
                     Download

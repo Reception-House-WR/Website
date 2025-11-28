@@ -14,8 +14,8 @@ const page = async () => {
 
   return (
     <div>
-        <HeroContactUs title={res.hero.title} desc={res.hero.description} />
-        <ContactBlock contactInfoItems={res.contactUsInfoSection.contactInfo} title={res.contactUsInfoSection.title} desc={res.contactUsInfoSection.description} parkingSection={res.parkingSection} /> 
+        <HeroContactUs title={res.hero?.title || ""}  desc={res.hero?.description || ""} />
+        <ContactBlock contactInfoItems={res?.contactUsInfoSection?.contactInfo || []} title={res?.contactUsInfoSection?.title || ""} desc={res?.contactUsInfoSection?.description || ""} parkingSection={res?.parkingSection} /> 
         <ContactUsMap />
     </div>
   )

@@ -26,11 +26,11 @@ export default function Barriers({
 
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             {features.map((feature) => (
-              <div key={feature.title} className="bg-card rounded-lg p-6 shadow-soft">
+              <div key={feature?.title} className="bg-card rounded-lg p-6 shadow-soft">
                 <h3 className="text-xl font-semibold mb-3 text-card-foreground">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+                <p className="text-muted-foreground">{feature?.description}</p>
               </div>
             ))}
           </div>

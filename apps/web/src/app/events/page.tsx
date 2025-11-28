@@ -9,5 +9,5 @@ export default async function Page() {
     return <div>Failed to load data</div>;
   }
 
-  return <EventsPageClient allEventsData={res.events} heroTitle={res.hero.title} heroImage={res.hero.backgroundImageUrl} heroDesc={res.hero.description} />;
+  return <EventsPageClient allEventsData={res?.events || []} heroTitle={res?.hero?.title || ""} heroImage={res?.hero?.backgroundImageUrl || ""} heroDesc={res?.hero?.description || ""} />;
 }

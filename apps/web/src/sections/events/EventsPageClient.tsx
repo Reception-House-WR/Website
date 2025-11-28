@@ -25,9 +25,9 @@ export default function EventsPageClient({
 
     let localDateString = "";
     if (eventDate) {
-      const year = eventDate.getFullYear();
-      const month = String(eventDate.getMonth() + 1).padStart(2, "0");
-      const day = String(eventDate.getDate()).padStart(2, "0");
+      const year = eventDate?.getFullYear();
+      const month = String(eventDate?.getMonth() + 1).padStart(2, "0");
+      const day = String(eventDate?.getDate()).padStart(2, "0");
       localDateString = `${year}-${month}-${day}`;
     }
 
@@ -39,10 +39,10 @@ export default function EventsPageClient({
     };
   });
   const upcomingEvents = allEventsData.filter(
-    (event) => event.date && new Date(event.date).getTime() >= Date.now()
+    (event) => event?.date && new Date(event.date).getTime() >= Date.now()
   );
   const pastEvents = allEventsData.filter(
-    (event) => event.date && new Date(event.date).getTime() < Date.now()
+    (event) => event?.date && new Date(event.date).getTime() < Date.now()
   );
 
   return (
@@ -86,10 +86,10 @@ export default function EventsPageClient({
 
               <TabsContent value="upcoming" className="mt-6">
                 <div className="space-y-6">
-                  {upcomingEvents.length > 0 ? (
+                  {upcomingEvents?.length > 0 ? (
                     upcomingEvents.map((event) => (
                       <EventCard
-                        key={event.title}
+                        key={event?.title}
                         event={event}
                         category="upcoming"
                       />
@@ -104,7 +104,7 @@ export default function EventsPageClient({
 
               <TabsContent value="past" className="mt-6">
                 <div className="space-y-6">
-                  {pastEvents.length > 0 ? (
+                  {pastEvents?.length > 0 ? (
                     pastEvents.map((event) => (
                       <EventCard
                         key={event.title}
@@ -122,11 +122,11 @@ export default function EventsPageClient({
 
               <TabsContent value="all" className="mt-6">
                 <div className="space-y-6">
-                  {allEventsData.length > 0 ? (
+                  {allEventsData?.length > 0 ? (
                     allEventsData.map((event, id) => {
                       const category =
-                        event.date &&
-                        new Date(event.date).getTime() >= Date.now()
+                        event?.date &&
+                        new Date(event?.date).getTime() >= Date.now()
                           ? "upcoming"
                           : "past";
                       return (

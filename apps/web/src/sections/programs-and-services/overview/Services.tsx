@@ -18,19 +18,19 @@ export default function Services({
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-12 my-8">
-          {services.cards.map((service, index) => {
+          {services?.cards.map((service, index) => {
             const DynamicIcon = serviceIcons[index % serviceIcons.length];
             return (
             <a
               key={index}
-              href={service.buttonUrl} 
+              href={service?.buttonUrl} 
               className="group relative h-64 rounded-xl overflow-hidden cursor-pointer animate-fade-in-up block"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               
-              {(service.image?.url && <img 
-                src={service.image.url} 
-                alt={service.image?.alternativeText || service.title}
+              {(service?.image?.url && <img 
+                src={service?.image.url} 
+                alt={service?.image?.alternativeText || service?.title}
                 className="absolute inset-0 w-full h-full object-cover"
               />)}
               
@@ -43,7 +43,7 @@ export default function Services({
                   <DynamicIcon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-sm font-semibold text-white leading-tight transition-all duration-300 group-hover:text-lg group-hover:font-bold">
-                  {service.title}
+                  {service?.title}
                 </h3>
               </div>
             </a>

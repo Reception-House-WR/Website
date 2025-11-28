@@ -115,21 +115,21 @@ export const CareersSection = ({
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <Briefcase className="h-6 w-6 text-primary" aria-hidden="true" />
-                        <h3 className="text-2xl font-bold">{job.role}</h3>
+                        <h3 className="text-2xl font-bold">{job?.role}</h3>
                       </div>
                       <div className="flex flex-wrap gap-3 text-sm text-muted-foreground mb-4">
-                        <span>{job.department}</span>
+                        <span>{job?.department}</span>
                         <span aria-hidden="true">•</span>
-                        <span>{job.mode}</span>
+                        <span>{job?.mode}</span>
                         <span aria-hidden="true">•</span>
                         <span>{job.contract}</span>
                       </div>
                     </div>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-6">{job.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6">{job?.description}</p>
                   <Button asChild className='bg-[var(--rh-500)]'>
                     <a 
-                      href={job.url}
+                      href={job?.url}
                       className="inline-flex items-center gap-2"
                     >
                       Apply Now

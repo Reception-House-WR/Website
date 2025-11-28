@@ -22,9 +22,9 @@ export default function Images({
               className="basis-1/1 sm:basis-1/2 lg:basis-1/3 flex justify-center"
             >
               
-              {(image.url && <img
-                src={image.url}
-                alt={image.alternativeText || `Skills Training Image ${index + 1}`}
+              {(image?.url && <img
+                src={image?.url}
+                alt={image?.alternativeText || `Skills Training Image ${index + 1}`}
                 className="rounded-lg object-cover w-[90%] h-[250px]"
               />)}
             </CarouselItem>

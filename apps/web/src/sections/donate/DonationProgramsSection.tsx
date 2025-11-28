@@ -40,26 +40,26 @@ export default function DonationProgramsSection({
                 <CardHeader className="relative">
                   <div className="w-24 h-24 mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     <DynamicIcon
-                      name={program.icon}
-                      aria-label={program.title}
+                      name={program?.icon}
+                      aria-label={program?.title}
                       className="w-14 h-14 text-[var(--rh-orange-500)]"
                     />
                   </div>
                   <CardTitle className="text-2xl group-hover:text-primary transition-colors">
-                    {program.title}
+                    {program?.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 flex flex-col flex-grow">
                   <CardDescription className="text-base leading-relaxed text-high-contrast">
-                    {program.description}
+                    {program?.description}
                   </CardDescription>
                   <Button
                     variant="default"
                     size="lg"
                     className="w-full bg-[var(--rh-500)] text-primary-foreground hover:bg-[var(--rh-400)] mt-auto"
                   >
-                    <Link href={program.button.url}>
-                      {program.button.label}
+                    <Link href={program?.button?.url}>
+                      {program?.button?.label}
                     </Link>
                   </Button>
                 </CardContent>

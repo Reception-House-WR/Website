@@ -34,14 +34,14 @@ export default async function Home() {
         campaign={res.currentCampaignSection.campaign}
       />
       <EventsCalendar
-        title={res.upcomingEventsSection.section.title}
-        desc={res.upcomingEventsSection.section.description}
-        events={res.upcomingEventsSection.events}
+        title={res.upcomingEventsSection?.section?.title || ""}
+        desc={res.upcomingEventsSection?.section?.description || ""}
+        events={res.upcomingEventsSection?.events || []}
       />
       <Partners
-        title={res.partnersSection.section.title}
-        desc={res.partnersSection.section.description}
-        partners={res.partnersSection.partners}
+        title={res.partnersSection?.section?.title || ""}
+        desc={res.partnersSection?.section?.description || ""}
+        partners={res.partnersSection?.partners || []}
       />
     </div>
   );

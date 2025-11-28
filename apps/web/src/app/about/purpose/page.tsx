@@ -23,11 +23,11 @@ const page = async () => {
       <Hero title={res.hero.title} desc={res.hero.description} />
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <VisionMission missionTitle={res.missionAndVissionSection.mission.title} missionDesc={res.missionAndVissionSection.mission.description} visionTitle={res.missionAndVissionSection.vision.title} visionDesc={res.missionAndVissionSection.vision.description} />
-          <CoreValues title={res.valuesSection.section.title} desc={res.valuesSection.section.description} values={res.valuesSection.values} />
-          <StrategicPriorities title={res.strategicPrioritiesSection.section.title} desc={res.strategicPrioritiesSection.section.description} priorities={res.strategicPrioritiesSection.priorities} />
-          <VideoSection title={res.ourImpactSection.title} desc={res.ourImpactSection.description} url={res.ourImpactSection.videoUrl} />
-          <Reports title={res.transparencyAndAccountabilitySection.section.title} desc={res.transparencyAndAccountabilitySection.section.description} files={res.transparencyAndAccountabilitySection.reports} />
+          <VisionMission missionTitle={res.missionAndVissionSection?.mission?.title || ""} missionDesc={res.missionAndVissionSection?.mission?.description || ""} visionTitle={res.missionAndVissionSection?.vision?.title || ""} visionDesc={res.missionAndVissionSection?.vision?.description || ""} />
+          <CoreValues title={res.valuesSection?.section?.title || ""} desc={res.valuesSection?.section?.description || ""} values={res.valuesSection?.values || []} />
+          <StrategicPriorities title={res.strategicPrioritiesSection?.section?.title || ""} desc={res.strategicPrioritiesSection?.section?.description || ""} priorities={res.strategicPrioritiesSection?.priorities || []} />
+          <VideoSection title={res.ourImpactSection?.title || ""} desc={res.ourImpactSection?.description || ""} url={res.ourImpactSection?.videoUrl || ""} />
+          <Reports title={res.transparencyAndAccountabilitySection?.section?.title || ""} desc={res.transparencyAndAccountabilitySection?.section?.description || ""} files={res.transparencyAndAccountabilitySection?.reports || []} />
         </div>
       </section>
     </div>

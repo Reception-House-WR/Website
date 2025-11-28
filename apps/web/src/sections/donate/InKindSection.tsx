@@ -46,18 +46,18 @@ export default function InKindSection({
             >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  {card.title}
+                  {card?.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {card.items.map((item, id) => (
-                    <li key={item.value} className="flex items-start">
+                  {card?.items.map((item, id) => (
+                    <li key={item?.value} className="flex items-start">
                       <span className="text-[var(--rh-orange-500)] mr-3 text-lg">
                         ✓
                       </span>
                       <span className="text-high-contrast font-medium">
-                        {item.value}
+                        {item?.value}
                       </span>
                     </li>
                   ))}
@@ -72,7 +72,7 @@ export default function InKindSection({
           <CardContent className="p-6 space-y-4">
             <h3 className="text-xl font-bold text-high-contrast flex items-center gap-2">
               <MapPin className="h-5 w-5 text-[var(--rh-orange-500)]" />
-              {dropOff.title}
+              {dropOff?.title}
             </h3>
 
             {/* --- DYNAMIC STYLING --- */}
@@ -84,21 +84,21 @@ export default function InKindSection({
 
             <>
               <div className="text-high-contrast leading-relaxed markdown drop-off-info text-left">
-                {`Please Note: ${dropOff.note}`}
+                {`Please Note: ${dropOff?.note}`}
               </div>
 
-              {dropOff.items.length > 0 && (
+              {dropOff?.items?.length > 0 && (
                 <div>
                   <p className="font-semibold mb-2 text-high-contrast">
-                    {dropOff.subtitle}
+                    {dropOff?.subtitle}
                   </p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                    {dropOff.items.map((item, index) => (
+                    {dropOff?.items?.map((item, index) => (
                       <span
                         key={index}
                         className="text-sm text-muted-foreground"
                       >
-                        • {item.value}
+                        • {item?.value}
                       </span>
                     ))}
                   </div>
@@ -109,7 +109,7 @@ export default function InKindSection({
             <div className="pt-4 border-t border-border">
               <p className="flex items-center gap-2 text-high-contrast">
                 <Mail className="h-5 w-5 text-[var(--rh-orange-500)]" />
-                {dropOff.bottomText}
+                {dropOff?.bottomText}
               </p>
             </div>
           </CardContent>
