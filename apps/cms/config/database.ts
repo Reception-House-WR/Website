@@ -34,6 +34,11 @@ export default ({ env }: DatabaseContext) => ({
         : false,
     },
 
+    settings: {
+      forceMigration: true,
+      runMigrations: true
+    },
+    
     // Optional connection pool configuration
     pool: {
       min: 0,
