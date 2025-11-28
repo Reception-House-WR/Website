@@ -40,8 +40,8 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
                 <div className="relative h-64 md:h-auto overflow-hidden">
                   
                   {(currentStory?.image && <img
-                    src={currentStory.image}
-                    alt={`${currentStory.image} from ${currentStory.author}`}
+                    src={currentStory?.image}
+                    alt={`${currentStory?.image} from ${currentStory?.author}`}
                     className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                   />)}
                 </div>
@@ -53,8 +53,8 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
                     "{currentStory?.quote}"
                   </blockquote>
                   <div>
-                    <p className="font-semibold text-foreground">{currentStory.author}</p>
-                    <p className="text-sm text-muted-foreground">{currentStory.country}</p>
+                    <p className="font-semibold text-foreground">{currentStory?.author}</p>
+                    <p className="text-sm text-muted-foreground">{currentStory?.country}</p>
                   </div>
                 </div>
               </div>
