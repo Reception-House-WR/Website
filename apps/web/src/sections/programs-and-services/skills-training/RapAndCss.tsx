@@ -37,11 +37,12 @@ export default function RapAndCss({
             </ul>
 
             <div className="pt-4">
-              <img
-                src={rapSection.image?.url}
+              
+              {(rapSection.image?.url && <img
+                src={rapSection.image.url}
                 alt={rapSection.image?.alternativeText || "Instructor helping students during orientation session"}
                 className="rounded-lg shadow-soft w-full"
-              />
+              />)}
             </div>
           </div>
 
@@ -71,11 +72,11 @@ export default function RapAndCss({
             </ul>
 
             <div className="pt-4">
-              <img
-                src={cssSection.image?.url}
+              {(cssSection.image?.url && <img
+                src={cssSection.image.url}
                 alt={cssSection.image?.alternativeText || ""}
                 className="rounded-lg shadow-soft w-full"
-              />
+              />)}
             </div>
           </div>
         </div>

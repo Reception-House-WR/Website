@@ -102,12 +102,13 @@ export default async function OurHistory() {
                     >
                       {event.image?.url && (
                         <div className="relative w-full max-w-[400px] h-[250px]">
-                          <Img
+                          
+                          {(event.image?.url && <Img
                             src={event.image.url}
                             alt={event.image.alternativeText || `Image for ${event.title}`}
                             fill
                             className="object-cover rounded-lg shadow-lg border border-gray-200 hover:border-primary transition-colors duration-300"
-                          />
+                          />)}
                         </div>
                       )}
                     </div>

@@ -31,11 +31,12 @@ export default function Programs({
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               <div className="relative h-64 overflow-hidden">
-                <img
+                
+                {(program.image.url && <img
                   src={program.image.url}
                   alt={program.image.alternativeText ?? program.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                />)}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <div className="w-14 h-14 rounded-full bg-[var(--rh-500)]/90 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">

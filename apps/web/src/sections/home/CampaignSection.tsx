@@ -24,11 +24,12 @@ export const CampaignSection = ({ title, campaign }: FeaturedCampaignProps) => {
             <div className="grid md:grid-cols-5 gap-0">
               {/* Image */}
               <div className="md:col-span-2 relative h-64 md:h-auto overflow-hidden">
-                <img
+                {(campaign.image && <img 
                   src={campaign.image}
                   alt={campaign.name}
                   className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 />
+                )}
               </div>
 
               {/* Content */}

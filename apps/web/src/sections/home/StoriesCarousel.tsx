@@ -38,11 +38,12 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Image */}
                 <div className="relative h-64 md:h-auto overflow-hidden">
-                  <img
+                  
+                  {(currentStory.image && <img
                     src={currentStory.image}
                     alt={`${currentStory.image} from ${currentStory.author}`}
                     className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
+                  />)}
                 </div>
 
                 {/* Content */}

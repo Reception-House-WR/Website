@@ -10,12 +10,12 @@ export const ProgramCard = ({ title, description, imageSrc, imageAlt }: ProgramC
   return (
     <article className="bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-hover transition-smooth flex-1 w-full">
       <div className="relative aspect-video overflow-hidden">
-        <Img
+        {(imageSrc && <Img
           src={imageSrc}
           alt={imageAlt || title}
           fill
           className="object-cover hover:scale-105 transition-smooth"
-        />
+        />)}
       </div>
       <div className="p-6">
         <h3 className="text-xl font-semibold mb-3 text-card-foreground">
