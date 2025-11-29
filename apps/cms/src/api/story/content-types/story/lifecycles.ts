@@ -191,23 +191,6 @@ export default {
  * SINGLE LIFECYCLE: afterDelete
  *
  * This will:
- *  - Run whenever a Story entry is deleted (for any locale).
- *  - If the deleted entry belongs to SOURCE_LOCALE (e.g. "en"):
- *        → Automatically delete ALL related localized versions
- *          that share the same `documentId` (en, es, fr, etc.).
- *  - If the deleted entry is NOT in SOURCE_LOCALE:
- *        → Do nothing (prevents infinite loops).
- *
- * Important:
- *  - Strapi v5 does NOT cascade-delete all locales by default.
- *  - `strapi.documents(...).delete({ documentId })` only removes
- *    the default locale version.
- *  - To delete ALL locales of a document, we must pass `locale: '*'`.
- */
-/**
- * SINGLE LIFECYCLE: afterDelete
- *
- * This will:
  *  - Run whenever a Story entry is deleted.
  *  - If the deleted entry belongs to SOURCE_LOCALE (e.g. "en"):
  *        → Automatically delete ALL localized versions
@@ -232,6 +215,24 @@ async afterDelete(event) {
     return;
   }
 
+  // New: We check if there is ANY other entry in 'en'
+  // for that same documentId. If there is, it means that this delete
+  // is part of an internal operation (publish/unpublish), not a final deletion.
+  const stillExists = await strapi.entityService.findMany(model.uid, {
+    filters: {
+      documentId,
+      locale: SOURCE_LOCALE,
+    },
+  });
+
+  if (stillExists && stillExists.length > 0) {
+    console.log(
+      `[afterDelete] Skip cascade delete → still has ${stillExists.length} entries in SOURCE_LOCALE for documentId ${documentId}`,
+    );
+    return;
+  }
+
+
   console.log(
     `Cascade delete starting → documentId=${documentId}, locale=${locale}`
   );
@@ -249,3 +250,28 @@ async afterDelete(event) {
 
 
 };
+
+
+// src/api/story/content-types/story/lifecycles.ts
+// import { createAutoTranslateLifecycles } from "../../../../utils/autoTranslate";
+
+// export default createAutoTranslateLifecycles({
+//   translatableFields: ["author", "quote"],
+
+//   async buildTranslatedData(source, targetLocale) {
+//     return {
+//       // Non-translatable fields copied as-is
+//       country: source.country,
+//       image: source.image,
+//       videoUrl: source.videoUrl,
+
+//       // Localization info
+//       locale: targetLocale,
+
+//       // Internal flag, NOT a real field of the model:
+//       // used only to detect that this entry was created/updated
+//       // by our translation code.
+//       triggeredByTranslation: true,
+//     };
+//   },
+// });
