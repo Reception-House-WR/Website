@@ -21,6 +21,7 @@ async function buildTranslatedData( source: any, targetLocale: string, ): Promis
     // Internal flag, NOT a real field of the model: 
     // used only to detect that this entry was created/updated by our translation code. 
     triggeredByTranslation: true, 
+
   }; 
 
   // Translate text fields 
@@ -51,6 +52,11 @@ export default {
       return; 
     } 
     
+    //Only execute it when is publish and not save
+    if (!story.publishedAt){
+      return;
+    }
+
     // Only auto-create translations from the source locale. 
     if (story.locale !== SOURCE_LOCALE) { 
       return; 
@@ -63,8 +69,8 @@ export default {
 
       const data = await buildTranslatedData(story, targetLocale); 
       console.log("AFTER CREATE ", SOURCE_LOCALE, " -> ", targetLocale) 
-      await strapi.documents(model.uid).create({ 
-        documentId: story.documentId, locale: targetLocale, data, 
+      await strapi.documents(model.uid).update({ 
+        documentId: story.documentId, locale: targetLocale, status: "published", data, 
       }); 
     
     } 
