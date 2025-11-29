@@ -23,13 +23,13 @@ export default function CampaignsSection({
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === campaignsData.length - 1 ? 0 : prevIndex + 1
+      prevIndex === campaignsData?.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? campaignsData.length - 1 : prevIndex - 1
+      prevIndex === 0 ? campaignsData?.length - 1 : prevIndex - 1
     );
   };
 
@@ -42,20 +42,20 @@ export default function CampaignsSection({
         <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
           {campaignDesc}
         </p>
-        {campaignsData.length > 0 ? (
+        {campaignsData?.length > 0 ? (
           <div className="relative">
             <Card
-              key={campaignsData[currentIndex].goal}
+              key={campaignsData[currentIndex]?.goal}
               className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
             >
               <div className="relative h-64 md:h-80 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
                   <Image
                     src={
-                      campaignsData[currentIndex].image ||
+                      campaignsData[currentIndex]?.image ||
                       "/public/assets/campaign.png"
                     }
-                    alt={campaignsData[currentIndex].name || "Campaign Image"}
+                    alt={campaignsData[currentIndex]?.name || "Campaign Image"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -63,29 +63,29 @@ export default function CampaignsSection({
 
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                   <h3 className="text-3xl md:text-4xl font-bold mb-2">
-                    {campaignsData[currentIndex].name}
+                    {campaignsData[currentIndex]?.name}
                   </h3>
                 </div>
               </div>
               <CardContent className="p-8 md:p-12 bg-white">
                 <p className="text-lg leading-relaxed text-high-contrast mb-6">
-                  {campaignsData[currentIndex].description}
+                  {campaignsData[currentIndex]?.description}
                 </p>
                 <div className="mb-6">
                   <div className="mb-2 flex justify-between text-sm">
                     <span className="font-medium text-foreground bg-clip-text">
-                      {formatCurrency(campaignsData[currentIndex].raised, "en")}
+                      {formatCurrency(campaignsData[currentIndex]?.raised, "en")}
                     </span>
                     <span className="text-muted-foreground">
-                      {formatCurrency(campaignsData[currentIndex].goal, "en")}
+                      {formatCurrency(campaignsData[currentIndex]?.goal, "en")}
                     </span>
                   </div>
                   <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
                     <div
                       className="h-full bg-gradient-to-r from-[var(--rh-yellow-500)] to-[var(--rh-red-500)] transition-all duration-500"
-                      style={{ width: `${(campaignsData[currentIndex].raised / campaignsData[currentIndex].goal) * 100}%` }}
+                      style={{ width: `${(campaignsData[currentIndex]?.raised / campaignsData[currentIndex]?.goal) * 100}%` }}
                       role="progressbar"
-                      aria-valuenow={(campaignsData[currentIndex].raised / campaignsData[currentIndex].goal) * 100}
+                      aria-valuenow={(campaignsData[currentIndex]?.raised / campaignsData[currentIndex]?.goal) * 100}
                       aria-valuemin={0}
                       aria-valuemax={100}
                       aria-label="Donation campaign progress"

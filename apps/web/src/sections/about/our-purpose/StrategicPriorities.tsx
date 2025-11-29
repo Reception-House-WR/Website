@@ -33,13 +33,13 @@ export const StrategicPriorities = ({
                     .sort((a, b) => a.priority - b.priority)
                     .map((priority, index) => (
                         <div
-                            key={`${priority.priority}-${index}`}
+                            key={`${priority?.priority}-${index}`}
                             className="flex items-center gap-4 p-4 bg-card rounded-lg hover:bg-black/5 transition-colors"
                         >
                             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                                <span className="text-white font-bold text-sm">{priority.priority}</span>
+                                <span className="text-white font-bold text-sm">{priority?.priority}</span>
                             </div>
-                            <p className="text-lg text-foreground flex-1">{priority.description}</p>
+                            <p className="text-lg text-foreground flex-1">{priority?.description}</p>
                         </div>
                     ))}
             </div>

@@ -62,7 +62,7 @@ export const EventCard = ({
       <CardContent className="p-0 md:flex h-full">
         {/* Event Image Section */}
         <div className="w-full h-48 md:h-auto md:w-1/3  bg-muted/50 flex-shrink-0">
-          {event.image ? (
+          {event.image.url ? (
             <img
               src={event.image.url}
               alt={event.title}
@@ -147,7 +147,7 @@ export const EventCard = ({
     </Card>
   );
 
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
   if (!siteKey) {
     console.error("reCAPTCHA site key is missing.");
     return CardUI;

@@ -13,12 +13,12 @@ export default async function StoriesPage() {
 
   return (
     <StoriesClient
-      heroTitle={res.hero.title}
-      heroDesc={res.hero.description}
-      heroImage={res.hero.backgroundImageUrl}
-      bodyTitle={res.body.section.title}
-      bodyDesc={res.body.section.description}
-      stories={res.body.stories}
+      heroTitle={res.hero?.title || ""}
+      heroDesc={res.hero?.description || ""}
+      heroImage={res.hero?.backgroundImageUrl || ""}
+      bodyTitle={res.body?.section?.title || ""}
+      bodyDesc={res.body?.section?.description || ""}
+      stories={res.body?.stories || []}
     />
   );
 }

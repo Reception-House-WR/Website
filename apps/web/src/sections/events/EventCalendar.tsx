@@ -24,7 +24,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
 
   //Parse dates as local time to prevent timezone shifts
   const eventDates = events.map((event) => {
-    if (!event.date) return new Date();
+    if (!event?.date) return new Date();
 
     const parts = event.date.split("-");
 
@@ -38,7 +38,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
   //Get events for the selected date
   const eventsOnSelectedDate = selectedDate
     ? events.filter(
-        (event) => event.date === format(selectedDate, "yyyy-MM-dd")
+        (event) => event?.date === format(selectedDate, "yyyy-MM-dd")
       )
     : [];
 
@@ -80,7 +80,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
         </div>
 
         {/* Events for the selected date */}
-        {selectedDate && eventsOnSelectedDate.length > 0 && (
+        {selectedDate && eventsOnSelectedDate?.length > 0 && (
           <div className="space-y-2 pt-2 w-full">
             <h4 className="font-semibold text-sm text-muted-foreground">
               Events on
@@ -108,7 +108,7 @@ export function EventCalendar({ events }: EventCalendarProps) {
         )}
 
         {/* No events for selected date */}
-        {selectedDate && eventsOnSelectedDate.length === 0 && (
+        {selectedDate && eventsOnSelectedDate?.length === 0 && (
           <div className="text-center py-4">
             <p className="text-sm text-muted-foreground">
               No events scheduled for this date

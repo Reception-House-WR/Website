@@ -15,11 +15,11 @@ export default async function Home() {
 
   return (
     <div className="">
-      <HeroAboutUs url={res.hero.backgroundImageUrl} title={res.hero.title} description={res.hero.description} />
-      <WhoWeAre title={res.whoWeAreSection.title} description={res.whoWeAreSection.description} />
-      <CommunityInAction title={res.communitySection.title} gallery={res.communitySection.gallery} />
+      <HeroAboutUs url={res?.hero?.backgroundImageUrl || ""} title={res?.hero?.title || ""} description={res?.hero?.description || ""} />
+      <WhoWeAre title={res?.whoWeAreSection?.title || ""} description={res?.whoWeAreSection?.description || ""} />
+      <CommunityInAction title={res?.communitySection?.title || ""} gallery={res?.communitySection?.gallery || []} />
       <LinksToPages />
-      <BoardOfDirectors title={res.boardOfDirectorsSection.title} desc={res.boardOfDirectorsSection.description} image={res.boardOfDirectorsSection.image?.url} buttonLabel={res.boardOfDirectorsSection.buttonLabel} />
+      <BoardOfDirectors title={res?.boardOfDirectorsSection?.title || ""} desc={res?.boardOfDirectorsSection?.description || ""} image={res?.boardOfDirectorsSection?.image?.url || ""} buttonLabel={res?.boardOfDirectorsSection?.buttonLabel || ""} />
     </div>
   );
 }

@@ -27,24 +27,24 @@ export const Partners = ({ title, desc, partners }: PartnersSectionProps) => {
             className="relative w-full py-4"
             >
             <CarouselContent className="py-6">
-                {partners.map((partner, index) => (
+            {partners.map((partner, index) => (
             <Card
               key={index}
               className="w-50 mx-5 flex items-center justify-center p-6 h-32 shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all hover:scale-105 animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <Link href={partner.url} target="_blank">
+              <Link href={partner?.url} target="_blank">
               <div className="text-center">
                 <div className="w-24 h-16 mx-auto mb-2 flex items-center justify-center">
-                  <img
-                    src={partner.logo.url}
-                    alt={partner.logo.alternativeText || partner.name}
+                  {(partner?.logo?.url && <img
+                    src={partner?.logo.url}
+                    alt={partner?.logo.alternativeText || partner?.name}
                     className="max-h-14 w-auto object-contain"
                     loading="lazy"
-                  />
+                  />)}
                 </div>
                 <p className="text-xs font-medium text-muted-foreground line-clamp-2">
-                  {partner.name}
+                  {partner?.name}
                 </p>
               </div>
               </Link>

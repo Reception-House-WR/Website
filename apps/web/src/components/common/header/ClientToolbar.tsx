@@ -11,7 +11,6 @@ export default function ClientToolbar() {
     <Toolbar 
       currentLang="en" 
       onLanguageToggle={handleToggle} 
-      
     />
   )
 }

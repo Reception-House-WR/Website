@@ -48,9 +48,9 @@ export const Reports = ({
                   <FileText className="w-6 h-6 text-blue-500" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground">{file.name}</h3>
+                  <h3 className="font-bold text-foreground">{file?.name}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {2024} • {formatFileSize(file.document.size)}
+                    {2024} • {formatFileSize(file?.document?.size)}
                   </p>
                 </div>
               </div>
@@ -59,7 +59,7 @@ export const Reports = ({
                 size="icon"
                 className="flex-shrink-0 cursor-pointer"
                 aria-label="Expand section"
-                onClick={() => handleDownload(file.document.url)}
+                onClick={() => handleDownload(file?.document?.url)}
               >
                 <Download className="w-5 h-5" />
               </Button>

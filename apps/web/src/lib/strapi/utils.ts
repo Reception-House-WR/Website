@@ -13,6 +13,6 @@ export function getStrapiMedia(
   }
   const url = mediaData.url;
   const strapiUrl =
-    process.env.STRAPI_URL || "http://localhost:1337";
+    process.env["STRAPI_URL"] || "http://localhost:1337";
   return url.startsWith("/") ? `${strapiUrl}${url}` : url;
 }

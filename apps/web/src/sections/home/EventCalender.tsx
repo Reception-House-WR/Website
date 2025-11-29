@@ -25,9 +25,9 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
   
   const displayedEvents = selectedDate
     ? events.filter(event => 
-        event.date && event.date.getDate() === selectedDate.getDate() &&
-        event.date.getMonth() === selectedDate.getMonth() &&
-        event.date.getFullYear() === selectedDate.getFullYear()
+        event?.date && event.date.getDate() === selectedDate.getDate() &&
+        event?.date.getMonth() === selectedDate.getMonth() &&
+        event?.date.getFullYear() === selectedDate.getFullYear()
       )
     : events;
 
@@ -113,7 +113,7 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                   <span>
                     {'Showing Events For'} <strong className="text-foreground">{dateFormatter.format(selectedDate)}</strong>
                     {hasEventsOnSelectedDate && (
-                      <> ({displayedEvents.length} {eventsCountText})</>
+                      <> ({displayedEvents?.length} {eventsCountText})</>
                     )}
                   </span>
                 ) : (
@@ -184,25 +184,26 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                     <CardContent className="p-0 sm:flex md:h-48">
                         {/* Event Image */}
                         <div className="relative md:aspect-auto overflow-hidden bg-muted h-full ">
-                          <img
-                            src={event.image?.url}
+                          
+                          {(event?.image?.url && <img
+                            src={event.image.url}
                             alt={event.image?.alternativeText || event.title}
                             loading="lazy"
                             className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
+                          />)}
                         </div>
                         
                         {/* Event Details */}
                         <div className="p-6 space-y-3 ">
                           <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                            {event.title}
+                            {event?.title}
                           </h3>
                           
                           <div className="space-y-2">
                             <div className="flex items-start gap-3 text-sm text-muted-foreground">
                               <CalendarIcon className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
                               <span>
-                                {event.date?.toISOString().split('T')[0]}
+                                {event?.date?.toISOString().split('T')[0]}
                               </span>
                             </div>
                             <div className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -211,12 +212,12 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                             </div>
                             <div className="flex items-start gap-3 text-sm text-muted-foreground">
                               <MapPin className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
-                              <span>{event.location}</span>
+                              <span>{event?.location}</span>
                             </div>
                           </div>
                           
                           <p className="text-sm text-muted-foreground line-clamp-2">
-                            {event.description}
+                            {event?.description}
                           </p>
                         </div>
                     </CardContent>

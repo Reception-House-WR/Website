@@ -54,27 +54,27 @@ export default function Programs({
                 >
                   <Icon className="w-8 h-8 text-white " />
                 </div>
-                <CardTitle className="text-2xl mb-2">{card.title}</CardTitle>
+                <CardTitle className="text-2xl mb-2">{card?.title}</CardTitle>
                 <CardDescription className="text-[var(--rh-500)] font-semibold">
-                  {card.subtitle}
+                  {card?.subtitle}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  {card.description}
+                  {card?.description}
                 </p>
                 <div className="space-y-2">
                   <h4 className="font-semibold text-foreground">
-                    {card.subtitle2}
+                    {card?.subtitle2}
                   </h4>
                   <ul className="space-y-2">
-                    {card.items.map((item, idx) => (
+                    {card?.items.map((item, idx) => (
                       <li
                         key={idx}
                         className="flex items-start gap-2 text-sm text-muted-foreground"
                       >
                         <span className="text-[var(--rh-red-500)] mt-1">•</span>
-                        <span>{item.value}</span>
+                        <span>{item?.value}</span>
                       </li>
                     ))}
                   </ul>

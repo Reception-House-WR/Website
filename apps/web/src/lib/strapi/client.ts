@@ -15,8 +15,8 @@ export async function fetchApi<T>(
   fetchOptions: RequestInit = {}
 ): Promise<T | null> {
   const strapiUrl =
-    process.env.STRAPI_URL || "http://localhost:1337";
-  const strapiToken = process.env.STRAPI_API_TOKEN;
+    process.env["STRAPI_URL"] || "http://localhost:1337";
+  const strapiToken = process.env["STRAPI_TOKEN"];
 
   const query = qs.stringify(queryObject, { encodeValuesOnly: true });
   const apiUrl = `${strapiUrl}${path}${query ? `?${query}` : ""}`;
