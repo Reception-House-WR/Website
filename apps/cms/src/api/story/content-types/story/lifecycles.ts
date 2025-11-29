@@ -91,98 +91,161 @@ export default {
   async beforeUpdate(event) {
 
     console.log("BEFORE UPDATE CALLED")
-  //   const { model, params } = event;
-  //   const { data, where } = params;
+    const { model, params } = event;
+    const { data, where } = params;
 
-  //   // 1) If this update comes from our own translation logic, skip it
-  //   if (data?.triggeredByTranslation) {
-  //     return;
-  //   }
+    // 1) If this update comes from our own translation logic, skip it
+    if (data?.triggeredByTranslation) {
+      return;
+    }
 
-  //   // 2) We need the ID of the Story being updated
-  //   if (!where?.id) {
-  //     return;
-  //   }
+    // 2) We need the ID of the Story being updated
+    if (!where?.id) {
+      return;
+    }
 
-  //   // 3) Load current entry with its localizations
-  //   const existing = await strapi.entityService.findOne(model.uid, where.id, {
-  //     populate: ["localizations"],
-  //   });
+    // 3) Load current entry with its localizations
+    const existing = await strapi.entityService.findOne(model.uid, where.id, {
+      populate: ["localizations"],
+    });
 
-  //   if (!existing) {
-  //     return;
-  //   }
+    if (!existing) {
+      return;
+    }
 
-  //   const currentLocale = existing.locale;
+    const currentLocale = existing.locale;
 
-  //   // 4) Only propagate changes when editing the source locale (en)
-  //   if (!currentLocale || currentLocale !== SOURCE_LOCALE) {
-  //     return;
-  //   }
+    // 4) Only propagate changes when editing the source locale (en)
+    if (!currentLocale || currentLocale !== SOURCE_LOCALE) {
+      return;
+    }
 
-  //   // 5) Detect which translatable fields actually changed
-  //   const changedFields: Partial<Record<TranslatableField, string>> = {};
+    // 5) Detect which translatable fields actually changed
+    const changedFields: Partial<Record<TranslatableField, string>> = {};
 
-  //   for (const field of TRANSLATABLE_FIELDS) {
-  //     const newValue = data[field];
-  //     const oldValue = existing[field];
+    for (const field of TRANSLATABLE_FIELDS) {
+      const newValue = data[field];
+      const oldValue = existing[field];
 
-  //     if (
-  //       typeof newValue === "string" &&
-  //       newValue.trim() !== (oldValue ?? "").trim()
-  //     ) {
-  //       changedFields[field] = newValue;
-  //     }
-  //   }
+      if (
+        typeof newValue === "string" &&
+        newValue.trim() !== (oldValue ?? "").trim()
+      ) {
+        changedFields[field] = newValue;
+      }
+    }
 
-  //   // If nothing changed in the fields we care about, stop here
-  //   if (Object.keys(changedFields).length === 0) {
-  //     return;
-  //   }
+    // If nothing changed in the fields we care about, stop here
+    if (Object.keys(changedFields).length === 0) {
+      return;
+    }
 
-  //   const localizations = existing.localizations || [];
+    const localizations = existing.localizations || [];
 
-  //   // 6) For each target locale (es, fr...)
-  //   for (const targetLocale of TARGET_LOCALES) {
-  //     // Try to find an existing localized Story
-  //     let targetEntry = localizations.find(
-  //       (loc) => loc.locale === targetLocale,
-  //     );
+    // 6) For each target locale (es, fr...)
+    for (const targetLocale of TARGET_LOCALES) {
+      // Try to find an existing localized Story
+      let targetEntry = localizations.find(
+        (loc) => loc.locale === targetLocale,
+      );
 
-  //     // 6.a) If it does NOT exist yet → create it
-  //     if (!targetEntry) {
-  //       const newData = await buildTranslatedData(existing, targetLocale);
+      // 6.a) If it does NOT exist yet → create it 
+      if (!targetEntry) {
+        const newData = await buildTranslatedData(existing, targetLocale);
 
-  //       const created = await strapi.documents(model.uid).create({
-  //         documentId: existing.documentId,
-  //         locale: targetLocale,
-  //         data: newData,
-  //       });
+        const created = await strapi.documents(model.uid).update({
+          documentId: existing.documentId,
+          locale: targetLocale,
+          data: newData,
+        });
 
-  //       targetEntry = created;
-  //     }
+        targetEntry = created;
+      }
 
 
-  //     console.log("BEFORE UPDATE")
-  //     // 6.b) Now build an update payload ONLY for the changed fields
-  //     const updateData: Record<string, any> = {
-  //       triggeredByTranslation: true, // avoid infinite loop
-  //     };
+      console.log("BEFORE UPDATE")
 
-  //     for (const [field, newValue] of Object.entries(changedFields)) {
-  //       updateData[field] = await translateText(
-  //         newValue!,
-  //         SOURCE_LOCALE,
-  //         targetLocale,
-  //       );
-  //     }
+      // 6.b) Now build an update payload ONLY for the changed fields
+      const updateData: Record<string, any> = {
+        triggeredByTranslation: true, // avoid infinite loop
+      };
 
-  //     // 6.c) Update the localized document using the Document Service
-  //     await strapi.documents(model.uid).update({
-  //       documentId: targetEntry.documentId,
-  //       locale: targetLocale,
-  //       data: updateData,
-  //     });
-  //   }
+      for (const [field, newValue] of Object.entries(changedFields)) {
+        updateData[field] = await translateText(
+          newValue!,
+          SOURCE_LOCALE,
+          targetLocale,
+        );
+      }
+
+      // 6.c) Update the localized document using the Document Service
+      await strapi.documents(model.uid).update({
+        documentId: targetEntry.documentId,
+        locale: targetLocale,
+        data: updateData,
+      });
+    }
   },
+
+/**
+ * SINGLE LIFECYCLE: afterDelete
+ *
+ * This will:
+ *  - Run whenever a Story entry is deleted (for any locale).
+ *  - If the deleted entry belongs to SOURCE_LOCALE (e.g. "en"):
+ *        → Automatically delete ALL related localized versions
+ *          that share the same `documentId` (en, es, fr, etc.).
+ *  - If the deleted entry is NOT in SOURCE_LOCALE:
+ *        → Do nothing (prevents infinite loops).
+ *
+ * Important:
+ *  - Strapi v5 does NOT cascade-delete all locales by default.
+ *  - `strapi.documents(...).delete({ documentId })` only removes
+ *    the default locale version.
+ *  - To delete ALL locales of a document, we must pass `locale: '*'`.
+ */
+/**
+ * SINGLE LIFECYCLE: afterDelete
+ *
+ * This will:
+ *  - Run whenever a Story entry is deleted.
+ *  - If the deleted entry belongs to SOURCE_LOCALE (e.g. "en"):
+ *        → Automatically delete ALL localized versions
+ *          (en, es, fr, etc.) using locale: '*'
+ *  - If the deleted entry is NOT in SOURCE_LOCALE:
+ *        → Do nothing.
+ */
+async afterDelete(event) {
+  const { model, result } = event;
+
+  // result could potentially be an array (bulk delete),
+  // but in your use case we only care about single deletes.
+  const story = Array.isArray(result) ? result[0] : result;
+
+  const locale = story?.locale;
+  const documentId = story?.documentId;
+
+  if (!documentId) return;
+
+  // Only cascade delete if the deleted version is the SOURCE_LOCALE
+  if (locale !== SOURCE_LOCALE) {
+    return;
+  }
+
+  console.log(
+    `Cascade delete starting → documentId=${documentId}, locale=${locale}`
+  );
+
+  // Delete ALL locales for this document
+  await strapi.documents(model.uid).delete({
+    documentId: documentId,
+    locale: "*", 
+  });
+
+  console.log(
+    `Cascade delete executed → Deleted all locales for documentId ${documentId}`
+  );
+}
+
+
 };
