@@ -1053,6 +1053,35 @@ export interface ApiStrategicPriorityStrategicPriority
   };
 }
 
+export interface ApiTagTag extends Struct.CollectionTypeSchema {
+  collectionName: 'tags';
+  info: {
+    displayName: 'tag';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String & Schema.Attribute.Required;
+    identifier: Schema.Attribute.UID;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
+      Schema.Attribute.Private;
+    pageLabel: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    sectionLabel: Schema.Attribute.String & Schema.Attribute.Required;
+    tags: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiValueValue extends Struct.CollectionTypeSchema {
   collectionName: 'values';
   info: {
@@ -1751,6 +1780,7 @@ declare module '@strapi/strapi' {
       'api::report.report': ApiReportReport;
       'api::story.story': ApiStoryStory;
       'api::strategic-priority.strategic-priority': ApiStrategicPriorityStrategicPriority;
+      'api::tag.tag': ApiTagTag;
       'api::value.value': ApiValueValue;
       'api::volunteer-testimonial.volunteer-testimonial': ApiVolunteerTestimonialVolunteerTestimonial;
       'api::web-page.web-page': ApiWebPageWebPage;

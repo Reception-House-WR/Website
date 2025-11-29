@@ -17,9 +17,8 @@ import {
 import { cn } from "@/lib/utils";
 import { SearchSection } from "@/lib/search/types";
 
-
 type SearchProps = {
-  items: SearchSection[];                 // 🔹 list of sections/pages
+  items: SearchSection[];
   placeholder?: string;
   className?: string;
 };
@@ -33,14 +32,13 @@ export default function Search({
   const [results, setResults] = useState<SearchSection[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Build Fuse index once (or when items change)
   const fuse = useMemo(() => {
     if (!items.length) return null;
 
     return new Fuse(items, {
       keys: ["label", "description"],
       includeScore: true,
-      threshold: 0.3, // 0.2–0.4 is a good fuzzy range
+      threshold: 0.3,
     });
   }, [items]);
 
@@ -53,7 +51,7 @@ export default function Search({
     }
 
     const fuseResults = fuse.search(q);
-    const top = fuseResults.slice(0, 10).map((r: unknown) => (r as { item: SearchSection }).item);
+    const top = fuseResults.slice(0, 10).map((r) => r.item as SearchSection);
 
     setResults(top);
     setIsOpen(true);
@@ -66,20 +64,24 @@ export default function Search({
 
   const handleChange = (value: string) => {
     setQuery(value);
-    // live search as user types
     runSearch(value);
   };
 
   const handleSelect = () => {
-    // close results when user clicks a result
     setIsOpen(false);
   };
 
-  const ResultsList = () => {
+  // 🔹 Reusable results list, with `floating` to control positioning
+  const ResultsList = ({ floating = false }: { floating?: boolean }) => {
     if (!isOpen || !query.trim()) return null;
 
     return (
-      <div className="mt-2 w-full bg-popover border rounded-md shadow-md max-h-72 overflow-auto text-sm">
+      <div
+        className={cn(
+          "w-full bg-popover border rounded-md shadow-md max-h-72 overflow-auto text-sm z-50",
+          floating ? "absolute left-0 top-full mt-2" : "mt-2"
+        )}
+      >
         {results.length === 0 ? (
           <div className="px-3 py-2 text-muted-foreground">No results</div>
         ) : (
@@ -109,39 +111,45 @@ export default function Search({
   return (
     <div className={cn("flex items-center w-full", className)}>
       {/* XL: inline search bar */}
-      <div className="hidden xl:flex flex-1 min-w-[180px] max-w-2xl flex-col">
-        <form onSubmit={handleSubmit}>
-          <div className="relative w-full">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder={placeholder}
-              value={query}
-              onChange={(e) => handleChange(e.target.value)}
-              className="pl-10"
-              aria-label="Search website"
-            />
-          </div>
-        </form>
-        <ResultsList />
+      <div className="hidden xl:flex flex-1 min-w-[180px] max-w-2xl">
+        <div className="relative w-full">
+          <form onSubmit={handleSubmit}>
+            <div className="relative w-full">
+              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder={placeholder}
+                value={query}
+                onChange={(e) => handleChange(e.target.value)}
+                className="pl-10"
+                aria-label="Search website"
+              />
+            </div>
+          </form>
+          {/* 🔹 Floating dropdown so it doesn't push layout */}
+          <ResultsList floating />
+        </div>
       </div>
 
       {/* MD–LG: inline (narrow) search bar */}
-      <div className="hidden md:flex lg:hidden w-full min-w-[180px] flex-col">
-        <form onSubmit={handleSubmit}>
-          <div className="relative w-full">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder={placeholder}
-              value={query}
-              onChange={(e) => handleChange(e.target.value)}
-              className="pl-10"
-              aria-label="Search website"
-            />
-          </div>
-        </form>
-        <ResultsList />
+      <div className="hidden md:flex lg:hidden w-full min-w-[180px]">
+        <div className="relative w-full">
+          <form onSubmit={handleSubmit}>
+            <div className="relative w-full">
+              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder={placeholder}
+                value={query}
+                onChange={(e) => handleChange(e.target.value)}
+                className="pl-10"
+                aria-label="Search website"
+              />
+            </div>
+          </form>
+          {/* 🔹 Same floating behavior here */}
+          <ResultsList floating />
+        </div>
       </div>
 
       {/* LG: icon opens dialog */}
@@ -171,6 +179,7 @@ export default function Search({
                 />
               </div>
             </form>
+            {/* 🔹 Inside dialog we want it *below*, not floating */}
             <ResultsList />
           </DialogContent>
         </Dialog>

@@ -19,7 +19,7 @@ export const SECTIONS_INDEX: SearchSection[] = [
     tags: ["stories", "refugees", "testimonials"],
   },
   {
-    id: "get-involved-volunteer",
+    id: "/about/our-history",
     pageLabel: "Get involved",
     sectionLabel: "Volunteer opportunities",
     description: "How to volunteer, roles, requirements, application",
@@ -42,5 +42,4 @@ export const SECTIONS_INDEX: SearchSection[] = [
     href: "/en/media-room#press-releases",
     tags: ["media", "news", "press"],
   },
-  // ...add more sections as needed
 ];

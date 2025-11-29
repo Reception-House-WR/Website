@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "tag"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "identifier": {
+      "type": "uid"
+    },
+    "pageLabel": {
+      "type": "string",
+      "required": true
+    },
+    "sectionLabel": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "tags": {
+      "type": "text",
+      "required": true,
+      "regex": "^[a-z]+(?: [a-z]+)*$"
+    }
+  }
+}
