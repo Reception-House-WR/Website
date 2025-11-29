@@ -5,6 +5,7 @@ const TARGET_LOCALES = ["es", "fr"]; // languages to update
 
 // fields we want to auto-translate
 const TRANSLATABLE_FIELDS = ["author", "quote"];
+const SYNC_FIELDS = ["country", "image", "videoUrl"];
 type TranslatableField = (typeof TRANSLATABLE_FIELDS)[number];
 
 async function buildTranslatedData( source: any, targetLocale: string, ): Promise<Record<string, any>> { 
@@ -88,24 +89,25 @@ export default {
    *          - if a localized document exists → update it
    *          - if it does not exist → create it
    */
-  async beforeUpdate(event) {
+  async afterUpdate(event) {
 
     console.log("BEFORE UPDATE CALLED")
-    const { model, params } = event;
-    const { data, where } = params;
+    const { model, params, result } = event;
+    const { data } = params;
+    const entry = result;
 
     // 1) If this update comes from our own translation logic, skip it
-    if (data?.triggeredByTranslation) {
-      return;
-    }
+    if (data?.triggeredByTranslation || entry?.triggeredByTranslation) {
+    return;
+  }
 
     // 2) We need the ID of the Story being updated
-    if (!where?.id) {
+    if (!entry?.id) {
       return;
     }
 
     // 3) Load current entry with its localizations
-    const existing = await strapi.entityService.findOne(model.uid, where.id, {
+    const existing = await strapi.entityService.findOne(model.uid, entry.id, {
       populate: ["localizations"],
     });
 
@@ -178,7 +180,13 @@ export default {
         );
       }
 
-      // 6.c) Update the localized document using the Document Service
+      // 6.c) Sincronizar campos NO traducibles (IMAGEN, etc.)
+      for (const field of SYNC_FIELDS) {
+        // copiamos el valor de la versión en inglés
+        updateData[field] = (existing as any)[field];
+      }
+
+      // 6.d) Update the localized document using the Document Service
       await strapi.documents(model.uid).update({
         documentId: targetEntry.documentId,
         locale: targetLocale,
