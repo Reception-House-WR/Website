@@ -1053,73 +1053,6 @@ export interface ApiStrategicPriorityStrategicPriority
   };
 }
 
-export interface ApiTimelineEventTimelineEvent
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'timeline_events';
-  info: {
-    displayName: 'Timeline Event';
-    pluralName: 'timeline-events';
-    singularName: 'timeline-event';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::timeline-event.timeline-event'
-    >;
-    order: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    year: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-  };
-}
-
 export interface ApiValueValue extends Struct.CollectionTypeSchema {
   collectionName: 'values';
   info: {
@@ -1818,7 +1751,6 @@ declare module '@strapi/strapi' {
       'api::report.report': ApiReportReport;
       'api::story.story': ApiStoryStory;
       'api::strategic-priority.strategic-priority': ApiStrategicPriorityStrategicPriority;
-      'api::timeline-event.timeline-event': ApiTimelineEventTimelineEvent;
       'api::value.value': ApiValueValue;
       'api::volunteer-testimonial.volunteer-testimonial': ApiVolunteerTestimonialVolunteerTestimonial;
       'api::web-page.web-page': ApiWebPageWebPage;
