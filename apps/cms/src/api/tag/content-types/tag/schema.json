@@ -4,7 +4,7 @@
   "info": {
     "singularName": "tag",
     "pluralName": "tags",
-    "displayName": "tag"
+    "displayName": "Tag"
   },
   "options": {
     "draftAndPublish": true
@@ -12,7 +12,8 @@
   "pluginOptions": {},
   "attributes": {
     "identifier": {
-      "type": "uid"
+      "type": "uid",
+      "required": true
     },
     "pageLabel": {
       "type": "string",
@@ -30,6 +31,10 @@
       "type": "text",
       "required": true,
       "regex": "^[a-z]+(?: [a-z]+)*$"
+    },
+    "href": {
+      "type": "string",
+      "required": true
     }
   }
 }
