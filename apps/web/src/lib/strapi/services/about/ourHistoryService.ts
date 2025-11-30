@@ -1,7 +1,7 @@
 import { fetchApi } from "../../client";
 import { PageStructure } from "../../models/strapi/pageStructure";
 
-export async function fetchAboutOurHistory(){
+export async function fetchAboutOurHistory(locale: string){
     return await fetchApi<{
         data: PageStructure[];
         }>("/api/web-pages", {
@@ -17,15 +17,17 @@ export async function fetchAboutOurHistory(){
             },
         },
         pagination: { pageSize: 1 },
+        locale
     });
 }
 
-export async function fetchTimelineEvents() {
+export async function fetchTimelineEvents(locale: string) {
     return await fetchApi<{ data: any[] }>("/api/timeline-events", {
         sort: ["year:asc", "order:asc"],        
-        pagination: { pageSize: 1000 }, 
+        pagination: { pageSize: 100 }, 
         populate: {
             image: true,
         },
+        locale
     });
 }

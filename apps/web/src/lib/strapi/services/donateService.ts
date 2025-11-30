@@ -1,7 +1,7 @@
 import { fetchApi } from "../client";
 import { PageStructure } from "../models/strapi/pageStructure";
 
-export async function fetchDonatePageSections() {
+export async function fetchDonatePageSections(locale: string) {
   return await fetchApi<{
     data: PageStructure[];
   }>("/api/web-pages", {
@@ -55,5 +55,6 @@ export async function fetchDonatePageSections() {
         
     },
     pagination: { pageSize: 1 },
+    locale
   });
 }

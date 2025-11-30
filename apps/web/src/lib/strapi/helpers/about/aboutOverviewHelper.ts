@@ -73,8 +73,8 @@ const toCard = (s?: RawStrapiSection): Card => ({
     : undefined,
 });
 
-export async function fetchAboutOverviewPage(): Promise<AboutOverviewSections | null> {
-  const pageRes = await fetchAboutOverview();
+export async function fetchAboutOverviewPage(locale: string): Promise<AboutOverviewSections | null> {
+  const pageRes = await fetchAboutOverview(locale);
 
   const page = pageRes?.data?.[0];
   if (!page) return null;

@@ -49,8 +49,8 @@ const toCard = (c?: RawStrapiComponent): Card => ({
   buttonUrl: c?.buttonUrl ?? "",
 });
 
-export async function fetchContactUsPage(): Promise<ContactUsSections | null> {
-  const pageRes = await fetchAboutContactUs();
+export async function fetchContactUsPage(locale:string): Promise<ContactUsSections | null> {
+  const pageRes = await fetchAboutContactUs(locale);
   const page = pageRes?.data?.[0];
   if (!page) return null;
 

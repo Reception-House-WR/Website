@@ -58,10 +58,10 @@ const toStory = (st: RawStory): Story => ({
   videoUrl: st.videoUrl ?? "",
 });
 
-export async function fetchStoriesPage(): Promise<StoriesSections | null> {
+export async function fetchStoriesPage(locale: string): Promise<StoriesSections | null> {
   const [pageRes, storiesRes] = await Promise.all([
-    fetchStoriesPageSections(),
-    fetchStories(),
+    fetchStoriesPageSections(locale),
+    fetchStories(locale),
   ]);
 
   const page = pageRes?.data?.[0];

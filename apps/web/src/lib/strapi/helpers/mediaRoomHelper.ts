@@ -148,10 +148,10 @@ const toGalleryItem = (g: RawGalleryItem): GalleryItem => ({
 });
 
 
-export async function fetchMediaRoomPage(): Promise<MediaRoomSections | null> {
+export async function fetchMediaRoomPage(locale: string): Promise<MediaRoomSections | null> {
   const [pageRes, galleryRes] = await Promise.all([
-    fetchMediaRoomPageSections(),
-    fetchGalleryItems(),
+    fetchMediaRoomPageSections(locale),
+    fetchGalleryItems(locale),
   ]);
 
 

@@ -4,7 +4,7 @@ import { AboutReport } from "../../models/about/report";
 import { Value } from "../../models/about/value";
 import { PageStructure } from "../../models/strapi/pageStructure";
 
-export async function fetchAboutOurPurpose(){
+export async function fetchAboutOurPurpose(locale: string) {
     return await fetchApi<{
         data: PageStructure[];
         }>("/api/web-pages", {
@@ -21,26 +21,29 @@ export async function fetchAboutOurPurpose(){
             },
         },
         pagination: { pageSize: 1 },
+        locale
     });
 }
 
-export async function fetchValues() {
+export async function fetchValues(locale: string) {
   return await fetchApi<{
     data: Value[];
   }>("/api/values", {
     pagination: { pageSize: 100 },
+    locale
   });
 }
 
-export async function fetchPriorities() {
+export async function fetchPriorities(locale: string) {
   return await fetchApi<{
     data: Priority[];
   }>("/api/strategic-priorities", {
     pagination: { pageSize: 100 },
+    locale
   });
 }
 
-export async function fetchReports() {
+export async function fetchReports(locale: string) {
   return await fetchApi<{
     data: AboutReport[];
   }>("/api/reports", {
@@ -48,5 +51,6 @@ export async function fetchReports() {
       document: true,     
     },
     pagination: { pageSize: 50 },
+    locale
   });
 }

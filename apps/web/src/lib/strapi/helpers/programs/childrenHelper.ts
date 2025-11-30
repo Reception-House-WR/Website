@@ -121,8 +121,8 @@ const toListCard = (c: RawListCard): ListCard => ({
   })),
 });
 
-export async function fetchProgramsChildrenPage(): Promise<ChildrenSection | null> {
-  const pageRes = await fetchProgramsChildrenSections();
+export async function fetchProgramsChildrenPage(locale: string): Promise<ChildrenSection | null> {
+  const pageRes = await fetchProgramsChildrenSections(locale);
   const page = pageRes?.data?.[0];
 
   console.log("Fetched Programs Children Page:", page);

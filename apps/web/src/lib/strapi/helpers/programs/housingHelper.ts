@@ -114,8 +114,8 @@ const toBenefitsSection = (s?: RawBenefits): BenefitsSection => ({
 
 //MAIN FUNCTION 
 
-export async function fetchProgramsHousingPage(): Promise<HousingSection | null> {
-  const pageRes = await fetchProgramsHousingSections();
+export async function fetchProgramsHousingPage(locale: string): Promise<HousingSection | null> {
+  const pageRes = await fetchProgramsHousingSections(locale);
   const page = pageRes?.data?.[0];
 
   console.log("Housing Page Response:", pageRes);

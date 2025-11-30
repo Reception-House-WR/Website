@@ -104,8 +104,8 @@ const toAnalyticsSection = (s?: RawStrapiSection): AnalyticsOverview => ({
   analytics: (s?.analytics ?? []).map(toAnalytic),
 });
 
-export async function fetchProgramsHealthPage(): Promise<HealthSections | null> {
-  const pageRes = await fetchProgramsHealthSections();
+export async function fetchProgramsHealthPage(locale: string): Promise<HealthSections | null> {
+  const pageRes = await fetchProgramsHealthSections(locale);
   const page = pageRes?.data?.[0];
 
   console.log("RAW HEALTH PAGE DATA:", page);

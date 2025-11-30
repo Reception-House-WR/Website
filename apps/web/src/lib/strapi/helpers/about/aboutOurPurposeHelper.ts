@@ -73,12 +73,12 @@ const toDocument = (r: RawReport): AboutReport => {
   };
 };
 
-export async function fetchOurPurposePage(): Promise<OurPurposeSections | null> {
+export async function fetchOurPurposePage(locale: string): Promise<OurPurposeSections | null> {
   const [pageRes, valuesRes, prioritiesRes, reportsRes] = await Promise.all([
-    fetchAboutOurPurpose(),
-    fetchValues(),
-    fetchPriorities(),
-    fetchReports(),
+    fetchAboutOurPurpose(locale),
+    fetchValues(locale),
+    fetchPriorities(locale),
+    fetchReports(locale),
   ]);
 
   const page = pageRes?.data?.[0];
