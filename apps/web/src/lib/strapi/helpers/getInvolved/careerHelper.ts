@@ -97,10 +97,10 @@ const toJobOpening = (j: RawJobOpening): JobOpening => ({
   url: j.url ?? "",
 });
 
-export async function fetchCareersPage(): Promise<CareersSections | null> {
+export async function fetchCareersPage(locale: string): Promise<CareersSections | null> {
   const [pageRes, jobsRes] = await Promise.all([
-    fetchGetInvolvedCareersPageSections(),
-    fetchJobOpenings(),
+    fetchGetInvolvedCareersPageSections(locale),
+    fetchJobOpenings(locale),
   ]);
 
   const page = pageRes?.data?.[0];

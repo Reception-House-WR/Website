@@ -70,10 +70,10 @@ const toEvent = (event: RawEvent): UpcomingEvent => {
   };
 };
 
-export async function fetchEventsPage(): Promise<EventSections | null> {
+export async function fetchEventsPage(locale: string): Promise<EventSections | null> {
   const [pageRes, eventsRes] = await Promise.all([
-    fetcEventPageSections(),
-    fetchEvents(),
+    fetcEventPageSections(locale),
+    fetchEvents(locale),
   ]);
 
   const page = pageRes?.data?.[0];

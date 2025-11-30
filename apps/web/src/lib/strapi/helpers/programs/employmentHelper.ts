@@ -76,8 +76,8 @@ const toBenefitsSection = (s?: RawStrapiSection): BenefitsSection => ({
   bottomDescription: s?.bottomDescription ?? "",
 });
 
-export async function fetchProgramsEmploymentPage(): Promise<EmploymentSections | null> {
-  const pageRes = await fetchProgramsEmploymentSections();
+export async function fetchProgramsEmploymentPage(locale: string): Promise<EmploymentSections | null> {
+  const pageRes = await fetchProgramsEmploymentSections(locale);
   const page = pageRes?.data?.[0];
   if (!page) return null;
 

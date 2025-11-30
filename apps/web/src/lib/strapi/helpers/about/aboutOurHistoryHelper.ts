@@ -48,10 +48,10 @@ const toTimelineEvent = (e: RawTimelineEvent): TimelineEvent => ({
   image: e.image,
 });
 
-export async function fetchAboutOurHistoryPage(): Promise<OurHistorySections | null> {
+export async function fetchAboutOurHistoryPage(locale: string): Promise<OurHistorySections | null> {
   const [pageRes, timelineRes] = await Promise.all([
-    fetchAboutOurHistory(),
-    fetchTimelineEvents(),
+    fetchAboutOurHistory(locale),
+    fetchTimelineEvents(locale),
   ]);
 
   const page = pageRes?.data?.[0];

@@ -2,7 +2,7 @@ import { fetchApi } from "../../client";
 import { JobOpening } from "../../models/getInvolved/jobPosting";
 import { PageStructure } from "../../models/strapi/pageStructure";
 
-export async function fetchGetInvolvedCareersPageSections() {
+export async function fetchGetInvolvedCareersPageSections(locale: string) {
   return await fetchApi<{
     data: PageStructure[];
   }>("/api/web-pages", {
@@ -32,12 +32,14 @@ export async function fetchGetInvolvedCareersPageSections() {
       },
     },
     pagination: { pageSize: 1 },
+    locale
   });
 }
 
-export async function fetchJobOpenings() {
+export async function fetchJobOpenings(locale: string) {
   return await fetchApi<{ data: JobOpening[] }>("/api/job-openings", {
     sort: ["createdAt:desc"], 
     pagination: { pageSize: 100 },
+    locale
   });
 }

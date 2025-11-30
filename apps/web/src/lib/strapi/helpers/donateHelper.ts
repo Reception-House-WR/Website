@@ -173,8 +173,8 @@ const toButtonSection = (s?: RawButtonSection): ButtonSection => ({
   button: toButton(s?.button),
 });
 
-export async function fetchDonationPage(): Promise<DonateSections | null> {
-  const pageRes = await fetchDonatePageSections();
+export async function fetchDonationPage(locale: string): Promise<DonateSections | null> {
+  const pageRes = await fetchDonatePageSections(locale);
   const page = pageRes?.data?.[0];
   if (!page) return null;
 

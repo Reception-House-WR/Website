@@ -1,7 +1,7 @@
 import { fetchApi } from "../../client";
 import { PageStructure } from "../../models/strapi/pageStructure";
 
-export async function fetchGetInvolvedVolunteerPageSections() {
+export async function fetchGetInvolvedVolunteerPageSections(locale: string) {
   return await fetchApi<{
     data: PageStructure[];
   }>("/api/web-pages", {
@@ -43,5 +43,6 @@ export async function fetchGetInvolvedVolunteerPageSections() {
         
     },
     pagination: { pageSize: 1 },
+    locale
   });
 }

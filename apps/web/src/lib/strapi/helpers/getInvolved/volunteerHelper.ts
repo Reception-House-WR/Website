@@ -104,8 +104,8 @@ const toVolunteerTestimonialCarousel = (
   ),
 });
 
-export async function fetchGetInvolvedVolunteerPage(): Promise<VolunteerSections | null> {
-  const pageRes = await fetchGetInvolvedVolunteerPageSections();
+export async function fetchGetInvolvedVolunteerPage(locale: string): Promise<VolunteerSections | null> {
+  const pageRes = await fetchGetInvolvedVolunteerPageSections(locale);
   const page = pageRes?.data?.[0];
 
   console.log(page);

@@ -45,10 +45,10 @@ const toEmployee = (e: RawEmployee): Employee => ({
   imageUrl: e.image?.url ?? "",
 });
 
-export async function fetchAboutOurPeoplePage(): Promise<AboutOurPeopleSections | null> {
+export async function fetchAboutOurPeoplePage(locale: string): Promise<AboutOurPeopleSections | null> {
   const [pageRes, employeesRes] = await Promise.all([
-    fetchAboutOurPeople(),
-    fetchAllEmployees(),
+    fetchAboutOurPeople(locale),
+    fetchAllEmployees(locale),
   ]);
 
   const page = pageRes?.data?.[0];

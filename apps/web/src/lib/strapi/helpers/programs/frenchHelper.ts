@@ -107,8 +107,8 @@ const toCard = (c: RawStrapiSection): Card => ({
 
 //---------------- MAIN FUNCTION ----------------
 
-export async function fetchProgramsFrenchPage(): Promise<FrenchSections | null> {
-  const pageRes = await fetchProgramsFrenchections();
+export async function fetchProgramsFrenchPage(locale: string): Promise<FrenchSections | null> {
+  const pageRes = await fetchProgramsFrenchections(locale);
   const page = pageRes?.data?.[0];
   if (!page) return null;
 

@@ -60,8 +60,8 @@ const toCardsSection = (s?: RawStrapiSection): CardsSection => ({
   cards: (s?.cards ?? []).map((c) => toIconCard(c)),
 });
 
-export async function fetchGetInvolvedOverviewPage(): Promise<overviewSections | null> {
-  const pageRes = await fetchGetInvolvedOverviewPageSections();
+export async function fetchGetInvolvedOverviewPage(locale: string): Promise<overviewSections | null> {
+  const pageRes = await fetchGetInvolvedOverviewPageSections(locale);
   const page = pageRes?.data?.[0];
 
   if (!page) return null;

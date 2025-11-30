@@ -1,7 +1,7 @@
 import { fetchApi } from "../client";
 import { PageStructure } from "../models/strapi/pageStructure";
 
-export async function fetchMediaRoomPageSections() {
+export async function fetchMediaRoomPageSections(locale: string) {
   return await fetchApi<{
     data: PageStructure[];
   }>("/api/web-pages", {
@@ -36,10 +36,11 @@ export async function fetchMediaRoomPageSections() {
       },
     },
     pagination: { pageSize: 1 },
+    locale
   });
 }
 
-export async function fetchGalleryItems() {
+export async function fetchGalleryItems(locale: string) {
   return await fetchApi<{
     data: any[];
   }>("/api/galleries", {
@@ -50,5 +51,6 @@ export async function fetchGalleryItems() {
     pagination: {
       pageSize: 100,  
     },
+    locale
   });
 }

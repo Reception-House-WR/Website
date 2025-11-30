@@ -81,8 +81,8 @@ const toProgramCard = (p: RawStrapiSection): ProgramCard => ({
   image: p.image ?? null,
 });
 
-export async function fetchProgramsIntegrationPage(): Promise<IntegrationSections | null> {
-  const pageRes = await fetchProgramsIntegrationSections();
+export async function fetchProgramsIntegrationPage(locale: string): Promise<IntegrationSections | null> {
+  const pageRes = await fetchProgramsIntegrationSections(locale);
   const page = pageRes?.data?.[0];
   if (!page) return null;
 

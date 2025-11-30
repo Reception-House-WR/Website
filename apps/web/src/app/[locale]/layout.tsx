@@ -1,4 +1,3 @@
-import ClientToolbar from "@/components/common/header/ClientToolbar";
 import { DonateButton } from "@/components/common/DonateButton";
 import Footer from "@/components/common/Footer";
 import {
@@ -6,6 +5,7 @@ import {
   DEFAULT_LOCALE,
   isValidLocale,
 } from "@/lib/strapi/internationalization/i18n";
+import ToolbarServer from "@/components/common/header/ToolbarServer";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -31,7 +31,7 @@ export default function LocaleLayout({
         Skip to main content
       </a>
 
-      <ClientToolbar />
+      <ToolbarServer />
 
       <main id="main-content">{children}</main>
 
