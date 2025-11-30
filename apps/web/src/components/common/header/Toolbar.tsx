@@ -1,18 +1,16 @@
-"use client";
-
-import { useCallback } from "react";
 import Logo from "./Logo";
 import Search from "./Search";
 import LanguageToggle from "./LanguageToggle";
 import { MenuDesktop, MenuMobile } from "./Menu";
-import { SECTIONS_INDEX } from "@/lib/search/sectionsIndex";
+import { SearchSection } from "@/lib/search/types";
 
 type ToolbarProps = {
   currentLang: "en" | "fr";
   onLanguageToggle: () => void;
+  items: SearchSection[];
 };
 
-export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
+export const Toolbar = ({ currentLang, onLanguageToggle, items }: ToolbarProps) => {
   // const handleSearch = useCallback((q: string) => {
   //   console.log("Searching for:", q);
   // }, []);
@@ -31,7 +29,7 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
           <div className="flex-1" />
 
           <div className="flex items-center gap-2 shrink-0">
-            <Search items={SECTIONS_INDEX} />
+            <Search items={items} />
             <LanguageToggle
               currentLang={currentLang}
               onToggle={onLanguageToggle}
@@ -54,7 +52,7 @@ export const Toolbar = ({ currentLang, onLanguageToggle }: ToolbarProps) => {
 
           <div className="ml-auto flex items-center gap-3 shrink-0 w-full sm:w-auto">
             <div className="flex-1 min-w-0">
-              <Search items={SECTIONS_INDEX} />
+              <Search items={items} />
             </div>
             <LanguageToggle
               currentLang={currentLang}

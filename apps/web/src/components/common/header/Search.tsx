@@ -36,9 +36,10 @@ export default function Search({
     if (!items.length) return null;
 
     return new Fuse(items, {
-      keys: ["label", "description"],
+      keys: ["pageLabel", "sectionLabel", "description", "tags"],
       includeScore: true,
-      threshold: 0.3,
+      ignoreLocation: true,
+      threshold: 0.4,
     });
   }, [items]);
 
