@@ -1,265 +1,328 @@
-// src/utils/autoTranslate.ts
 import { translateText } from "./translator";
 
+//SOURCE_LOCALE: Base language from which we translate.
 export const SOURCE_LOCALE = "en";
+
+//TARGET_LOCALES: All locales that should receive auto-translated content.
 export const TARGET_LOCALES = ["es", "fr"] as const;
 
-type AutoTranslateConfig = {
-  /**
-   * Fields in this content-type that should be translated
-   * (text fields only).
-   */
+export type AutoTranslateConfig = {
+  //Fields that will be translated with translateText()
   translatableFields: readonly string[];
 
-  /**
-   * Function that builds the base data object for a given target locale.
-   * - Should copy non-translatable fields as-is from `source`
-   * - Should set `locale` and `triggeredByTranslation`
-   * - MUST NOT call translateText here for the fields in `translatableFields`
-   *   (this is done by the helper).
-   */
-  buildTranslatedData: (
+  //Fields that are not translated but must stay in sync across all locales
+  syncFields: readonly string[];
+
+  //Base builder for each content type
+  buildBaseData: (
     source: any,
     targetLocale: string
   ) => Promise<Record<string, any>> | Record<string, any>;
+
+  modelName?: string;
 };
 
+type TranslatableField = string;
+
 /**
- * Factory that returns a full set of lifecycles (afterCreate, beforeUpdate, afterDelete)
- * for a given content-type, reusing the same translation logic.
+ * Helper: build the translated payload for "create" / "first time".
+ * - Copies base fields from buildBaseData()
+ * - Sets locale + triggeredByTranslation
+ * - Translates all translatableFields
  */
-export function createAutoTranslateLifecycles(config: AutoTranslateConfig) {
-  const { translatableFields, buildTranslatedData } = config;
+async function buildTranslatedData(
+  source: any,
+  targetLocale: string,
+  config: AutoTranslateConfig
+): Promise<Record<string, any>> {
+  const base = await config.buildBaseData(source, targetLocale);
 
-  return {
-    /**
-     * LIFECYCLE: afterCreate
-     *
-     * This will:
-     *  - Run whenever an entry is created.
-     *  - Only act when:
-     *      - The entry is created in SOURCE_LOCALE
-     *      - The entry is published (publishedAt not null)
-     *      - It was NOT created by our own translation logic
-     *  - For each TARGET_LOCALE:
-     *      → create or update a localized document
-     *      → publish it (status: "published")
-     */
-    async afterCreate(event: any) {
-      const { model, result } = event;
-      const entry = result;
+  const data: Record<string, any> = {
+    ...base,
+    locale: targetLocale,
+    //Internal flag, (not a real field of the model)
+    //used only to detect that this entry was created/updated
+    //by our translation code and avoid infinite loops.
+    triggeredByTranslation: true,
+  };
 
-      // Skip entries created/updated by our own translation logic
-      if (entry?.data?.triggeredByTranslation) {
-        return;
-      }
+  for (const field of config.translatableFields) {
+    const value = source[field];
 
-      // Only act when the source locale entry is published
-      if (!entry?.publishedAt) {
-        return;
-      }
+    if (typeof value === "string" && value.trim().length > 0) {
+      data[field] = await translateText(value, SOURCE_LOCALE, targetLocale);
+    } else {
+      data[field] = value ?? "";
+    }
+  }
 
-      // Only auto-create translations from the source locale
-      if (entry.locale !== SOURCE_LOCALE) {
-        return;
-      }
+  return data;
+}
 
-      console.log(`[autoTranslate] afterCreate → ${model.uid}`);
+/**
+ * LIFECYCLE 1: afterCreate 
+ *
+ * When a new entry is created:
+ *  - If it's created in SOURCE_LOCALE (en) and published:
+ *      → automatically create / update documents in each TARGET_LOCALE
+ *  - If it's created in a different locale:
+ *      → do nothing (we only auto-translate from en → others).
+ *  - If it was created by our own translation logic:
+ *      → do nothing to avoid infinite loops.
+ */
+async function handleAfterCreate(
+  event: any,
+  config: AutoTranslateConfig
+): Promise<void> {
+  const { model, result } = event;
+  const entry = result;
 
-      for (const targetLocale of TARGET_LOCALES) {
-        const baseData = await buildTranslatedData(entry, targetLocale);
+  //Skip if created by our own translation logic
+  if (entry?.data?.triggeredByTranslation || entry?.triggeredByTranslation) {
+    return;
+  }
 
-        // Translate only the configured fields
-        const translatedData: Record<string, any> = {
-          ...baseData,
-          triggeredByTranslation: true,
-        };
+  //Only execute when the entry is published
+  if (!entry?.publishedAt) {
+    return;
+  }
 
-        for (const field of translatableFields) {
-          const value = entry[field];
-          if (typeof value === "string" && value.trim().length > 0) {
-            translatedData[field] = await translateText(
-              value,
-              SOURCE_LOCALE,
-              targetLocale
-            );
-          }
-        }
+  //Only auto-create translations from the source locale
+  if (entry.locale !== SOURCE_LOCALE) {
+    return;
+  }
 
-        await strapi.documents(model.uid).update({
-          documentId: entry.documentId,
-          locale: targetLocale,
-          status: "published",
-          data: translatedData,
-        });
+  strapi.log.info(
+    `[autoTranslate] afterCreate => ${config.modelName ?? model.uid}`
+  );
 
-        console.log(
-          `[autoTranslate] Created/updated ${model.uid} for locale ${targetLocale}`
-        );
-      }
-    },
+  for (const targetLocale of TARGET_LOCALES) {
+    const data = await buildTranslatedData(entry, targetLocale, config);
 
-    /**
-     * SINGLE LIFECYCLE: beforeUpdate
-     *
-     * This will:
-     *  - Run whenever an entry is updated.
-     *  - If the entry is in SOURCE_LOCALE (en):
-     *      → detect which translatable fields changed
-     *      → for each TARGET_LOCALE:
-     *          - if a localized document exists → update it
-     *          - if it does not exist → create it (and publish)
-     */
-    async beforeUpdate(event: any) {
-      const { model, params } = event;
-      const { data, where } = params;
+    await strapi.documents(model.uid).update({
+      documentId: entry.documentId,
+      locale: targetLocale,
+      status: "published",
+      data: data as any,
+    });
 
-      console.log(`[autoTranslate] beforeUpdate → ${model.uid}`);
+    strapi.log.info(
+      `[autoTranslate] afterCreate → ${SOURCE_LOCALE} -> ${targetLocale}`
+    );
+  }
+}
 
-      // 1) Skip if this comes from our own translation updates
-      if (data?.triggeredByTranslation) {
-        return;
-      }
+/**
+ * LIFECYCLE 2: afterUpdate (generic handler)
+ *
+ * This will:
+ *  - Run whenever an entry is updated.
+ *  - If the entry is in SOURCE_LOCALE (en):
+ *      - detect which translatable fields changed
+ *      - for each TARGET_LOCALE:
+ *          - if a localized document exists => update only changed fields
+ *          - if it does not exist → create a translated version
+ *      - always sync non-translatable fields (SYNC_FIELDS) from en
+ *  - If the update comes from our own translation logic:
+ *      - do nothing to avoid infinite loops.
+ */
+async function handleAfterUpdate(
+  event: any,
+  config: AutoTranslateConfig
+): Promise<void> {
+  const { model, params, result } = event;
+  const { data } = params;
+  const entry = result;
 
-      // 2) We need the ID of the entry being updated
-      if (!where?.id) {
-        return;
-      }
+  //Skip if this update was triggered by our own translation logic
+  if (data?.triggeredByTranslation || entry?.triggeredByTranslation) {
+    return;
+  }
 
-      // 3) Load current entry with its localizations
-      const existing = await strapi.entityService.findOne(
-        model.uid,
-        where.id,
-        {
-          populate: ["localizations"],
-        }
-      );
+  if (!entry?.id) {
+    return;
+  }
 
-      if (!existing) {
-        return;
-      }
+  //Load current entry with its localizations
+  const existing = await strapi.entityService.findOne(model.uid, entry.id, {
+    populate: ["localizations"],
+  });
 
-      const currentLocale = existing.locale;
+  if (!existing) {
+    return;
+  }
 
-      // 4) Only propagate changes when editing the source locale
-      if (!currentLocale || currentLocale !== SOURCE_LOCALE) {
-        return;
-      }
+  const currentLocale = existing.locale;
 
-      // 5) Detect which translatable fields actually changed
-      const changedFields: Record<string, string> = {};
+  //Only propagate changes when editing the source locale (en)
+  if (!currentLocale || currentLocale !== SOURCE_LOCALE) {
+    return;
+  }
 
-      for (const field of translatableFields) {
-        const newValue = data[field];
-        const oldValue = existing[field];
+  //Detect which translatable fields actually changed
+  const changedFields: Partial<Record<TranslatableField, string>> = {};
 
-        if (
-          typeof newValue === "string" &&
-          newValue.trim() !== (oldValue ?? "").trim()
-        ) {
-          changedFields[field] = newValue;
-        }
-      }
+  for (const field of config.translatableFields) {
+    const newValue = data[field];
+    const oldValue = existing[field];
 
-      // If nothing changed in the fields we care about, stop here
-      if (Object.keys(changedFields).length === 0) {
-        return;
-      }
+    //If field was not present in the payload, then it was not touched
+    if (newValue === undefined) continue;
 
-      const localizations = existing.localizations || [];
+    if (
+      typeof newValue === "string" &&
+      newValue.trim() !== (oldValue ?? "").trim()
+    ) {
+      changedFields[field] = newValue;
+    }
+  }
 
-      // 6) For each target locale (es, fr...)
-      for (const targetLocale of TARGET_LOCALES) {
-        // Try to find an existing localized entry
-        let targetEntry = localizations.find(
-          (loc: any) => loc.locale === targetLocale
-        );
+  //If nothing changed in the fields we care about, stop
+  if (Object.keys(changedFields).length === 0) {
+    return;
+  }
 
-        // 6.a) If it does NOT exist yet → create it with base data
-        if (!targetEntry) {
-          const baseData = await buildTranslatedData(existing, targetLocale);
+  const localizations = existing.localizations || [];
 
-          const created = await strapi.documents(model.uid).update({
-            documentId: existing.documentId,
-            locale: targetLocale,
-            status: "published",
-            data: {
-              ...baseData
-            },
-          });
+  for (const targetLocale of TARGET_LOCALES) {
+    //Try to find an existing localized entry
+    let targetEntry = localizations.find(
+      (loc: any) => loc.locale === targetLocale
+    );
 
-          targetEntry = created;
-        }
+    // 1) If it does NOT exist yet => create it with all base and translated fields
+    if (!targetEntry) {
+      const newData = await buildTranslatedData(existing, targetLocale, config);
 
-        // 6.b) Build an update payload ONLY for the changed fields
-        const updateData: Record<string, any> = {
-          triggeredByTranslation: true, // avoid infinite loop
-        };
-
-        for (const [field, newValue] of Object.entries(changedFields)) {
-          updateData[field] = await translateText(
-            newValue!,
-            SOURCE_LOCALE,
-            targetLocale
-          );
-        }
-
-        // 6.c) Update the localized document
-        await strapi.documents(model.uid).update({
-          documentId: targetEntry.documentId,
-          locale: targetLocale,
-          status: "published",
-          data: updateData,
-        });
-
-        console.log(
-          `[autoTranslate] Updated ${model.uid} ${targetLocale} for changed fields: ${Object.keys(
-            changedFields
-          ).join(", ")}`
-        );
-      }
-    },
-
-    /**
-     * SINGLE LIFECYCLE: afterDelete
-     *
-     * This will:
-     *  - Run whenever an entry is deleted.
-     *  - If the deleted entry belongs to SOURCE_LOCALE (e.g. "en"):
-     *        → Automatically delete ALL localized versions
-     *          (en, es, fr, etc.) using locale: '*'
-     *  - If the deleted entry is NOT in SOURCE_LOCALE:
-     *        → Do nothing.
-     */
-    async afterDelete(event: any) {
-      const { model, result } = event;
-
-      // result could be an array or a single object
-      const entry = Array.isArray(result) ? result[0] : result;
-
-      const locale = entry?.locale;
-      const documentId = entry?.documentId;
-
-      if (!documentId) return;
-
-      // Only cascade delete if the deleted version is the SOURCE_LOCALE
-      if (locale !== SOURCE_LOCALE) {
-        return;
-      }
-
-      console.log(
-        `[autoTranslate] Cascade delete starting → ${model.uid}, documentId=${documentId}, locale=${locale}`
-      );
-
-      // Delete ALL locales for this document
-      await strapi.documents(model.uid).delete({
-        documentId,
-        locale: "*",
+      const created = await strapi.documents(model.uid).update({
+        documentId: existing.documentId,
+        locale: targetLocale,
+        data: newData as any,
       });
 
-      console.log(
-        `[autoTranslate] Cascade delete executed → Deleted all locales for documentId ${documentId}`
+      targetEntry = created;
+    }
+
+    // 2) Build update payload:
+    //    - translated changed fields
+    //    - synced non-translatable fields (like images)
+    const updateData: Record<string, any> = {
+      triggeredByTranslation: true, // avoid infinite loop
+    };
+
+    //Translate only changed translatable fields
+    for (const [field, newValue] of Object.entries(changedFields)) {
+      updateData[field] = await translateText(
+        newValue!,
+        SOURCE_LOCALE,
+        targetLocale
       );
+    }
+
+    //Sync no translatable fields from the source entry
+    for (const field of config.syncFields) {
+      updateData[field] = (existing as any)[field];
+    }
+
+    // 3) Update the localized document using the Document Service
+    await strapi.documents(model.uid).update({
+      documentId: targetEntry.documentId,
+      locale: targetLocale,
+      data: updateData as any,
+    });
+
+    strapi.log.info(
+      `[autoTranslate] afterUpdate → synced ${targetLocale} for ${config.modelName ?? model.uid}`
+    );
+  }
+}
+
+/**
+ * LIFECYCLE 3: afterDelete (generic handler)
+ *
+ * This will:
+ *  - Run whenever an entry is deleted.
+ *  - If the deleted entry belongs to SOURCE_LOCALE (e.g. "en"):
+ *        - Check if there is any other entry in SOURCE_LOCALE for
+ *          the same documentId.
+ *        - If there is none, it means the document is truly deleted:
+ *              → delete ALL localized versions (en, es, fr, etc.)
+ *          using locale: '*'.
+ *  - If the deleted entry is NOT in SOURCE_LOCALE:
+ *        - Do nothing (prevents loops).
+ */
+async function handleAfterDelete(event: any): Promise<void> {
+  const { model, result } = event;
+
+  const entry = Array.isArray(result) ? result[0] : result;
+
+  const locale = entry?.locale;
+  const documentId = entry?.documentId;
+
+  if (!documentId) return;
+
+  //Only cascade delete if the deleted version is the SOURCE_LOCALE
+  if (locale !== SOURCE_LOCALE) {
+    return;
+  }
+
+  //Check if there is still any entry in SOURCE_LOCALE for this documentId.
+  //If there is, this delete is part of an internal publish/unpublish flow,
+  //not a "final" deletion from the CMS.
+  const stillExists = await strapi.entityService.findMany(model.uid, {
+    filters: {
+      documentId,
+      locale: SOURCE_LOCALE,
+    },
+  });
+
+  if (stillExists && stillExists.length > 0) {
+    //Skip cascade delete in this case
+    return;
+  }
+
+  //Now we know the document is really gone in SOURCE_LOCALE:
+  //delete all locales for this document (en, es, fr, ...)
+  await strapi.documents(model.uid).delete({
+    documentId,
+    locale: "*",
+  });
+
+  strapi.log.info(
+    `[autoTranslate] afterDelete → Cascade delete executed for documentId=${documentId}`
+  );
+}
+
+/**
+ * Factory: returns the lifecycles object for a given content-type.
+ *
+ * Usage in each content-type lifecycle file:
+ *
+ *   import { createAutoTranslateLifecycles } from "../../../../utils/autoTranslate";
+ *
+ *   const storyConfig: AutoTranslateConfig = {
+ *     translatableFields: ["author", "quote"],
+ *     syncFields: ["country", "image", "videoUrl"],
+ *     buildBaseData: (source) => ({
+ *       country: source.country,
+ *       image: source.image,
+ *       videoUrl: source.videoUrl,
+ *     }),
+ *     modelName: "Story",
+ *   };
+ *
+ *   export default createAutoTranslateLifecycles(storyConfig);
+ */
+export function createAutoTranslateLifecycles(config: AutoTranslateConfig) {
+  return {
+    async afterCreate(event: any) {
+      await handleAfterCreate(event, config);
+    },
+    async afterUpdate(event: any) {
+      await handleAfterUpdate(event, config);
+    },
+    async afterDelete(event: any) {
+      await handleAfterDelete(event);
     },
   };
 }
