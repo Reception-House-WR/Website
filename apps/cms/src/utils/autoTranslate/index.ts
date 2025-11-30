@@ -5,6 +5,8 @@ import { translateCurrentCampaignSection, CURRENT_CAMPAIGN_UID } from "./current
 import { translateSectionSection, SECTION_UID } from "./section";
 import { translateHeroSection, HERO_UID } from "./hero";
 import { translateStoriesCarouselSection, STORIES_CAROUSEL_UID } from "./storiesCarousel";
+import { CARD_UID, translateCardSection } from "./card";
+import { IMPACT_UID, translateImpactSection } from "./impact";
 
 /**
  * Base type for a WebPage dynamic zone section.
@@ -29,6 +31,8 @@ export const SECTION_TRANSLATORS: Record<string, SectionTranslator> = {
   [SECTION_UID]: translateSectionSection,
   [HERO_UID]: translateHeroSection,
   [STORIES_CAROUSEL_UID]: translateStoriesCarouselSection,
+  [CARD_UID]: translateCardSection,
+  [IMPACT_UID]: translateImpactSection,
 };
 
 /**
