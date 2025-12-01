@@ -125,7 +125,7 @@ export async function fetchProgramsChildrenPage(locale: string): Promise<Childre
   const pageRes = await fetchProgramsChildrenSections(locale);
   const page = pageRes?.data?.[0];
 
-  console.log("Fetched Programs Children Page:", page);
+  // console.log("Fetched Programs Children Page:", page);
   if (!page) return null;
 
   const sections = (page.sections ?? []) as RawStrapiSection[];

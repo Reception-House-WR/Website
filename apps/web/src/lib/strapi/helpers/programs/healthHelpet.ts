@@ -108,7 +108,7 @@ export async function fetchProgramsHealthPage(locale: string): Promise<HealthSec
   const pageRes = await fetchProgramsHealthSections(locale);
   const page = pageRes?.data?.[0];
 
-  console.log("RAW HEALTH PAGE DATA:", page);
+  // console.log("RAW HEALTH PAGE DATA:", page);
 
   if (!page) return null;
 

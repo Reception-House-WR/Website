@@ -67,7 +67,7 @@ const toOurProgramsSection = (s?: RawStrapiSection): OurPrograms => ({
 export async function fetchProgramsOverviewPage(locale: string): Promise<ProgramSections | null> {
   const pageRes = await fetchProgramsOverviewections(locale);
 
-  console.log("Raw Programs Overview Page Response:", pageRes);
+  // console.log("Raw Programs Overview Page Response:", pageRes);
   const page = pageRes?.data?.[0];
   if (!page) return null;
 

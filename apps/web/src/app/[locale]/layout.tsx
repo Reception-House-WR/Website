@@ -24,7 +24,7 @@ export default async function LocaleLayout({
     ? params.locale
     : DEFAULT_LOCALE;
   
-  const locales = await fetchStrapiLocales();
+  const locales = fetchStrapiLocales();
   const nav = buildLocalizedNav(locale);
 
   return (
