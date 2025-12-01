@@ -4,7 +4,7 @@ import { translateText } from "./translator";
 export const SOURCE_LOCALE = "en";
 
 //TARGET_LOCALES: All locales that should receive auto-translated content.
-export const TARGET_LOCALES = ["es", "fr"] as const;
+export const TARGET_LOCALES = ["es", "fr", "ar", "fa", "so", "pt"] as const;
 
 export type AutoTranslateConfig = {
   //Fields that will be translated with translateText()
@@ -18,6 +18,14 @@ export type AutoTranslateConfig = {
     source: any,
     targetLocale: string
   ) => Promise<Record<string, any>> | Record<string, any>;
+
+  //For custom translations (Tags)
+  fieldTranslators?: {
+    [fieldName: string]: (
+      value: any,
+      targetLocale: string
+    ) => Promise<any> | any;
+  };
 
   modelName?: string;
 };
@@ -48,6 +56,12 @@ async function buildTranslatedData(
 
   for (const field of config.translatableFields) {
     const value = source[field];
+    const customTranslator = config.fieldTranslators?.[field];
+
+    if(customTranslator){
+      data[field] = await customTranslator(value, targetLocale);
+      continue;
+    }
 
     if (typeof value === "string" && value.trim().length > 0) {
       data[field] = await translateText(value, SOURCE_LOCALE, targetLocale);
@@ -212,6 +226,12 @@ async function handleAfterUpdate(
 
     //Translate only changed translatable fields
     for (const [field, newValue] of Object.entries(changedFields)) {
+
+      const customTranslator = config.fieldTranslators?.[field];
+
+      if(customTranslator){
+        updateData[field] = await customTranslator(newValue, targetLocale);
+      }
       updateData[field] = await translateText(
         newValue!,
         SOURCE_LOCALE,

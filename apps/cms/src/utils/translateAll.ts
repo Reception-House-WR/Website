@@ -13,6 +13,7 @@ const CONTENT_TYPES_TO_TRANSLATE_ALL = [
   "api::value.value",
   "api::volunteer-testimonial.volunteer-testimonial",
   "api::web-page.web-page",
+  "api::tag.tag"
 ] as const;
 
 export async function runAutotranslateAll() {
