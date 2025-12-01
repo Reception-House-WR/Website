@@ -53,8 +53,7 @@
           "localized": true
         }
       },
-      "required": true,
-      "regex": "^[a-z]+(?: [a-z]+)*$"
+      "required": true
     },
     "href": {
       "type": "string",
