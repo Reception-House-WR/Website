@@ -116,6 +116,38 @@ export const webPageSectionsPopulate = {
           },
         },
       },
+      "common.button-section": {
+        populate: {
+          button: true,
+        },
+      },
+      "get-involved.cards-section": {
+        populate: {
+          cards: {
+            populate: {
+              button: true,
+            },
+          },
+        },
+      },
+      "get-involved.benefits-card-section": {
+        populate: {
+          benefits: {
+            populate: {
+              backgroundImage: true,
+            },
+          },
+        },
+      },
+      "get-involved.volunteer-testimonials-carousel": {
+        populate: {
+          testimonials: {
+            populate: {
+              image: true,
+            },
+          },
+        },
+      }
     },
   },
 } as const;
