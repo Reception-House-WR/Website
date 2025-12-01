@@ -27,6 +27,8 @@ import { VOLUNTEER_TESTIMONIALS_CAROUSEL_UID, translateVolunteerTestimonialsCaro
 import { CAMPAIGNS_SECTION_UID, translateCampaignsSection } from "./campaigns";
 import { DROP_OFF_CARD_UID, translateDropOffCardSection } from "./dropOffCard";
 import { LIST_CARDS_SECTION_UID, translateListCardsSection } from "./listCardsSection";
+import { MEDIA_KIT_SECTION_UID, translateMediaKitSection } from "./mediaKitSection";
+import { RELEASES_SECTION_UID, translateReleasesSection } from "./releasesSection";
 
 /**
  * Base type for a WebPage dynamic zone section.
@@ -73,6 +75,8 @@ export const SECTION_TRANSLATORS: Record<string, SectionTranslator> = {
   [CAMPAIGNS_SECTION_UID]: translateCampaignsSection,
   [LIST_CARDS_SECTION_UID]: translateListCardsSection,
   [DROP_OFF_CARD_UID]: translateDropOffCardSection,
+  [MEDIA_KIT_SECTION_UID]: translateMediaKitSection,
+  [RELEASES_SECTION_UID]: translateReleasesSection,
 };
 
 /**

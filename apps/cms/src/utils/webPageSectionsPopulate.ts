@@ -171,6 +171,24 @@ export const webPageSectionsPopulate = {
           items: true,
         },
       },
+      "media-room.media-kit-section": {
+        populate: {
+          kits: {
+            populate: {
+              kit: true,
+            },
+          },
+        },
+      },
+      "media-room.releases-section": {
+        populate: {
+          pressReleases: {
+            populate: {
+              image: true, 
+            },
+          },
+        },
+      },
     },
   },
 } as const;
