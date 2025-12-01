@@ -1,5 +1,4 @@
 "use client";
-import { NAV } from "@/components/common/header/Menu";
 import { useMemo } from "react";
 import Link from "next/link";
 import {
@@ -12,6 +11,7 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
+import { NAV } from "@/lib/strapi/helpers/navHelper";
 
 const socialLinks = [
   {

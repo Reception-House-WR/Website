@@ -32,106 +32,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { ListItem } from "./Listitem";
+import { NavItem } from "@/lib/strapi/helpers/navHelper";
 
-export const NAV = [
-  { label: "Home", href: "/" },
 
-  {
-    label: "About Us",
-    href: "/about",
-    children: [
-      {
-        label: "Our People",
-        href: "/about/our-people",
-        description: "Meet the team behind Reception House.",
-      },
-      {
-        label: "Our Purpose",
-        href: "/about/purpose",
-        description: "What we do and why we exist.",
-      },
-      {
-        label: "Our History",
-        href: "/about/our-history",
-        description: "Milestones and impact over the years.",
-      },
-      {
-        label: "Contact Us",
-        href: "/about/contact-us",
-        description: "Get in touch or visit our offices.",
-      },
-    ],
-  },
-
-  {
-    label: "Programs & Services",
-    href: "/programs-and-services",
-    children: [
-      {
-        label: "Healthcare & Wellbeing",
-        href: "/programs-and-services/healthcare-wellbeing",
-        description: "Primary care access, mental health and wellness.",
-      },
-      {
-        label: "Temporary Accommodation & Housing",
-        href: "/programs-and-services/housing",
-        description: "Short-term stays and pathways to permanent housing.",
-      },
-      {
-        label: "Children & Youth",
-        href: "/programs-and-services/children-youth",
-        description: "Support for school readiness and youth programs.",
-      },
-      {
-        label: "Employment Services",
-        href: "/programs-and-services/employment",
-        description: "Job search help, coaching and employer links.",
-      },
-      {
-        label: "Integration Skills Training",
-        href: "/programs-and-services/integration-skills",
-        description: "Language and life skills for newcomers.",
-      },
-      {
-        label: "French Services",
-        href: "/programs-and-services/french-services",
-        description: "Services en français pour les nouveaux arrivants.",
-      },
-    ],
-  },
-
-  { label: "Events", href: "/events" },
-
-  {
-    label: "Get Involved",
-    href: "/get-involved",
-    children: [
-      {
-        label: "Volunteer Sign Up",
-        href: "/get-involved/volunteer",
-        description: "Share your time and skills with our community.",
-      },
-      {
-        label: "Careers",
-        href: "/get-involved/careers",
-        description: "Join our staff—see current openings.",
-      },
-    ],
-  },
-
-  { label: "Stories", href: "/stories" },
-  { label: "Donate", href: "/donate" },
-  { label: "Media Room", href: "/media-room" },
-];
 
 /* ====================== Desktop  ====================== */
-export function MenuDesktop() {
+export function MenuDesktop({ nav }: { nav: NavItem[] }) {
   const pathname = usePathname();
 
   const isActive = (href: string) =>
     pathname === href || pathname?.startsWith(href + "/");
 
-  const ItemInner = (item: (typeof NAV)[number]) => {
+  const ItemInner = (item: NavItem) => {
     if (!item.children) {
       return (
         <NavigationMenuLink
@@ -196,7 +108,7 @@ export function MenuDesktop() {
     <div className="hidden lg:block">
       <NavigationMenu className="relative">
         <NavigationMenuList className="gap-1">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <NavigationMenuItem key={item.label}>
               <ItemInner {...item} />
             </NavigationMenuItem>
@@ -210,7 +122,11 @@ export function MenuDesktop() {
 }
 /* ====================== Mobile ====================== */
 
-export function MenuMobile() {
+export function MenuMobile({
+  nav
+}: {
+  nav: NavItem[];
+}) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -236,7 +152,7 @@ export function MenuMobile() {
           </SheetHeader>
 
           <nav className="space-y-2">
-            {NAV.map((item) =>
+            {nav.map((item) =>
               item.children ? (
                 <Accordion type="single" collapsible key={item.label}>
                   <AccordionItem value="section">

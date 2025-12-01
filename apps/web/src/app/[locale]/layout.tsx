@@ -6,12 +6,14 @@ import {
   isValidLocale,
 } from "@/lib/strapi/internationalization/i18n";
 import ToolbarServer from "@/components/common/header/ToolbarServer";
+import { fetchStrapiLocales } from "@/lib/strapi/helpers/localesHelper";
+import { buildLocalizedNav } from "@/lib/strapi/helpers/navHelper";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
@@ -21,6 +23,9 @@ export default function LocaleLayout({
   const locale = isValidLocale(params.locale)
     ? params.locale
     : DEFAULT_LOCALE;
+  
+  const locales = await fetchStrapiLocales();
+  const nav = buildLocalizedNav(locale);
 
   return (
     <>
@@ -31,7 +36,7 @@ export default function LocaleLayout({
         Skip to main content
       </a>
 
-      <ToolbarServer />
+      <ToolbarServer locales={locales} nav={nav} currentLocale={locale} />
 
       <main id="main-content">{children}</main>
 
