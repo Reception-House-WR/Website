@@ -1,6 +1,7 @@
 import { translateText } from "../../../../utils/translator";
 import { SOURCE_LOCALE, TARGET_LOCALES } from "../../../../utils/autoTranslate";
 import { translateSectionsArray } from "../../../../utils/autoTranslate/index";
+import { webPageSectionsPopulate } from "../../../../utils/webPageSectionsPopulate";
 
 /**
  * Helper: build the translated payload for a WebPage entry.
@@ -57,7 +58,7 @@ export default {
     const existing = await strapi.entityService.findOne(model.uid, entry.id, {
       populate: {
         localizations: true,
-        sections: { populate: "*" },
+        ...webPageSectionsPopulate
       },
     });
 
@@ -103,7 +104,7 @@ export default {
     const existing = await strapi.entityService.findOne(model.uid, entry.id, {
       populate: {
         localizations: true,
-        sections: { populate: "*" },
+        ...webPageSectionsPopulate
       },
     });
 

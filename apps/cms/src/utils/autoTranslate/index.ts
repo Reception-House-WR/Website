@@ -7,6 +7,19 @@ import { translateHeroSection, HERO_UID } from "./hero";
 import { translateStoriesCarouselSection, STORIES_CAROUSEL_UID } from "./storiesCarousel";
 import { CARD_UID, translateCardSection } from "./card";
 import { IMPACT_UID, translateImpactSection } from "./impact";
+import { ANALYTICS_SECTION_UID, translateAnalyticsSection } from "./analyticsSection";
+import { CARDS_CAROUSEL_UID, translateCardsCarouselSection } from "./cardsCarousel";
+import { GALLERY_CAROUSEL_UID, translateGalleryCarouselSection } from "./galleryCarousel";
+import { INFO_CARD_UID, translateInfoCardSection } from "./infoCard";
+import { BENEFITS_SECTION_UID, translateBenefitsSection } from "./benefitsSection";
+import { FRENCH_OVERVIEW_UID, translateFrenchOverviewSection } from "./frenchOverview";
+import { LIST_CARD_UID, translateListCardSection } from "./listCard";
+import { PROGRAM_CARD_UID, translateProgramCardSection } from "./programCard";
+import { ANALYTICS_OVERVIEW_UID, translateAnalyticsOverviewSection } from "./analyticsOverview";
+import { PARTNER_SECTION_UID, translatePartnerSection } from "./partnerSection";
+import { SERVICE_OVERVIEW_UID, translateServiceOverviewSection } from "./serviceOverview";
+import { CARDS_SECTION_UID, translateCardsSection } from "./cards";
+import { OUR_PROGRAMS_UID, translateOurProgramsSection } from "./ourPrograms";
 
 /**
  * Base type for a WebPage dynamic zone section.
@@ -33,6 +46,19 @@ export const SECTION_TRANSLATORS: Record<string, SectionTranslator> = {
   [STORIES_CAROUSEL_UID]: translateStoriesCarouselSection,
   [CARD_UID]: translateCardSection,
   [IMPACT_UID]: translateImpactSection,
+  [ANALYTICS_SECTION_UID]: translateAnalyticsSection,
+  [CARDS_CAROUSEL_UID]: translateCardsCarouselSection,
+  [INFO_CARD_UID]: translateInfoCardSection,
+  [GALLERY_CAROUSEL_UID]: translateGalleryCarouselSection,
+  [LIST_CARD_UID]: translateListCardSection,
+  [BENEFITS_SECTION_UID]: translateBenefitsSection,
+  [FRENCH_OVERVIEW_UID]: translateFrenchOverviewSection,
+  [PROGRAM_CARD_UID]: translateProgramCardSection,
+  [SERVICE_OVERVIEW_UID]: translateServiceOverviewSection,
+  [PARTNER_SECTION_UID]: translatePartnerSection,
+  [ANALYTICS_OVERVIEW_UID]: translateAnalyticsOverviewSection,
+   [CARDS_SECTION_UID]: translateCardsSection,
+  [OUR_PROGRAMS_UID]: translateOurProgramsSection,
 };
 
 /**
