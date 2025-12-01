@@ -24,6 +24,9 @@ import { BENEFITS_CARD_SECTION_UID, translateBenefitsCardSection } from "./benef
 import { BUTTON_SECTION_UID, translateButtonSection } from "./buttonSection";
 import { CARDS_SECTION_GET_INVOLVED_UID, translateCardsSectionGetInvolved } from "./cardsSection";
 import { VOLUNTEER_TESTIMONIALS_CAROUSEL_UID, translateVolunteerTestimonialsCarouselSection } from "./volunteerTestimonialsCarousel";
+import { CAMPAIGNS_SECTION_UID, translateCampaignsSection } from "./campaigns";
+import { DROP_OFF_CARD_UID, translateDropOffCardSection } from "./dropOffCard";
+import { LIST_CARDS_SECTION_UID, translateListCardsSection } from "./listCardsSection";
 
 /**
  * Base type for a WebPage dynamic zone section.
@@ -67,6 +70,9 @@ export const SECTION_TRANSLATORS: Record<string, SectionTranslator> = {
   [CARDS_SECTION_GET_INVOLVED_UID]: translateCardsSectionGetInvolved,
   [BENEFITS_CARD_SECTION_UID]: translateBenefitsCardSection,
   [VOLUNTEER_TESTIMONIALS_CAROUSEL_UID]: translateVolunteerTestimonialsCarouselSection,
+  [CAMPAIGNS_SECTION_UID]: translateCampaignsSection,
+  [LIST_CARDS_SECTION_UID]: translateListCardsSection,
+  [DROP_OFF_CARD_UID]: translateDropOffCardSection,
 };
 
 /**

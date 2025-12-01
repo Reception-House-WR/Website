@@ -147,7 +147,30 @@ export const webPageSectionsPopulate = {
             },
           },
         },
-      }
+      },
+      "donate.campaigns": {
+        populate: {
+          campaigns: {
+            populate: {
+              image: true, 
+            },
+          },
+        },
+      }, 
+      "donate.list-cards-section": {
+        populate: {
+          cards: {
+            populate: {
+              items: true,
+            },
+          },
+        },
+      },
+      "donate.drop-off-card": {
+        populate: {
+          items: true,
+        },
+      },
     },
   },
 } as const;
