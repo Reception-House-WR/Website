@@ -10,6 +10,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
+import { set } from "zod";
 
 type LocaleOption = {
   code: string;
@@ -30,6 +32,10 @@ export default function LanguageToggle({
 }: LanguageToggleProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const [currentLabel, setCurrentLabel] = useState(
+    locales.find((l) => l.code === currentLocale)?.code?.toUpperCase() ??
+      currentLocale.toUpperCase()
+  );
 
   const handleSelectLocale = (nextLocale: string) => {
     if (!pathname) return;
@@ -46,11 +52,11 @@ export default function LanguageToggle({
 
     const newPath = segments.join("/") || `/${nextLocale}`;
     router.push(newPath);
+    setCurrentLabel(nextLocale.toUpperCase());
   };
 
-  const currentLabel =
-    locales.find((l) => l.code === currentLocale)?.code?.toUpperCase() ??
-    currentLocale.toUpperCase();
+  console.log("Rendering LanguageToggle with currentLocale:", currentLocale);
+
 
   return (
     <DropdownMenu>

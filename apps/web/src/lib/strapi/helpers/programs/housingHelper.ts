@@ -118,7 +118,7 @@ export async function fetchProgramsHousingPage(locale: string): Promise<HousingS
   const pageRes = await fetchProgramsHousingSections(locale);
   const page = pageRes?.data?.[0];
 
-  console.log("Housing Page Response:", pageRes);
+  // console.log("Housing Page Response:", pageRes);
   if (!page) return null;
 
   const sections = (page.sections ?? []) as RawStrapiSection[];

@@ -8,7 +8,7 @@ import WhoWeAre from "@/sections/about/overview/WhoWeAre";
 export default async function Home({ params }: { params: { locale: string } }) {
   
   const res = await fetchAboutOverviewPage(params.locale);
-  console.log("About overview page data:", res);
+  // console.log("About overview page data:", res);
   if (!res) {
     return <div className="flex items-center justify-center py-5">Error loading about overview page data.</div>;
   }

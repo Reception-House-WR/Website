@@ -19,7 +19,7 @@ export default async function Home({
     : DEFAULT_LOCALE;
 
   const res = await fetchHomePage(locale);
-  console.log("Home page data:", locale, res);
+  // console.log("Home page data:", locale, res);
 
   if (!res) {
     return (

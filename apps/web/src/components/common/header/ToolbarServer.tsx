@@ -14,7 +14,7 @@ export default async function ToolbarServer({
 }) {
   const SECTIONS_INDEX = await loadSectionsIndex();
 
-  console.log("Section Index", SECTIONS_INDEX);
+  // console.log("Section Index", SECTIONS_INDEX);
 
   return <ClientToolbar locales={locales} nav={nav} items={SECTIONS_INDEX} currentLocale={currentLocale} />;
 }
