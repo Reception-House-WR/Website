@@ -4,7 +4,7 @@ import { translateText } from "./translator";
 export const SOURCE_LOCALE = "en";
 
 //TARGET_LOCALES: All locales that should receive auto-translated content.
-export const TARGET_LOCALES = ["es", "fr", "ar", "fa", "so", "pt"] as const;
+export const TARGET_LOCALES = ["es", "fr", "ar", "fa", "so", "pt", "ti", "sw", "zh-Hans", "am", "bn", "ur", "ps", "pa", "ne"] as const;
 
 export type AutoTranslateConfig = {
   //Fields that will be translated with translateText()
