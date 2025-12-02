@@ -17,12 +17,10 @@ export function generateStaticParams() {
 export default async function LocaleLayout({
   children,
   params,
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
-  const locale = isValidLocale(params.locale)
-    ? params.locale
+}: LayoutProps<"/[locale]">) {
+  const { locale: rawLocale } = await params;
+  const locale = isValidLocale(rawLocale)
+    ? rawLocale
     : DEFAULT_LOCALE;
   
   const locales = fetchStrapiLocales();
