@@ -80,13 +80,13 @@ export function MenuDesktop({ nav }: { nav: NavItem[] }) {
         <NavigationMenuContent>
           <div className="p-4 md:w-[600px] lg:w-[720px]">
             <ul className="grid gap-2 sm:grid-cols-2">
-              <ListItem
+              {/* <ListItem
                 title="Overview"
                 href={item.href}
                 className="text-[var(--rh-500)]"
               >
                 A quick summary of this section.
-              </ListItem>
+              </ListItem> */}
               {item.children.map((sub) => (
                 <ListItem
                   key={sub.href}
@@ -161,13 +161,13 @@ export function MenuMobile({
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="pl-2">
-                        <Link
+                        {/* <Link
                           href={item.href}
                           className="block py-2 text-sm opacity-90"
                           onClick={() => setIsOpen(false)}
                         >
                           Overview
-                        </Link>
+                        </Link> */}
 
                         {item.children.map((sub) => (
                           <Link

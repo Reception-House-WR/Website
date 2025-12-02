@@ -8,6 +8,7 @@ import {
 import ToolbarServer from "@/components/common/header/ToolbarServer";
 import { fetchStrapiLocales } from "@/lib/strapi/helpers/localesHelper";
 import { buildLocalizedNav } from "@/lib/strapi/helpers/navHelper";
+import { getFooterCopy } from "@/lib/footerCopy";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -16,16 +17,15 @@ export function generateStaticParams() {
 export default async function LocaleLayout({
   children,
   params,
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
-  const locale = isValidLocale(params.locale)
-    ? params.locale
+}: LayoutProps<"/[locale]">) {
+  const { locale: rawLocale } = await params;
+  const locale = isValidLocale(rawLocale)
+    ? rawLocale
     : DEFAULT_LOCALE;
   
   const locales = fetchStrapiLocales();
-  const nav = buildLocalizedNav(locale);
+  const nav = await buildLocalizedNav(locale);
+  const footerCopy = await getFooterCopy(locale);
 
   return (
     <>
@@ -41,7 +41,7 @@ export default async function LocaleLayout({
       <main id="main-content">{children}</main>
 
       <DonateButton lang={locale} />
-      <Footer />
+      <Footer nav={nav} copy={footerCopy} />
     </>
   );
 }

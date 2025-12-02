@@ -11,7 +11,7 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
-import { NAV } from "@/lib/strapi/helpers/navHelper";
+import { FooterCopy } from "@/lib/footerCopy";
 
 const socialLinks = [
   {
@@ -70,10 +70,16 @@ export function buildFooterColumns(nav: NavItem[]) {
   return columns;
 }
 
-export const Footer = () => {
+export const Footer = ({
+  nav,
+  copy
+}: {
+  nav: NavItem[];
+  copy: FooterCopy;
+}) => {
   const cols = useMemo<FooterColumn[]>(
-    () => buildFooterColumns(NAV as NavItem[]),
-    []
+    () => buildFooterColumns(nav),
+    [nav, copy.moreColumnTitle]
   );
 
   return (
@@ -85,7 +91,7 @@ export const Footer = () => {
           <div className="space-y-6">
             <div>
               <h2 className="font-bold text-xl mb-4">
-                Reception House Waterloo Region
+                {copy.orgName}
               </h2>
               <address className="not-italic space-y-2 text-sm">
                 <div className="flex items-center gap-2">
@@ -100,7 +106,7 @@ export const Footer = () => {
                     className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
                     aria-label="View our location on Google Maps: 101 Frederick St, Kitchener, ON N2H 6R2"
                   >
-                    101 Frederick St, Kitchener, ON N2H 6R2
+                    {copy.addressLine}
                   </a>
                 </div>
 
@@ -127,7 +133,7 @@ export const Footer = () => {
                 </div>
 
                 <p className="pt-2 text-xs">
-                  Charitable Registration No. 11890 5297 RR0001
+                  {copy.charityNumber}
                 </p>
               </address>
             </div>
@@ -135,13 +141,10 @@ export const Footer = () => {
             {/* Accessibility Statement */}
             <div className="space-y-3">
               <h3 className="font-semibold text-base">
-                Accessibility at Reception House
+                {copy.accessibilityTitle}
               </h3>
               <p className="text-sm leading-relaxed">
-                We are committed to providing accessible services in accordance
-                with the Accessibility for Ontarians with Disabilities Act
-                (AODA). For alternate formats or accessibility inquiries,
-                contact{" "}
+                {`${copy.accessibilityText} `}
                 <a
                   href="mailto:info@receptionhouse.ca"
                   className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors font-medium flex items-center min-h-11"
@@ -201,7 +204,7 @@ export const Footer = () => {
         {/*Bottom Bar */}
         <div className="border-t border-foreground/10 pt-6 text-center">
           <p className="text-sm mb-2">
-            © 2025 Reception House Waterloo Region | All rights reserved
+            {copy.legalCopyright}
           </p>
           <nav
             aria-label="Legal links"
@@ -211,21 +214,21 @@ export const Footer = () => {
               href="/privacy"
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
             >
-              Privacy Policy
+              {copy.legalPrivacy}
             </Link>
             <span aria-hidden="true">•</span>
             <Link
               href="/accessibility"
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
             >
-              Accessibility
+              {copy.legalAccessibility}
             </Link>
             <span aria-hidden="true">•</span>
             <Link
               href="/terms"
               className="hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-secondary transition-colors flex items-center min-h-11"
             >
-              Terms of Use
+              {copy.legalTerms}
             </Link>
           </nav>
         </div>
