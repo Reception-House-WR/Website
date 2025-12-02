@@ -1,19 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { translateWithCache } from "@/lib/translation/service";
 
 interface DonateButtonProps {
   lang: string;
 }
 
-const translations = {
-  en: "Donate Now",
-  fr: "Faire un don",
-};
+export async function DonateButton({ lang }: DonateButtonProps) {
+  const baseText = "Donate Now";
 
-export const DonateButton = ({ lang }: DonateButtonProps) => {
-  const text =
-    translations[lang as keyof typeof translations] || translations.en;
+  let text = baseText;
+
+  if (lang !== "en") {
+    const [translated] = await translateWithCache([baseText], "en", lang);
+    text = translated;
+  }
 
   return (
     <div className="fixed bottom-8 right-8 z-50 animate-slide-in-right">
@@ -38,4 +40,4 @@ export const DonateButton = ({ lang }: DonateButtonProps) => {
       </Button>
     </div>
   );
-};
+}

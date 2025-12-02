@@ -1,3 +1,5 @@
+import { getTranslatedNav } from "@/lib/translation/translateNav";
+
 export const NAV = [
   { label: "Home", href: "/" },
 
@@ -5,6 +7,11 @@ export const NAV = [
     label: "About Us",
     href: "/about",
     children: [
+      {
+        label: "Overview",
+        href: "/about",
+        description: "A quick overview of this section.",
+      },
       {
         label: "Our People",
         href: "/about/our-people",
@@ -32,6 +39,11 @@ export const NAV = [
     label: "Programs & Services",
     href: "/programs-and-services",
     children: [
+      {
+        label: "Overview",
+        href: "/programs-and-services",
+        description: "A quick overview of this section.",
+      },
       {
         label: "Healthcare & Wellbeing",
         href: "/programs-and-services/healthcare-wellbeing",
@@ -72,6 +84,11 @@ export const NAV = [
     href: "/get-involved",
     children: [
       {
+        label: "Overview",
+        href: "/get-involved",
+        description: "A quick overview of this section.",
+      },
+      {
         label: "Volunteer Sign Up",
         href: "/get-involved/volunteer",
         description: "Share your time and skills with our community.",
@@ -96,8 +113,9 @@ export type NavItem = {
   children?: NavItem[];
 };
 
-export function buildLocalizedNav(locale: string): NavItem[] {
-  return NAV.map((item) => ({
+export async function buildLocalizedNav(locale: string): Promise<NavItem[]> {
+  const base = await getTranslatedNav(locale);
+  return base.map((item) => ({
     ...item,
     href: `/${locale}${item.href}`,
     children: item.children
