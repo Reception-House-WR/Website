@@ -52,7 +52,7 @@ export async function getFooterCopy(locale: string): Promise<FooterCopy> {
   ];
 
   // IMPORTANT: this runs on the server (layout/page), not in the browser
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/translate`, {
+  const res = await fetch(`${process.env["NEXT_PUBLIC_BASE_URL"]}/api/translate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ texts, from: "en", to: locale }),
