@@ -28,9 +28,14 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold text-foreground md:text-4xl">
-          {title}
-        </h2>
+        <div className="text-center mb-8 space-y-4">
+          <h2 className="text-center text-3xl font-bold text-foreground md:text-4xl">
+            {title}
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            {desc}
+          </p>
+        </div>
 
         <div className="relative mx-auto max-w-4xl">
           <Card className="overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-shadow py-0">

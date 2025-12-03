@@ -185,7 +185,7 @@ const FrenchServicesSection = ({
                 className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)] h-12"
                 asChild
               >
-                <Link href={redirectLink}>{buttonLabel}</Link>
+                <a href={`mailto:${redirectLink}`}>{buttonLabel}</a>
               </Button>
             </div>
           </div>

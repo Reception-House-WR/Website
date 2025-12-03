@@ -66,9 +66,14 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold text-foreground md:text-4xl">
-          {title}
-        </h2>
+        <div className="text-center mb-8 space-y-4">
+          <h2 className="text-center text-3xl font-bold text-foreground md:text-4xl">
+            {title}
+          </h2>
+          <p className="text-muted-foreground leading-relaxed">
+            {desc}
+          </p>
+        </div>
 
         <div className="mx-auto max-w-6xl grid lg:grid-cols-[350px_1fr] gap-8 items-start">
 

@@ -58,9 +58,9 @@ export default function TeamDirectory({
 
             {/* Department Filter Badges */}
             <div className="flex flex-wrap gap-2">
-              {departments.map((dept) => (
+              {["All", ...departments].map((dept, id) => (
                 <Badge
-                  key={dept}
+                  key={id}
                   className={cn(
                     "px-4 py-1.5 rounded-full cursor-pointer transition-colors text-sm font-medium border",
                     // Apply active styles if the department is selected

@@ -39,9 +39,6 @@ export default function Programs({
                 />)}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute top-4 left-4">
-                  <div className="w-14 h-14 rounded-full bg-[var(--rh-500)]/90 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                    <Icon className="w-7 h-7 text-white" />
-                  </div>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="text-xl font-bold text-white mb-1 transition-all duration-300 group-hover:text-2xl">
