@@ -57,6 +57,9 @@ export const EventCard = ({
   };
 
   // --- This is the shared UI for the card ---
+  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
+  const hasRecaptcha = Boolean(siteKey);
+
   const CardUI = (
     <Card className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0">
       <CardContent className="p-0 md:flex h-full">
@@ -116,42 +119,41 @@ export const EventCard = ({
 
           {/* --- Conditional Button --- */}
           {category === "upcoming" ? (
-            event.isPaid ? (
-              // --- PAID EVENT BUTTON ---
+          event.isPaid ? (
+            // --- PAID EVENT BUTTON ---
+            <Button
+              size="lg"
+              className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
+              onClick={handlePaidRSVP}
+            >
+              RSVP on Eventbrite
+            </Button>
+          ) : hasRecaptcha ? (
+            // --- FREE EVENT BUTTON con reCAPTCHA ---
+            <DialogTrigger asChild>
               <Button
                 size="lg"
                 className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
-                onClick={handlePaidRSVP}
               >
-                RSVP on Eventbrite
+                RSVP Now
               </Button>
-            ) : (
-              // --- FREE EVENT BUTTON ---
-              <DialogTrigger asChild>
-                <Button
-                  size="lg"
-                  className="bg-[var(--rh-500)] text-[var(--primary-foreground)] hover:bg-[var(--rh-400)]"
-                >
-                  RSVP Now
-                </Button>
-              </DialogTrigger>
-            )
+            </DialogTrigger>
           ) : (
-            // --- PAST EVENT BUTTON ---
+            // --- FREE EVENT pero SIN reCAPTCHA: SIN DialogTrigger ---
             <Button size="lg" disabled>
-              Event Ended
+              RSVP temporarily unavailable
             </Button>
-          )}
+          )
+        ) : (
+          // --- PAST EVENT BUTTON ---
+          <Button size="lg" disabled>
+            Event Ended
+          </Button>
+        )}
         </div>
       </CardContent>
     </Card>
   );
-
-  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
-  if (!siteKey) {
-    console.error("reCAPTCHA site key is missing.");
-    return CardUI;
-  }
 
   if (event.isPaid || category === "past") {
     return CardUI;
@@ -159,7 +161,7 @@ export const EventCard = ({
 
   // --- FREE, UPCOMING EVENT ---
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
+    <GoogleReCaptchaProvider reCaptchaKey={siteKey!}>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         {CardUI}
         <DialogContent className="sm:max-w-[500px]">

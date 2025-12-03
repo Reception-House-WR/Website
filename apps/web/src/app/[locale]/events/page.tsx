@@ -3,7 +3,7 @@ import EventsPageClient from "@/sections/events/EventsPageClient";
 
 export default async function Page({ params }: { params: { locale: string } }) {
   const res = await fetchEventsPage(params.locale);
-  // console.log(res)
+  console.log(res)
 
   if (!res) {
     return <div>Failed to load data</div>;
