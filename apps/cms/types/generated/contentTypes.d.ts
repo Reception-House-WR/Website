@@ -1146,34 +1146,6 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiTranslationTranslation extends Struct.CollectionTypeSchema {
-  collectionName: 'translations';
-  info: {
-    displayName: 'Translation';
-    pluralName: 'translations';
-    singularName: 'translation';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::translation.translation'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    version: Schema.Attribute.Integer;
-  };
-}
-
 export interface ApiValueValue extends Struct.CollectionTypeSchema {
   collectionName: 'values';
   info: {
@@ -1873,7 +1845,6 @@ declare module '@strapi/strapi' {
       'api::story.story': ApiStoryStory;
       'api::strategic-priority.strategic-priority': ApiStrategicPriorityStrategicPriority;
       'api::tag.tag': ApiTagTag;
-      'api::translation.translation': ApiTranslationTranslation;
       'api::value.value': ApiValueValue;
       'api::volunteer-testimonial.volunteer-testimonial': ApiVolunteerTestimonialVolunteerTestimonial;
       'api::web-page.web-page': ApiWebPageWebPage;
