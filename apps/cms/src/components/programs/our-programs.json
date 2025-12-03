@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_programs_our_programs",
+  "info": {
+    "displayName": "ourPrograms"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "topDescription": {
+      "type": "text",
+      "required": true
+    },
+    "cards": {
+      "type": "component",
+      "component": "programs.info-card",
+      "repeatable": true
+    },
+    "bottomDescription": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

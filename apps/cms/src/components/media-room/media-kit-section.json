@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_media_room_media_kit_sections",
+  "info": {
+    "displayName": "mediaKitSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "kits": {
+      "type": "component",
+      "component": "media-room.kits",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

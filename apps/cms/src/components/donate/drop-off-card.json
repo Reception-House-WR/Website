@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_donate_drop_off_cards",
+  "info": {
+    "displayName": "dropOffCard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "note": {
+      "type": "text"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "component": "programs.item",
+      "repeatable": true
+    },
+    "bottomText": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_about_impacts",
+  "info": {
+    "displayName": "impact"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "videoUrl": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

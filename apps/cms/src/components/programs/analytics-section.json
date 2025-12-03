@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_programs_analytics_sections",
+  "info": {
+    "displayName": "analyticsSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "analytics": {
+      "type": "component",
+      "component": "programs.analytics",
+      "repeatable": true
+    },
+    "description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

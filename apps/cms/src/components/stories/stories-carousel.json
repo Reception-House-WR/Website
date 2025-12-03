@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_stories_stories_carousels",
+  "info": {
+    "displayName": "storiesCarousel"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "stories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::story.story"
+    }
+  },
+  "config": {}
+}

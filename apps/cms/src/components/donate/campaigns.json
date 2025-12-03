@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_donate_campaigns",
+  "info": {
+    "displayName": "campaigns"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "campaigns": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::campaign.campaign"
+    }
+  },
+  "config": {}
+}

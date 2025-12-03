@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_get_involved_benefits_card_sections",
+  "info": {
+    "displayName": "benefitsCardSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "benefits": {
+      "type": "component",
+      "component": "get-involved.benefit-card",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_donate_lists",
+  "info": {
+    "displayName": "list"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "programs.item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

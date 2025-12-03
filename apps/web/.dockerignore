@@ -1,0 +1,36 @@
+# VCS / editor
+.git
+.gitignore
+.vscode
+.idea
+*.swp
+.DS_Store
+
+# Logs
+**/*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Dependencies & caches
+**/node_modules
+**/.pnpm-store
+**/.yarn/cache
+**/.cache
+**/.turbo
+**/.parcel-cache
+/node_modules
+*/node_modules
+
+# Next / build output
+**/.next
+**/dist
+**/build
+**/coverage
+
+# Big folders you don’t need for building the web app
+apps/cms/**           # Strapi can be huge: .cache, uploads, etc.
+!apps/cms/package.json
+!apps/cms/pnpm-lock.yaml
+
+# Uploads / assets that aren’t needed to build
+apps/web/public/uploads/**

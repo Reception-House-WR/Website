@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_programs_french_overviews",
+  "info": {
+    "displayName": "frenchOverview"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "component": "programs.info-card",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

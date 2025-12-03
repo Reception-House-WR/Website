@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_programs_partner_sections",
+  "info": {
+    "displayName": "partnerSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "partners": {
+      "type": "component",
+      "component": "programs.partner",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_programs_benefits_sections",
+  "info": {
+    "displayName": "benefitsSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "card": {
+      "type": "component",
+      "component": "common.list-card",
+      "repeatable": false
+    },
+    "buttonLabel": {
+      "type": "string"
+    },
+    "bottomDescription": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}
