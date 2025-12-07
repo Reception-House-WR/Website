@@ -175,11 +175,8 @@ export const Gallery = ({
                 )}
               </div>
               <DialogDescription id="media-description" className="space-y-2">
-                <span className="text-base text-foreground">
-                  {selectedMedia?.description}
-                </span>
                 {selectedMedia?.description && (
-                  <span className="text-sm text-muted-foreground italic">
+                  <span className="text-base text-foreground">
                     {selectedMedia?.description}
                   </span>
                 )}
