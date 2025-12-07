@@ -3,6 +3,7 @@ import {
   DEFAULT_LOCALE,
   isValidLocale,
 } from "@/lib/strapi/internationalization/i18n";
+import { getHomeHeroCopy } from "@/lib/translation/static/homeHeroCopy";
 import { CampaignSection } from "@/sections/home/CampaignSection";
 import { EventsCalendar } from "@/sections/home/EventCalender";
 import { Hero } from "@/sections/home/Hero";
@@ -19,6 +20,7 @@ export default async function Home({
     : DEFAULT_LOCALE;
 
   const res = await fetchHomePage(locale);
+  const heroCopy = await getHomeHeroCopy(locale);
   // console.log("Home page data:", locale, res);
 
   if (!res) {
@@ -32,6 +34,8 @@ export default async function Home({
   return (
     <div>
       <Hero
+        contactUsText={heroCopy.contactUs}
+        learnMoreText={heroCopy.learnMore}
         title={res.hero.title}
         description={res.hero.description}
         imageUrl={res.hero.backgroundImageUrl ?? ""}
