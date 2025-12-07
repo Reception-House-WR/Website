@@ -2,48 +2,15 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import {
   ArrowRight,
-  History,
-  Mail,
-  Target,
-  Users,
-  type LucideIcon,
 } from "lucide-react";
+import { QuickLink } from "@/lib/translation/static/aboutUsLinks";
 
-type QuickLink = {
-  title: string;
-  path: string;
-  icon: LucideIcon;
-  description: string;
-};
 
-const quickLinks: QuickLink[] = [
-  {
-    title: "Our People",
-    path: "/about/our-people",
-    icon: Users,
-    description: "Meet our dedicated team members",
-  },
-  {
-    title: "Our Purpose",
-    path: "/about/purpose",
-    icon: Target,
-    description: "Our mission, vision, and values",
-  },
-  {
-    title: "Our History",
-    path: "/about/our-history",
-    icon: History,
-    description: "Journey of impact and growth",
-  },
-  {
-    title: "Contact Us",
-    path: "/about/contact-us",
-    icon: Mail,
-    description: "Get in touch with us",
-  }
-];
-
-export default function LinkToPages() {
+export default function LinkToPages({
+  quickLinks,
+}: {
+  quickLinks: QuickLink[];
+}) {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 mx-8 ">
       {quickLinks.map((item, index) => {
