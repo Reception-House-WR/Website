@@ -1,5 +1,6 @@
 import { fetchAboutOverviewPage } from "@/lib/strapi/helpers/about/aboutOverviewHelper";
 import { getAboutUsHeroCopy } from "@/lib/translation/static/aboutUsHeroCopy";
+import { getAboutUsQuickLinks } from "@/lib/translation/static/aboutUsLinks";
 import BoardOfDirectors from "@/sections/about/overview/BoardOfDirectors";
 import CommunityInAction from "@/sections/about/overview/CommunityInAction";
 import HeroAboutUs from "@/sections/about/overview/HeroAboutUs";
@@ -10,6 +11,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
   
   const res = await fetchAboutOverviewPage(params.locale);
   const heroCopy = await getAboutUsHeroCopy(params.locale);
+  const quickLinks = await getAboutUsQuickLinks(params.locale);
   
   // console.log("About overview page data:", res);
   if (!res) {
@@ -17,11 +19,11 @@ export default async function Home({ params }: { params: { locale: string } }) {
   }
 
   return (
-    <div className="">
+    <div>
       <HeroAboutUs learnMore={heroCopy.learnMore} getInvolved={heroCopy.getInvolved} url={res?.hero?.backgroundImageUrl || ""} title={res?.hero?.title || ""} description={res?.hero?.description || ""} />
       <WhoWeAre title={res?.whoWeAreSection?.title || ""} description={res?.whoWeAreSection?.description || ""} />
       <CommunityInAction title={res?.communitySection?.title || ""} gallery={res?.communitySection?.gallery || []} />
-      <LinksToPages />
+      <LinksToPages quickLinks={quickLinks} />
       <BoardOfDirectors title={res?.boardOfDirectorsSection?.title || ""} desc={res?.boardOfDirectorsSection?.description || ""} image={res?.boardOfDirectorsSection?.image?.url || ""} buttonLabel={res?.boardOfDirectorsSection?.buttonLabel || ""} />
     </div>
   );
