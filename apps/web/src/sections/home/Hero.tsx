@@ -6,9 +6,11 @@ interface HeroProps {
   title: string;
   description: string;
   imageUrl: string;
+  contactUsText: string;
+  learnMoreText: string;
 }
 
-export const Hero = ({ title, description, imageUrl }: HeroProps) => {
+export const Hero = ({ title, description, imageUrl, contactUsText, learnMoreText }: HeroProps) => {
 
   return (
     <section 
@@ -37,7 +39,7 @@ export const Hero = ({ title, description, imageUrl }: HeroProps) => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.2s' }}>
           <Link href="/about/contact-us">
           <Button  size="lg" className="group" > 
-            Contact Us
+            {contactUsText}
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             
           </Button>
@@ -45,7 +47,7 @@ export const Hero = ({ title, description, imageUrl }: HeroProps) => {
 
           <Link href="/programs-and-services">
           <Button variant="outline" size="lg" className="bg-card/10 backdrop-blur-sm border-primary-foreground/20 text-primary-foreground hover:bg-card/20">
-            Learn More
+            {learnMoreText}
           </Button>
           </Link>
         </div>

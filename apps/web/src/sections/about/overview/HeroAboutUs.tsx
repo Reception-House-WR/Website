@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-export default function HeroAboutUs ({url, title, description}: {url?: string; title: string; description: string}) {
+export default function HeroAboutUs ({url, title, description, learnMore, getInvolved}: {url?: string; title: string; description: string; learnMore: string; getInvolved: string}) {
     return (   
 
         <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
@@ -27,12 +27,12 @@ export default function HeroAboutUs ({url, title, description}: {url?: string; t
             <div className="flex flex-wrap gap-4">
               <Link href="/about/purpose">
                 <Button size="lg" className="bg-[var(--rh-500)] hover:bg-[var(--rh-100)]/90 hover:text-[var(--rh-500)]">
-                  Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                  {learnMore} <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/get-involved">
                 <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-foreground">
-                  Get Involved
+                  {getInvolved}
                 </Button>
               </Link>
             </div>
