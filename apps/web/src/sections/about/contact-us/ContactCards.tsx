@@ -3,12 +3,7 @@ import { Card } from "@/components/ui/card";
 import { contactInfo as contactInfoType } from "@/lib/strapi/models/about/contactInfo";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
-const contactIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
-  "Phone": Phone,
-  "Email": Mail,
-  "Address": MapPin,
-  "Office Hours": Clock,
-}
+const contactIcons: ComponentType<SVGProps<SVGSVGElement>>[] = [Phone,Mail, MapPin,Clock]
 
 export default function ContactCards({
     contactInfo
@@ -18,7 +13,7 @@ export default function ContactCards({
     return (
         <div className="space-y-4">
             {contactInfo.map((info, index) => {
-            const Icon = contactIcons[info?.title];
+            const Icon = contactIcons[index % contactIcons.length];
             return (
                 <Card
                 key={info.title}

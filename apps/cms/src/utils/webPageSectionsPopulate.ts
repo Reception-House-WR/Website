@@ -24,6 +24,11 @@ export const webPageSectionsPopulate = {
           backgroundImage: true,
         },
       },
+      "common.card":{
+        populate: {
+          image: true,
+        }
+      },
       "common.section": true,
       "programs.analytics-section": {
         populate: {
