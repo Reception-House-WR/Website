@@ -6,6 +6,8 @@ export default async function Home({ params }: { params: { locale: string } }){
   const res = await fetchProgramsHousingPage(params.locale);
   // console.log("Housing Page Data:", res);
 
+  const siteKey = process.env["RECAPTCHA_SITE_KEY"];
+
   if (!res) {
     return <div>Failed to load data</div>;
   }
@@ -16,7 +18,7 @@ export default async function Home({ params }: { params: { locale: string } }){
         title={res.hero.title}
         description={res.hero.description}
       />
-      <HousingSection buttonLabel={res.benefitsSection.buttonLabel} bottomDesc={res.benefitsSection.bottomDescription} benefitsCard={res.benefitsSection.card} benefitsTitle={res.benefitsSection.title} benefitsDesc={res.benefitsSection.description} featuresTitle={res.featuresSection.title} featuresDesc={res.featuresSection.description} features={res.featuresSection.cards} analytics={res.analyticsSection.analytics} analyticsTitle={res.analyticsSection.title} analyticsDesc={res.analyticsSection.description} />
+      <HousingSection siteKey={siteKey || null} buttonLabel={res.benefitsSection.buttonLabel} bottomDesc={res.benefitsSection.bottomDescription} benefitsCard={res.benefitsSection.card} benefitsTitle={res.benefitsSection.title} benefitsDesc={res.benefitsSection.description} featuresTitle={res.featuresSection.title} featuresDesc={res.featuresSection.description} features={res.featuresSection.cards} analytics={res.analyticsSection.analytics} analyticsTitle={res.analyticsSection.title} analyticsDesc={res.analyticsSection.description} />
     </div>
   );
 }

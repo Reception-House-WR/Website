@@ -15,6 +15,7 @@ import { ListCard } from "@/lib/strapi/models/common/listCard";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 export const EmploymentSection = ({
+  siteKey,
   title,
   desc,
   cards,
@@ -24,6 +25,7 @@ export const EmploymentSection = ({
   benefitsCard,
   buttonLabel,
 }: {
+  siteKey: string | null;
   title: string;
   desc: string;
   cards: SimpleCard[];
@@ -34,7 +36,6 @@ export const EmploymentSection = ({
   buttonLabel: string;
 }) => {
   //reCAPTCHA key
-  const siteKey = process.env["RECAPTCHA_SITE_KEY"];
 
   return (
     <div>

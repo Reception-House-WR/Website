@@ -35,9 +35,11 @@ function formatDisplayDate(isoDate: Date | null): string {
 
 // --- Event Card (individual event) ---
 export const EventCard = ({
+  siteKey,
   event,
   category,
 }: {
+  siteKey: string | null;
   event: UpcomingEvent;
   category: "upcoming" | "past";
 }) => {
@@ -57,7 +59,6 @@ export const EventCard = ({
   };
 
   // --- This is the shared UI for the card ---
-  const siteKey = process.env["RECAPTCHA_SITE_KEY"];
   const hasRecaptcha = Boolean(siteKey);
 
   const CardUI = (

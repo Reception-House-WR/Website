@@ -31,6 +31,7 @@ const parseNumberWithSuffix = (input: string) => {
 };
 
 export const HousingSection = ({
+  siteKey,
   analyticsTitle,
   analyticsDesc,
   analytics,
@@ -43,6 +44,7 @@ export const HousingSection = ({
   buttonLabel,
   bottomDesc
 }: {
+  siteKey: string | null;
   analyticsTitle: string;
   analyticsDesc: string;
   analytics: Analytic[];
@@ -55,7 +57,6 @@ export const HousingSection = ({
   buttonLabel: string;
   bottomDesc: string;
 }) => {
-  const siteKey = process.env["RECAPTCHA_SITE_KEY"];
 
   return (
     <>

@@ -7,6 +7,7 @@ import { EventCard } from "./EventCard";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
 
 interface EventsPageClientProps {
+  siteKey: string | null;
   allEventsData: UpcomingEvent[];
   heroTitle: string;
   heroImage?: string;
@@ -14,6 +15,7 @@ interface EventsPageClientProps {
 }
 
 export default function EventsPageClient({
+  siteKey,
   allEventsData,
   heroTitle,
   heroImage,
@@ -89,6 +91,7 @@ export default function EventsPageClient({
                   {upcomingEvents?.length > 0 ? (
                     upcomingEvents.map((event) => (
                       <EventCard
+                        siteKey={siteKey}
                         key={event?.title}
                         event={event}
                         category="upcoming"
@@ -107,6 +110,7 @@ export default function EventsPageClient({
                   {pastEvents?.length > 0 ? (
                     pastEvents.map((event) => (
                       <EventCard
+                       siteKey={siteKey}
                         key={event.title}
                         event={event}
                         category="past"
@@ -130,7 +134,12 @@ export default function EventsPageClient({
                           ? "upcoming"
                           : "past";
                       return (
-                        <EventCard key={id} event={event} category={category} />
+                        <EventCard 
+                          siteKey={siteKey}
+                          key={id} 
+                          event={event} 
+                          category={category} 
+                        />
                       );
                     })
                   ) : (

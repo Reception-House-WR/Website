@@ -19,17 +19,18 @@ const LazyRecaptchaForm = dynamic(
 );
 
 export default function ContactUsPage({
+  siteKey,
   title,
   desc,
   parkingSection,
   contactInfoItems,
 }: {
+  siteKey: string | null;
   title: string;
   desc: string;
   parkingSection: Card;
   contactInfoItems: contactInfo[];
 }) {
-  const siteKey = process.env["RECAPTCHA_SITE_KEY"];
 
   const formRef = useRef<HTMLDivElement | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
