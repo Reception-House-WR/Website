@@ -57,7 +57,7 @@ export const EventCard = ({
   };
 
   // --- This is the shared UI for the card ---
-  const siteKey = process.env["NEXT_PUBLIC_RECAPTCHA_SITE_KEY"];
+  const siteKey = process.env["RECAPTCHA_SITE_KEY"];
   const hasRecaptcha = Boolean(siteKey);
 
   const CardUI = (
