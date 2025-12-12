@@ -3,7 +3,7 @@ import { History } from "lucide-react";
 import  Img  from 'next/image';
 import MarkdownRenderer from "@/components/common/MarkdownRenderer";
 import { fetchAboutOurHistoryPage } from "@/lib/strapi/helpers/about/aboutOurHistoryHelper";
-
+import Image from "next/image";
 
 export default async function OurHistory({ params }: { params: { locale: string } }) {
 
@@ -21,15 +21,23 @@ export default async function OurHistory({ params }: { params: { locale: string 
         className="relative h-[40vh] min-h-[300px] overflow-hidden bg-gray-200"
         role="banner"
       >
-          <div
-            className="absolute inset-0 z-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${res?.hero?.backgroundImageUrl})` }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{ background: "var(--hero-gradient)" }}
+        <div className="absolute inset-0 z-0">
+          {res?.hero?.backgroundImageUrl && (
+            <Image
+              src={res.hero.backgroundImageUrl}
+              alt="Hero background"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
             />
-          </div>
+          )}
+
+          <div
+            className="absolute inset-0"
+            style={{ background: "var(--hero-gradient)" }}
+          />
+        </div>
 
         <div className="relative container mx-auto px-4 h-full flex items-center">
           <div className="max-w-2xl text-white animate-fade-in-up">
@@ -101,14 +109,16 @@ export default async function OurHistory({ params }: { params: { locale: string 
                       }`}
                     >
                       {event?.image?.url && (
-                        <div className="relative w-full max-w-[400px] h-[250px]">
-                          
-                          {(event?.image?.url && <Img
-                            src={event?.image?.url}
-                            alt={event?.image?.alternativeText || `Image for ${event?.title}`}
-                            fill
-                            className="object-cover rounded-lg shadow-lg border border-gray-200 hover:border-primary transition-colors duration-300"
-                          />)}
+                        <div className="relative w-full max-w-[400px] h-[250px] overflow-hidden">
+                          {event?.image?.url && (
+                            <Image
+                              src={event.image.url}
+                              alt={event.image.alternativeText || `Image for ${event.title}`}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 400px"
+                              className="object-cover rounded-lg shadow-lg border border-gray-200 hover:border-primary transition-colors duration-300"
+                            />
+                          )}
                         </div>
                       )}
                     </div>

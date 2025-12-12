@@ -12,7 +12,9 @@ export async function fetchAboutOurPurpose(locale: string) {
         populate: {
             sections: {
             on: {
-                "about.impact":true,
+                "about.impact": {
+                  populate: { image: true },
+                },
                 "common.hero": {
                 populate: {backgroundImage: true}, 
                 },

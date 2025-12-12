@@ -5,6 +5,7 @@ import { AboutReport } from "../../models/about/report";
 import { Value } from "../../models/about/value";
 import { Hero } from "../../models/common/hero";
 import { Section } from "../../models/common/section";
+import { StrapiImageResponse } from "../../models/strapi/image";
 import { fetchAboutOurPurpose, fetchPriorities, fetchReports, fetchValues } from "../../services/about/ourPurposeService";
 
 type RawStrapiSection = {
@@ -14,6 +15,7 @@ type RawStrapiSection = {
   description?: string;
   backgroundImage?: { url?: string }[];
   videoUrl?: string;
+  image?: StrapiImageResponse;
 };
 
 type RawValue = {
@@ -56,6 +58,7 @@ const toImpact = (s?: RawStrapiSection): AboutImpact => ({
   title: s?.title ?? "",
   description: s?.description ?? "",
   videoUrl: s?.videoUrl ?? "",
+  image: s?.image?.url ?? "",
 });
 
 const toDocument = (r: RawReport): AboutReport => {
@@ -156,6 +159,7 @@ export async function fetchOurPurposePage(locale: string): Promise<OurPurposeSec
           title: "",
           description: "",
           videoUrl: "",
+          image: "",
         },
 
     transparencyAndAccountabilitySection: {

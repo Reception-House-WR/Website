@@ -1,6 +1,7 @@
 import { Users } from "lucide-react"; // Icon for Hero section
 import TeamDirectory from "../../../../components/common/TeamDirectory"; // Client Component for interactive directory
 import { fetchAboutOurPeoplePage } from "@/lib/strapi/helpers/about/aboutOurPeopleHelper";
+import Image from "next/image";
 
 export default async function OurPeople({ params }: { params: { locale: string } }) {
   const res = await fetchAboutOurPeoplePage(params.locale);
@@ -21,15 +22,23 @@ export default async function OurPeople({ params }: { params: { locale: string }
         className="relative h-[40vh] min-h-[300px] overflow-hidden bg-gray-200"
         role="banner"
       >
-          <div
-            className="absolute inset-0 z-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${res.hero?.backgroundImageUrl})` }}
-          >
-            <div
-              className="absolute inset-0 "
-              style={{ background: "var(--hero-gradient)" }} 
+        <div className="absolute inset-0 z-0">
+          {res.hero?.backgroundImageUrl && (
+            <Image
+              src={res.hero.backgroundImageUrl}
+              alt="Hero background"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
             />
-          </div>
+          )}
+
+          <div
+            className="absolute inset-0"
+            style={{ background: "var(--hero-gradient)" }}
+          />
+        </div>
         {/* Hero Content */}
         <div className="relative container mx-auto px-4 h-full flex items-center">
           <div className="max-w-2xl text-white animate-fade-in-up">

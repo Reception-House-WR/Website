@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 import Img from "next/image";
 import { Employee } from "@/lib/strapi/models/about/employee";
@@ -88,13 +89,15 @@ export default function TeamDirectory({
                 <div className="space-y-4">
                   {/* Display Employee Image or Initials Fallback */}
                   {employee?.imageUrl ? (
-                    <Img
-                      src={employee?.imageUrl}
-                      alt={employee?.name || "Employee"}
-                      width={80}
-                      height={80}
-                      className="w-20 h-20 rounded-full object-cover"
-                    />
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden">
+                      <Image
+                        src={employee.imageUrl}
+                        alt={employee.name || "Employee"}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    </div>
                   ) : (
                     <div className="w-20 h-20 bg-[var(--rh-500)] rounded-full flex items-center justify-center">
                       <span className="text-primary-foreground text-2xl font-bold">

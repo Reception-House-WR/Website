@@ -5,10 +5,12 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 export const VideoSection = ({
+  image,
   title,
   desc,
   url
 }: {
+  image: string,
   title: string,
   desc: string,
   url: string
@@ -63,7 +65,7 @@ export const VideoSection = ({
                 aria-label="Play video"
               >
                 <Image
-                  src={`https://www.opencityinc.com/wp-content/uploads/Reception-House-Annual-Meeting-50-Charity-Spotlight-OpencityInc.jpg`}
+                  src={image}
                   alt="Video thumbnail"
                   className="absolute inset-0 w-full h-full object-cover"
                   fill

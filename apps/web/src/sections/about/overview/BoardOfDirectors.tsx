@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export default function BoardOfDirectors({
   title,
@@ -17,12 +18,14 @@ export default function BoardOfDirectors({
     return (
         <Card className="overflow-hidden shadow-card animate-fade-in mx-8">
             <div className="grid md:grid-cols-2 gap-0">
-              <div className="relative h-64 md:h-auto">
+              <div className="relative h-64 md:h-auto overflow-hidden">
                 {image && (
-                  <img
+                  <Image
                     src={image}
                     alt="Board of Directors"
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
                   />
                 )}
               </div>
