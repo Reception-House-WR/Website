@@ -9,6 +9,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GalleryItem } from "@/lib/strapi/models/mediaRoom/galleryItem";
 import { PlayIcon } from "lucide-react";
 import React, { useState } from "react";
+import Image from "next/image";
 
 export const Gallery = ({
   title,
@@ -114,11 +115,15 @@ export const Gallery = ({
               aria-label={`View ${item.image?.alternativeText || "media item"}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
-                {(item?.image?.url && <img
-                  src={item.image.url}
-                  alt={item.image?.alternativeText || "Thumbnail"}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />)}
+                {item?.image?.url && (
+                  <Image
+                    src={item.image.url}
+                    alt={item.image.alternativeText || "Thumbnail"}
+                    fill
+                    sizes="100vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                )}
                 {item.isImage === false && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                     <div className="rounded-full bg-[var(--rh-500)] p-4 transition-transform group-hover:scale-110">
