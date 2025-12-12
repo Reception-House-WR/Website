@@ -22,7 +22,7 @@ export async function fetchAboutOurHistory(locale: string){
 }
 
 export async function fetchTimelineEvents(locale: string) {
-    return await fetchApi<{ data: any[] }>("/api/timeline-events", {
+    return await fetchApi<{ data: any[] }>("/api/histories", {
         sort: ["year:asc", "order:asc"],        
         pagination: { pageSize: 100 }, 
         populate: {
