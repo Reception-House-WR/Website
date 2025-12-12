@@ -1,4 +1,6 @@
 import { ProgramCard } from "@/lib/strapi/models/programs/programCard";
+import Image from "next/image";
+
 
 export default function RapAndCss({
   rapSection,
@@ -37,13 +39,21 @@ export default function RapAndCss({
             </ul>
 
             <div className="pt-4">
-              
-              {(rapSection?.image?.url && <img
-                src={rapSection?.image?.url}
-                alt={rapSection?.image?.alternativeText || "Instructor helping students during orientation session"}
-                className="rounded-lg shadow-soft w-full"
-              />)}
-            </div>
+            {rapSection?.image?.url && (
+              <div className="relative w-full h-[420px] overflow-hidden rounded-lg shadow-soft">
+                <Image
+                  src={rapSection.image.url}
+                  alt={
+                    rapSection.image.alternativeText ||
+                    "Instructor helping students during orientation session"
+                  }
+                  fill
+                  sizes="100vw"
+                  className="object-contain"
+                />
+              </div>
+            )}
+          </div>
           </div>
 
           <div className="space-y-6">
@@ -72,11 +82,17 @@ export default function RapAndCss({
             </ul>
 
             <div className="pt-4">
-              {(cssSection?.image?.url && <img
-                src={cssSection?.image?.url}
-                alt={cssSection?.image?.alternativeText || ""}
-                className="rounded-lg shadow-soft w-full"
-              />)}
+              {cssSection?.image?.url && (
+                <div className="relative w-full h-[420px] overflow-hidden rounded-lg shadow-soft">
+                  <Image
+                    src={cssSection.image.url}
+                    alt={cssSection.image.alternativeText || ""}
+                    fill
+                    sizes="100vw"
+                    className="object-contain"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

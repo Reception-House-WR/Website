@@ -1,5 +1,6 @@
 import { Cards } from "@/lib/strapi/models/programs/cards";
 import { Heart, Building2, GraduationCap, Briefcase, BookOpen } from "lucide-react";
+import Image from "next/image";
 
 const serviceIcons = [
   Heart,
@@ -28,11 +29,13 @@ export default function Services({
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               
-              {(service?.image?.url && <img 
-                src={service?.image.url} 
-                alt={service?.image?.alternativeText || service?.title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />)}
+              {service?.image?.url && (<Image
+              src={service.image.url}
+              alt={service.image.alternativeText || service.title}
+              fill
+              sizes="100vw"
+              className="absolute inset-0 object-cover"
+            />)}
               
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
               

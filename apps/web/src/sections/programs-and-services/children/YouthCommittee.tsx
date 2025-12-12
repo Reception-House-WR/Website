@@ -2,7 +2,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 import { Item } from "@/lib/strapi/models/programs/item";
 import { StrapiImageResponse } from "@/lib/strapi/models/strapi/image";
 import { Users } from "lucide-react";
-
+import Image from "next/image";
 
 export function YouthCommittee({
   committeeImages,
@@ -28,11 +28,17 @@ export function YouthCommittee({
                 <CarouselContent>
                   {committeeImages.map((image, index) => (
                     <CarouselItem key={index}>
-                      {(image.url && <img 
-                        src={image.url}
-                        alt={image.alternativeText ?? "Youth Advisory Committee Image"}
-                        className="rounded-2xl shadow-medium w-full h-[500px] object-cover transition-transform duration-500 hover:scale-105"
-                      />)}
+                     <div className="relative w-full h-[500px] overflow-hidden rounded-2xl shadow-medium">
+                      {image.url && (
+                        <Image
+                          src={image.url}
+                          alt={image.alternativeText ?? "Youth Advisory Committee Image"}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 800px"
+                          className="object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      )}
+                    </div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>

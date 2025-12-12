@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { SimpleCard } from "@/lib/strapi/models/common/simpleCard";
 import { BookOpen, Heart, Lightbulb } from "lucide-react";
+import Image from "next/image";
 
 const icons = [
   BookOpen,
@@ -32,11 +33,15 @@ export default function Programs({
             >
               <div className="relative h-64 overflow-hidden">
                 
-                {(program.image.url && <img
-                  src={program.image.url}
-                  alt={program.image.alternativeText ?? program.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />)}
+                {program.image?.url && (
+                  <Image
+                    src={program.image.url}
+                    alt={program.image.alternativeText ?? program.title}
+                    fill
+                    sizes="100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute top-4 left-4">
                 </div>

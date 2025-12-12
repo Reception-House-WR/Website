@@ -1,5 +1,6 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { StrapiImageResponse } from "@/lib/strapi/models/strapi/image";
+import Image from "next/image";
 
 export default function Images({
   images
@@ -22,11 +23,17 @@ export default function Images({
               className="basis-1/1 sm:basis-1/2 lg:basis-1/3 flex justify-center"
             >
               
-              {(image?.url && <img
-                src={image?.url}
-                alt={image?.alternativeText || `Skills Training Image ${index + 1}`}
-                className="rounded-lg object-cover w-[90%] h-[250px]"
-              />)}
+              {image?.url && (
+                <div className="relative w-[90%] h-[250px] overflow-hidden rounded-lg">
+                  <Image
+                    src={image.url}
+                    alt={image.alternativeText || `Skills Training Image ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 90vw, 400px"
+                    className="object-cover"
+                  />
+                </div>
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>
