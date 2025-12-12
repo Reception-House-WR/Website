@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import Link from "next/link";
 import { Partner } from "@/lib/strapi/models/home/partner";
+import Image from "next/image";
 
 interface PartnersSectionProps {
   title: string;
@@ -35,13 +36,16 @@ export const Partners = ({ title, desc, partners }: PartnersSectionProps) => {
             >
               <Link href={partner?.url} target="_blank">
               <div className="text-center">
-                <div className="w-24 h-16 mx-auto mb-2 flex items-center justify-center">
-                  {(partner?.logo?.url && <img
-                    src={partner?.logo.url}
-                    alt={partner?.logo.alternativeText || partner?.name}
-                    className="max-h-14 w-auto object-contain"
-                    loading="lazy"
-                  />)}
+                <div className="w-24 h-16 mx-auto mb-2 flex items-center justify-center relative">
+                  {partner?.logo?.url && (
+                    <Image
+                      src={partner.logo.url}
+                      alt={partner.logo.alternativeText || partner.name}
+                      fill
+                      sizes="96px"
+                      className="object-contain max-h-14"
+                    />
+                  )}
                 </div>
                 <p className="text-xs font-medium text-muted-foreground line-clamp-2">
                   {partner?.name}

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Clock, MapPin, Calendar as CalendarIcon } from "lucide-react";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
+import Image from "next/image";
 
 interface EventsCalendarProps {
   title: string;
@@ -187,17 +188,18 @@ export const EventsCalendar = ({ title, desc, events }: EventsCalendarProps) => 
                     className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0"
                   >
                     <CardContent className="p-0 sm:flex md:h-48">
-                        {/* Event Image */}
-                        <div className="relative md:aspect-auto overflow-hidden bg-muted h-full ">
-                          
-                          {(event?.image?.url && <img
+                      {/* Event Image */}
+                      <div className="relative h-48 w-full sm:h-auto sm:w-56 md:w-64 flex-shrink-0 overflow-hidden bg-muted">
+                        {event?.image?.url && (
+                          <Image
                             src={event.image.url}
-                            alt={event.image?.alternativeText || event.title}
-                            loading="lazy"
-                            className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />)}
-                        </div>
-                        
+                            alt={event.image.alternativeText || event.title}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 256px"
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        )}
+                      </div>
                         {/* Event Details */}
                         <div className="p-6 space-y-3 ">
                           <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">

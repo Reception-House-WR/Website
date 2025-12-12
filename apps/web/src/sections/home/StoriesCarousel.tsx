@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Story } from "@/lib/strapi/models/stories/story";
+import Image from "next/image";
+
 interface StoriesCarouselProps {
   title: string;
   desc: string;
@@ -43,12 +45,15 @@ export const StoriesCarousel = ({ title, desc, stories }: StoriesCarouselProps) 
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Image */}
                 <div className="relative h-64 md:h-auto overflow-hidden">
-                  
-                  {(currentStory?.image && <img
-                    src={currentStory?.image}
-                    alt={`${currentStory?.image} from ${currentStory?.author}`}
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  />)}
+                  {currentStory?.image && (
+                    <Image
+                      src={currentStory.image}
+                      alt={`Story image from ${currentStory.author}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  )}
                 </div>
 
                 {/* Content */}

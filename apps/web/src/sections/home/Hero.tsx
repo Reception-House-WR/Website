@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface HeroProps {
   title: string;
@@ -18,13 +19,21 @@ export const Hero = ({ title, description, imageUrl, contactUsText, learnMoreTex
       role="banner"
     >
       {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${imageUrl})` }}
-      >
+      <div className="absolute inset-0 z-0">
+        {/* Image */}
+        <Image
+          src={imageUrl}
+          alt="Hero background"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+
+        {/* Gradient overlay */}
         <div
           className="absolute inset-0"
-          style={{ background: 'var(--hero-gradient)' }}
+          style={{ background: "var(--hero-gradient)" }}
         />
       </div>
 

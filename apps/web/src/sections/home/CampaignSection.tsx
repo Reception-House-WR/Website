@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib/formatCurrency";
 import { Campaign } from "@/lib/strapi/models/donate/campaign";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface FeaturedCampaignProps {
   title: string;
@@ -24,11 +25,14 @@ export const CampaignSection = ({ title, campaign }: FeaturedCampaignProps) => {
             <div className="grid md:grid-cols-5 gap-0">
               {/* Image */}
               <div className="md:col-span-2 relative h-64 md:h-auto overflow-hidden">
-                {(campaign.image && <img 
-                  src={campaign.image}
-                  alt={campaign.name}
-                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                />
+                {campaign.image && (
+                  <Image
+                    src={campaign.image}
+                    alt={campaign.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 66vw"
+                    className="object-cover transition-transform duration-500 hover:scale-105"
+                  />
                 )}
               </div>
 
