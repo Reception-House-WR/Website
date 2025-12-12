@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { RSVPForm } from "./RSVPForm";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
+import Image from "next/image";
 
 // --- Helper: Format date for display ---
 function formatDisplayDate(isoDate: Date | null): string {
@@ -65,13 +66,14 @@ export const EventCard = ({
     <Card className="group overflow-hidden shadow-[var(--card-shadow)] hover:shadow-[var(--card-hover-shadow)] transition-all animate-fade-in py-0">
       <CardContent className="p-0 md:flex h-full">
         {/* Event Image Section */}
-        <div className="w-full h-48 md:h-auto md:w-1/3  bg-muted/50 flex-shrink-0">
-          {event.image.url ? (
-            <img
+        <div className="relative w-full h-48 md:h-auto md:w-1/3 bg-muted/50 flex-shrink-0 overflow-hidden">
+          {event.image?.url ? (
+            <Image
               src={event.image.url}
               alt={event.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
             <div className=" w-full h-full flex items-center justify-center p-6">

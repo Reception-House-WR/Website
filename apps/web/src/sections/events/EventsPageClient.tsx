@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EventCalendar } from "./EventCalendar";
 import { EventCard } from "./EventCard";
 import { UpcomingEvent } from "@/lib/strapi/models/event/event";
+import Image from "next/image";
 
 interface EventsPageClientProps {
   siteKey: string | null;
@@ -54,10 +55,18 @@ export default function EventsPageClient({
         className="relative h-[40vh] min-h-[300px] overflow-hidden bg-gray-200"
         role="banner"
       >
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          {heroImage && (
+            <Image
+              src={heroImage}
+              alt={heroTitle || "Hero background"}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          )}
           <div
             className="absolute inset-0"
             style={{ background: "var(--hero-gradient)" }}
