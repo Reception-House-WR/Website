@@ -104,7 +104,7 @@ export default {
     const existing = await strapi.entityService.findOne(model.uid, entry.id, {
       populate: {
         localizations: true,
-        ...webPageSectionsPopulate
+        ...webPageSectionsPopulate 
       },
     });
 

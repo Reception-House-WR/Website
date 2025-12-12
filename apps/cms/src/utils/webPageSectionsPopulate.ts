@@ -54,7 +54,11 @@ export const webPageSectionsPopulate = {
           gallery: true,
         },
       },
-      "about.impact": true,
+      "about.impact": {
+        populate:{
+          image: true
+        }
+      },
       "common.list-card": {
         populate: {
           items: true,

@@ -7,6 +7,7 @@ export interface AboutImpact extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     videoUrl: Schema.Attribute.String & Schema.Attribute.Required;
   };

@@ -8,7 +8,7 @@ export const IMPACT_UID = "about.impact";
 /**
  * Translator for impact component
  * - Translates: title, description
- * - Syncs: videoUrl
+ * - Syncs: videoUrl, image
  */
 export async function translateImpactSection(
   section: WebPageSection,
@@ -41,6 +41,7 @@ export async function translateImpactSection(
 
   //Sync "videoUrl" (no translation)
   result.videoUrl = section.videoUrl;
+  result.image = section.image;
 
   //Copy any other fields that might exist
   for (const key of Object.keys(section)) {
@@ -49,6 +50,7 @@ export async function translateImpactSection(
       key === "title" ||
       key === "description" ||
       key === "videoUrl" ||
+      key === "image" ||
       key === "id"
     ) {
       continue;
