@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_get_involved_volunteer_testimonials_carousels",
+  "info": {
+    "displayName": "volunteerTestimonialsCarousel"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "testimonials": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::volunteer-testimonial.volunteer-testimonial"
+    }
+  },
+  "config": {}
+}

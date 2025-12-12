@@ -1,0 +1,44 @@
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+
+export default function BoardOfDirectors({
+  title,
+  desc,
+  image,
+  buttonLabel
+}: {
+  title: string;
+  desc: string;
+  image?: string;
+  buttonLabel: string;
+}) {
+
+    return (
+        <Card className="overflow-hidden shadow-card animate-fade-in mx-8">
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="relative h-64 md:h-auto overflow-hidden">
+                {image && (
+                  <Image
+                    src={image}
+                    alt="Board of Directors"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                )}
+              </div>
+              <div className="p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-accent/5 to-primary/5">
+                <h3 className="text-3xl font-bold mb-4 text-foreground">{title}</h3>
+                <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                  {desc}
+                </p>
+                <Button  className="w-fit">
+                  {buttonLabel} <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </Card>
+    );
+}

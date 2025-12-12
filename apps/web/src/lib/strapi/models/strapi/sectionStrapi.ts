@@ -1,0 +1,37 @@
+import { StoriesCarousel } from "../stories/stories-carousel";
+import { Hero } from "../common/hero";
+import { CurrentCampaign } from "../donate/currentCampaign";
+import { Section } from "../common/section";
+import { GalleryCarousel } from "../common/galleryCarousel";
+import { Card } from "../common/card";
+import { Cards } from "../programs/cards";
+import { InfoCard } from "../programs/infoCard";
+import { OurPrograms } from "../programs/ourPrograms";
+import { ServiceOverview } from "../programs/serviceOverview";
+import { AnalyticsOverview } from "../programs/analyticOverview";
+import { AnalyticsSection } from "../programs/analyticsSection";
+import { CardsCarousel } from "../programs/cardsCarousel";
+import { BenefitsSection } from "../programs/benefitsSection";
+import { ProgramCard } from "../programs/programCard";
+import { ButtonSection } from "../common/buttonSection";
+import { CardsSection } from "../getInvolved/cardsSection";
+
+export type SectionStrapi =
+  | Hero
+  | StoriesCarousel
+  | CurrentCampaign
+  | Section
+  | GalleryCarousel
+  | Card
+  | Cards
+  | InfoCard
+  | OurPrograms
+  | AnalyticsOverview
+  | ServiceOverview
+  | AnalyticsSection
+  | CardsCarousel
+  | BenefitsSection
+  | ProgramCard
+  | CardsSection
+  | ButtonSection
+  ;

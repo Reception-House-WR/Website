@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_donate_list_cards_sections",
+  "info": {
+    "displayName": "listCardsSection"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "component": "donate.list",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
